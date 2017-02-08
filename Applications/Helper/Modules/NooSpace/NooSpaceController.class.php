@@ -32,6 +32,9 @@ class NooSpaceController extends \Library\BackController
 			$response = $this->app->getHTTPResponse();
 			$response->redirect('/');
 			
+		}else{
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
 		}
 	}
 }
