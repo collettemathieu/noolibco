@@ -33,6 +33,9 @@ class NooSpaceController extends \Library\BackController
 			$response->redirect('/');
 			
 		}else{
+			// On récupère l'utilisateur système
+			$user = $this->app->getUser();	
+			
 			// On informe que c'est un chargement Ajax
 			$user->setAjax(true);
 		}
