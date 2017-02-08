@@ -36,7 +36,7 @@ $(function(){
 		            }else if(key==='tree'){
 		            	document.location.href="/ManagerOfApplications/app="+$(this).attr('id');
 		            }else if(key==='run'){
-		            	document.location.href="/NooSpace/app="+$(this).attr('id');
+		            	document.location.href="/NooSpace/a="+$(this).attr('id');
 		            }
 		        },
 		        items: {
