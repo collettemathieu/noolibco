@@ -46,3 +46,9 @@ cpbackup-exclude.conf
 /ConfigSystem/fichierDeConfiguration.xml
 /ConfigSystem/Facebook/
 /ConfigSystem/Browscap/
+/Files/Data/
+/Files/Images/
+/Files/Sources/
+/SafeWorkSpace/Utilisateurs/
+/public_html/Images/BackgroundUtilisateurs/
+/public_html/.htaccess
