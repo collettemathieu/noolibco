@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/Sphinx/" module="Defaut" action="show"/>
+	<route url="/Sphinx/SearchApplication" module="Search" action="searchApplication"/>
+</routes>

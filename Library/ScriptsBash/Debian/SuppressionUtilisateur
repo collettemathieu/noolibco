@@ -1,0 +1,15 @@
+#!/bin/bash
+#Ce script permet de supprimer un utilisateur et ses applications de tout les dossiers du serveurs 
+#Paramètre1: nom de l'utilisateur.
+#Exemple ./SuppressionUtilisateur John
+#Il supprimera le dossier /Files/Sources/John, /Files/Data/John ainsi que /SafeWorkSpace/John/
+homenoolibco="/home/noolibco"
+if [ -d $homenoolibco/Files/Sources/$1 ];then
+	rm -rf $homenoolibco/Files/Sources/$1
+fi
+if [ -d $homenoolibco/Files/Data/$1 ];then 	
+	rm -rf $homenoolibco/Files/Data/$1
+fi
+if [ -d $homenoolibco/SafeWorkSpace/Utilisateurs/$1 ];then 	
+	rm -rf $homenoolibco/SafeWorkSpace/Utilisateurs/$1
+fi

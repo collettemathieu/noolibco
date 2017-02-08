@@ -1,0 +1,22 @@
+			<div class="col-lg-8 centering sousMenu maxWidth fadeIn">	
+				<form id="form" ng-submit="validStep2()" name="formStep2" class="well well-lg col-lg-12 centering">
+					<legend>
+						Step 2: Keywords and icon
+					</legend>
+					<div class="form-group has-feedback" ng-class="{'has-error':formStep2.motsClesApp.$invalid && formStep2.motsClesApp.$dirty, 'has-success':formStep2.motsClesApp.$valid}">
+						<input type="text" name="motsClesApp" ng-model="motsClesApp" ng-pattern="/^([a-zA-Z0-9\-\s]{3,}, {0,1})+[a-zA-Z0-9\-\s]{3,}$/" required class="form-control input-lg" placeholder="keyword1, keyword2, keyword3, ..."/>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formStep2.motsClesApp.$invalid && formStep2.motsClesApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formStep2.motsClesApp.$valid}"></span>
+						<span ng-show="formStep2.motsClesApp.$invalid && formStep2.motsClesApp.$dirty" class="help-block">Select at least 2 keywords for your application (keyword1, key-word2, keyword3)</span>
+					</div>
+					<div class="form-group has-feedback">
+						<label for="fileLogoApp">Select an icon for your application (PNG, JPEG, 128px*128px, < 12ko) <a href="https://www.iconfinder.com" target="_blank">IconFinder</a></label>
+						<input type="file" name="logoApp" ng-model="logoApp" class="form-control" logo-application-validator size="40"/>
+						<div id="affichageMiniatureLogo"></div>
+					</div>
+
+					<button ng-disabled="formStep2.$invalid" class="btn btn-primary" type="submit">
+						<div ng-hide="validStep3">Step 3</div>
+						<div ng-show="validStep3"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
+					</button>
+				</form>
+			</div>

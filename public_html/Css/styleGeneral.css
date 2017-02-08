@@ -1,0 +1,309 @@
+/**********************/
+/*      GENERAL       */
+/**********************/
+
+@font-face {
+   font-family: 'ComicNeue-Angular-Regular';
+   src: url('../fonts/ComicNeue-Angular-Regular.otf');
+}
+
+@font-face {
+   font-family: 'ComicNeue_Light';
+   src: url('../fonts/ComicNeue_Light.otf');
+}
+
+html, body{
+	width: 100%;
+	height: 100%;
+}
+
+body{
+	background-color: black;
+	background-size: cover;
+	background-attachment: fixed;
+	margin: auto;
+	font-family: "ComicNeue-Angular-Regular";
+}
+
+header{
+  height: 15%;
+}
+
+section{
+  height: 80%;
+}
+
+footer{
+  height: 4%;
+}
+
+
+/* Pour l'animation des icônes bootstrap */
+.glyphicon.spinning {
+    -moz-animation: spin-moz 1s infinite linear;
+    -webkit-animation: spin-webkit 1s infinite linear;
+    animation: spin 1s infinite linear;
+}
+
+.glyphicon-refresh-animate {
+    -moz-animation: spin-moz .7s infinite linear;
+    -webkit-animation: spin-webkit .7s infinite linear;
+    animation: spin .7s infinite linear;
+}
+
+@-moz-keyframes spin-moz {
+  from { -moz-transform: rotate(0deg);}
+  to { -moz-transform: rotate(360deg);}
+}
+
+@-webkit-keyframes spin-webkit {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+/* Pour le pré-chargement des pages */
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.globalLoader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid grey; /* Blue */
+    border-bottom: 4px solid grey;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    position: fixed;
+    top: 50%;
+    left: 47%;
+    z-index: 9999;
+    -webkit-animation: spinGlobalLoader 2s linear infinite;
+    animation: spinGlobalLoader 2s linear infinite;
+}
+
+@-webkit-keyframes spinGlobalLoader {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spinGlobalLoader {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* Pour gérer les césures */
+.cesure{
+  word-wrap: break-word; 
+}
+
+/* Pour réaliser un fadeIn sur les éléments */
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fadeIn{
+  opacity:0;  /* make things invisible upon start */
+  -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation:fadeIn ease-in 1;
+  animation:fadeIn ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:0.8s;
+  -moz-animation-duration:0.8s;
+animation-duration:0.8s;
+} 
+
+/* Pour la taille maximale de certains containers */
+.maxWidth{
+  max-width: 960px;
+}
+
+/* Pour un positionnement en hauteur automatique des éléments des formulaires */
+.form-control {
+    height: auto;
+}
+
+/* Pour le centrage verticale des éléments */
+.container-fluid{
+  height:100%;
+  display:table;
+  width: 100%;
+  padding: 0;
+}
+ 
+.row-fluid {
+  height: 100%; 
+  display:table-cell; 
+  vertical-align: middle;
+}
+
+.centering {
+  float:none;
+  margin:0 auto;
+}
+
+/* Pour centrer les textes des tableaux sous bootstrap */
+.table td, .table th{
+   text-align: center;   
+}
+
+/* Pour éviter au tableau de s'étaler sur toute la ligne */
+.table-nonfluid {
+   width: auto !important;
+}
+
+/* Pour les sous-menu avec fond blanc */
+
+.sousMenu{
+  padding: 15px;
+  margin-bottom: 25px;
+  background-color: rgba(250, 250, 250, 0.7);
+}
+
+/* Pour la taille des label */
+.label-lg{
+  font-size: 1em;
+}
+
+/* Pour les boîtes de dialogue vers le client */
+.informationsClient{
+  display: none;
+  position: fixed;
+  width: 400px;
+  top: 10px;
+  right: 10px;
+  z-index: 99999;
+}
+
+.rotate270 {
+    margin: 0;
+    padding: 0;
+    -webkit-transform-origin: 0 0;
+       -moz-transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+         -o-transform-origin: 0 0;
+            transform-origin: 0 0;
+    -webkit-transform: rotate(270deg);
+       -moz-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+         -o-transform: rotate(270deg);
+            transform: rotate(270deg);
+}
+
+/* Style de la barre pour Firefox*/
+progress::-moz-progress-bar, .progress{
+    
+    background: 
+      -moz-repeating-linear-gradient(
+        45deg, 
+        rgba(255,255,255,.2) 0,
+        rgba(255,255,255,.2) 10px, 
+        rgba(255,255,255,0) 10px,
+        rgba(255,255,255,0) 20px
+      ),
+      -moz-linear-gradient(
+        rgba(255,255,255,.1) 50%,
+        rgba(255,255,255,0) 60%
+      ),
+      #09c;
+    background: 
+      repeating-linear-gradient(
+        45deg, 
+        rgba(255,255,255,.2) 0,
+        rgba(255,255,255,.2) 10px, 
+        rgba(255,255,255,0) 10px,
+        rgba(255,255,255,0) 20px
+      ),
+      linear-gradient(
+        rgba(255,255,255,.1) 50%,
+        rgba(255,255,255,0) 60%
+      ),
+      #09c;
+    
+  
+}
+
+/* Style de la barre pour Chrome*/
+progress::-webkit-progress-value, .progress{
+    background: 
+      -webkit-repeating-linear-gradient(
+        45deg, 
+        rgba(255,255,255,.2) 0,
+        rgba(255,255,255,.2) 10px, 
+        rgba(255,255,255,0) 10px,
+        rgba(255,255,255,0) 20px
+      ),
+      -webkit-linear-gradient(
+        rgba(255,255,255,.1) 50%,
+        rgba(255,255,255,0) 60%
+      ),
+      #09c;
+    background: 
+      repeating-linear-gradient(
+        45deg, 
+        rgba(255,255,255,.2) 0,
+        rgba(255,255,255,.2) 10px, 
+        rgba(255,255,255,0) 10px,
+        rgba(255,255,255,0) 20px
+      ),
+      linear-gradient(
+        rgba(255,255,255,.1) 50%,
+        rgba(255,255,255,0) 60%
+      ),
+      #09c;
+}
+
+
+/* Style de la barre rouge pour Chrome*/
+#progressRed progress::-webkit-progress-value{
+    background-color: 
+      #900;
+    background-color: 
+      #900;
+}
+
+/* Style de la barre Rouge pour Firefox*/
+#progressRed progress::-moz-progress-bar{
+    background-color: 
+      #000;
+    background-color: 
+      #000;
+ }
+
+ 
+/* Style de la barre orange pour Chrome*/
+#progressOrange progress::-webkit-progress-value{
+    background-color: 
+      #FF6600;
+    background-color: 
+      #FF6600;
+}
+
+/* Style de la barre orange pour Firefox*/
+#progressOrange progress::-moz-progress-bar{
+    background-color: 
+      #FF6600;
+    background-color: 
+      #FF6600;
+ }
+
+
+/* Enlève la couleur d'arrière-plan */
+progress::-webkit-progress-bar, .progress{
+    background: transparent;
+}

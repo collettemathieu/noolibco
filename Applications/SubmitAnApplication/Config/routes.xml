@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/SubmitAnApplication/" module="Defaut" action="show"/>
+	<route url="/SubmitAnApplication/ValidStep1" module="Step1" action="validStep1"/>
+	<route url="/SubmitAnApplication/ValidNameApplication" module="Step1" action="validNameApplication"/>
+	<route url="/SubmitAnApplication/GetStatusApplication/idApp=([0-9]+)" module="Step1" action="getStatusApplication" vars="idApp"/>
+	<route url="/SubmitAnApplication/GetAllCategories" module="Step1" action="getAllCategories"/>
+	<route url="/SubmitAnApplication/ValidStep2" module="Step2" action="validStep2"/>
+	<route url="/SubmitAnApplication/DepositApplication" module="Step3" action="depositApplication"/>
+	<route url="/SubmitAnApplication/GetDataStep3" module="Step3" action="getDataStep3"/>
+	<route url="/SubmitAnApplication/GetPublicationsApplication" module="Step3" action="getPublicationsApplication"/>
+</routes>

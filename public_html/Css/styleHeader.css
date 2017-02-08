@@ -1,0 +1,49 @@
+/**********************/
+/*      HEADER        */
+/**********************/
+
+header nav{
+	position: absolute;
+	top: 20px;
+	right: 0px;
+	width: 250px;
+}
+
+header nav img{
+	cursor: pointer;
+	padding-bottom: 5px;
+}
+
+header .modal-body img{
+	height: 80px;
+}
+
+header .modal-body li{
+	margin-left: 10px;
+}
+
+.fullScreen{
+	margin: 0;
+	display: inline-block;
+	height: 25px;
+	width: 29px;
+	cursor: pointer;
+	padding: 6px;
+	border-radius: 0px 5px 5px 0px;
+	background-color:rgba(250, 250, 250, 0.95);
+	top: 105px;
+	left: 0px;
+}
+
+#helperApplication .modal-dialog{
+	width: 90%;
+}
+
+#alertBrowser{
+	display: inline-block;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 100%;
+	z-index: 10000000;
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/Library/" module="Defaut" action="show"/>
+	<route url="/Library/app=([0-9]+)" module="AppView" action="show" vars="app"/>
+	<route url="/Library/ContactAuthor" module="AppView" action="contactAuthor"/>
+</routes>

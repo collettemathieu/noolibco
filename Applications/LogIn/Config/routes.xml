@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/LogIn/" module="LogIn" action="show"/>
+	<route url="/LogIn/BrowserIsValid/" module="LogIn" action="browserIsValid"/>
+	<route url="/LogIn/JSNotActivated" module="LogIn" action="activatedJS"/>
+	<route url="/LogIn/RefreshJS" module="LogIn" action="refreshJS"/>
+	<route url="/LogIn/ValidationLogIn" module="LogIn" action="validation"/>
+	<route url="/LogIn/Deconnexion" module="LogIn" action="deconnexion"/>
+	
+	
+	<route url="/LogIn/GetStatut" module="Inscription" action="getStatut"/>
+	<route url="/LogIn/ValiderInscription" module="Inscription" action="validerInscription"/>
+	
+	<route url="/LogIn/ValidationMail/j=([a-zA-Z0-9._%+-]{8,32})" module="LogIn" action="mailvalidation" vars="jeton"/>
+	
+	<route url="/LogIn/RecupPassword/" module="LogIn" action="recuppassword"/>
+	<route url="/LogIn/RecupPassword/([a-zA-Z]{7})" module="LogIn" action="recuppassword" vars="request"/>
+	
+	<route url="/LogIn/ResetPassword/j=([a-zA-Z0-9._%+-]{8,32})" module="LogIn" action="resetpassword" vars="jeton"/>
+
+	<route url="/LogIn/Banni" module="Banni" action="show"/>
+
+	<route url="/LogIn/ContactUs/" module="LogIn" action="contactUs"/>
+
+</routes>

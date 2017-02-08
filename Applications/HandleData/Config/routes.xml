@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/HandleData/" module="Defaut" action="show"/>
+
+	<route url="/HandleData/GestionnaireDeDonnees" module="DataManager" action="showGestionnaireDonnee"/>
+	<route url="/HandleData/AddLocalData" module="AddData" action="addLocalData"/>
+	
+	<route url="/HandleData/DeleteData" module="DataManager" action="deleteData"/>
+	<route url="/HandleData/ShowData" module="DataManager" action="showData"/>
+	<route url="/HandleData/SaveDataOnServer" module="DataManager" action="saveDataOnServer"/>
+	
+	<route url="/HandleData/SendDataForHighStock/idDonnee=([0-9]+)" module="DataManager" action="sendDataForHighStock" vars="idDonneeUtilisateur"/>
+	<route url="/HandleData/SendDataForHighStock/idDonnee=([0-9]+)debutDonnee=([0-9]+)finDonnee=([0-9]+)" module="DataManager" action="sendDataForHighStock" vars="idDonneeUtilisateur,debutDonnee,finDonnee"/>
+	
+	<route url="/HandleData/UpdateData" module="DataManager" action="updateData"/>
+</routes>

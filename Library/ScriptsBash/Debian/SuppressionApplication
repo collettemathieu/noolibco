@@ -1,0 +1,10 @@
+#!/bin/bash
+#Ce script permet de supprimer les applications de tout les dossiers du serveurs 
+#Paramètre1: nom du développeur, Paramètre 2 : nom de l'application.
+#Exemple ./SuppressionApplication John TailleArtere
+#Il supprimera le dossier /files/sources/John/TailleArtere/* ainsi que les élements se trouvant dans /SafeWorkSpace/Applications/TailleArtere et /NotSafeWorkSpace/Applications/TailleArtere
+#./Suppression_application.sh /folder/application1/
+homenoolibco="/home/noolibco"
+if [ -d $homenoolibco/Files/Sources/$1/$2 ]; then
+	rm -rf $homenoolibco/Files/Sources/$1/$2;
+fi

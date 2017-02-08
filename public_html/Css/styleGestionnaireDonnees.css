@@ -1,0 +1,273 @@
+/*****************************/
+/*  Gestionnaire des données */
+/*****************************/
+
+#boutonShowGestionnaireDonnees{
+	display: inline-block;
+	position: absolute;
+	top: 55px;
+	left: 0px;
+	padding-right: 5px;
+	text-align: center;
+	
+	cursor: pointer;
+	width: 55px;
+	height: 40px;
+	border-radius: 0px 5px 5px 0px;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+#boutonShowGestionnaireDonnees img{
+	display: inline-block;
+	vertical-align: bottom;
+
+}
+
+#boutonShowGestionnaireDonnees:hover{
+	width: 65px;
+}
+
+
+#overlayGestionnaireDonnees{
+	display: none;
+	position: absolute;
+	top: 50px;
+	left: 0;
+	width: 500px;
+	height: 550px;
+	z-index: 999;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+.headerGestionnaireDonnees{
+	display: block;
+	height: 55px;
+}
+
+
+.inHeaderGestionnaireDonnees, .inHeaderMule{
+	display: block;
+	width: 450px;
+	margin: auto;
+	margin-top: 15px;
+	color: white;
+	border-bottom: white solid 1px;
+	
+}
+
+.inHeaderMule{
+	width: 200px;
+}
+
+.titreGestionnaire{
+	display: inline-block;
+	font-size: 1.5em;
+	height: 55px;
+	line-height: 55px;
+	width: 270px;
+	font-family: "ComicNeue_Light";
+}
+
+
+#sectionGestionnaireDonnees{
+	display: inline-block;
+	width: 500px;
+}
+
+
+#inSectionGestionnaireDonnees{
+	display: block;
+	width: 500px;
+	margin: 10px auto 0px auto;
+	height: 450px;
+}
+
+.alertSaving{
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	width: 12px;
+	height: 12px;
+	border-radius: 15px;
+}
+
+.label-danger-saved{
+	background-color: rgb(217, 83, 79);
+}
+
+.label-warning-saved{
+	background-color: orange;
+}
+
+
+.donneeUser{
+	position: relative;
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	margin: 2px;
+	cursor: pointer;
+	z-index: 10;
+	line-height: 64px;
+	vertical-align: top;
+}
+
+.dashedBorder{
+	border: 1px white dashed;
+	border-radius: 5px;
+	width: 68px;
+	height: 68px;
+}
+
+#boiteAOutils{
+	display: inline-block;
+	width: 80px;
+	margin-left: 20px;
+	padding: 10px 0px 0px 10px;
+	height: 420px;
+	vertical-align: top;
+	border-right: 1px white dashed;
+}
+
+#boutonImporter{
+	display: inline-block;
+	cursor: pointer;
+}
+
+#listeDonneesUser{
+	display: inline-block;
+	width: 380px;
+	height: 420px;
+	padding: 10px;
+	vertical-align: top;
+	z-index: 9;
+}
+
+#inListeDonneesUser{
+	display: inline-block;
+	width: 100%;
+	height: 420px;
+	z-index: 999;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+/* Pour la scrollBar */
+#inListeDonneesUser::-webkit-scrollbar, #laMule form::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+/* Track */
+#inListeDonneesUser::-webkit-scrollbar-track, #laMule form::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+/* Handle */
+#inListeDonneesUser::-webkit-scrollbar-thumb, #laMule form::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(200,200,200,0.7); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+#inListeDonneesUser::-webkit-scrollbar-thumb:window-inactive, #laMule form::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(200,200,200,0.7); 
+}
+
+
+/**
+*	Charger et visualiser une donnée
+*/
+
+#overlayFormulaireAjoutDonneeLocale .modal-dialog, #overlayAfficherDonnee .modal-dialog{
+	width: 90%;
+}
+
+#overlayFormulaireAjoutDonneeLocale .modal-body img, #overlayAfficherDonnee .modal-body img{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.image-waiter{
+	left: 46%;
+	top: 45px;
+	position: absolute;
+}
+
+.image-dataManager-waiter{
+	color: white;
+}
+
+.image-upload{
+	display: inline-block;
+}
+
+.image-upload img{
+	cursor: pointer;
+}
+
+.image-upload input{
+    display: none;
+}
+
+#labelSubmitLocalData img, #labelSubmitUpdateData img, #labelSubmitSaveData img{
+	opacity: 0.2;
+	cursor: default;
+}
+
+/**
+* Barre de progression - espace disponible
+*/
+
+#progressBarGestionnaireDonneeUtilisateur{
+	display: inline-block;
+	width: 150px;
+	vertical-align: top;
+	margin: 5px 0px 0px 15px;
+}
+
+#progressBarGestionnaireDonneeUtilisateur > div{
+	display: block;
+	margin: 0;
+	padding: 0;
+	line-height: 20px;
+	font-size: 0.8em;
+}
+
+
+#progressBarEspaceDisponibleData{
+	display: inline-block;
+	width: 150px;
+
+	-moz-box-sizing: border-box;
+   	box-sizing: border-box;
+    height: 10px;
+    padding: 3px 3px 2px 3px;
+    background: #333; 
+    background: -webkit-linear-gradient(#2d2d2d,#444);
+    background:    -moz-linear-gradient(#2d2d2d,#444);
+    background:      -o-linear-gradient(#2d2d2d,#444);
+    background:         linear-gradient(#2d2d2d,#444);
+    border: 1px solid rgba(0,0,0,.5);
+    border-radius: 10px;
+    box-shadow: 0 1px 0 rgba(255,255,255,.2); 
+}
+
+/* La mule */
+#laMule{
+	display: inline-block;
+	width: 380px;
+	height: 100%;
+	vertical-align: top;
+	border-left: 1px white dashed;
+}
+
+#laMule form{
+	display: block;
+	height: 450px;
+
+	overflow-y: auto;
+	overflow-x: hidden;
+}

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/PourAdminSeulement/" module="Defaut" action="show"/>
+	
+	<route url="/PourAdminSeulement/PasserEnAdmin" module="Defaut" action="passerEnAdmin"/>
+	<route url="/PourAdminSeulement/SortirDuModeAdmin" module="Defaut" action="sortirDuModeAdmin"/>
+	
+	<route url="/PourAdminSeulement/Utilisateurs/" module="Utilisateurs" action="show"/>
+	
+	<route url="/PourAdminSeulement/Utilisateurs/CreerUtilisateur" module="Utilisateurs" action="creerUtilisateur"/>
+	
+	<route url="/PourAdminSeulement/Utilisateurs/idUtilisateur=([0-9]+)" module="Utilisateurs" action="show" vars="idUtilisateur"/>
+	<route url="/PourAdminSeulement/Utilisateurs/UtilisateurEnAdministrateur" module="Utilisateurs" action="utilisateurEnAdministrateur"/>
+	<route url="/PourAdminSeulement/Utilisateurs/ActiveUtilisateur" module="Utilisateurs" action="ActiveUtilisateur"/>
+	<route url="/PourAdminSeulement/Utilisateurs/DesactiveUtilisateur" module="Utilisateurs" action="DesactiveUtilisateur"/>
+	<route url="/PourAdminSeulement/Utilisateurs/BannirUtilisateur" module="Utilisateurs" action="bannirUtilisateur"/>
+	<route url="/PourAdminSeulement/Utilisateurs/GracierUtilisateur" module="Utilisateurs" action="gracierUtilisateur"/>
+	<route url="/PourAdminSeulement/Utilisateurs/SupprimerUtilisateur" module="Utilisateurs" action="supprimerUtilisateur"/>
+	
+	<route url="/PourAdminSeulement/Utilisateurs/ChangerPhotoProfil" module="Utilisateurs" action="changerPhotoProfil"/>
+	<route url="/PourAdminSeulement/Utilisateurs/ChangerPrenom" module="Utilisateurs" action="changerPrenom"/>
+	<route url="/PourAdminSeulement/Utilisateurs/ChangerNom" module="Utilisateurs" action="ChangerNom"/>
+	<route url="/PourAdminSeulement/Utilisateurs/ChangerEmail" module="Utilisateurs" action="changerEmail"/>
+	<route url="/PourAdminSeulement/Utilisateurs/ChangerPagePerso" module="Utilisateurs" action="changerPagePerso"/>
+	<route url="/PourAdminSeulement/Utilisateurs/ChangerDescription" module="Utilisateurs" action="changerDescription"/>
+	<route url="/PourAdminSeulement/Utilisateurs/ChangerPasswod" module="Utilisateurs" action="changerPasswod"/>
+	<route url="/PourAdminSeulement/Utilisateurs/ChangerStatut" module="Utilisateurs" action="changerStatut"/>
+	<route url="/PourAdminSeulement/Utilisateurs/AjouterEquipe" module="Utilisateurs" action="ajouterEquipe"/>
+	<route url="/PourAdminSeulement/Utilisateurs/RemoveEquipe" module="Utilisateurs" action="removeEquipe"/>
+	
+	
+	<route url="/PourAdminSeulement/Attributs/" module="Attributs" action="show"/>
+	
+	<route url="/PourAdminSeulement/Attributs/EditerStatutUtilisateur/" module="Attributs" action="editerStatutUtilisateur"/>
+	<route url="/PourAdminSeulement/Attributs/EditerStatutUtilisateur/idStatutUtilisateur*=([0-9]+)" module="Attributs" action="editerStatutUtilisateur" vars="idStatutUtilisateur"/>
+	<route url="/PourAdminSeulement/Attributs/EditerStatutUtilisateur/AjouterStatutUtilisateur" module="Attributs" action="ajouterStatutUtilisateur"/>
+	<route url="/PourAdminSeulement/Attributs/EditerStatutUtilisateur/SupprimerStatutUtilisateur" module="Attributs" action="supprimerStatutUtilisateur"/>
+	<route url="/PourAdminSeulement/Attributs/EditerStatutUtilisateur/modifierStatutUtilisateur" module="Attributs" action="modifierStatutUtilisateur"/>
+	
+	<route url="/PourAdminSeulement/Attributs/EditerStatutApplication/" module="Attributs" action="editerStatutApplication"/>
+	<route url="/PourAdminSeulement/Attributs/EditerStatutApplication/idStatutApplication=([0-9]+)" module="Attributs" action="editerStatutApplication" vars="idStatutApplication"/>
+	<route url="/PourAdminSeulement/Attributs/EditerStatutApplication/AjouterStatutApplication" module="Attributs" action="ajouterStatutApplication"/>
+	<route url="/PourAdminSeulement/Attributs/EditerStatutApplication/SupprimerStatutApplication" module="Attributs" action="supprimerStatutApplication"/>
+	<route url="/PourAdminSeulement/Attributs/EditerStatutApplication/modifierStatutApplication" module="Attributs" action="modifierStatutApplication"/>
+	
+	<route url="/PourAdminSeulement/Attributs/EditerCategorie/" module="Attributs" action="editerCategorie"/>
+	<route url="/PourAdminSeulement/Attributs/EditerCategorie/idCategorie=([0-9]+)" module="Attributs" action="editerCategorie" vars="idCategorie"/>
+	<route url="/PourAdminSeulement/Attributs/EditerCategorie/AjouterCategorie" module="Attributs" action="ajouterCategorie"/>
+	<route url="/PourAdminSeulement/Attributs/EditerCategorie/SupprimerCategorie" module="Attributs" action="supprimerCategorie"/>
+	<route url="/PourAdminSeulement/Attributs/EditerCategorie/modifierCategorie" module="Attributs" action="modifierCategorie"/>
+	
+	
+	<route url="/PourAdminSeulement/Attributs/EditerSurcategorie/" module="Attributs" action="editerSurcategorie"/>
+	<route url="/PourAdminSeulement/Attributs/EditerSurcategorie/idSurcategorie=([0-9]+)" module="Attributs" action="editerSurcategorie" vars="idSurcategorie"/>
+	<route url="/PourAdminSeulement/Attributs/EditerSurcategorie/AjouterSurcategorie" module="Attributs" action="ajouterSurcategorie"/>
+	<route url="/PourAdminSeulement/Attributs/EditerSurcategorie/SupprimerSurcategorie" module="Attributs" action="supprimerSurcategorie"/>
+	<route url="/PourAdminSeulement/Attributs/EditerSurcategorie/modifierSurcategorie" module="Attributs" action="modifierSurcategorie"/>
+	
+	<route url="/PourAdminSeulement/Attributs/EditerTypeDonneeUtilisateur/" module="Attributs" action="editerTypeDonneeUtilisateur"/>
+	<route url="/PourAdminSeulement/Attributs/EditerTypeDonneeUtilisateur/Modifier" module="Attributs" action="modifierTypeDonneeUtilisateur"/>
+	<route url="/PourAdminSeulement/Attributs/EditerTypeDonneeUtilisateur/Supprimer" module="Attributs" action="supprimerTypeDonneeUtilisateur"/>
+	<route url="/PourAdminSeulement/Attributs/EditerTypeDonneeUtilisateur/Ajouter" module="Attributs" action="ajouterTypeDonneeUtilisateur"/>
+	
+	
+	
+	<route url="/PourAdminSeulement/Groupes/" module="Groupes" action="show"/>
+	
+	<route url="/PourAdminSeulement/Groupes/Etablissement/" module="Groupes" action="showEtablissement"/>
+	<route url="/PourAdminSeulement/Groupes/Etablissement/idEtablissement=([0-9]+)" module="Groupes" action="showEtablissement" vars="idEtablissement"/>
+	<route url="/PourAdminSeulement/Groupes/Etablissement/creerEtablissement" module="Groupes" action="creerEtablissement"/>
+	<route url="/PourAdminSeulement/Groupes/Etablissement/supprimerEtablissement" module="Groupes" action="supprimerEtablissement"/>
+	<route url="/PourAdminSeulement/Groupes/Etablissement/changerInfoEtablissement" module="Groupes" action="changerInfoEtablissement"/>
+	
+	<route url="/PourAdminSeulement/Groupes/Laboratoire/" module="Groupes" action="showLaboratoire"/>
+	<route url="/PourAdminSeulement/Groupes/Laboratoire/idLaboratoire=([0-9]+)" module="Groupes" action="showLaboratoire" vars="idLaboratoire"/>
+	<route url="/PourAdminSeulement/Groupes/Laboratoire/creerLaboratoire" module="Groupes" action="creerLaboratoire"/>
+	<route url="/PourAdminSeulement/Groupes/Laboratoire/supprimerLaboratoire" module="Groupes" action="supprimerLaboratoire"/>
+	<route url="/PourAdminSeulement/Groupes/Laboratoire/changerInfoLaboratoire" module="Groupes" action="changerInfoLaboratoire"/>
+	
+	<route url="/PourAdminSeulement/Groupes/Equipe/" module="Groupes" action="showEquipe"/>
+	<route url="/PourAdminSeulement/Groupes/Equipe/idEquipe=([0-9]+)" module="Groupes" action="showEquipe" vars="idEquipe"/>
+	<route url="/PourAdminSeulement/Groupes/Equipe/creerEquipe" module="Groupes" action="creerEquipe"/>
+	<route url="/PourAdminSeulement/Groupes/Equipe/supprimerEquipe" module="Groupes" action="supprimerEquipe"/>
+	<route url="/PourAdminSeulement/Groupes/Equipe/changerInfoEquipe" module="Groupes" action="changerInfoEquipe"/>
+	
+	<route url="/PourAdminSeulement/Groupes/Ville/" module="Groupes" action="showVille"/>
+	<route url="/PourAdminSeulement/Groupes/Ville/idVille=([0-9]+)" module="Groupes" action="showVille" vars="idVille"/>
+	<route url="/PourAdminSeulement/Groupes/Ville/creerVille" module="Groupes" action="creerVille"/>
+	<route url="/PourAdminSeulement/Groupes/Ville/supprimerVille" module="Groupes" action="supprimerVille"/>
+	<route url="/PourAdminSeulement/Groupes/Ville/changerInfoVille" module="Groupes" action="changerInfoVille"/>
+	
+	<route url="/PourAdminSeulement/Groupes/Pays/" module="Groupes" action="showPays"/>
+	<route url="/PourAdminSeulement/Groupes/Pays/idPays=([0-9]+)" module="Groupes" action="showPays" vars="idPays"/>
+	<route url="/PourAdminSeulement/Groupes/Pays/creerPays" module="Groupes" action="creerPays"/>
+	<route url="/PourAdminSeulement/Groupes/Pays/supprimerPays" module="Groupes" action="supprimerPays"/>
+	<route url="/PourAdminSeulement/Groupes/Pays/changerInfoPays" module="Groupes" action="changerInfoPays"/>
+	
+	<route url="/PourAdminSeulement/Configurations/" module="Configurations" action="show"/>
+	<route url="/PourAdminSeulement/Configurations/CreerConfigurations" module="Configurations" action="creerConfigurations"/>
+	<route url="/PourAdminSeulement/Configurations/ModifierConfigurations" module="Configurations" action="modifierConfigurations"/>
+	<route url="/PourAdminSeulement/Configurations/SupprimerConfigurations" module="Configurations" action="supprimerConfigurations"/>
+		
+	<route url="/PourAdminSeulement/Configurations/AjouterElementsConfigurations" module="Configurations" action="ajouterElementsConfigurations"/>
+	<route url="/PourAdminSeulement/Configurations/SupprimerCategorieConfigurations" module="Configurations" action="supprimerCategorieConfigurations"/>
+	<route url="/PourAdminSeulement/Configurations/ModifierCategorieConfigurations" module="Configurations" action="modifierCategorieConfigurations"/>
+	<route url="/PourAdminSeulement/Configurations/AjouterSousCategorieConfigurations" module="Configurations" action="ajouterSousCategorieConfigurations"/>
+	<route url="/PourAdminSeulement/Configurations/SupprimerSousCategorieConfigurations" module="Configurations" action="supprimerSousCategorieConfigurations"/>
+	<route url="/PourAdminSeulement/Configurations/ModifierSousCategorieConfigurations" module="Configurations" action="modifierSousCategorieConfigurations"/>
+	
+	<route url="/PourAdminSeulement/Applications/" module="Applications" action="show"/>
+	<route url="/PourAdminSeulement/Applications/ActiverDesactiverApplication" module="Applications" action="activerDesactiverApplication"/>
+	<route url="/PourAdminSeulement/Applications/ActivateVersion/a=([0-9]+)v=([0-9]+)" module="Applications" action="activerVersionApplication" vars="idApplication,idVersion"/>
+	<route url="/PourAdminSeulement/Applications/ProcessFacebookApplication(.*)" module="Applications" action="processFacebookApplication"/>
+	<route url="/PourAdminSeulement/Applications/PostOnSocialNetworks/app=([0-9]+)" module="Applications" action="postOnSocialNetworks" vars="idApplication"/>
+
+	
+	<route url="/PourAdminSeulement/DonneesUtilisateur/" module="DonneesUtilisateur" action="show"/>
+	<route url="/PourAdminSeulement/DonneesUtilisateur/idUtilisateur=([0-9]{1,3})" module="DonneesUtilisateur" action="show" vars="idUtilisateur"/>
+	<route url="/PourAdminSeulement/DonneesUtilisateur/Supprimer/" module="DonneesUtilisateur" action="supprimerDonneeUtilisateur"/>
+</routes>

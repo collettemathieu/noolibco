@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.google.com/schemas/sitemap/0.84">
+	<url>
+		<loc>
+			https://www.noolib.com/
+		</loc>
+	</url>
+	<url>
+		<loc>
+			https://www.noolib.com/Profile/
+		</loc>
+	</url>
+
+	<url>
+		<loc>
+			https://www.noolib.com/NooSpace/
+		</loc>
+	</url>
+
+	<url>
+		<loc>
+			https://www.noolib.com/Library/
+		</loc>
+	</url>
+	<url>
+		<loc>
+			https://www.noolib.com/SubmitAnApplication/
+		</loc>
+	</url>
+	<url>
+		<loc>
+			https://www.noolib.com/ManagerOfApplications/
+		</loc>
+	</url>
+</urlset>
+

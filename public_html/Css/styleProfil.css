@@ -1,0 +1,34 @@
+/**********************/
+/*      PROFIL       */
+/**********************/
+
+.profilUserName{
+	width: 200px;
+	font-size: 1.5em;
+}
+
+.profilUserName img{
+	cursor: pointer;
+}
+
+.infoProfil{
+	margin-left: 50px;
+}
+
+.infoProfil>div{
+	padding: 5px;
+}
+
+.infoApplicationUser{
+	margin-left: 330px;
+}
+
+.captionTableApplicationProfil img{
+	width: 50px;
+	height: 50px;
+}
+
+.captionTableApplicationProfil h3{
+	display: inline-block;
+	vertical-align: bottom;
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/Settings/" module="Parametres" action="show"/>
+	
+	<route url="/Settings/ManageYourAccount" module="Parametres" action="parametresCompte"/>
+	<route url="/Settings/ParametresCompte/SupprimerUtilisateur" module="Parametres" action="supprimerUtilisateur"/>
+	
+	<route url="/Settings/EditYourWallpaper" module="Parametres" action="parametreFond"/>
+	<route url="/Settings/ParametreFond/ChangerFond" module="Parametres" action="changerFond"/>
+	<route url="/Settings/ParametreFond/FondParDefaut" module="Parametres" action="fondParDefaut"/>
+</routes>

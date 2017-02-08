@@ -1,0 +1,2 @@
+application.constant('invalidNameTooShort', 'This name is too short !');
+application.constant('invalidNameApplication', 'The name of this application already exists. Please change it for another name.');

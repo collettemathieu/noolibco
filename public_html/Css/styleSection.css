@@ -1,0 +1,38 @@
+/****************/
+/*   Section    */
+/****************/
+
+/* Pour le NooSpace */
+.noospace{
+	background-color: rgba(250, 250, 250, 0.6);
+	height: 100%;
+}
+
+/* Pour les cases Menu */
+.caseMenu {
+	display: inline-block;
+	color: black;
+	width: 200px;
+	height: 200px;
+	background-color: rgba(250, 250, 250, 0.6);
+	margin: 20px;
+	padding: 0;
+}
+
+.caseMenu p {
+	display: inline-block;
+	margin: 0;
+	padding: 15px;
+	font-size: 1.6em;
+}
+
+.caseMenu img {
+	display: inline-block;
+	margin: 0px 0px 0px 60px;
+	padding: 0;
+}
+
+.caseMenu:hover{
+	background-color: rgba(250, 250, 250, 0.8);
+	color: black;
+}

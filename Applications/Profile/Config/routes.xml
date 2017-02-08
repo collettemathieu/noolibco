@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	
+	<route url="/Profile/" module="Defaut" action="show"/>
+	<route url="/Profile/idAuteur=([0-9]+)" module="Defaut" action="show" vars="idAuteur"/>
+	
+	<route url="/Profile/ChangerPhotoProfil" module="Defaut" action="changerPhotoProfil"/>
+	<route url="/Profile/ChangerPrenom" module="Defaut" action="changerPrenom"/>
+	<route url="/Profile/ChangerNom" module="Defaut" action="changerNom"/>
+	<route url="/Profile/ChangerEmail" module="Defaut" action="changerEmail"/>
+	<route url="/Profile/ChangerPagePerso" module="Defaut" action="changerPagePerso"/>
+	<route url="/Profile/ChangerDescription" module="Defaut" action="changerDescription"/>
+	<route url="/Profile/ChangerPassword" module="Defaut" action="changerPassword"/>
+	<route url="/Profile/ChangerPasswordAdmin" module="Defaut" action="changerPasswordAdmin"/>
+	<route url="/Profile/ChangerStatut" module="Defaut" action="changerStatut"/>
+	<route url="/Profile/AjouterEquipe" module="Defaut" action="ajouterEquipe"/>
+	<route url="/Profile/RemoveEquipe" module="Defaut" action="removeEquipe"/>
+	<route url="/Profile/ContactAuthor" module="Defaut" action="contactAuthor"/>
+	
+</routes>

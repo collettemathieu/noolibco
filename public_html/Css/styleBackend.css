@@ -1,0 +1,24 @@
+/**********************/
+/*   css du backend   */
+/**********************/
+
+/* Pour l'affichage des données utilisateurs */
+
+.imgTableDonneeUser{
+	width: 32px;
+}
+
+/* Pour l'affichage de la page de l'application */
+
+.informationApplication img, .informationApplication h3{
+	display: inline-block;
+}
+
+.informationApplication h3{
+	margin-left: 20px;
+}
+
+/* Pour créer une marge sur les boutons */
+.btn-margin{
+  margin-left: 4px;
+}

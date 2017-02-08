@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/NooSpace/" module="Defaut" action="show"/>
+	<route url="/NooSpace/a=([0-9]+)v=([0-9]{0,})" module="Defaut" action="show" vars="idApplication,idVersion"/>
+</routes>

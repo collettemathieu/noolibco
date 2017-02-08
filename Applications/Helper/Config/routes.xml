@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/Helper/" module="Defaut" action="noHelp"/>
+	<route url="/Helper/Frontend" module="Frontend" action="showHelpFrontend"/>
+	<route url="/Helper/Contact" module="Frontend" action="contact"/>
+	<route url="/Helper/NooSpace" module="NooSpace" action="showHelpNooSpace"/>
+</routes>

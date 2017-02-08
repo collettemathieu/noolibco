@@ -1,0 +1,13 @@
+#!/bin/bash
+##Pour lancer le script :
+##./Creation_utilisateur.sh username
+
+homenoolibco="/home/noolibco"
+if ! [ -d $homenoolibco/SafeWorkSpace/Utilisateurs/$1 ];
+then	
+	mkdir $homenoolibco/SafeWorkSpace/Utilisateurs/$1;
+fi
+if ! [ -d $homenoolibco/Files/Data/$1 ];
+then
+    	mkdir $homenoolibco/Files/Data/$1;
+fi

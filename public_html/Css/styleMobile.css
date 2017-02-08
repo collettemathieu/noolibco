@@ -1,0 +1,45 @@
+/*********************************************/
+/* Feuille de style la page Mobile				   */
+/*********************************************/
+
+/* Général */
+
+@font-face {
+   font-family: 'ComicNeue-Angular-Regular';
+   src: url('../fonts/ComicNeue-Angular-Regular.otf');
+}
+
+html, body{
+	width: 100%;
+	height: 100%;
+}
+
+body{
+	font-family: "ComicNeue-Angular-Regular";
+}
+
+/* Pour le centrage verticale des éléments */
+.container-fluid{
+  height:100%;
+  display:table;
+  width: 100%;
+  padding: 0;
+}
+ 
+.row-fluid {
+  height: 100%; 
+  display:table-cell; 
+  vertical-align: middle;
+}
+
+.centering {
+  float:none;
+  margin:0 auto;
+}
+
+
+/* Pour les titres*/	
+h1{
+	font-size: 5em;
+}
+	

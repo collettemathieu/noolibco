@@ -1,0 +1,12 @@
+#!/bin/bash
+# Texte d'explications ???
+	set -e
+
+	to=$1
+	shift
+
+	cont=$(docker run -d "$@")
+	code=$(timeout "$to" docker wait "$cont" || true)
+
+	docker logs $cont
+	docker rm -f $cont 1>/dev/null

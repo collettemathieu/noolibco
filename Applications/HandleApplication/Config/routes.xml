@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/HandleApplication/" module="Defaut" action="show"/>
+
+	<route url="/HandleApplication/DataApplication" module="Tree" action="dataApplication"/>
+	<route url="/HandleApplication/ChangePictureApplication" module="Tree" action="changePictureApplication"/>
+	<route url="/HandleApplication/ChangeNameApplication" module="Tree" action="changeNameApplication"/>
+	<route url="/HandleApplication/ChangeDescriptionApplication" module="Tree" action="changeDescriptionApplication"/>
+	<route url="/HandleApplication/AddPublication" module="Tree" action="addPublication"/>
+	<route url="/HandleApplication/RequestPublication" module="Tree" action="requestPublication"/>
+	<route url="/HandleApplication/DeletePublication" module="Tree" action="deletePublicationFromApplication"/>
+	<route url="/HandleApplication/AddAuthor" module="Tree" action="addAuthor"/>
+	<route url="/HandleApplication/RemoveAuthor" module="Tree" action="removeAuthor"/>
+
+
+	<route url="/HandleApplication/FormTache" module="Tree" action="showFormTache"/>
+	<route url="/HandleApplication/FormFonction" module="Tree" action="showFormFonction"/>
+	<route url="/HandleApplication/FormParametre" module="Tree" action="showFormParametre"/>
+	<route url="/HandleApplication/ValidFormTache" module="Tree" action="validFormTache"/>
+	<route url="/HandleApplication/ValidFormFonction" module="Tree" action="validFormFonction"/>
+	<route url="/HandleApplication/ValidFormParametre" module="Tree" action="validFormParametre"/>
+	<route url="/HandleApplication/DeleteTache" module="Tree" action="deleteTache"/>
+	<route url="/HandleApplication/DeleteFonction" module="Tree" action="deleteFonction"/>
+	<route url="/HandleApplication/DeleteParametre" module="Tree" action="deleteParametre"/>
+	<route url="/HandleApplication/Delete" module="Tree" action="delete"/>
+
+	<route url="/HandleApplication/ModifTache" module="Tree" action="modifTache"/>
+	<route url="/HandleApplication/ModifFonction" module="Tree" action="modifFonction"/>
+	<route url="/HandleApplication/ModifParametre" module="Tree" action="modifParametre"/>
+	
+	<route url="/HandleApplication/ValidModifTache" module="Tree" action="validModifTache"/>
+	<route url="/HandleApplication/ValidModifFonction" module="Tree" action="validModifFonction"/>
+	<route url="/HandleApplication/ValidModifParametre" module="Tree" action="validModifParametre"/>
+
+	<route url="/HandleApplication/CreateNewVersionApplication" module="Tree" action="createNewVersionApplication"/>
+	
+	<route url="/HandleApplication/AddRemoveToDock" module="ApplicationsInDock" action="addRemoveToDock"/>
+
+	<route url="/HandleApplication/RunTheMule" module="Engine" action="runTheMule"/>
+	
+	<route url="/HandleApplication/ShowMule" module="Mule" action="show"/>
+
+</routes>
