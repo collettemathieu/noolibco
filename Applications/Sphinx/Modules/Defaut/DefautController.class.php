@@ -31,6 +31,9 @@ class DefautController extends \Library\BackController
 		}else{
 			// On récupère l'utilisateur système
 			$user = $this->app->getUser();
+
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
 			
 			// On ajoute la variable d'erreurs
 			$user->getMessageClient()->addErreur(self::DENY_EXECUTE_COMMAND);
