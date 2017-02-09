@@ -89,10 +89,10 @@ class HTTPRequest extends \Library\ApplicationComponent
 			
 			foreach ($donnees as $key => $value)
 			{
-				// On protège les données entrées.
-				//$value = trim(htmlspecialchars($value));
 				// On supprime les caractères spéciaux
 				$value = preg_replace($this->tabSpecialChars, '', $value);
+				// On protège les données entrées.
+				$value = trim(htmlspecialchars($value));
 				$this->postData[$key] = $value;
 			}
 		}
@@ -105,10 +105,10 @@ class HTTPRequest extends \Library\ApplicationComponent
 		{
 			foreach ($donnees as $key => $value)
 			{
-				// On protège les données entrées.
-				$value = trim(htmlspecialchars($value));
 				// On supprime les caractères spéciaux
 				$value = preg_replace($this->tabSpecialChars, '', $value);
+				// On protège les données entrées.
+				$value = trim(htmlspecialchars($value));
 				$this->getData[$key] = $value;
 			}
 		}
