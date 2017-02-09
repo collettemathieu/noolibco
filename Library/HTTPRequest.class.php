@@ -31,7 +31,7 @@ class HTTPRequest extends \Library\ApplicationComponent
 					'#\(#', 
 					'#\)#', 
 					'#\'#', 
-					'#\"#', 
+					'#"#', 
 					'#\}#', 
 					'#\]#', 
 					'#\{#', 
@@ -90,7 +90,7 @@ class HTTPRequest extends \Library\ApplicationComponent
 			foreach ($donnees as $key => $value)
 			{
 				// On protège les données entrées.
-				$value = trim(htmlspecialchars($value));
+				//$value = trim(htmlspecialchars($value));
 				// On supprime les caractères spéciaux
 				$value = preg_replace($this->tabSpecialChars, '', $value);
 				$this->postData[$key] = $value;
