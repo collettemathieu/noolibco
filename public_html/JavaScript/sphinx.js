@@ -22,7 +22,7 @@
                   },
                   error: function(){
                         var response = {};
-                        response['erreurs'] = '<p>Une erreur système est survenue.</p>';
+                        response['erreurs'] = '<p>An error has occured.</p>';
                         displayInformationsClient(response);
                         btn.button('reset');
                   }

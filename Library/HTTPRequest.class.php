@@ -31,7 +31,7 @@ class HTTPRequest extends \Library\ApplicationComponent
 					'#\(#', 
 					'#\)#', 
 					'#\'#', 
-					'#\"#', 
+					'#"#', 
 					'#\}#', 
 					'#\]#', 
 					'#\{#', 
@@ -51,7 +51,7 @@ class HTTPRequest extends \Library\ApplicationComponent
 		ini_set('display_errors', false);
 
 		// On construit les variables de HTTPRequest avec les variables post, get et les cookies.
-		// Suppression des variables globales Get, Post, mais pas Cookie sinon nouvelle section.
+		// Suppression des variables globales Get, Post, mais pas Cookie sinon nouvelle session.
 		if(isset($_COOKIE)){
 			$this->setCookieData($_COOKIE);	
 		}
@@ -61,7 +61,7 @@ class HTTPRequest extends \Library\ApplicationComponent
 		}
 		if(isset($_GET)){
 			$this->setGetData($_GET);
-			//unset($_GET);
+			//unset($_GET); // Pour l'API Facebook
 		}		
 	}
 
@@ -73,8 +73,8 @@ class HTTPRequest extends \Library\ApplicationComponent
 		{
 			foreach ($donnees as $key => $value)
 			{
-				// On protège les données entrées.
 				if(!empty($value)){
+					// On protège les données entrées.
 					$value = htmlspecialchars($value);
 					$this->cookieData[$key] = $value;
 				}
@@ -107,6 +107,8 @@ class HTTPRequest extends \Library\ApplicationComponent
 			{
 				// On protège les données entrées.
 				$value = trim(htmlspecialchars($value));
+				// On supprime les caractères spéciaux
+				$value = preg_replace($this->tabSpecialChars, '', $value);
 				$this->getData[$key] = $value;
 			}
 		}
