@@ -82,7 +82,7 @@ class HTTPRequest extends \Library\ApplicationComponent
 				// On protège les données entrées.
 				$value = trim(htmlspecialchars($value));
 				// On supprime les caractères étranges
-				$value = preg_replace(array('#\(#', '#\)#', '#\'#', '#"#', '#\}#', '#\]#', '#\{#', '#\[#'), '', $value);
+				$value = preg_replace(array('#\(#', '#\)#', '#\'#', '#\"#', '#\}#', '#\]#', '#\{#', '#\[#'), '', $value);
 				$this->postData[$key] = $value;
 			}
 		}
