@@ -26,7 +26,17 @@ class HTTPRequest extends \Library\ApplicationComponent
 
 	protected $cookieData = array(),
 			  $postData = array(),
-			  $getData = array();
+			  $getData = array(),
+			  $tabSpecialChars = array(
+					'#\(#', 
+					'#\)#', 
+					'#\'#', 
+					'#\"#', 
+					'#\}#', 
+					'#\]#', 
+					'#\{#', 
+					'#\[#'
+				);
 
 	/**
 	* Constructeur de la classe.
@@ -81,8 +91,8 @@ class HTTPRequest extends \Library\ApplicationComponent
 			{
 				// On protège les données entrées.
 				$value = trim(htmlspecialchars($value));
-				// On supprime les caractères étranges
-				$value = preg_replace(array('#\(#', '#\)#', '#\'#', '#\"#', '#\}#', '#\]#', '#\{#', '#\[#'), '', $value);
+				// On supprime les caractères spéciaux
+				$value = preg_replace($this->tabSpecialChars, '', $value);
 				$this->postData[$key] = $value;
 			}
 		}
