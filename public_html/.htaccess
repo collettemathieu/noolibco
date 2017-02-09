@@ -1,11 +1,11 @@
 RewriteEngine on
 
 #Pour rediriger les adresses de www.noolib.com vers https://www.noolib.com
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://www.noolib.com/$1 [R=301,L]
+#RewriteCond %{HTTPS} off
+#RewriteRule ^(.*)$ https://www.noolib.com/$1 [R=301,L]
 
-RewriteCond %{HTTP_HOST} ^noolib.com$ [NC]
-RewriteRule ^(.*)$ https://www.noolib.com/$1 [R=301,L]
+#RewriteCond %{HTTP_HOST} ^noolib.com$ [NC]
+#RewriteRule ^(.*)$ https://www.noolib.com/$1 [R=301,L]
 
 ######################
 
