@@ -31,7 +31,7 @@ class HTTPRequest extends \Library\ApplicationComponent
 					'#\(#', 
 					'#\)#', 
 					'#\'#', 
-					'#"#', 
+					'#\"#', 
 					'#\}#', 
 					'#\]#', 
 					'#\{#', 
