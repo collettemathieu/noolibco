@@ -62,7 +62,9 @@ class HTTPRequest extends \Library\ApplicationComponent
 		if(isset($_GET)){
 			$this->setGetData($_GET);
 			//unset($_GET); // Pour l'API Facebook
-		}		
+		}	
+
+		echo $this->app->getNomApplication();exit();	
 	}
 
 	/* SETTERS */
