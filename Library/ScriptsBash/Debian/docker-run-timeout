@@ -2,6 +2,7 @@
 #Ce script permet de rm -f le conteneur après un temps imparti
 #Le temps est donnée en argument à l'appel de cette fonction (dans LancementApplicationServeurProd dans notre cas)
 #Ce script met aussi en option des arguments permettant de protéger le système en mémoire et en utilisation processeur
+#Documentation => https://docs.docker.com/engine/reference/run/#/runtime-constraints-on-resources
 set -e
 
 to=$1
