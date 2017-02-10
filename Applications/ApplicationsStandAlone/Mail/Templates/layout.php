@@ -24,7 +24,7 @@
 				<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc; border-collapse: collapse;">
 					<tr>
 						<td align="center" bgcolor="#79c8e2" style="padding: 40px 0 30px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;">
-							<img src="https://www.noolib.com/Mail/h1.gif" alt="Email NooLib" width="300" height="230" style="display: block;" />
+							<img src="https://www.noolib.com/Images/Mail/h1.gif" alt="Email NooLib" width="300" height="230" style="display: block;" />
 						</td>
 					</tr>
 					<?php echo $content;?>
@@ -40,13 +40,13 @@
 											<tr>
 												<td style="font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;">
 													<a href="https://twitter.com/NoolibApp" style="color: #ffffff;">
-														<img src="https://www.noolib.com/Mail/tw.gif" alt="Twitter" width="38" height="38" style="display: block;" border="0" />
+														<img src="https://www.noolib.com/Images/Mail/tw.gif" alt="Twitter" width="38" height="38" style="display: block;" border="0" />
 													</a>
 												</td>
 												<td style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
 												<td style="font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;">
 													<a href="https://www.facebook.com/Noolib-1648329638748950/" style="color: #ffffff;">
-														<img src="https://www.noolib.com/Mail/fb.gif" alt="Facebook" width="38" height="38" style="display: block;" border="0" />
+														<img src="https://www.noolib.com/Images/Mail/fb.gif" alt="Facebook" width="38" height="38" style="display: block;" border="0" />
 													</a>
 												</td>
 											</tr>
