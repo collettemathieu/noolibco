@@ -92,6 +92,7 @@ class HTTPRequest extends \Library\ApplicationComponent
 				if($this->app->getNomApplication() != 'HandleData'){
 					// On supprime les caractères spéciaux
 					$value = preg_replace($this->tabSpecialChars, '', $value);
+					echo $this->app->getNomApplication();exit();
 				}
 				// On protège les données entrées.
 				$value = trim(htmlspecialchars($value));

@@ -35,7 +35,6 @@ class AddDataController extends \Library\BackController
 		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
 		if ($request->isAjaxRequest()) {
 
-			echo $this->app->getNomApplication();exit();
 			// On récupère l'utilisateur système
 			$user = $this->app->getUser();
 
