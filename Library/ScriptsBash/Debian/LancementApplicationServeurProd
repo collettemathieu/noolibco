@@ -25,10 +25,10 @@ if [ -f $homenoolibco/Files/Sources/$1/$3/$4/$5 ]; then
 		version=3; #Remplacer par $7
 		if [ $version = 3 ]
 		then
-			fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app noolibco/custompy:3 python3 "$fichier;
+			fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app noolibco/python:3-alpine python3 "$fichier;
 		elif [ $version = 2 ]
 		then
-			fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app noolibco/custompy:2 python "$fichier;
+			fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app noolibco/python:2-apline python "$fichier;
 		else
 			echo "Python version $fichier not supported"
 		fi
