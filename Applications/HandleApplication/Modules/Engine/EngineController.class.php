@@ -353,7 +353,7 @@ class EngineController extends \Library\BackController
 					$result = utf8_encode($result);
 					
 					if(json_decode($result, true) === null){
-						$outputData = '{"errors":"'.$outputData.'"}';
+						$outputData = '{"erreurs":"'.$outputData.'"}';
 						break;
 					}
 				}

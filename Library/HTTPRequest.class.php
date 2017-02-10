@@ -89,10 +89,9 @@ class HTTPRequest extends \Library\ApplicationComponent
 			
 			foreach ($donnees as $key => $value)
 			{
-				if($this->app->getNomApplication() != 'HandleData'){
+				if(json_decode($value, true) === null){
 					// On supprime les caractères spéciaux
 					$value = preg_replace($this->tabSpecialChars, '', $value);
-					echo $this->app->getNomApplication();exit();
 				}
 				// On protège les données entrées.
 				$value = trim(htmlspecialchars($value));
@@ -108,7 +107,7 @@ class HTTPRequest extends \Library\ApplicationComponent
 		{
 			foreach ($donnees as $key => $value)
 			{
-				if($this->app->getNomApplication() != 'HandleData'){
+				if(json_decode($value, true) === null){
 					// On supprime les caractères spéciaux
 					$value = preg_replace($this->tabSpecialChars, '', $value);
 				}
