@@ -33,7 +33,9 @@ class HTTPRequest extends \Library\ApplicationComponent
 					'#\'#', 
 					'#"#',  
 					'#\]#', 
-					'#\[#'
+					'#\[#',
+					'#\}#',
+					'#\{#'
 				);
 
 	/**
@@ -87,8 +89,10 @@ class HTTPRequest extends \Library\ApplicationComponent
 			
 			foreach ($donnees as $key => $value)
 			{
-				// On supprime les caractères spéciaux
-				//$value = preg_replace($this->tabSpecialChars, '', $value);
+				if($this->app->getNomApplication() != 'HandleData'){
+					// On supprime les caractères spéciaux
+					$value = preg_replace($this->tabSpecialChars, '', $value);
+				}
 				// On protège les données entrées.
 				$value = trim(htmlspecialchars($value));
 				$this->postData[$key] = $value;
@@ -103,8 +107,10 @@ class HTTPRequest extends \Library\ApplicationComponent
 		{
 			foreach ($donnees as $key => $value)
 			{
-				// On supprime les caractères spéciaux
-				//$value = preg_replace($this->tabSpecialChars, '', $value);
+				if($this->app->getNomApplication() != 'HandleData'){
+					// On supprime les caractères spéciaux
+					$value = preg_replace($this->tabSpecialChars, '', $value);
+				}
 				// On protège les données entrées.
 				$value = trim(htmlspecialchars($value));
 				$this->getData[$key] = $value;
@@ -215,7 +221,7 @@ class HTTPRequest extends \Library\ApplicationComponent
 				// On récupère l'utilisateur système
 				$user = $this->app->getUser();
 				$currentTime = time();
-				if($currentTime > $user->ajaxLastRequestTimer() - 2){ // On autorise une requête toutes les 2 secondes (+2)
+				if($currentTime > $user->ajaxLastRequestTimer() - 10){ // On autorise une requête toutes les 2 secondes (+2)
 					$user->setIsAjaxRequestAlreadyRunning(false);
 					$user->ajaxLastRequestTimer($currentTime);
 				}else{
