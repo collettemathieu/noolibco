@@ -1,7 +1,8 @@
 *
+!.gitignore
 !/Applications/
 !/ConfigSystem/Template/
 !/Library/
-!/public_html/
+!/public_html/*
 /public_html/Images/BackgroundUtilisateurs/
 /public_html/.htaccess
