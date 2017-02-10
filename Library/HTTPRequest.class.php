@@ -64,7 +64,7 @@ class HTTPRequest extends \Library\ApplicationComponent
 			//unset($_GET); // Pour l'API Facebook
 		}	
 
-		echo $this->app->getNomApplication();exit();	
+		print_r($this->app->getNomApplication());exit();	
 	}
 
 	/* SETTERS */
