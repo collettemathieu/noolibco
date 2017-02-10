@@ -90,7 +90,6 @@ class HTTPRequest extends \Library\ApplicationComponent
 			foreach ($donnees as $key => $value)
 			{
 				if($this->app->getNomApplication() != 'HandleData'){
-					exit();
 					// On supprime les caractères spéciaux
 					$value = preg_replace($this->tabSpecialChars, '', $value);
 				}
