@@ -306,6 +306,7 @@ function addData(){
               contentType: false,
               processData: false,
               success: function(response) {
+                console.log(response);
                 closeOverlayLocalData(); 
                 try{
                   var response = JSON.parse(response);
