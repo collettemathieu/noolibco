@@ -29,8 +29,7 @@ class HTTPRequest extends \Library\ApplicationComponent
 			  $getData = array(),
 			  $tabSpecialChars = array(
 					'#\(#', 
-					'#\)#', 
-					'#\'#',  
+					'#\)#',  
 					'#\]#', 
 					'#\[#'
 				);
