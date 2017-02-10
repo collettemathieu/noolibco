@@ -39,16 +39,16 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+				<td style="text-align: justify; padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
 					<p><?php echo $message; ?></p>
 				</td>
 			</tr>
 			<tr>
-				<td style="text-align: center;">
+				<td style="text-align: justify;">
 					<ul>
-					<li>You can response directly to the author of this email. If you do not want to response, your email will remain confidential for the sender.</li><br>
-					<li>If you have received this email in error, please notify the system manager <a href="mailto:contact@noolib.com">contact@noolib.com</a>. This message contains confidential information and is intended only for the individual named. If you are not the named addressee you should not disseminate, distribute or copy this e-mail.</li><br>
-					<li>For further informations, please contact : <a href="mailto:contact@noolib.com">contact@noolib.com</a></li><br>
+						<li>You can response directly to the author of this email. If you do not want to response, your email will remain confidential for the sender.</li><br>
+						<li>If you have received this email in error, please notify the system manager <a href="mailto:contact@noolib.com">contact@noolib.com</a>. This message contains confidential information and is intended only for the individual named. If you are not the named addressee you should not disseminate, distribute or copy this e-mail.</li><br>
+						<li>For further informations, please contact : <a href="mailto:contact@noolib.com">contact@noolib.com</a></li><br>
 					</ul>
 				</td>
 			</tr>
