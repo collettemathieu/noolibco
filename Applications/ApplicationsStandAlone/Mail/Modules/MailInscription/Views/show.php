@@ -1,26 +1,58 @@
-<layout label="Text only">
-	<table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
-		<tbody>
+<style type="text/css">
+.btn-class{
+ display: inline-block;
+ border:1px solid #bfbfbf;
+ color: #8c8c8c;
+ border-radius: 5px 5px 5px 5px;
+ -webkit-border-radius: 5px 5px 5px 5px;
+ -moz-border-radius: 5px 5px 5px 5px;
+ font-family: Verdana;
+ width: auto;
+ height: auto;
+ font-size: 16px;
+ padding: 10px 40px;
+ box-shadow: inset 0 1px 0 0 #fff,inset 0 -1px 0 0 #d9d9d9,inset 0 0 0 1px #f2f2f2,0 2px 4px 0 #f2f2f2;
+ -moz-box-shadow: inset 0 1px 0 0 #fff,inset 0 -1px 0 0 #d9d9d9,inset 0 0 0 1px #f2f2f2,0 2px 4px 0 #f2f2f2;
+ -webkit-box-shadow: inset 0 1px 0 0 #fff,inset 0 -1px 0 0 #d9d9d9,inset 0 0 0 1px #f2f2f2,0 2px 4px 0 #f2f2f2;
+ text-shadow: 0 1px 0 #fff;
+ background-image: linear-gradient(to top, #f2f2f2, #f2f2f2);
+ background-color: #f2f2f2;
+ text-decoration: none;
+}
+.btn-class:hover, .btn-class:active{
+ border:1px solid #8c8c8c;
+ color: #8c8c8c;
+ box-shadow: inset 0 1px 0 0 #ffffff,inset 0 -1px 0 0 #d9d9d9,inset 0 0 0 1px #f2f2f2;
+ -moz-box-shadow: inset 0 1px 0 0 #ffffff,inset 0 -1px 0 0 #d9d9d9,inset 0 0 0 1px #f2f2f2;
+ -webkit-box-shadow: inset 0 1px 0 0 #ffffff,inset 0 -1px 0 0 #d9d9d9,inset 0 0 0 1px #f2f2f2;
+ background-color: #f2f2f2;
+}
+
+</style>
+
+<tr>
+	<td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
 			<tr>
-				<td class="w580" width="580">
-					<p align="left" class="article-title"><singleline label="Title">Welcome to NooLib Web Application</singleline></p>
-					<div align="center" class="article-content">
-						<multiline label="Description">To complete your registration to NooLib, please click on the link below: <br><br></multiline>
-					</div>
-					<div align="center" class="article-content">
-						<a href="<?php echo $lienValidation; ?>" class="myButton">Activate my NooLib account</a>
-					</div>
-					<br><br>
-					<div align="left" class="article-content">
-						<ul style="list-stye-type:circle;">
-							<li>The link above allows to guarantee your authentication on NooLib Web Application.</li><br>
-							<li>Whether you have received this message in error, please delete it. You are not registered until you do not click on the link above.</li><br>
-							<li>For any questions, please contact: <a href="mailto:contact@noolib.com">contact@noolib.com</a></li><br>
-						</ul>
-					<div/>														
+				<td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
+					<h3>Welcome to NooLib Web Application</h3>
 				</td>
 			</tr>
-			<tr><td class="w580" width="580" height="10"></td></tr>
-		</tbody>
-	</table>
-</layout>  
+			<tr>
+				<td style="text-align: justify; padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+					To complete your registration to NooLib, please click on the link below: <br><br>
+					<a href="<?php echo $lienValidation; ?>" class="btn-class">Activate my NooLib account</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: justify;">
+					<ul>
+						<li>The link above allows to guarantee your authentication on NooLib Web Application.</li><br>
+						<li>Whether you have received this message in error, please delete it. You are not registered until you do not click on the link above.</li><br>
+						<li>For any questions, please contact: <a href="mailto:contact@noolib.com">contact@noolib.com</a></li><br>
+					</ul>
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
