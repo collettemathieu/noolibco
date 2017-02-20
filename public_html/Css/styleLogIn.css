@@ -96,7 +96,7 @@ animation-duration:0.7s;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 999;
+  z-index: 1;
   background-color: rgba(0,0,0,0.6);
 }
 
@@ -110,7 +110,7 @@ animation-duration:0.7s;
     position: fixed;
     top: 50%;
     left: 47%;
-    z-index: 999;
+    z-index: 1;
     -webkit-animation: spinGlobalLoader 2s linear infinite;
     animation: spinGlobalLoader 2s linear infinite;
 }
