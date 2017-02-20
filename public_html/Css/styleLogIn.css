@@ -86,9 +86,8 @@ animation-duration:0.7s;
 
 /* Pour JS */
 .alertJS{
-  z-index: 2000;
+  z-index: 1000000;
 }
-
 
 /* Pour le pré-chargement des pages */
 .overlay{
