@@ -1,0 +1,13 @@
+#!/bin/bash
+#Ce script permet de rm -f le conteneur après un temps imparti
+#Le temps est donnée en argument à l'appel de cette fonction (dans LancementApplicationServeurProd dans notre cas)
+#Ce script met aussi en option des arguments permettant de protéger le système en mémoire et en utilisation processeur
+#Documentation => https://docs.docker.com/engine/reference/run/#/runtime-constraints-on-resources
+set -e
+
+to=$1
+shift
+cont=$(docker run --net=none --cpuset-cpus="1,2" --memory="100m" -d "$@") #Permet de limiter le serveur sur 2 coeurs et sur 100Mo de RAM
+code=$(timeout "$to" docker wait "$cont" || true)
+docker logs $cont
+docker rm -f $cont 1>/dev/null
