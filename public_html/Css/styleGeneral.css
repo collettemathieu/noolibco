@@ -185,7 +185,7 @@ animation-duration:0.8s;
   display: none;
   position: fixed;
   width: 400px;
-  top: 60px;
+  bottom: 60px;
   right: 10px;
   z-index: 9999;
 }
