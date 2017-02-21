@@ -29,7 +29,7 @@ $(function(){
 		$('#noospace').droppable({
 		    drop: function(event, ui){
 		    	var pos = $(this).offset();
-
+		    	console.log($(this));
 		    	var positionSourisX = event.clientX,
 			      	positionSourisY = event.clientY,
 			      	positionElement = ui.draggable.offset(),
