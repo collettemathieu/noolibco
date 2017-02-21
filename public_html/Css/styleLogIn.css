@@ -86,7 +86,10 @@ animation-duration:0.7s;
 
 /* Pour JS */
 .alertJS{
-  position: absolute;
+  width:inherit;
+    position: absolute;
+    display: block;
+    z-index: 501;
   z-index: 10000;
 }
 
