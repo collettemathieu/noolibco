@@ -8,7 +8,14 @@ if($user->getMessageClient()->hasErreur()){
 			'erreurs' => $texte
 		);
 
-	// On envoie la réponse au format JSON
-	echo json_encode($reponse);
+	
+}elseif(isset($dataObjet)){
+	$reponse = $dataObjet;
+}else{
+	$reponse = array(
+		'erreurs' => '<p>DataManager :: An system error has occurred !</p>'
+	);
 }
+// On envoie la réponse au format JSON
+echo json_encode($reponse);
 ?>

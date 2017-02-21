@@ -15,6 +15,10 @@ if($user->getMessageClient()->hasErreur()){
 	$reponse = array(
 		'reussites' => $texte
 	);
+}else{
+	$reponse = array(
+		'erreurs' => '<p>DataManager :: An system error has occurred !</p>'
+	);
 }
 
 $reponse['tailleMaxDonneesUtilisateur'] = $tailleMaxDonneesUtilisateur;

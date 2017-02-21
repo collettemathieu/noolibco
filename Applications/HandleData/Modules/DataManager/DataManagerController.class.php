@@ -256,8 +256,7 @@ class DataManagerController extends \Library\BackController
 
 							// Renvoi des données AJAX
 							// On renvoie les données choisies par l'utilisateur sous forme d'un tableau de 2 colonnes (X, Y) pour affichage
-							exit(json_encode($dataObjet)); // Pour une sérialisation à transmettre à javascript, on passe par JSON.
-							
+							$this->page->addVar('dataObjet', $dataObjet);
 						}else{
 							$user->getMessageClient()->addErreur(self::ERROR_LOADING_DATA);
 						}
