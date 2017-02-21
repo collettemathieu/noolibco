@@ -1,4 +1,4 @@
-	<div class="container">
+	<div class="container" style="position:absolute">
 		<div class="row">
 			<div class="col-lg-12 fadeIn">
 				<div class="col-sm-6">
