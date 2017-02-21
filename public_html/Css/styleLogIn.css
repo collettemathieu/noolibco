@@ -87,14 +87,14 @@ animation-duration:0.7s;
 /* Pour JS */
 .alertJS{
   width:inherit;
-    position: absolute;
+    position: fixed;
     display: block;
   z-index: 1000;
 }
 
 /* Pour le pré-chargement des pages */
 .overlay{
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -110,7 +110,7 @@ animation-duration:0.7s;
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 47%;
     z-index: 999;
