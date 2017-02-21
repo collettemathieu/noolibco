@@ -8,8 +8,7 @@
 		        </div>
 		    </noscript>
 			<div class="col-lg-12 fadeIn">
-				<div class="col-sm-6">
-					
+				<div class="col-sm-6">	
 			        <div id="content">
 						<h1>Welcome to NooLib.</h1>
 						<h2>NooLib offers a library of scientific applications for Research.</h2>
