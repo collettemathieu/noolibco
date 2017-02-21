@@ -1,6 +1,6 @@
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-12 fadeIn" style="position:absolute; z-index:10000">
+			<div class="col-lg-12 fadeIn" style="position:absolute">
 				<div class="col-sm-6">
 					<!-- Si JS n'est pas activé -->
 			        <noscript>
