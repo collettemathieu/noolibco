@@ -87,8 +87,6 @@ animation-duration:0.7s;
 /* Pour JS */
 .alertJS{
     position: relative;
-    display: block;
-    color: white;
     z-index: 1000;
 }
 
