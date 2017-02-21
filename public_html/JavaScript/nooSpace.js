@@ -42,7 +42,7 @@ $(function(){
 		      	// Pour insérer une application dans la noospace
 		      	if(ui.draggable.parent().attr('id') === 'applicationsInDock' || ui.draggable.hasClass('runIt')){
 
-		      		deployApplication(ui.draggable, $(this), nouvellePositionElementX, nouvellePositionElementY, positionSourisX, largeurGestionnaireDonnee);
+		      		deployApplication(ui.draggable, $(this), nouvellePositionElementX, nouvellePositionElementY);
 
 			
 				// Pour insérer une nouvelle donnée dans la noospace
@@ -78,7 +78,7 @@ $(function(){
 		});
 
 		// Pour déployer une application dans la NooSpace
-		function deployApplication(app, element, nouvellePositionElementX, nouvellePositionElementY, positionSourisX, largeurGestionnaireDonnee){
+		function deployApplication(app, element, nouvellePositionElementX, nouvellePositionElementY){
 			if(app.hasClass('runIt')){
       			app.removeClass('runIt');
       		}
@@ -114,6 +114,8 @@ $(function(){
 	      	// Pour receuillir les données dans la dataBox de l'application
 	      	cloneApplication.children('.dataBox').droppable({
 	      		drop: function(event, ui){
+	      			var positionSourisX = event.clientX,
+	      			largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
 
 	      			if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
 
