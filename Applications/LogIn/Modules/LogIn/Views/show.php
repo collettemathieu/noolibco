@@ -2,12 +2,12 @@
 		<div class="row">
 			<!-- Si JS n'est pas activé -->
 		    <noscript>
-		    <div class="col-lg-12 alertJS">
-		        <div class="col-lg-6 alert alert-warning">
-		        	<span>JavaScript is not enabled.</span>
-		        	<span>NooLib does not work properly without JavaScript enabled <a href="https://support.google.com/adsense/answer/12654?hl=fr" target="_blank">(Help ?)</a>.</span>
-		        </div>
-		    </div>
+			    <div class="col-lg-12 alertJS">
+			        <div class="col-lg-6 alert alert-warning">
+			        	<h1>JavaScript is not enabled.</h1>
+			        	<h1>NooLib does not work properly without JavaScript enabled <a href="https://support.google.com/adsense/answer/12654?hl=fr" target="_blank">(Help ?)</a>.</h1>
+			        </div>
+			    </div>
 		    </noscript>
 			<div class="col-lg-12 fadeIn">
 				<div class="col-sm-6">	
