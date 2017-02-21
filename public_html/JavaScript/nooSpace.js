@@ -42,7 +42,7 @@ $(function(){
 		      	// Pour insérer une application dans la noospace
 		      	if(ui.draggable.parent().attr('id') === 'applicationsInDock' || ui.draggable.hasClass('runIt')){
 
-		      		deployApplication(ui.draggable);
+		      		deployApplication(ui.draggable, $(this));
 
 			
 				// Pour insérer une nouvelle donnée dans la noospace
@@ -78,12 +78,12 @@ $(function(){
 		});
 
 		// Pour déployer une application dans la NooSpace
-		function deployApplication(app){
+		function deployApplication(app, element){
 			if(app.hasClass('runIt')){
       			app.removeClass('runIt');
       		}
       		var cloneApplication = app.clone();
-      		cloneApplication.appendTo($(this));
+      		cloneApplication.appendTo(element);
 
       		cloneApplication.css('width','240px').css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX-93+'px'); // 93 pour contrer l'ajout de width:240px
 
