@@ -1,7 +1,7 @@
-	<div class="container" style="position:absolute">
+	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 fadeIn">
-				<div class="col-sm-6">
+				<div class="col-sm-6" style="position:absolute; z-index:10000">
 					<!-- Si JS n'est pas activé -->
 			        <noscript>
 			            <div class="col-lg-12 alertJS alert alert-warning">
