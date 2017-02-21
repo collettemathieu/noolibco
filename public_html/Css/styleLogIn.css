@@ -86,10 +86,9 @@ animation-duration:0.7s;
 
 /* Pour JS */
 .alertJS{
-  width:inherit;
-    position: fixed;
+    position: relative;
     display: block;
-  z-index: 1000;
+    z-index: 1000;
 }
 
 /* Pour le pré-chargement des pages */
