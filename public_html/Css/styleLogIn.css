@@ -89,13 +89,12 @@ animation-duration:0.7s;
   width:inherit;
     position: absolute;
     display: block;
-    z-index: 501;
-  z-index: 10000;
+  z-index: 1000;
 }
 
 /* Pour le pré-chargement des pages */
 .overlay{
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -111,7 +110,7 @@ animation-duration:0.7s;
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 47%;
     z-index: 999;
