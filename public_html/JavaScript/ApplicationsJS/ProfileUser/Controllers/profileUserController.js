@@ -16,6 +16,6 @@
 
 application.controller('profileUserController', ['teamService', '$scope', '$http', function(teamService, $scope, $http){
 	$scope.institutions = teamService.getInstitutions();
-	console.log(institutions);
+	console.log($scope.institutions);
 }]);
 
