@@ -25,6 +25,7 @@ application.factory('teamService', ['$q', '$http', function($q, $http){
 				url: '/Profile/GetInstitutions'
 			})
 			.success(function(response){
+				console.log(response);
 				deferred.resolve(response);
 			})
 			.error(function(error){
