@@ -34,6 +34,6 @@
 }
 
 /* Pour centrer verticalement dans un tableau les élements */
-tr {
+.table > tr {
      vertical-align: middle;
 }
