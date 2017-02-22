@@ -16,5 +16,7 @@
 	<route url="/Profile/AjouterEquipe" module="Defaut" action="ajouterEquipe"/>
 	<route url="/Profile/RemoveEquipe" module="Defaut" action="removeEquipe"/>
 	<route url="/Profile/ContactAuthor" module="Defaut" action="contactAuthor"/>
+
+	<route url="/Profile/GetInstitutions" module="Defaut" action="getInstitutions"/>
 	
 </routes>

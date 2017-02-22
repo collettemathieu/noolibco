@@ -14,7 +14,8 @@
  * @version: 1
  */
 
-application.controller('profileUserController', ['$scope', '$http', function($scope, $http){
-	alert('ici');
+application.controller('profileUserController', ['teamService' '$scope', '$http', function(teamService, $scope, $http){
+	var institutions = teamService.getInstitutions();
+	console.log(institutions);
 }]);
 

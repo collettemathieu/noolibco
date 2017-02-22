@@ -60,10 +60,6 @@ class DefautController extends \Library\BackController
 		$this->page->addVar('listeApps', $listeApps);
 		
 		
-		//pour le choix des équipes
-		$idEtablissement = $request->getPostData('idEtablissement');
-		$idLaboratoire = $request->getPostData('idLaboratoire');
-		
 		$managerEtablissement = $this->getManagers()->getManagerOf('Etablissement');
 		$this->page->addVar('listeEtablissement', $managerEtablissement->getAllEtablissements());
 		
@@ -102,6 +98,35 @@ class DefautController extends \Library\BackController
 		$this->page->addVar('statutAAfficher', $statutAAfficher);
 	}
 	
+	/**
+	* Méthode pour récupérer la liste des institutions de recherche
+	*/
+	public function executeGetInstitutions($request){
+		
+		// On récupère l'utilisateur système
+		$user = $this->app->getUser();
+
+		// On informe que c'est un chargement Ajax
+		$user->setAjax(true);
+
+		// On récupère la liste des établissements
+		$managerEtablissement = $this->getManagers()->getManagerOf('Etablissement');
+		$listeEtablissements = $managerEtablissement->getAllEtablissements();
+
+		// On créé le tableau des types de publication
+		$listeEtablissementsAAfficher = array();
+		foreach($listeEtablissements as $id=>$etablissement){
+			$typeEtablissement = array(
+				'id' => $id,
+				'nameType' => $etablissement->getNomEtablissement()
+				);
+			array_push($listeEtablissementsAAfficher, $typeEtablissement);
+		}
+		// On ajoute la variable à la page
+		$this->page->addVar('listeEtablissementsAAfficher', $listeEtablissementsAAfficher);
+		
+	}
+
 
 	/**
 	* Méthode pour contacter l'auteur via son profil 
