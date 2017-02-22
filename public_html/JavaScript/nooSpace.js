@@ -78,8 +78,8 @@ $(function(){
       			app.removeClass('runIt');
       		}
       		if(nouvellePositionElementX === 'undefined' || nouvellePositionElementY === 'undefined'){
-      			var largeurNooSpace = parseInt($('#noospace').css('width')),
-      				hauteurNooSpace = parseInt($('#noospace').css('height'));
+      			var largeurNooSpace = parseInt($('#noospace').width()),
+      				hauteurNooSpace = parseInt($('#noospace').height());
       			nouvellePositionElementX = parseInt(largeurNooSpace/2);
       			nouvellePositionElementY = parseInt(hauteurNooSpace/2);
       		}
