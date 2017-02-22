@@ -284,83 +284,26 @@
 								<table class="table table-bordered table-striped table-condensed">
 									<caption>Add yourself to a team</caption>
 									<tr>
-										<td>
-											Institution:
-										</td>
-										<td></td>
-										<td>
-											<?php if(isset($idEtablissement)) { ?>
-												Laboratory:
-											<?php } ?>
-										</td>
-										<td></td>
-										<td>
-											<?php if(isset($idLaboratoire)) { ?>
-												Team:
-											<?php } ?>
-										</td>
+										<td>Institution:</td>
+										<td>Laboratory:</td>
+										<td>Team:</td>
 										<td></td>
 									</tr>
 									<tr>
-										<select ng-options="institution.name for institution in institutions track by institution.idEtablissement" name="selectedInstitution" ng-model="selectedInstitution"></select>
-										<form method="post" action="/Profile/">
+										<form method="post" action="/Profile/AjouterEquipe">
 											<td>
-												<select name="idEtablissement">
-													<?php foreach($listeEtablissement as $etablissement)
-													{
-														$echo = '<option value="' . $etablissement->getIdEtablissement() . '"';
-														if(isset($idEtablissement) && $etablissement->getIdEtablissement() == $idEtablissement)
-														{
-															$echo .= ' selected';
-														}
-														$echo .= '>' . $etablissement->getNomEtablissement() . '</option>';
-														echo($echo);
-													} ?>
-												</select>
+												<select required ng-options="institution.name for institution in institutions track by institution.idEtablissement" name="selectedInstitution" ng-model="selectedInstitution"></select>
 											</td>
 											<td>
-												<input type="submit" value="→"/>
+												<select required ng-options="institution.name for institution in institutions track by institution.idEtablissement" name="selectedInstitution" ng-model="selectedInstitution"></select>
+											</td>
+											<td>
+												<select required ng-options="institution.name for institution in institutions track by institution.idEtablissement" name="selectedInstitution" ng-model="selectedInstitution"></select>
+											</td>
+											<td>
+												<input type="submit" value="Add">
 											</td>
 										</form>
-										<?php if(isset($idEtablissement)) { ?>
-											<form method="post" action="/Profile/">
-												<td>
-													<input type="hidden" name="idEtablissement" value="<?php echo $idEtablissement ?>"/>
-													<select name="idLaboratoire">
-														<?php foreach($listeLaboratoire as $laboratoire)
-														{
-															$echo = '<option value="' . $laboratoire->getIdLaboratoire() . '"';
-															if(isset($idLaboratoire) && $laboratoire->getIdLaboratoire() == $idLaboratoire)
-															{
-																$echo .= ' selected';
-															}
-															$echo .= '>' . $laboratoire->getNomLaboratoire() . '</option>';
-															echo($echo);
-														} ?>
-													</select>
-												</td>
-												<td>
-													<input type="submit" value="→"/>
-												</td>
-											</form>
-										<?php } ?>
-										<?php if(isset($idLaboratoire)) { ?>
-											<form method="post" action="/Profile/AjouterEquipe">
-												<td>
-													<select name="idEquipe">
-														<?php foreach($listeEquipe as $equipe)
-														{
-															$echo = '<option value="' . $equipe->getIdEquipe() . '"';
-															$echo .= '>' . $equipe->getNomEquipe() . '</option>';
-															echo($echo);
-														} ?>
-													</select>
-												</td>
-												<td>
-													<input type="submit" value="Add">
-												</td>
-											</form>
-										<?php } ?>
 									</tr>
 								</table>
 							</div>
