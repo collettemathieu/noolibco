@@ -301,7 +301,7 @@
 												<select required ng-options="team.name for team in teams track by team.idEquipe" name="selectedTeam" ng-model="selectedTeam"></select>
 											</td>
 											<td>
-												<button ng-disabled="formTeam.$invalid" type="submit">Add</button>
+												<button ng-disabled="formTeam.$invalid" class="btn btn-primary" type="submit">Add</button>
 											</td>
 										</form>
 									</tr>
