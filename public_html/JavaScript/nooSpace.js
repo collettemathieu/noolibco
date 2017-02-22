@@ -16,13 +16,14 @@ $(function(){
 		if($('#noospace .runIt').length !=0){
 			var widthNoospace = parseInt($('#noospace').css('width'));
 			$('#noospace').css('width', widthNoospace-50+'px'); // Bidouille pour éviter un agrandissement de la noospace
+			/*
 			$('#noospace .runIt').draggable({
 				revert: false,
 				containment: '#noospace',
 				stop: function(){
 					$(this).remove();
 				}
-			});
+			});*/
 			deployApplication($('#noospace .runIt'), $('#noospace'), 100, 100);
 		}
 
