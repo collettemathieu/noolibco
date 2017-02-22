@@ -1,5 +1,5 @@
 <?php $userSession = unserialize($user->getAttribute('userSession'));?>		
-<div class="container-fluid">
+<div class="container-fluid" ng-app="ProfileUser" ng-controller="ProfileUserController" ng-strict-di><!-- ng-strict-di for throwing an exception when minify operation errors appeared -->
 	<div class="row-fluid">
 		<div class="col-lg-12 sousMenu centering maxWidth">
 			<div class="row">
@@ -281,7 +281,7 @@
 							</div>
 							<div>
 								<table class="table table-bordered table-striped table-condensed">
-									<caption>Add a team</caption>
+									<caption>Add yourself to a team</caption>
 									<tr>
 										<td>
 											Institution:
