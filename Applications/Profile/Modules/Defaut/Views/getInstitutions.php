@@ -1,6 +1,8 @@
 <?php 
 if(isset($listeEtablissementsAAfficher)){
-	$reponse = $listeEtablissementsAAfficher;
+	$reponse = array(
+		'listeEtablissement' => $listeEtablissementsAAfficher
+	);
 }else{
 	$reponse = array(
 		'erreurs' => 'A system error has occured.'
