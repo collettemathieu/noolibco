@@ -302,7 +302,7 @@
 										<td></td>
 									</tr>
 									<tr>
-										<select ng-options="institution.idEtablissement for institution.name in institutions" name="selectedInstitution" ng-model="selectedInstitution"></select>
+										<select ng-options="institution.name for institution in institutions" name="selectedInstitution" ng-model="selectedInstitution"></select>
 										<form method="post" action="/Profile/">
 											<td>
 												<select name="idEtablissement">
