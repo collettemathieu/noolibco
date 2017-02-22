@@ -1,6 +1,7 @@
 <?php $userSession = unserialize($user->getAttribute('userSession'));?>		
 <div class="container-fluid" ng-app="ProfileUser" ng-controller="ProfileUserController" ng-strict-di><!-- ng-strict-di for throwing an exception when minify operation errors appeared -->
 	<div class="row-fluid">
+		
 		<div class="col-lg-12 sousMenu centering maxWidth">
 			<div class="row">
 				<div class="col-lg-2 col-lg-offset-1 sousMenu profilUserName text-center" <?php if($utilisateurAAfficher->getIdUtilisateur() == $userSession->getIdUtilisateur()){ ?>data-intro="Edit this picture"<?php }else{ ?>data-intro="Picture of <?php echo $utilisateurAAfficher->getPrenomUtilisateur(); ?>"<?php } ?> data-position="bottom">
