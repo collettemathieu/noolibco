@@ -18,7 +18,7 @@ $(function(){
 			$('#noospace').css('width', widthNoospace-50+'px'); // Bidouille pour éviter un agrandissement de la noospace
 			
 			var appRunIt = $('#noospace .runIt');
-			deployApplication(appRunIt, $('#noospace'), 100, 100);
+			deployApplication(appRunIt, $('#noospace'));
 			appRunIt.remove();
 		}
 
@@ -40,7 +40,6 @@ $(function(){
 
 		      		deployApplication(ui.draggable, $(this), nouvellePositionElementX, nouvellePositionElementY);
 
-			
 				// Pour insérer une nouvelle donnée dans la noospace
 			    }else if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
 
@@ -77,6 +76,12 @@ $(function(){
 		function deployApplication(app, element, nouvellePositionElementX, nouvellePositionElementY){
 			if(app.hasClass('runIt')){
       			app.removeClass('runIt');
+      		}
+      		if(nouvellePositionElementX === 'undefined' || nouvellePositionElementY === 'undefined'){
+      			var largeurNooSpace = parseInt($('#noospace').css('width')),
+      				hauteurNooSpace = parseInt($('#noospace').css('height'));
+      			nouvellePositionElementX = parseInt(largeurNooSpace/2);
+      			nouvellePositionElementY = parseInt(hauteurNooSpace/2);
       		}
       		var cloneApplication = app.clone();
       		cloneApplication.appendTo(element);
