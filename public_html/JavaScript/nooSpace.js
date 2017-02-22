@@ -24,8 +24,8 @@ $(function(){
 					$(this).remove();
 				}
 			});*/
-			deployApplication($('#noospace .runIt'), $('#noospace'), 100, 100);
-			$('#noospace .runIt').remove();
+			//deployApplication($('#noospace .runIt'), $('#noospace'), 100, 100);
+			//$('#noospace .runIt').remove();
 		}
 
 		// Sinon pour toutes les applications déplacées sur la noospace
