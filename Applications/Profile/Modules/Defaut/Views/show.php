@@ -281,7 +281,7 @@
 								</table>
 							</div>
 							<div>
-								<table class="table table-bordered table-striped table-condensed" style="vertical-align:middle;">
+								<table class="table table-bordered table-striped table-condensed">
 									<caption>Add yourself to a team</caption>
 									<tr>
 										<td>Institution:</td>
