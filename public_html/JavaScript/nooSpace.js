@@ -82,6 +82,7 @@ $(function(){
       				hauteurNooSpace = parseInt($('#noospace').height());
       			nouvellePositionElementX = parseInt(largeurNooSpace/2);
       			nouvellePositionElementY = parseInt(hauteurNooSpace/2);
+      			alert(nouvellePositionElementY);
       		}
       		var cloneApplication = app.clone();
       		cloneApplication.appendTo(element);
