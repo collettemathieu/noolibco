@@ -16,16 +16,10 @@ $(function(){
 		if($('#noospace .runIt').length !=0){
 			var widthNoospace = parseInt($('#noospace').css('width'));
 			$('#noospace').css('width', widthNoospace-50+'px'); // Bidouille pour éviter un agrandissement de la noospace
-			/*
-			$('#noospace .runIt').draggable({
-				revert: false,
-				containment: '#noospace',
-				stop: function(){
-					$(this).remove();
-				}
-			});*/
-			//deployApplication($('#noospace .runIt'), $('#noospace'), 100, 100);
-			//$('#noospace .runIt').remove();
+			
+			var appRunIt = $('#noospace .runIt');
+			deployApplication(appRunIt, $('#noospace'), 100, 100);
+			appRunIt.remove();
 		}
 
 		// Sinon pour toutes les applications déplacées sur la noospace
