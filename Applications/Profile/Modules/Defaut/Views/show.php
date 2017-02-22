@@ -290,18 +290,18 @@
 										<td></td>
 									</tr>
 									<tr>
-										<form method="post" action="/Profile/AjouterEquipe">
+										<form method="post" name="formTeam" action="/Profile/AjouterEquipe">
 											<td>
 												<select required ng-options="institution.name for institution in institutions track by institution.idEtablissement" name="selectedInstitution" ng-model="selectedInstitution"></select>
 											</td>
 											<td>
-												<select required ng-options="institution.name for institution in institutions track by institution.idEtablissement" name="selectedInstitution" ng-model="selectedInstitution"></select>
+												<select required ng-options="laboratory.name for laboratory in laboratorys track by laboratory.idLaboratoire" name="selectedLaboratory" ng-model="selectedLaboratory"></select>
 											</td>
 											<td>
-												<select required ng-options="institution.name for institution in institutions track by institution.idEtablissement" name="selectedInstitution" ng-model="selectedInstitution"></select>
+												<select required ng-options="team.name for team in teams track by team.idEquipe" name="selectedTeam" ng-model="selectedTeam"></select>
 											</td>
 											<td>
-												<input type="submit" value="Add">
+												<button ng-disabled="formTeam.$invalid" type="submit">Add</button>
 											</td>
 										</form>
 									</tr>
