@@ -77,12 +77,11 @@ $(function(){
 			if(app.hasClass('runIt')){
       			app.removeClass('runIt');
       		}
-      		if(nouvellePositionElementX === 'undefined' || nouvellePositionElementY === 'undefined'){
+      		if(typeof nouvellePositionElementX == 'undefined' || typeof nouvellePositionElementY == 'undefined'){
       			var largeurNooSpace = parseInt($('#noospace').width()),
       				hauteurNooSpace = parseInt($('#noospace').height());
       			nouvellePositionElementX = parseInt(largeurNooSpace/2);
       			nouvellePositionElementY = parseInt(hauteurNooSpace/2);
-      			alert(nouvellePositionElementY);
       		}
       		var cloneApplication = app.clone();
       		cloneApplication.appendTo(element);
