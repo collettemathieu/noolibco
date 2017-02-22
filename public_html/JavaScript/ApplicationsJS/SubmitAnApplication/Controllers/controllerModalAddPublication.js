@@ -18,7 +18,6 @@ application.controller('controllerModalAddPublication', ['applicationService', '
 	
 	// On ajoute les types des publications à la balise select
 	$scope.types = dataStep3['typePublication'];
-    console.log(dataStep3);
 	$scope.selectedType = $scope.types[1];
 
 	// On ajoute l'id de l'application à l'input hidden
