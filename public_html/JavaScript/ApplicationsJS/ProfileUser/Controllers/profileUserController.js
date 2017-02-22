@@ -17,7 +17,7 @@
 application.controller('profileUserController', ['teamService', '$scope', '$http', function(teamService, $scope, $http){
 	// On récupère la liste des établissements
 	teamService.getInstitutions().then(function(institutions){ // <- c'est une promise
-		console.log(institutions);
+		$scope.institutions = institutions;
 	}, function(error){
 		displayInformationsClient(error);
 	});
