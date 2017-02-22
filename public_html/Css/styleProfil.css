@@ -33,6 +33,7 @@
 	vertical-align: bottom;
 }
 
-.table > tbody > tr > td {
+/* Pour centrer verticalement dans un tableau les élements */
+tr {
      vertical-align: middle;
 }
