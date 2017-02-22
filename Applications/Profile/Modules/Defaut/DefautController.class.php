@@ -118,8 +118,7 @@ class DefautController extends \Library\BackController
 		foreach($listeEtablissements as $id=>$etablissement){
 			$typeEtablissement = array(
 				'id' => $id,
-				'name' => $etablissement->getNomEtablissement(),
-				'idEtablissement' => $etablissement->getIdEtablissement()
+				'name' => $etablissement->getNomEtablissement()
 				);
 			array_push($listeEtablissementsAAfficher, $typeEtablissement);
 		}
