@@ -23,13 +23,13 @@ $(function(){
 					$(this).remove();
 				}
 			});
+			deployApplication($('#noospace .runIt'), $('#noospace'), 100, 100);
 		}
 
 		// Sinon pour toutes les applications déplacées sur la noospace
 		$('#noospace').droppable({
 		    drop: function(event, ui){
 		    	var pos = $(this).offset();
-		    	console.log($(this));
 		    	var positionSourisX = event.clientX,
 			      	positionSourisY = event.clientY,
 			      	positionElement = ui.draggable.offset(),
