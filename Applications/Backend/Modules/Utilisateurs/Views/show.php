@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-app="ProfileUser" ng-controller="profileUserController" ng-strict-di><!-- ng-strict-di for throwing an exception when minify operation errors appeared -->
 	<div class="row-fluid">
 		<div class="col-lg-11 centering maxWidth">
 			<div class="col-lg-4 sousMenu">
