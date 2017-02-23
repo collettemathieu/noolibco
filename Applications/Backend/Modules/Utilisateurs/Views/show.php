@@ -38,9 +38,11 @@
 					</div>
 					<div class="form-group">
 						<label>Select a status</label>
-						<select name="newStatut" class="form-control input-sm">
-							<?php echo($statutAAfficher); ?>
-						</select>
+						<div class="form-group">
+							<select name="newStatut" class="form-control input-sm">
+								<?php echo($statutAAfficher); ?>
+							</select>
+						</div>
 					</div>
 					<div class="form-group">
 						<label>Password user</label>
@@ -433,7 +435,7 @@
     <!-- Modal content-->
     <div class="modal-content">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<button type="button" class="close" data-dismiss="modal">x</button>
 			<h2 class="modal-title">Edit the photo</h2>
 		</div>
 		<div class="modal-body">
