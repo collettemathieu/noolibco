@@ -22,11 +22,11 @@ application.controller('profileUserController', ['teamService', '$scope', '$http
 		displayInformationsClient(error);
 	});
 
-
+	$scope.idEtablissement = null;
 	// On récupère la liste des laboratoires
 	$scope.$watch("idEtablissement", function(newIdEtablissement){
-		alert('ici');
 		teamService.getLaboratories(newIdEtablissement).then(function(laboratoires){ // <- c'est une promise
+			console.log(laboratoires);
 			$scope.laboratoires = laboratoires;
 		}, function(error){
 			displayInformationsClient(error);
