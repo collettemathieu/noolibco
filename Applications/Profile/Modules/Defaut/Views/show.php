@@ -360,7 +360,7 @@
 			 					<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())) ?>"/>
 			 				</a>
 			 				<?php }else{?>
-			 				<a href ="/SubmitAnApplication/app=<?php echo $app->getIdApplication(); ?>">
+			 				<a href ="/SubmitAnApplication/<?php echo $app->getIdApplication(); ?>">
 			 					<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())) ?>"/>
 			 				</a>
 			 				<?php }?>
