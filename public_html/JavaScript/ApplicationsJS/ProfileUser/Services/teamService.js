@@ -32,7 +32,7 @@ application.factory('teamService', ['$q', '$http', function($q, $http){
 
 			return deferred.promise;
 		},
-		getLaboratories: function(idEtablissement){
+		getLaboratories: function(idInstitution){
 			var deferred = $q.defer();
 			$http({
 				method: 'POST',
@@ -45,7 +45,7 @@ application.factory('teamService', ['$q', '$http', function($q, $http){
 			        return str.join("&");
 			    },
 				data: {
-					idEtablissement: idEtablissement
+					idEtablissement: idInstitution
 				}
 			})
 			.success(function(response){
@@ -70,7 +70,7 @@ application.factory('teamService', ['$q', '$http', function($q, $http){
 			        return str.join("&");
 			    },
 				data: {
-					idLaboratory: idLaboratory
+					idLaboratoire: idLaboratory
 				}
 			})
 			.success(function(response){
