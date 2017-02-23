@@ -153,7 +153,7 @@
 									<form method="post" action="/Profile/ChangerStatut">
 										<select size="4" name="newStatut">
 											<?php echo($statutAAfficher); ?>
-										</select>
+										</select><br>
 										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
