@@ -362,20 +362,12 @@
 					foreach($listeApps as $app){ 
 						if($utilisateurAAfficher->getIdUtilisateur() == $userSession->getIdUtilisateur() || ($utilisateurAAfficher->getIdUtilisateur() != $userSession->getIdUtilisateur() && $app->getStatut()->getIdStatut()>4)){
 						?>
-						
+					
+					<a <?php if($app->getStatut()->getIdStatut()>=4){?> href ="/Library/app=<?php echo $app->getIdApplication(); ?>" <?php }else{?> href ="/SubmitAnApplication/<?php echo $app->getIdApplication(); ?>" <?php }?> >
 					<table class="table table-bordered table-striped table-condensed">
 				 		<caption class="captionTableApplicationProfil">
-				 			<?php if($app->getStatut()->getIdStatut()>=4){?>
-				 			<a href ="/Library/app=<?php echo $app->getIdApplication(); ?>">
-			 					<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())) ?>"/>
-			 				</a>
-			 				<?php }else{?>
-			 				<a href ="/SubmitAnApplication/<?php echo $app->getIdApplication(); ?>">
-			 					<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())) ?>"/>
-			 				</a>
-			 				<?php }?>
-
-				 		</caption>
+			 				<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())) ?>"/>
+			 			</caption>
 				 		<thead>
 				 		</thead>
 				 		<tbody>
@@ -406,6 +398,7 @@
 							</tr>
 						</tbody>
 					</table>
+					</a>
 					<?php }} ?>
 				</div>
 			</div>
