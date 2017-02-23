@@ -165,7 +165,7 @@ class UtilisateursController extends \Library\BackController
 		$user->setAjax(true);
 
 		// On récupère l'ensemble des équipes associées à un laboratoire
-		$listeEquipesAAfficher = $this->executeGetAllTeams($request)
+		$listeEquipesAAfficher = $this->executeGetAllTeams($request);
 		
 		if($listeEquipesAAfficher){
 			// On ajoute la variable à la page
