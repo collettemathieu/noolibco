@@ -478,8 +478,9 @@ class DefautController extends \Library\BackController
 		$response->redirect('/Profile/');
 	}
 	
-	public function executeChangerStatut($request)
-	{
+	public function executeChangerStatut($request){
+
+		echo 'ici';exit();
 		$response = $this->app->getHTTPResponse();
 		$user = $this->app->getUser();
 		$userSession = unserialize($user->getAttribute('userSession'));
