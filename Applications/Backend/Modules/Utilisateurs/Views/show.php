@@ -74,7 +74,7 @@
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerPrenom">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
 								<input type="text" name="prenom"/>
-								<input type="submit" name="submit" value="Send">
+								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
 						</div>
 					</div> 
@@ -90,7 +90,7 @@
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerNom">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
 								<input type="text" name="nom"/>
-								<input type="submit" name="submit" value="Send">
+								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
 						</div>
 					</div> 
@@ -106,7 +106,7 @@
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerEmail">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
 								<input type="text" name="email"/>
-								<input type="submit" name="submit" value="Send">
+								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
 						</div>
 					</div> 
@@ -126,7 +126,7 @@
 									<?php echo($statutAAfficher); ?>
 								</select>
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<input type="submit" name="submit" value="Send">
+								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
 						</div>
 					</div> 
@@ -142,7 +142,7 @@
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerPagePerso">
 								<input type="text" name="pagePerso"/>
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<input type="submit" name="submit" value="Send">
+								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
 						</div>
 					</div> 
@@ -150,15 +150,15 @@
 
 				<div class="panel panel-default col-lg-12">
 					<div class="panel-heading">
-						<a class="accordion-toggle" href="#item6" data-toggle="collapse">About you: <?php echo($utilisateurAAdministrer->getDescriptionUtilisateur()); ?></a>
+						<a class="accordion-toggle" href="#item6" data-toggle="collapse">About this user: <?php echo($utilisateurAAdministrer->getDescriptionUtilisateur()); ?></a>
 					</div>
 					<div id="item6" class="panel-collapse collapse out">
 						<div class="panel-body">
 							Change his background profile:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerDescription">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<textarea name="description"><?php echo($utilisateurAAdministrer->getDescriptionUtilisateur()); ?></textarea>
-								<input type="submit" name="submit" value="Send">
+								<textarea class="col-lg-12" rows="5" name="description"><?php echo($utilisateurAAdministrer->getDescriptionUtilisateur()); ?></textarea>
+								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
 						</div>
 					</div> 
@@ -166,21 +166,21 @@
 
 				<div class="panel panel-default col-lg-12">
 					<div class="panel-heading">
-						<a class="accordion-toggle" href="#item7" data-toggle="collapse">Change his password</a>
+						<a class="accordion-toggle" href="#item7" data-toggle="collapse">Change his(her) password</a>
 					</div>
 					<div id="item7" class="panel-collapse collapse out">
 						<div class="panel-body">
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerPasswod">
 								<div class="form-group">
-									<label for="newPassword">New password</label>
+									<span class="label label-primary">New password</span>
 									<input type="password" class="form-control input-sm" id="newPassword" name="newPassword1"/>
 								</div>
 								<div class="form-group">
-									<label for="confirmPassword">Confirm the new password</label>
+									<span class="label label-primary">Confirm the new password</span>
 									<input type="password" class="form-control input-sm" id="confirmPassword" name="newPassword2"/>
 								</div>
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<input type="submit" name="submit" value="Send">
+								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
 						</div>
 					</div> 
@@ -210,7 +210,8 @@
 																')' ); ?></td>
 												<td><input type="hidden" name="idEquipe" value="<?php echo $equipe->getIdEquipe() ?>">
 												<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-												<input type="submit" name="submit" value="Retirer"><br/></td>
+												<button class="btn btn-primary" type="submit">Remove</button>
+											</td>
 											</form>
 										</tr>
 									<?php } ?>
@@ -293,7 +294,7 @@
 												</td>
 												<td>
 													<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-													<input type="submit" value="Add">
+													<button class="btn btn-primary" type="submit">Add</button>
 												</td>
 											</form>
 										<?php } ?>
@@ -325,7 +326,7 @@
 						<div class="panel-body">
 							<form method="POST" action="/PourAdminSeulement/Utilisateurs/GracierUtilisateur">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<input type="submit" value="Pardon"/>
+								<button class="btn btn-primary" type="submit">Pardon</button>
 							</form>
 						</div>
 					</div> 
@@ -341,7 +342,7 @@
 						<div class="panel-body">
 							<form method="POST" action="/PourAdminSeulement/Utilisateurs/BannirUtilisateur">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<input type="submit" value="Bannish"/>
+								<button class="btn btn-primary" type="submit">Bannish</button>
 							</form>
 						</div>
 					</div> 
@@ -358,7 +359,7 @@
 						<div class="panel-body">
 							<form method="POST" action="/PourAdminSeulement/Utilisateurs/DesactiveUtilisateur">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<input type="submit" value="Desactivate"/>
+								<button class="btn btn-primary" type="submit">Desactivate</button>
 							</form>
 						</div>
 					</div> 
@@ -372,7 +373,7 @@
 						<div class="panel-body">
 							<form method="POST" action="/PourAdminSeulement/Utilisateurs/ActiveUtilisateur">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<input type="submit" value="Activate"/>
+								<button class="btn btn-primary" type="submit">Activate</button>
 							</form>
 						</div>
 					</div> 
@@ -388,7 +389,7 @@
 						<div class="panel-body">
 							<form method="POST" action="/PourAdminSeulement/Utilisateurs/SupprimerUtilisateur">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<input type="submit" value="Delete"/>
+								<button class="btn btn-primary" type="submit">Delete</button>
 							</form>
 						</div>
 					</div> 
@@ -404,11 +405,11 @@
 						<div class="panel-body">
 							<form method="POST" action="/PourAdminSeulement/Utilisateurs/UtilisateurEnAdministrateur">
 								<div class="form-group">
-									<label for="newPassword">New administrator password</label>
+									<span class="label label-primary">New administrator password</span>
 									<input type="password" class="form-control input-sm" id="newPassword" name="futurPasswordAdmin1"/>
 								</div>
 								<div class="form-group">
-									<label for="confirmPassword">Confirm the new administrator password</label>
+									<span class="label label-primary">Confirm the new administrator password</span>
 									<input type="password" class="form-control input-sm" id="confirmPassword" name="futurPasswordAdmin2"/>
 								</div>
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
