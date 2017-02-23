@@ -183,8 +183,8 @@
 								<div class="panel-body">
 									Change your background profile:
 									<form method="post" action="/Profile/ChangerDescription">
-										<textarea class="col-lg-12" cols="10" name="description"><?php echo($utilisateurAAfficher->getDescriptionUtilisateur()); ?></textarea>
-										<button class="btn btn-primary" type="submit">Send</button>
+										<textarea class="col-lg-12" rows="5" name="description"><?php echo($utilisateurAAfficher->getDescriptionUtilisateur()); ?></textarea>
+										<br><button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
 							</div> 
@@ -224,15 +224,15 @@
 								<div class="panel-body">
 									<form method="post" action="/Profile/ChangerPasswordAdmin">
 										<div class="form-group">
-											<label for="oldPassword">Old password</label>
+											<span class="label label-primary">Old password</span>
 											<input type="password" class="form-control input-sm" id="oldPassword" name="actualPasswordAdmin"/>
 										</div>
 										<div class="form-group">
-											<label for="newPassword">New password</label>
+											<span class="label label-primary">New password</span>
 											<input type="password" class="form-control input-sm" id="newPassword" name="newPasswordAdmin1"/>
 										</div>
 										<div class="form-group">
-											<label for="confirmPassword">Confirm the new password</label>
+											<span class="label label-primary">Confirm your password</span>
 											<input type="password" class="form-control input-sm" id="confirmPassword" name="newPasswordAdmin2"/>
 										</div>
 										<button class="btn btn-primary" type="submit">Send</button>
@@ -281,7 +281,6 @@
 										<td>Institution</td>
 										<td>Laboratory</td>
 										<td>Team</td>
-										<td></td>
 									</tr>
 									<tr>
 										<form method="post" name="formTeam" action="/Profile/AjouterEquipe">
@@ -294,9 +293,7 @@
 											<td>
 												<select size="4" required ng-options="team.name for team in teams track by team.id" name="selectedTeam" ng-model="selectedTeam"></select>
 											</td>
-											<td>
-												<button class="btn btn-primary" type="submit">Add</button>
-											</td>
+											<button class="btn btn-primary" type="submit">Add</button>
 										</form>
 									</tr>
 								</table>
