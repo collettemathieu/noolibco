@@ -86,19 +86,8 @@ class DefautController extends \Library\BackController
 		// On informe que c'est un chargement Ajax
 		$user->setAjax(true);
 
-		// On récupère la liste des établissements
-		$managerEtablissement = $this->getManagers()->getManagerOf('Etablissement');
-		$listeEtablissements = $managerEtablissement->getAllEtablissements();
+		$listeEtablissementsAAfficher = $this->executeGetAllInstitutions();
 
-		// On créé le tableau des types de publication
-		$listeEtablissementsAAfficher = array();
-		foreach($listeEtablissements as $id=>$etablissement){
-			$typeEtablissement = array(
-				'name' => $etablissement->getNomEtablissement(),
-				'id' => $etablissement->getIdEtablissement()
-				);
-			array_push($listeEtablissementsAAfficher, $typeEtablissement);
-		}
 		// On ajoute la variable à la page
 		$this->page->addVar('listeEtablissementsAAfficher', $listeEtablissementsAAfficher);
 		
@@ -116,29 +105,12 @@ class DefautController extends \Library\BackController
 		// On informe que c'est un chargement Ajax
 		$user->setAjax(true);
 
-		//On récupère l'id de l'établissement
-		$idEtablissement = (int) $request->getPostData('idEtablissement');
-		// On récupère l'établissement demandé
-		$managerEtablissement = $this->getManagers()->getManagerOf('Etablissement');
-		$etablissement = $managerEtablissement->getEtablissementById($idEtablissement);
+		// On récupère l'ensemble des laboratoires associés à une institution
+		$listeLaboratoiresAAfficher = $this->executeGetAllLaboratories($request);
 		
-		if($etablissement){
-			$managerEtablissement->putLaboratoiresInEtablissement($etablissement);
-		
-			// On créé le tableau des types de publication
-			$listeLaboratoiresAAfficher = array();
-			foreach($etablissement->getLaboratoires() as $id=>$laboratoire){
-				$typeLaboratoire = array(
-					'name' => $laboratoire->getNomLaboratoire(),
-					'id' => $laboratoire->getIdLaboratoire()
-					);
-				array_push($listeLaboratoiresAAfficher, $typeLaboratoire);
-			}
+		if($listeLaboratoiresAAfficher){
 			// On ajoute la variable à la page
 			$this->page->addVar('listeLaboratoiresAAfficher', $listeLaboratoiresAAfficher);
-		}else{
-			// On envoie une erreur
-			$user->getMessageClient()->addErreur(self::PROFILE_INSTITUTION_NOT_EXISTS);
 		}
 	}
 
@@ -153,29 +125,12 @@ class DefautController extends \Library\BackController
 		// On informe que c'est un chargement Ajax
 		$user->setAjax(true);
 
-		//On récupère l'id du laboratoire
-		$idLaboratoire = (int) $request->getPostData('idLaboratoire');
-		// On récupère le laboratoire demandé
-		$managerLaboratoire = $this->getManagers()->getManagerOf('Laboratoire');
-		$laboratoire = $managerLaboratoire->getLaboratoireById($idLaboratoire);
+		// On récupère l'ensemble des équipes associées à un laboratoire
+		$listeEquipesAAfficher = $this->executeGetAllTeams($request);
 		
-		if($laboratoire){
-			$managerLaboratoire->putEquipesInLaboratoire($laboratoire);
-
-			// On créé le tableau des types de publication
-			$listeEquipesAAfficher = array();
-			foreach($laboratoire->getEquipes() as $id=>$equipe){
-				$typeEquipe = array(
-					'name' => $equipe->getNomEquipe(),
-					'id' => $equipe->getIdEquipe()
-					);
-				array_push($listeEquipesAAfficher, $typeEquipe);
-			}
+		if($listeEquipesAAfficher){
 			// On ajoute la variable à la page
 			$this->page->addVar('listeEquipesAAfficher', $listeEquipesAAfficher);
-		}else{
-			// On envoie une erreur
-			$user->getMessageClient()->addErreur(self::PROFILE_LABORATORY_NOT_EXISTS);
 		}
 	}
 
