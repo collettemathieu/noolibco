@@ -151,7 +151,7 @@
 								<div class="panel-body">
 									Change your status:
 									<form method="post" action="/Profile/ChangerStatut">
-										<select size="3" name="newStatut">
+										<select size="4" name="newStatut">
 											<?php echo($statutAAfficher); ?>
 										</select>
 										<button class="btn btn-primary" type="submit">Send</button>
@@ -183,7 +183,7 @@
 								<div class="panel-body">
 									Change your background profile:
 									<form method="post" action="/Profile/ChangerDescription">
-										<textarea name="description"><?php echo($utilisateurAAfficher->getDescriptionUtilisateur()); ?></textarea>
+										<textarea class="col-lg-12" cols="10" name="description"><?php echo($utilisateurAAfficher->getDescriptionUtilisateur()); ?></textarea>
 										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
