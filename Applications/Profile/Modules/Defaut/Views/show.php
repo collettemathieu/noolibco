@@ -275,15 +275,15 @@
 								</table>
 							</div>
 							<div>
-								<table class="table table-bordered table-striped table-condensed">
-									<caption>Add yourself to a team</caption>
-									<tr>
-										<td>Institution</td>
-										<td>Laboratory</td>
-										<td>Team</td>
-									</tr>
-									<tr>
-										<form method="post" name="formTeam" action="/Profile/AjouterEquipe">
+								<form method="post" name="formTeam" action="/Profile/AjouterEquipe">
+									<table class="table table-bordered table-striped table-condensed">
+										<caption>Add yourself to a team</caption>
+										<tr>
+											<td>Institution</td>
+											<td>Laboratory</td>
+											<td>Team</td>
+										</tr>
+										<tr>
 											<td>
 												<select size="4" required ng-options="institution.name for institution in institutions track by institution.id" name="selectedInstitution" ng-model="selectedInstitution"></select>
 											</td>
@@ -293,10 +293,10 @@
 											<td>
 												<select size="4" required ng-options="team.name for team in teams track by team.id" name="selectedTeam" ng-model="selectedTeam"></select>
 											</td>
-											<button class="btn btn-primary" type="submit">Add</button>
-										</form>
-									</tr>
-								</table>
+										</tr>
+									</table>
+									<button class="btn btn-primary" type="submit">Add</button>
+								</form>
 							</div>
 					<?php }
 					else

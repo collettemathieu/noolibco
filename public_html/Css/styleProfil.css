@@ -39,6 +39,7 @@
 }
 
 select option{
-	max-width: 200px;
+	width: 150px;
+	max-width: 250px;
 }
 
