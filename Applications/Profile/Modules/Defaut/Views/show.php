@@ -151,7 +151,7 @@
 								<div class="panel-body">
 									Change your status:
 									<form method="post" action="/Profile/ChangerStatut">
-										<select class="col-lg-12" size="3" name="newStatut">
+										<select name="newStatut">
 											<?php echo($statutAAfficher); ?>
 										</select>
 										<button class="btn btn-primary" type="submit">Send</button>
