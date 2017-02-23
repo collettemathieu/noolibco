@@ -70,7 +70,7 @@
 					</div>
 					<div id="item1" class="panel-collapse collapse out">
 						<div class="panel-body">
-							Change his surname:
+							Change his (her) surname:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerPrenom">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
 								<div class="form-group">
@@ -88,7 +88,7 @@
 					</div>
 					<div id="item2" class="panel-collapse collapse out">
 						<div class="panel-body">
-							Change his name:
+							Change his (her) name:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerNom">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
 								<div class="form-group">
@@ -106,7 +106,7 @@
 					</div>
 					<div id="item3" class="panel-collapse collapse out">
 						<div class="panel-body">
-							Change his(her) email address:
+							Change his (her) email address:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerEmail">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
 								<div class="form-group">
@@ -126,7 +126,7 @@
 					</div>
 					<div id="item4" class="panel-collapse collapse out">
 						<div class="panel-body">
-							Change his status:
+							Change his (her) status:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerStatut">
 								<div class="form-group">
 									<select name="newStatut" class="form-control input-sm">
@@ -146,7 +146,7 @@
 					</div>
 					<div id="item5" class="panel-collapse collapse out">
 						<div class="panel-body">
-							Change his personal page:
+							Change his (her) personal page:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerPagePerso">
 								<div class="form-group">
 									<input type="text" name="pagePerso" class="form-control"/>
@@ -164,7 +164,7 @@
 					</div>
 					<div id="item6" class="panel-collapse collapse out">
 						<div class="panel-body">
-							Change his background profile:
+							Change his (her) background profile:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerDescription">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
 								<div class="form-group">
@@ -178,7 +178,7 @@
 
 				<div class="panel panel-default col-lg-12">
 					<div class="panel-heading">
-						<a class="accordion-toggle" href="#item7" data-toggle="collapse">Change his(her) password</a>
+						<a class="accordion-toggle" href="#item7" data-toggle="collapse">Change his (her) password</a>
 					</div>
 					<div id="item7" class="panel-collapse collapse out">
 						<div class="panel-body">
@@ -230,88 +230,28 @@
 								</table>
 							</div>
 							<div>
-								<table class="table table-bordered table-striped table-condensed">
-									<caption>Add a team</caption>
-									<tr>
-										<td>
-											Institution:
-										</td>
-										<td></td>
-										<td>
-											<?php if(isset($idEtablissement)) { ?>
-												Laboratory:
-											<?php } ?>
-										</td>
-										<td></td>
-										<td>
-											<?php if(isset($idLaboratoire)) { ?>
-												Team:
-											<?php } ?>
-										</td>
-										<td></td>
-									</tr>
-									<tr>
-										<form method="post" action="/PourAdminSeulement/Utilisateurs/idUtilisateur=<?php echo $utilisateurAAdministrer->getIdUtilisateur(); ?>">
+								<form method="post" name="formTeam" action="/Profile/AjouterEquipe">
+									<table class="table table-bordered table-striped table-condensed">
+										<caption>Add yourself to a team</caption>
+										<tr>
+											<td>Institution</td>
+											<td>Laboratory</td>
+											<td>Team</td>
+										</tr>
+										<tr>
 											<td>
-												<select name="idEtablissement">
-													<?php foreach($listeEtablissement as $etablissement)
-													{
-														$echo = '<option value="' . $etablissement->getIdEtablissement() . '"';
-														if(isset($idEtablissement) && $etablissement->getIdEtablissement() == $idEtablissement)
-														{
-															$echo .= ' selected';
-														}
-														$echo .= '>' . $etablissement->getNomEtablissement() . '</option>';
-														echo($echo);
-													} ?>
-												</select>
+												<select size="4" required ng-options="institution.name for institution in institutions track by institution.id" name="selectedInstitution" ng-model="selectedInstitution"></select>
 											</td>
 											<td>
-												<input type="submit" value="→"/>
+												<select size="4" required ng-options="laboratory.name for laboratory in laboratories track by laboratory.id" name="selectedLaboratory" ng-model="selectedLaboratory"></select>
 											</td>
-										</form>
-										<?php if(isset($idEtablissement)) { ?>
-											<form method="post" action="/PourAdminSeulement/Utilisateurs/idUtilisateur=<?php echo $utilisateurAAdministrer->getIdUtilisateur(); ?>">
-												<td>
-													<input type="hidden" name="idEtablissement" value="<?php echo $idEtablissement ?>"/>
-													<select name="idLaboratoire">
-														<?php foreach($listeLaboratoire as $laboratoire)
-														{
-															$echo = '<option value="' . $laboratoire->getIdLaboratoire() . '"';
-															if(isset($idLaboratoire) && $laboratoire->getIdLaboratoire() == $idLaboratoire)
-															{
-																$echo .= ' selected';
-															}
-															$echo .= '>' . $laboratoire->getNomLaboratoire() . '</option>';
-															echo($echo);
-														} ?>
-													</select>
-												</td>
-												<td>
-													<input type="submit" value="→"/>
-												</td>
-											</form>
-										<?php } ?>
-										<?php if(isset($idLaboratoire)) { ?>
-											<form method="post" action="/PourAdminSeulement/Utilisateurs/AjouterEquipe">
-												<td>
-													<select name="idEquipe">
-														<?php foreach($listeEquipe as $equipe)
-														{
-															$echo = '<option value="' . $equipe->getIdEquipe() . '"';
-															$echo .= '>' . $equipe->getNomEquipe() . '</option>';
-															echo($echo);
-														} ?>
-													</select>
-												</td>
-												<td>
-													<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-													<button class="btn btn-primary" type="submit">Add</button>
-												</td>
-											</form>
-										<?php } ?>
-									</tr>
-								</table>
+											<td>
+												<select size="4" required ng-options="team.name for team in teams track by team.id" name="selectedTeam" ng-model="selectedTeam"></select>
+											</td>
+										</tr>
+									</table>
+									<button class="btn btn-primary" type="submit">Add</button>
+								</form>
 							</div>
 						</div> 
 					</div>
@@ -411,7 +351,7 @@
 					
 				<div class="panel panel-default col-lg-12">
 					<div class="panel-heading">
-						<a class="accordion-toggle" href="#item14" data-toggle="collapse">Change (or create) his administrator password</a>
+						<a class="accordion-toggle" href="#item14" data-toggle="collapse">Change (or create) his (her) administrator password</a>
 					</div>
 					<div id="item14" class="panel-collapse collapse out">
 						<div class="panel-body">

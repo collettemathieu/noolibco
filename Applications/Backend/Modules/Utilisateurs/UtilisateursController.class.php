@@ -9,6 +9,7 @@
 // +----------------------------------------------------------------------+
 // | Auteurs : Guénaël DEQUEKER <dequekerguenael@noolib.com> 		      |
 // | 		   Steve DESPRES    <despressteve@noolib.com> 		     	  |
+// | 		   Mathieu COLLETTE    <collettemathieu@noolib.com>      	  |
 // +----------------------------------------------------------------------+
 
 /**
@@ -103,38 +104,9 @@ class UtilisateursController extends \Library\BackController
 							$response = $this->app->getHTTPResponse();
 							$response->redirect('/PourAdminSeulement/Utilisateurs/');
 						}
-						else
-						{
-							$this->page->addVar('utilisateurAAdministrer', $utilisateurAAdministrer);
-							
+						else{
 							//on ajoute les variables nécéssaire à la page
-							
-							//pour le choix des équipes
-							
-							$idEtablissement = $request->getPostData('idEtablissement');
-							$idLaboratoire = $request->getPostData('idLaboratoire');
-							
-							$managerEtablissement = $this->getManagers()->getManagerOf('Etablissement');
-							$this->page->addVar('listeEtablissement', $managerEtablissement->getAllEtablissements());
-							
-							if(isset($idEtablissement))
-							{
-								$this->page->addVar('idEtablissement', $idEtablissement);
-								
-								$etablissement = $managerEtablissement->getEtablissementById($idEtablissement);
-								$managerEtablissement->putLaboratoiresInEtablissement($etablissement);
-								$this->page->addVar('listeLaboratoire', $etablissement->getLaboratoires());
-								
-								if(isset($idLaboratoire))
-								{
-									$this->page->addVar('idLaboratoire', $idLaboratoire);
-									
-									$managerLaboratoire = $this->getManagers()->getManagerOf('Laboratoire');
-									$laboratoire = $managerLaboratoire->getLaboratoireById($idLaboratoire);
-									$managerLaboratoire->putEquipesInLaboratoire($laboratoire);
-									$this->page->addVar('listeEquipe', $laboratoire->getEquipes());
-								}
-							}
+							$this->page->addVar('utilisateurAAdministrer', $utilisateurAAdministrer);
 						}
 					}
 				}
