@@ -33,11 +33,6 @@
 	vertical-align: bottom;
 }
 
-/* Pour centrer verticalement dans un tableau les élements */
-.table > tbody > tr > td {
-     vertical-align: middle;
-}
-
 table select option{
 	width: 130px;
 	max-width: 150px;

@@ -369,7 +369,7 @@
 				 			<a href ="/Library/app=<?php echo $app->getIdApplication(); ?>">
 			 					<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())) ?>"/>
 			 				</a>
-			 				<?php }else{?>
+			 				<?php }elseif($app->getCreateur()->getIdUtilisateur() === $userSession->getIdUtilisateur()){?>
 			 				<a href ="/SubmitAnApplication/<?php echo $app->getIdApplication(); ?>">
 			 					<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())) ?>"/>
 			 				</a>
