@@ -232,7 +232,7 @@
 							<div>
 								<form method="post" name="formTeam" action="/Profile/AjouterEquipe">
 									<table class="table table-bordered table-striped table-condensed">
-										<caption>Add yourself to a team</caption>
+										<caption>Add this user to a team</caption>
 										<tr>
 											<td>Institution</td>
 											<td>Laboratory</td>
@@ -250,6 +250,7 @@
 											</td>
 										</tr>
 									</table>
+									<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
 									<button class="btn btn-primary" type="submit">Add</button>
 								</form>
 							</div>
