@@ -32,18 +32,20 @@ application.controller('profileUserController', ['teamService', '$scope', '$http
 	
 	// On récupère la liste des laboratoires
 	$scope.$watch("idEtablissement", function(newInstitution){
-		teamService.getLaboratories(newInstitution.id).then(function(response){ // <- c'est une promise
-			if(response['erreurs']){
+		if(typeof(newInstitution) != 'undefined'){
+			teamService.getLaboratories(newInstitution.id).then(function(response){ // <- c'est une promise
+				if(response['erreurs']){
+					displayInformationsClient(response);
+				}else{
+					$scope.laboratories = response;
+				}
+			}, function(error){
+				var response = {
+				  	'erreurs': '<p>A system error has occurred: '+error+'</p>'
+				};
 				displayInformationsClient(response);
-			}else{
-				$scope.laboratories = response;
-			}
-		}, function(error){
-			var response = {
-			  	'erreurs': '<p>A system error has occurred: '+error+'</p>'
-			};
-			displayInformationsClient(response);
-		});
+			});
+		}
 	});
 }]);
 
