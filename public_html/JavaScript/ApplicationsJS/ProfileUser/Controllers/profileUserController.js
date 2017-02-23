@@ -57,6 +57,7 @@ application.controller('profileUserController', ['teamService', '$scope', '$http
 				if(response['erreurs']){
 					displayInformationsClient(response);
 				}else{
+					console.log(response);
 					$scope.teams = response;
 					$scope.selectedTeam = response[0];
 				}
