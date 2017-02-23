@@ -38,11 +38,9 @@
 					</div>
 					<div class="form-group">
 						<label>Select a status</label>
-						<div class="form-group">
-							<select name="newStatut" class="form-control input-sm">
-								<?php echo($statutAAfficher); ?>
-							</select>
-						</div>
+						<select name="newStatut" class="form-control input-sm">
+							<?php echo($statutAAfficher); ?>
+						</select>
 					</div>
 					<div class="form-group">
 						<label>Password user</label>
@@ -124,9 +122,11 @@
 						<div class="panel-body">
 							Change his status:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerStatut">
-								<select name="newStatut">
-									<?php echo($statutAAfficher); ?>
-								</select>
+								<div class="form-group">
+									<select name="newStatut" class="form-control input-sm">
+										<?php echo($statutAAfficher); ?>
+									</select>
+								</div>
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
 								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
