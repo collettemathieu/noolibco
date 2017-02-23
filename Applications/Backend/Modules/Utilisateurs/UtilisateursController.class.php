@@ -113,6 +113,111 @@ class UtilisateursController extends \Library\BackController
 			}
 		}
 	}
+
+	/**
+	* Méthode pour récupérer la liste des institutions de recherche
+	*/
+	public function executeGetInstitutions($request){
+		
+		// On récupère l'utilisateur système
+		$user = $this->app->getUser();
+
+		// On informe que c'est un chargement Ajax
+		$user->setAjax(true);
+
+		// On récupère la liste des établissements
+		$managerEtablissement = $this->getManagers()->getManagerOf('Etablissement');
+		$listeEtablissements = $managerEtablissement->getAllEtablissements();
+
+		// On créé le tableau des types de publication
+		$listeEtablissementsAAfficher = array();
+		foreach($listeEtablissements as $id=>$etablissement){
+			$typeEtablissement = array(
+				'name' => $etablissement->getNomEtablissement(),
+				'id' => $etablissement->getIdEtablissement()
+				);
+			array_push($listeEtablissementsAAfficher, $typeEtablissement);
+		}
+		// On ajoute la variable à la page
+		$this->page->addVar('listeEtablissementsAAfficher', $listeEtablissementsAAfficher);
+		
+	}
+
+
+	/**
+	* Méthode pour récupérer la liste des laboratoires en fonction de l'établissement
+	*/
+	public function executeGetLaboratories($request){
+		
+		// On récupère l'utilisateur système
+		$user = $this->app->getUser();
+
+		// On informe que c'est un chargement Ajax
+		$user->setAjax(true);
+
+		//On récupère l'id de l'établissement
+		$idEtablissement = (int) $request->getPostData('idEtablissement');
+		// On récupère l'établissement demandé
+		$managerEtablissement = $this->getManagers()->getManagerOf('Etablissement');
+		$etablissement = $managerEtablissement->getEtablissementById($idEtablissement);
+		
+		if($etablissement){
+			$managerEtablissement->putLaboratoiresInEtablissement($etablissement);
+		
+			// On créé le tableau des types de publication
+			$listeLaboratoiresAAfficher = array();
+			foreach($etablissement->getLaboratoires() as $id=>$laboratoire){
+				$typeLaboratoire = array(
+					'name' => $laboratoire->getNomLaboratoire(),
+					'id' => $laboratoire->getIdLaboratoire()
+					);
+				array_push($listeLaboratoiresAAfficher, $typeLaboratoire);
+			}
+			// On ajoute la variable à la page
+			$this->page->addVar('listeLaboratoiresAAfficher', $listeLaboratoiresAAfficher);
+		}else{
+			// On envoie une erreur
+			$user->getMessageClient()->addErreur(self::PROFILE_INSTITUTION_NOT_EXISTS);
+		}
+	}
+
+	/**
+	* Méthode pour récupérer la liste des équipes en fonction du laboratoire
+	*/
+	public function executeGetTeams($request){
+		
+		// On récupère l'utilisateur système
+		$user = $this->app->getUser();
+
+		// On informe que c'est un chargement Ajax
+		$user->setAjax(true);
+
+		//On récupère l'id du laboratoire
+		$idLaboratoire = (int) $request->getPostData('idLaboratoire');
+		// On récupère le laboratoire demandé
+		$managerLaboratoire = $this->getManagers()->getManagerOf('Laboratoire');
+		$laboratoire = $managerLaboratoire->getLaboratoireById($idLaboratoire);
+		
+		if($laboratoire){
+			$managerLaboratoire->putEquipesInLaboratoire($laboratoire);
+
+			// On créé le tableau des types de publication
+			$listeEquipesAAfficher = array();
+			foreach($laboratoire->getEquipes() as $id=>$equipe){
+				$typeEquipe = array(
+					'name' => $equipe->getNomEquipe(),
+					'id' => $equipe->getIdEquipe()
+					);
+				array_push($listeEquipesAAfficher, $typeEquipe);
+			}
+			// On ajoute la variable à la page
+			$this->page->addVar('listeEquipesAAfficher', $listeEquipesAAfficher);
+		}else{
+			// On envoie une erreur
+			$user->getMessageClient()->addErreur(self::PROFILE_LABORATORY_NOT_EXISTS);
+		}
+	}
+	
 	
 	public function executeCreerUtilisateur($request)
 	{
@@ -523,7 +628,7 @@ class UtilisateursController extends \Library\BackController
 			}
 			else
 			{
-				$idEquipe = $request->getPostData('idEquipe');
+				$idEquipe = $request->getPostData('selectedTeam');
 				
 				$this->ajouterEquipe($utilisateurAAdministrer, $idEquipe);
 				
