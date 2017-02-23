@@ -292,13 +292,13 @@
 									<tr>
 										<form method="post" name="formTeam" action="/Profile/AjouterEquipe">
 											<td>
-												<select required ng-options="institution.name for institution in institutions track by institution.idEtablissement" name="selectedInstitution" ng-model="selectedInstitution"></select>
+												<select required ng-options="institution.name for institution in institutions track by institution.idEtablissement" name="idEtablissement" ng-model="idEtablissement"></select>
 											</td>
 											<td>
-												<select required ng-options="laboratory.name for laboratory in laboratorys track by laboratory.idLaboratoire" name="selectedLaboratory" ng-model="selectedLaboratory"></select>
+												<select required ng-options="laboratory.name for laboratory in laboratorys track by laboratory.idLaboratoire" name="idLaboratoire" ng-model="idLaboratoire"></select>
 											</td>
 											<td>
-												<select required ng-options="team.name for team in teams track by team.idEquipe" name="selectedTeam" ng-model="selectedTeam"></select>
+												<select required ng-options="team.name for team in teams track by team.idEquipe" name="idEquipe" ng-model="idEquipe"></select>
 											</td>
 											<td>
 												<button ng-disabled="formTeam.$invalid" class="btn btn-primary" type="submit">Add</button>

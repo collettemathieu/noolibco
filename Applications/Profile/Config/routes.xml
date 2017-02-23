@@ -18,5 +18,6 @@
 	<route url="/Profile/ContactAuthor" module="Defaut" action="contactAuthor"/>
 
 	<route url="/Profile/GetInstitutions" module="Defaut" action="getInstitutions"/>
+	<route url="/Profile/GetLaboratories" module="Defaut" action="getLaboratories"/>
 	
 </routes>

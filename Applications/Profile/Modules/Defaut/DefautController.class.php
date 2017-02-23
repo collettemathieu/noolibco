@@ -117,7 +117,6 @@ class DefautController extends \Library\BackController
 		$listeEtablissementsAAfficher = array();
 		foreach($listeEtablissements as $id=>$etablissement){
 			$typeEtablissement = array(
-				'id' => $id,
 				'name' => $etablissement->getNomEtablissement(),
 				'idEtablissement' => $etablissement->getIdEtablissement()
 				);
@@ -126,6 +125,44 @@ class DefautController extends \Library\BackController
 		// On ajoute la variable à la page
 		$this->page->addVar('listeEtablissementsAAfficher', $listeEtablissementsAAfficher);
 		
+	}
+
+
+	/**
+	* Méthode pour récupérer la liste des laboratoires en fonction de l'établissement
+	*/
+	public function executeGetLaboratories($request){
+		
+		// On récupère l'utilisateur système
+		$user = $this->app->getUser();
+
+		// On informe que c'est un chargement Ajax
+		$user->setAjax(true);
+
+		//On récupère l'id de l'établissement
+		$idEtablissement = (int) $request->getGetData('idEtablissement');
+
+		$etablissement = $managerEtablissement->getEtablissementById($idEtablissement);
+		
+		if($etablissement){
+			$managerEtablissement->putLaboratoiresInEtablissement($etablissement);
+		
+			// On créé le tableau des types de publication
+			$listeLaboratoiresAAfficher = array();
+			foreach($etablissement->getLaboratoires() as $id=>$laboratoire){
+				$typeLaboratoire = array(
+					'id' => $id,
+					'name' => $laboratoire->getNomLaboratoire(),
+					'idLaboratoire' => $laboratoire->getIdLaboratoire()
+					);
+				array_push($listeLaboratoiresAAfficher, $typeLaboratoire);
+			}
+			// On ajoute la variable à la page
+			$this->page->addVar('listeLaboratoiresAAfficher', $listeLaboratoiresAAfficher);
+		}else{
+			// On envoie une erreur
+			$user->getMessageClient()->addErreur(self::PROFILE_INSTITUTION_NOT_EXISTS);
+		}
 	}
 
 
