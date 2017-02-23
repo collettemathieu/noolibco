@@ -47,7 +47,10 @@ application.controller('controllerStep3', ['applicationService', 'publicationsAp
 					deferred.resolve(response);
 				})
 				.error(function(error){
-					displayInformationsClient(error);
+					var response = {
+						'erreurs': '<p>A system error has occurred: '+error+'</p>'
+					};
+					displayInformationsClient(response);
 				});
 
 				return deferred.promise;
@@ -70,7 +73,10 @@ application.controller('controllerStep3', ['applicationService', 'publicationsAp
 			$scope.deletingPublication = false;
 		})
 		.catch(function(error){
-			displayInformationsClient(error);
+			var response = {
+				'erreurs': '<p>A system error has occurred: '+error+'</p>'
+			};
+			displayInformationsClient(response);
 			$scope.deletingPublication = false;
 		});
 	};
@@ -95,7 +101,10 @@ application.controller('controllerStep3', ['applicationService', 'publicationsAp
 				}
 			})
 			.error(function(error){
-				displayInformationsClient(error);
+				var response = {
+					'erreurs': '<p>A system error has occurred: '+error+'</p>'
+				};
+				displayInformationsClient(response);
 				$scope.validDeposit = false;
 			});
 		}

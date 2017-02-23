@@ -16,20 +16,34 @@
 
 application.controller('profileUserController', ['teamService', '$scope', '$http', function(teamService, $scope, $http){
 	// On récupère la liste des établissements
-	teamService.getInstitutions().then(function(institutions){ // <- c'est une promise
-		$scope.institutions = institutions;
+	teamService.getInstitutions().then(function(response){ // <- c'est une promise
+		if(response['erreurs']){
+			displayInformationsClient(response);
+		}else{
+			$scope.institutions = response;
+		}
 	}, function(error){
-		displayInformationsClient(error);
+		var response = {
+			'erreurs': '<p>A system error has occurred: '+error+'</p>'
+		};
+		displayInformationsClient(response);
 	});
 
-	$scope.idEtablissement = null;
+	
 	// On récupère la liste des laboratoires
 	$scope.$watch("idEtablissement", function(newIdEtablissement){
-		teamService.getLaboratories(newIdEtablissement).then(function(laboratoires){ // <- c'est une promise
-			console.log(laboratoires);
-			$scope.laboratoires = laboratoires;
+		console.log(newIdEtablissement);
+		teamService.getLaboratories(newIdEtablissement).then(function(response){ // <- c'est une promise
+			if(response['erreurs']){
+				displayInformationsClient(response);
+			}else{
+				$scope.laboratories = response;
+			}
 		}, function(error){
-			displayInformationsClient(error);
+			var response = {
+			  	'erreurs': '<p>A system error has occurred: '+error+'</p>'
+			};
+			displayInformationsClient(response);
 		});
 	});
 }]);

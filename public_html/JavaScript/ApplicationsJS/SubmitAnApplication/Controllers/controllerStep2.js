@@ -40,7 +40,10 @@ application.controller('controllerStep2', ['$scope', '$http', '$location', funct
 				}
 			})
 			.error(function(error){
-				displayInformationsClient(error);
+				var response = {
+					'erreurs': '<p>A system error has occurred: '+error+'</p>'
+				};
+				displayInformationsClient(response);
 				$scope.validStep3 = false;
 			});
 		}
