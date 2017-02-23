@@ -363,7 +363,7 @@
 						if($utilisateurAAfficher->getIdUtilisateur() == $userSession->getIdUtilisateur() || ($utilisateurAAfficher->getIdUtilisateur() != $userSession->getIdUtilisateur() && $app->getStatut()->getIdStatut()>4)){
 						?>
 					
-					<a <?php if($app->getStatut()->getIdStatut()>=4){?> href ="/Library/app=<?php echo $app->getIdApplication(); ?>" <?php }else{?> href ="/SubmitAnApplication/<?php echo $app->getIdApplication(); ?>" <?php }?> >
+					<a class="linkApplication" <?php if($app->getStatut()->getIdStatut()>=4){?> href ="/Library/app=<?php echo $app->getIdApplication(); ?>" <?php }else{?> href ="/SubmitAnApplication/<?php echo $app->getIdApplication(); ?>" <?php }?> >
 					<table class="table table-bordered table-striped table-condensed">
 				 		<caption class="captionTableApplicationProfil">
 			 				<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())) ?>"/>
