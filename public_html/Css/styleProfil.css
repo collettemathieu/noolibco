@@ -38,7 +38,7 @@
      vertical-align: middle;
 }
 
-select option{
+table select option{
 	width: 130px;
 	max-width: 150px;
 }
