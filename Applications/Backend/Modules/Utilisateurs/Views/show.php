@@ -73,7 +73,9 @@
 							Change his surname:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerPrenom">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<input type="text" name="prenom"/>
+								<div class="form-group">
+									<input type="text" name="prenom" class="form-control"/>
+								</div>
 								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
 						</div>
@@ -89,7 +91,9 @@
 							Change his name:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerNom">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<input type="text" name="nom"/>
+								<div class="form-group">
+									<input type="text" name="nom" class="form-control"/>
+								</div>
 								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
 						</div>
@@ -102,10 +106,12 @@
 					</div>
 					<div id="item3" class="panel-collapse collapse out">
 						<div class="panel-body">
-							Change his email address:
+							Change his(her) email address:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerEmail">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<input type="text" name="email"/>
+								<div class="form-group">
+									<input type="mail" name="email" class="form-control"/>
+								</div>
 								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
 						</div>
@@ -142,7 +148,9 @@
 						<div class="panel-body">
 							Change his personal page:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerPagePerso">
-								<input type="text" name="pagePerso"/>
+								<div class="form-group">
+									<input type="text" name="pagePerso" class="form-control"/>
+								</div>
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
 								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
@@ -417,7 +425,7 @@
 									<input type="password" class="form-control input-sm" id="confirmPassword" name="futurPasswordAdmin2"/>
 								</div>
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<input type="submit" name="submit" value="Send">
+								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
 						</div>
 					</div> 
