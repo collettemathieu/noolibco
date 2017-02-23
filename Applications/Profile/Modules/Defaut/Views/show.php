@@ -199,15 +199,15 @@
 								<div class="panel-body">
 									<form method="post" action="/Profile/ChangerPassword">
 										<div class="form-group">
-											<label for="oldPassword">Old password</label>
+											<span class="label label-primary">Old password</span>
 											<input type="password" class="form-control input-sm" id="oldPassword" name="actualPassword"/>
 										</div>
 										<div class="form-group">
-											<label for="newPassword">New password</label>
+											<span class="label label-primary">New password</span>
 											<input type="password" class="form-control input-sm" id="newPassword" name="newPassword1"/>
 										</div>
 										<div class="form-group">
-											<label for="confirmPassword">Confirm the new password</label>
+											<span class="label label-primary">Confirm your password</span>
 											<input type="password" class="form-control input-sm" id="confirmPassword" name="newPassword2"/>
 										</div>
 										<button class="btn btn-primary" type="submit">Send</button>
