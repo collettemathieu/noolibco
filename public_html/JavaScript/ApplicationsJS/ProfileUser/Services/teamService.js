@@ -18,11 +18,60 @@
 application.factory('teamService', ['$q', '$http', function($q, $http){
 	return{
 		getInstitutions: function(){
-			// On importe les publications déjà enregistrées de l'application
 			var deferred = $q.defer();
 			$http({
 				method: 'POST',
 				url: '/Profile/GetInstitutions'
+			})
+			.success(function(response){
+				deferred.resolve(response);
+			})
+			.error(function(error){
+				displayInformationsClient(error);
+			});
+
+			return deferred.promise;
+		},
+		getLaboratories: function(idEtablissement){
+			var deferred = $q.defer();
+			$http({
+				method: 'POST',
+				url: '/Profile/GetLaboratories',
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				transformRequest: function(obj) {
+			        var str = [];
+			        for(var p in obj)
+			        	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			        return str.join("&");
+			    },
+				data: {
+					idEtablissement: idEtablissement
+				}
+			})
+			.success(function(response){
+				deferred.resolve(response);
+			})
+			.error(function(error){
+				displayInformationsClient(error);
+			});
+
+			return deferred.promise;
+		},
+		getTeams: function(idLaboratory){
+			var deferred = $q.defer();
+			$http({
+				method: 'POST',
+				url: '/Profile/GetEquipes',
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				transformRequest: function(obj) {
+			        var str = [];
+			        for(var p in obj)
+			        	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			        return str.join("&");
+			    },
+				data: {
+					idLaboratory: idLaboratory
+				}
 			})
 			.success(function(response){
 				deferred.resolve(response);

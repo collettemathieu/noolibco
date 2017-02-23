@@ -10,7 +10,8 @@
 // +----------------------------------------------------------------------+
 // |           Guénaël DEQUEKER <dequekerguenael@noolib.com>  et 		  | 
 // |		   Baptiste MAUDET <maudetbapstiste@noolib.com>			      |
-// | 		   Steve DESPRES    <despressteve@noolib.com> 		     	  |
+// | 		   Steve DESPRES    <despressteve@noolib.com> 				  |
+// |		   Mathieu COLLETTE    <collettemathieu@noolib.com>		   	  |
 // +----------------------------------------------------------------------+
 
 /**
@@ -36,7 +37,7 @@ class DefautController extends \Library\BackController
 		$idAuteur = (int) $request->getGetData('idAuteur');
 		
 		//On test si il y a un id passé en Get
-		if(isset($idAuteur) && is_int($idAuteur)){
+		if(isset($idAuteur) && $idAuteur != 0){
 			//On récupère les paramètre de l'utilisateur à afficher gràce à son id
 			$utilisateurAAfficher = $managerUtilisateur->getUtilisateurByIdWithAllData($idAuteur);
 		}
@@ -54,33 +55,9 @@ class DefautController extends \Library\BackController
 			$managerApplication->putVersionsInApplication($app);
 		}
 		
-		
-		//on ajoute les variable à la page
+		//On ajoute les variable à la page
 		$this->page->addVar('utilisateurAAfficher', $utilisateurAAfficher);
 		$this->page->addVar('listeApps', $listeApps);
-		
-		
-		$managerEtablissement = $this->getManagers()->getManagerOf('Etablissement');
-		$this->page->addVar('listeEtablissement', $managerEtablissement->getAllEtablissements());
-		
-		if(isset($idEtablissement))
-		{
-			$this->page->addVar('idEtablissement', $idEtablissement);
-			
-			$etablissement = $managerEtablissement->getEtablissementById($idEtablissement);
-			$managerEtablissement->putLaboratoiresInEtablissement($etablissement);
-			$this->page->addVar('listeLaboratoire', $etablissement->getLaboratoires());
-			
-			if(isset($idLaboratoire))
-			{
-				$this->page->addVar('idLaboratoire', $idLaboratoire);
-				
-				$managerLaboratoire = $this->getManagers()->getManagerOf('Laboratoire');
-				$laboratoire = $managerLaboratoire->getLaboratoireById($idLaboratoire);
-				$managerLaboratoire->putEquipesInLaboratoire($laboratoire);
-				$this->page->addVar('listeEquipe', $laboratoire->getEquipes());
-			}
-		}
 		
 		// On appelle le manager des Statut Utilisateur
 		// On récupère les différents statut d'utilisateur
@@ -118,7 +95,7 @@ class DefautController extends \Library\BackController
 		foreach($listeEtablissements as $id=>$etablissement){
 			$typeEtablissement = array(
 				'name' => $etablissement->getNomEtablissement(),
-				'idEtablissement' => $etablissement->getIdEtablissement()
+				'id' => $etablissement->getIdEtablissement()
 				);
 			array_push($listeEtablissementsAAfficher, $typeEtablissement);
 		}
@@ -140,8 +117,9 @@ class DefautController extends \Library\BackController
 		$user->setAjax(true);
 
 		//On récupère l'id de l'établissement
-		$idEtablissement = (int) $request->getGetData('idEtablissement');
-
+		$idEtablissement = (int) $request->getPostData('idEtablissement');
+		// On récupère l'établissement demandé
+		$managerEtablissement = $this->getManagers()->getManagerOf('Etablissement');
 		$etablissement = $managerEtablissement->getEtablissementById($idEtablissement);
 		
 		if($etablissement){
@@ -151,9 +129,8 @@ class DefautController extends \Library\BackController
 			$listeLaboratoiresAAfficher = array();
 			foreach($etablissement->getLaboratoires() as $id=>$laboratoire){
 				$typeLaboratoire = array(
-					'id' => $id,
 					'name' => $laboratoire->getNomLaboratoire(),
-					'idLaboratoire' => $laboratoire->getIdLaboratoire()
+					'id' => $laboratoire->getIdLaboratoire()
 					);
 				array_push($listeLaboratoiresAAfficher, $typeLaboratoire);
 			}
@@ -162,6 +139,43 @@ class DefautController extends \Library\BackController
 		}else{
 			// On envoie une erreur
 			$user->getMessageClient()->addErreur(self::PROFILE_INSTITUTION_NOT_EXISTS);
+		}
+	}
+
+	/**
+	* Méthode pour récupérer la liste des équipes en fonction du laboratoire
+	*/
+	public function executeGetTeams($request){
+		
+		// On récupère l'utilisateur système
+		$user = $this->app->getUser();
+
+		// On informe que c'est un chargement Ajax
+		$user->setAjax(true);
+
+		//On récupère l'id du laboratoire
+		$idLaboratoire = (int) $request->getPostData('idLaboratoire');
+		// On récupère le laboratoire demandé
+		$managerLaboratoire = $this->getManagers()->getManagerOf('Laboratoire');
+		$laboratoire = $managerLaboratoire->getLaboratoireById($idLaboratoire);
+		
+		if($laboratoire){
+			$managerLaboratoire->putEquipesInLaboratoire($laboratoire);
+
+			// On créé le tableau des types de publication
+			$listeEquipesAAfficher = array();
+			foreach($laboratoire->getEquipes() as $id=>$equipe){
+				$typeEquipe = array(
+					'name' => $equipe->getNomEquipe(),
+					'id' => $equipe->getIdEquipe()
+					);
+				array_push($listeEquipesAAfficher, $typeEquipe);
+			}
+			// On ajoute la variable à la page
+			$this->page->addVar('listeEquipesAAfficher', $listeEquipesAAfficher);
+		}else{
+			// On envoie une erreur
+			$user->getMessageClient()->addErreur(self::PROFILE_LABORATORY_NOT_EXISTS);
 		}
 	}
 

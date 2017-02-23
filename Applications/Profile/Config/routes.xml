@@ -19,5 +19,6 @@
 
 	<route url="/Profile/GetInstitutions" module="Defaut" action="getInstitutions"/>
 	<route url="/Profile/GetLaboratories" module="Defaut" action="getLaboratories"/>
+	<route url="/Profile/GetTeams" module="Defaut" action="getTeams"/>
 	
 </routes>

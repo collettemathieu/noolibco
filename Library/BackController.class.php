@@ -179,7 +179,7 @@ abstract class BackController extends ApplicationComponent
 	const PROFILE_CONTACT_NOT_EXIST = 'This user does not exist anymore.';
 	const PROFILE_MESSAGE_SENT = 'Your message has been sent successfully.';
 	const PROFILE_INSTITUTION_NOT_EXISTS = 'The institution asked does not exist.';
-
+	const PROFILE_LABORATORY_NOT_EXISTS = 'The laboratory asked does not exist.';
 
 	/* Trait */
 	const TRAIT_LINK_NOT_EXIST = 'This link does not exist.';
