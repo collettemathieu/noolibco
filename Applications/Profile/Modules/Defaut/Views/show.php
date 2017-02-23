@@ -355,9 +355,16 @@
 						
 					<table class="table table-bordered table-striped table-condensed">
 				 		<caption class="captionTableApplicationProfil">
+				 			<?php if($app->getStatut()->getIdStatut()>=4){?>
 				 			<a href ="/Library/app=<?php echo $app->getIdApplication(); ?>">
 			 					<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())) ?>"/>
 			 				</a>
+			 				<?php }else{?>
+			 				<a href ="/SubmitAnApplication/app=<?php echo $app->getIdApplication(); ?>">
+			 					<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())) ?>"/>
+			 				</a>
+			 				<?php }?>
+
 				 		</caption>
 				 		<thead>
 				 		</thead>
