@@ -21,6 +21,7 @@ application.controller('profileUserController', ['teamService', '$scope', '$http
 			displayInformationsClient(response);
 		}else{
 			$scope.institutions = response;
+			$scope.selectedInstitution = response[0];
 		}
 	}, function(error){
 		var response = {
