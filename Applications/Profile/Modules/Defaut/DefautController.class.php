@@ -480,7 +480,6 @@ class DefautController extends \Library\BackController
 	
 	public function executeChangerStatut($request){
 
-		echo 'ici';exit();
 		$response = $this->app->getHTTPResponse();
 		$user = $this->app->getUser();
 		$userSession = unserialize($user->getAttribute('userSession'));
