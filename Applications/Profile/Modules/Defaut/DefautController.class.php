@@ -251,8 +251,9 @@ class DefautController extends \Library\BackController
 		$user = $this->app->getUser();
 		$utilisateur = unserialize($user->getAttribute('userSession'));
 		
-		$idEquipe = $request->getPostData('idEquipe');
+		$idEquipe = $request->getPostData('selectedTeam');
 		
+		print_r($idEquipe);exit();
 		$this->ajouterEquipe($utilisateur, $idEquipe);
 		//on met à jour la variable session
 		$utilisateur->addEquipe($this->getManagers()->getManagerOf('Equipe')->getEquipeById($idEquipe));
