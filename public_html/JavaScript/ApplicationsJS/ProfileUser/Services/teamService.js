@@ -61,7 +61,7 @@ application.factory('teamService', ['$q', '$http', function($q, $http){
 			var deferred = $q.defer();
 			$http({
 				method: 'POST',
-				url: '/Profile/GetEquipes',
+				url: '/Profile/GetTeams',
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: function(obj) {
 			        var str = [];
