@@ -107,7 +107,9 @@
 								<div class="panel-body">
 									Change your first name:
 									<form method="post" action="/Profile/ChangerPrenom">
-										<input type="text" name="prenom"/>
+										<div class="form-group">
+											<input type="text" name="prenom" class="form-control"/>
+										</div>
 										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
@@ -122,7 +124,9 @@
 								<div class="panel-body">
 									Change your last name:
 									<form method="post" action="/Profile/ChangerNom">
-										<input type="text" name="nom"/>
+										<div class="form-group">
+											<input type="text" name="nom" class="form-control"/>
+										</div>
 										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
@@ -152,7 +156,7 @@
 									Change your status:
 									<form method="post" action="/Profile/ChangerStatut">
 										<div class="form-group">
-											<select name="newStatut" class=" form-control">
+											<select name="newStatut" class="form-control">
 												<?php echo($statutAAfficher); ?>
 											</select>
 										</div>
@@ -170,7 +174,9 @@
 								<div class="panel-body">
 									Change your personal page:
 									<form method="post" action="/Profile/ChangerPagePerso">
-										<input type="text" name="pagePerso"/>
+										<div class="form-group">
+											<input type="text" name="pagePerso" class="form-control"/>
+										</div>
 										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
@@ -185,8 +191,10 @@
 								<div class="panel-body">
 									Change your background profile:
 									<form method="post" action="/Profile/ChangerDescription">
-										<textarea class="col-lg-12" rows="5" name="description"><?php echo($utilisateurAAfficher->getDescriptionUtilisateur()); ?></textarea>
-										<br><button class="btn btn-primary" type="submit">Send</button>
+										<div class="form-group">
+											<textarea class="col-lg-12 form-control" rows="5" name="description"><?php echo($utilisateurAAfficher->getDescriptionUtilisateur()); ?></textarea>
+										</div>
+										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
 							</div> 
