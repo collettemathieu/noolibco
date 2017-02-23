@@ -48,9 +48,7 @@
 												<span class="help-block"></span>
 											</div>
 											<input type="hidden" name="idAuteur" value="<?php echo $utilisateurAAfficher->getIdUtilisateur(); ?>">
-											<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">
-										    Send
-										 	</button>
+											<button class="btn btn-primary" type="submit">Send</button>
 										</form>
 									</div>
 								</div> 
@@ -110,7 +108,7 @@
 									Change your first name:
 									<form method="post" action="/Profile/ChangerPrenom">
 										<input type="text" name="prenom"/>
-										<input type="submit" name="submit" value="Send">
+										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
 							</div> 
@@ -125,7 +123,7 @@
 									Change your last name:
 									<form method="post" action="/Profile/ChangerNom">
 										<input type="text" name="nom"/>
-										<input type="submit" name="submit" value="Send">
+										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
 							</div> 
@@ -139,10 +137,6 @@
 								<div class="panel-body">
 									Change your email address:
 									<div class="alert alert-warning">This option is not available yet. Please stay tune !</div>
-									<!--<form method="post" action="/Profile/ChangerEmail">
-										<input type="text" name="email"/>
-										<input type="submit" name="submit" value="Send">
-									</form>-->
 								</div>
 							</div> 
 						</div>
@@ -160,7 +154,7 @@
 										<select size="3" name="newStatut">
 											<?php echo($statutAAfficher); ?>
 										</select>
-										<input type="submit" name="submit" value="Send">
+										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
 							</div> 
@@ -175,7 +169,7 @@
 									Change your personal page:
 									<form method="post" action="/Profile/ChangerPagePerso">
 										<input type="text" name="pagePerso"/>
-										<input type="submit" name="submit" value="Send">
+										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
 							</div> 
@@ -190,7 +184,7 @@
 									Change your background profile:
 									<form method="post" action="/Profile/ChangerDescription">
 										<textarea name="description"><?php echo($utilisateurAAfficher->getDescriptionUtilisateur()); ?></textarea>
-										<input type="submit" name="submit" value="Send">
+										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
 							</div> 
@@ -216,7 +210,7 @@
 											<label for="confirmPassword">Confirm the new password</label>
 											<input type="password" class="form-control input-sm" id="confirmPassword" name="newPassword2"/>
 										</div>
-										<input type="submit" name="submit" value="Send">
+										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
 							</div> 
@@ -241,7 +235,7 @@
 											<label for="confirmPassword">Confirm the new password</label>
 											<input type="password" class="form-control input-sm" id="confirmPassword" name="newPasswordAdmin2"/>
 										</div>
-										<input type="submit" name="submit" value="Send">
+										<button class="btn btn-primary" type="submit">Send</button>
 									</form>
 								</div>
 							</div> 
@@ -274,7 +268,7 @@
 																$equipe->getLaboratoire()->getEtablissement()->getNomEtablissement() . 
 																')' ); ?></td>
 												<td><input type="hidden" name="idEquipe" value="<?php echo $equipe->getIdEquipe() ?>">
-												<input type="submit" name="submit" value="Remove"><br/></td>
+												<button class="btn btn-primary" type="submit">Remove</button>
 											</form>
 										</tr>
 									<?php } ?>
@@ -301,7 +295,7 @@
 												<select size="4" required ng-options="team.name for team in teams track by team.id" name="selectedTeam" ng-model="selectedTeam"></select>
 											</td>
 											<td>
-												<button ng-disabled="formTeam.$invalid" class="btn btn-primary" type="submit">Add</button>
+												<button class="btn btn-primary" type="submit">Add</button>
 											</td>
 										</form>
 									</tr>
