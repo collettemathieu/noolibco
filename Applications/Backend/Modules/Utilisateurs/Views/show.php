@@ -230,7 +230,7 @@
 								</table>
 							</div>
 							<div>
-								<form method="post" name="formTeam" action="/Profile/AjouterEquipe">
+								<form method="post" name="formTeam" action="/PourAdminSeulement/Utilisateurs/AjouterEquipe">
 									<table class="table table-bordered table-striped table-condensed">
 										<caption>Add this user to a team</caption>
 										<tr>
