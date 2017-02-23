@@ -159,7 +159,9 @@
 							Change his background profile:
 							<form method="post" action="/PourAdminSeulement/Utilisateurs/ChangerDescription">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
-								<textarea class="col-lg-12" rows="5" name="description"><?php echo($utilisateurAAdministrer->getDescriptionUtilisateur()); ?></textarea>
+								<div class="form-group">
+									<textarea class="col-lg-12 form-control" rows="5" name="description"><?php echo($utilisateurAAdministrer->getDescriptionUtilisateur()); ?></textarea>
+								</div>
 								<button class="btn btn-primary" type="submit">Send</button>
 							</form>
 						</div>
