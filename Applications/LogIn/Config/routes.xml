@@ -18,7 +18,7 @@
 	
 	<route url="/LogIn/ResetPassword/j=([a-zA-Z0-9._%+-]{8,32})" module="LogIn" action="showResetpassword" vars="jeton"/>
 
-	<route url="/LogIn/ResetPassword" module="LogIn" action="resetpassword"/>
+	<route url="/LogIn/ResetPassword/" module="LogIn" action="resetpassword"/>
 
 	<route url="/LogIn/Banni" module="Banni" action="show"/>
 

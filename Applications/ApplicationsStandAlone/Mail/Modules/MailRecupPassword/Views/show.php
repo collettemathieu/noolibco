@@ -42,7 +42,11 @@
 				<td style="text-align: justify; padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
 					We have received a demand of reinitialization of your password linked to your email address on NooLib. To reset your password, please click on the link below: <br><br>
 				</td>
-				<div style="text-align: center;"><a href="<?php echo $lienValidation; ?>" class="btn-class">Reset my password</a></div>
+			</tr>
+			<tr>
+				<td style="text-align: center; padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+					<a href="<?php echo $lienValidation; ?>" class="btn-class">Reset my password</a>
+				</td>
 			</tr>
 			<tr>
 				<td style="text-align: justify;">
