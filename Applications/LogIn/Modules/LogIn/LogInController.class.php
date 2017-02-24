@@ -670,10 +670,13 @@ class LogInController extends \Library\BackController{
 	}
 	
 	/**
-	*	Pour traiter la réinitialisation du mot de passe
+	*	Pour afficher la page de réinitialisation du mot de passe
 	*/	
-	public function executeResetPassword($request){
+	public function executeShowResetPassword($request){
 	
+		//On récupère la réponse
+		$response = $this->app->getHTTPResponse();
+
 		//Si le jeton est présent dans les données GET
 		if($request->getGetData('jeton')){
 		
@@ -689,27 +692,11 @@ class LogInController extends \Library\BackController{
 			$tempsValiditeJeton = time()-(30*60);
 			//On récupère l'utilisateur actuel
 			$user = $this->app->getUser();
-			//On récupère la réponse
-			$response = $this->app->getHTTPResponse();
 			
 			// On appelle le manager des Users
 			$managerUser = $this->getManagers()->getManagerOf('Utilisateur');
 			// On récupère l'utilisateur de la base selon l'id
 			$userBase = $managerUser->getUtilisateurById($idUtilisateur);
-			
-			//Si le CRC du jeton ne correspond pas avec celui du mot de passe de l'utilisateur
-			if( !crc32($userBase->getPasswordUtilisateur()) === $password_crc32 ){
-				//On redirige vers l'acceuil
-				$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);
-				$response->redirect('/LogIn/');
-			}
-			
-			//Si la date de validité du jeton est dépassée
-			if( !$timeJeton >= (time()-$tempsValiditeJeton )){
-				//On redirige vers l'acceuil
-				$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);
-				$response->redirect('/LogIn/');
-			}
 			
 			//Si l'utilisateur existe
 			if($userBase){
@@ -721,15 +708,101 @@ class LogInController extends \Library\BackController{
 					// On procède à la redirection vers la page par défaut
 					$response->redirect('/');
 			
-					//Si l'utilisateur n'est pas connecté
+				//Si l'utilisateur n'est pas connecté
 				}else{
+
+					//Si le CRC du jeton ne correspond pas avec celui du mot de passe de l'utilisateur
+					if( !crc32($userBase->getPasswordUtilisateur()) === $password_crc32 ){
+						//On redirige vers l'acceuil
+						$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);
+						$response->redirect('/LogIn/');
+					}
+					
+					//Si la date de validité du jeton est dépassée
+					if( !$timeJeton >= (time()-$tempsValiditeJeton )){
+						//On redirige vers l'acceuil
+						$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);
+						$response->redirect('/LogIn/');
+					}
+
+					// On envoie le jeton à la page
+					$this->page->addVar('jetonUser', $request->getGetData('jeton'));
+					
+				}
+			}else{
+				$user->getMessageClient()->addErreur(self::LOGIN_WRONG_EMAIL);
+				$response->redirect('/LogIn/');
+			}
+		}else{	
+			//On redirige vers l'acceuil
+			$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);		
+			$response->redirect('/LogIn/');
+		}
+	}
+
+
+	/**
+	*	Pour traiter la réinitialisation du mot de passe
+	*/	
+	public function executeResetPassword($request){
+		
+		//On récupère la réponse
+		$response = $this->app->getHTTPResponse();
+
+		//Si le jeton est présent dans les données GET
+		if($request->isExistPOST('jetonUser')){
+		
+			//On décode le jeton
+			$donneesUtilisateur = $this->decodeJeton($request->getPostData('jetonUser'));
+
+			//On récupère les données inclus dans le jeton
+			$idUtilisateur = $donneesUtilisateur['idMembre'];
+			$timeJeton = $donneesUtilisateur['time'];
+			$password_crc32 = $donneesUtilisateur['password_crc32'];
+			
+			//On déclare le temps de validation du jeton : 30 minutes
+			$tempsValiditeJeton = time()-(30*60);
+			//On récupère l'utilisateur actuel
+			$user = $this->app->getUser();
+			
+			// On appelle le manager des Users
+			$managerUser = $this->getManagers()->getManagerOf('Utilisateur');
+			// On récupère l'utilisateur de la base selon l'id
+			$userBase = $managerUser->getUtilisateurById($idUtilisateur);
+			
+			//Si l'utilisateur existe
+			if($userBase){
+				
+				//Si l'utilisateur est déjà connecté
+				if($user->isAuthenticated()){
+
+					$user->getMessageClient()->addErreur(self::LOGIN_ALREADY_LOGGED);
+					// On procède à la redirection vers la page par défaut
+					$response->redirect('/');
+			
+				//Si l'utilisateur n'est pas connecté
+				}else{
+
+					//Si le CRC du jeton ne correspond pas avec celui du mot de passe de l'utilisateur
+					if( !crc32($userBase->getPasswordUtilisateur()) === $password_crc32 ){
+						//On redirige vers l'acceuil
+						$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);
+						$response->redirect('/LogIn/');
+					}
+					
+					//Si la date de validité du jeton est dépassée
+					if( !$timeJeton >= (time()-$tempsValiditeJeton )){
+						//On redirige vers l'acceuil
+						$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);
+						$response->redirect('/LogIn/');
+					}
 					
 					//On vérifie que l'utilisateur a entré son nouveau mot de passe dans le formulaire
 					if($request->isExistPOST('newPassword1') && $request->isExistPOST('newPassword2')){
 					
-					// On vérifie que les deux mots de passe entrés sont identiques
-					$newPassword1 = $request->getPostData('newPassword1');
-					$newPassword2 = $request->getPostData('newPassword2');
+						// On vérifie que les deux mots de passe entrés sont identiques
+						$newPassword1 = $request->getPostData('newPassword1');
+						$newPassword2 = $request->getPostData('newPassword2');
 					
 						//Si les deux mots de passe de validation correspondent
 						if($newPassword1 === $newPassword2){
@@ -743,7 +816,7 @@ class LogInController extends \Library\BackController{
 									//On protège le mot de passe
 									$newPassword = $this->protectPassword($newPassword1);
 									//On modifie le mot de passe de l'utilisateur
-									$userBase-> setPasswordUtilisateur($newPassword);
+									$userBase->setPasswordUtilisateur($newPassword);
 									//On sauvegarde l'utilisateur
 									$managerUser->saveUtilisateur($userBase);
 									$user->getMessageClient()->addReussite(self::LOGIN_PASSWORD_EDITED);
@@ -766,9 +839,13 @@ class LogInController extends \Library\BackController{
 				$response->redirect('/LogIn/');
 			}
 		}else{			
+			//On redirige vers l'acceuil
+			$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);
 			$response->redirect('/LogIn/');
 		}
-	}	
+	}
+
+
 
 	/**
 	* Méthode pour contacter NooLib

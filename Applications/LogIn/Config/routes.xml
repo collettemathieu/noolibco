@@ -16,7 +16,9 @@
 	<route url="/LogIn/RecupPassword/" module="LogIn" action="recuppassword"/>
 	<route url="/LogIn/RecupPassword/([a-zA-Z]{7})" module="LogIn" action="recuppassword" vars="request"/>
 	
-	<route url="/LogIn/ResetPassword/j=([a-zA-Z0-9._%+-]{8,32})" module="LogIn" action="resetpassword" vars="jeton"/>
+	<route url="/LogIn/ResetPassword/j=([a-zA-Z0-9._%+-]{8,32})" module="LogIn" action="showResetpassword" vars="jeton"/>
+
+	<route url="/LogIn/ResetPassword" module="LogIn" action="resetpassword"/>
 
 	<route url="/LogIn/Banni" module="Banni" action="show"/>
 
