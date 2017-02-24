@@ -225,8 +225,8 @@ abstract class Application{
 			$response->redirect('/Mobile/');
 		}elseif(!$this->user->isMobile() && $this->nomApplication === 'Mobile'){
 			// On procède à la redirection vers la page pour mobile (qui proposera de télécharger l'application)
-			//$response = $this->getHTTPResponse();
-			//$response->redirect('/');
+			$response = $this->getHTTPResponse();
+			$response->redirect('/');
 		}elseif(!$this->user->jsIsActivated()){
 			// On réactive JS pour l'utilisateur
 			$this->user->setJsIsActivated(true);
