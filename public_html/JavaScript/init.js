@@ -59,19 +59,47 @@
             contentType: false,
             processData: false,
             success: function(response) {
-            	try{
+            	if(isJson(response)){
             		var response = JSON.parse(response);
             		if(!response['erreurs']){
 	            		var response = {};
                 		response['erreurs'] = '<p>A system error has occurred.</p>';
 	            	}
 	            	displayInformationsClient(response);  
-            	}
-            	catch(e){
+            	}else{
             		$('#helperApplication').find('.modal-body').html(response);
             		$('#helperApplication').modal('show');
+
+            		// On contrôle le formulaire de contact
+            		$('#formContact').on('submit', function(e){
+		            e.preventDefault();
+		            var formData = new FormData(e.target),
+		                btn = $(this).find('button');
+		            btn.button('loading');
+		            // Envoi de la requête HTTP en mode asynchrone
+		            $.ajax({
+		                url: '/Helper/Contact',
+		                type: 'POST',
+		                data: formData,
+		                async: true,
+		                cache: false,
+		                contentType: false,
+		                processData: false,
+		                success: function(response) {
+		                    btn.button('reset');
+		                    response = JSON.parse(response);
+		                    displayInformationsClient(response);
+		                },
+		                error: function(){
+		                    btn.button('reset');
+		                    var response = {
+		                        'erreurs': '<p>A system error has occurred.</p>'
+		                    };
+		                    displayInformationsClient(response);
+		                }
+		            });
+		        });
             	}
-				
             },
             error: function(){
             	var response = {};
@@ -80,4 +108,14 @@
             }
         });
 	});
+
+	function isJson(text){
+		try{
+			JSON.parse(text);
+			return true;
+		}
+		catch(e){
+			return false;
+		}
+	}
 })();

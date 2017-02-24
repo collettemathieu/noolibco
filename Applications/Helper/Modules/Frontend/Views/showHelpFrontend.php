@@ -16,7 +16,7 @@
 	</div>
 	<div class="tab-pane" id="contactNooLib">
 		<br/>
-		<form class="well well-lg col-lg-6 centering" action="/Helper/Contact" method="post">
+		<form id="formContact" class="well well-lg col-lg-6 centering">
 			<div class="form-group has-feedback">
 				<input type="text" class="form-control" name="emailAddress" placeholder="Your email..." value="<?php echo $mailUtilisateur;?>"/>
 				<span class="glyphicon form-control-feedback"></span>
