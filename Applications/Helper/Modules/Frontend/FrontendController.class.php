@@ -48,9 +48,14 @@ class FrontendController extends \Library\BackController{
 
 	/* Permet d'envoyer un courrier à NooLib */
 	public function executeContact($request){
-		$this->sendAMailToNooLib($request);
+		
+		// On récupère l'utilisateur système
+		$user = $this->app->getUser();
 
-		$response = $this->app->getHTTPResponse();
-		$response->redirect('/');
+		// On informe que c'est un chargement Ajax
+		$user->setAjax(true);
+
+		// On envoie le mail à l'équipe NooLib
+		$response = $this->sendAMailToNooLib($request);
 	}
 }
