@@ -720,7 +720,7 @@ class LogInController extends \Library\BackController{
 					}
 					
 					//Si la date de validité du jeton est dépassée : 5 minutes
-					if( $timeJeton >= (time()-5*60)){
+					if( $timeJeton < (time()-5*60)){
 						//On redirige vers l'acceuil
 						$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);
 						$response->redirect('/LogIn/');
@@ -796,7 +796,7 @@ class LogInController extends \Library\BackController{
 					}
 					
 					//Si la date de validité du jeton est dépassée: 5min
-					if( $timeJeton >= (time()-5*60)){
+					if( $timeJeton < (time()-5*60)){
 						//On redirige vers l'acceuil
 						$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);
 						$response->redirect('/LogIn/');
