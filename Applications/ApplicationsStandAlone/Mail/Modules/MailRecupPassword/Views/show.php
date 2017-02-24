@@ -51,7 +51,7 @@
 			<tr>
 				<td style="text-align: justify;">
 					<ul>
-						<li>This link remains valid during 24 hours.</li><br>
+						<li>The link remains valid during 5 minutes.</li><br>
 						<li>You will be redirected to a secured page in order to create a new password for your account.</li><br>
 					 	<li>The link above allows to guarantee your authentication on NooLib Web Application.</li><br>
 						<li>Whether you have received this message in error, please delete it.</li><br>

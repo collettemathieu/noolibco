@@ -531,8 +531,8 @@ class LogInController extends \Library\BackController{
 				$idUtilisateur = $donneesUtilisateur['idMembre'];
 				$timeJeton = $donneesUtilisateur['time'];
 				
-				//On déclare le temps de validation du jeton : 24 heures
-				$tempsValiditeJeton = time()-(24*60*60);
+				//On déclare le temps de validation du jeton : 6 heures
+				$tempsValiditeJeton = time()-(6*60*60);
 				
 				//On récupère l'utilisateur grâce à son Mail
 				$userVerif= $managerUser->getUtilisateurById($idUtilisateur);
@@ -680,19 +680,25 @@ class LogInController extends \Library\BackController{
 		//On récupère l'utilisateur système
 		$user = $this->app->getUser();
 
+		// On récupère le jeton en GET
+		$jeton = $request->getGetData('jeton');
+
+		// On récupère le jeton en session
+		$jetonSession = $user->getAttribute('jetonUser');
+
 		//Si le jeton est présent dans les données GET
-		if($request->getGetData('jeton')){
+		if(isset($jetonSession) && $jeton === $jetonSession){
 		
 			//On décode le jeton
-			$donneesUtilisateur = $this->decodeJeton($request->getGetData('jeton'));
+			$donneesUtilisateur = $this->decodeJeton($jeton);
 
 			//On récupère les données inclus dans le jeton
 			$idUtilisateur = $donneesUtilisateur['idMembre'];
 			$timeJeton = $donneesUtilisateur['time'];
 			$password_crc32 = $donneesUtilisateur['password_crc32'];
 			
-			//On déclare le temps de validation du jeton : 30 minutes
-			$tempsValiditeJeton = time()-(30*60);
+			//On déclare le temps de validation du jeton : 5 minutes
+			$tempsValiditeJeton = time()-(5*60);
 			
 			// On appelle le manager des Users
 			$managerUser = $this->getManagers()->getManagerOf('Utilisateur');
@@ -753,19 +759,25 @@ class LogInController extends \Library\BackController{
 		//On récupère l'utilisateur système
 		$user = $this->app->getUser();
 
+		// On récupère le jeton en POST
+		$jeton = $request->getPostData('jetonUser');
+
+		// On récupère le jeton en session
+		$jetonSession = $user->getAttribute('jetonUser');
+
 		//Si le jeton est présent dans les données GET
-		if($request->isExistPOST('jetonUser')){
+		if(isset($jetonSession) && $jeton === $jetonSession){
 		
 			//On décode le jeton
-			$donneesUtilisateur = $this->decodeJeton($request->getPostData('jetonUser'));
+			$donneesUtilisateur = $this->decodeJeton($jeton);
 
 			//On récupère les données inclus dans le jeton
 			$idUtilisateur = $donneesUtilisateur['idMembre'];
 			$timeJeton = $donneesUtilisateur['time'];
 			$password_crc32 = $donneesUtilisateur['password_crc32'];
 			
-			//On déclare le temps de validation du jeton : 30 minutes
-			$tempsValiditeJeton = time()-(30*60);
+			//On déclare le temps de validation du jeton : 5 minutes
+			$tempsValiditeJeton = time()-(5*60);
 			
 			// On appelle le manager des Users
 			$managerUser = $this->getManagers()->getManagerOf('Utilisateur');
@@ -798,6 +810,9 @@ class LogInController extends \Library\BackController{
 						$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);
 						$response->redirect('/LogIn/');
 					}
+
+					// On supprime le jeton en session
+					$user->delAttribute('jetonUser');
 					
 					//On vérifie que l'utilisateur a entré son nouveau mot de passe dans le formulaire
 					if($request->isExistPOST('newPassword1') && $request->isExistPOST('newPassword2')){

@@ -44,6 +44,10 @@ class MailRecupPasswordController extends \Library\BackController{
 		$jeton = $this->codeJeton($mailUtilisateur);
 
 		if($jeton){
+
+			// On place le jeton en session de l'utilisateur
+			$user->setAttribute('jetonUser', $jeton);
+
 			//On définit le lien de validation				
 			$lienRecupPassword ='http://noolib.com/LogIn/ResetPassword/j='.$jeton;
 			
