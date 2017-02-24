@@ -677,6 +677,9 @@ class LogInController extends \Library\BackController{
 		//On récupère la réponse
 		$response = $this->app->getHTTPResponse();
 
+		//On récupère l'utilisateur système
+		$user = $this->app->getUser();
+
 		//Si le jeton est présent dans les données GET
 		if($request->getGetData('jeton')){
 		
@@ -690,8 +693,6 @@ class LogInController extends \Library\BackController{
 			
 			//On déclare le temps de validation du jeton : 30 minutes
 			$tempsValiditeJeton = time()-(30*60);
-			//On récupère l'utilisateur actuel
-			$user = $this->app->getUser();
 			
 			// On appelle le manager des Users
 			$managerUser = $this->getManagers()->getManagerOf('Utilisateur');
@@ -749,6 +750,9 @@ class LogInController extends \Library\BackController{
 		//On récupère la réponse
 		$response = $this->app->getHTTPResponse();
 
+		//On récupère l'utilisateur système
+		$user = $this->app->getUser();
+
 		//Si le jeton est présent dans les données GET
 		if($request->isExistPOST('jetonUser')){
 		
@@ -762,8 +766,7 @@ class LogInController extends \Library\BackController{
 			
 			//On déclare le temps de validation du jeton : 30 minutes
 			$tempsValiditeJeton = time()-(30*60);
-			//On récupère l'utilisateur actuel
-			$user = $this->app->getUser();
+			
 			
 			// On appelle le manager des Users
 			$managerUser = $this->getManagers()->getManagerOf('Utilisateur');
