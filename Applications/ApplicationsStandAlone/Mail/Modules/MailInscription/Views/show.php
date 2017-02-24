@@ -40,7 +40,11 @@
 			</tr>
 			<tr>
 				<td style="text-align: justify; padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-					To complete your registration to NooLib, please click on the link below: <br><br>
+					To complete your registration to NooLib, please click on the link below:
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: center; padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
 					<a href="<?php echo $lienValidation; ?>" class="btn-class">Activate my NooLib account</a>
 				</td>
 			</tr>

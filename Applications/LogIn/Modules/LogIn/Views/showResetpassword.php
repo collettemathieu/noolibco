@@ -13,7 +13,7 @@
 					<div class="form-group">
 						<input type="password" class="form-control input-lg" name="newPassword2" placeholder= "Confirm your new password"/>
 					</div>
-					<input type="hidden" name="jeton" value="<?php if(isset($jetonUser)){echo $jetonUser;}?>"/>
+					<input type="hidden" name="jetonUser" value="<?php if(isset($jetonUser)){echo $jetonUser;}?>"/>
 					<button class="btn btn-primary" type="submit">Send</button>
 				</form>
 			</div>

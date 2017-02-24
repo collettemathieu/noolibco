@@ -767,7 +767,6 @@ class LogInController extends \Library\BackController{
 			//On déclare le temps de validation du jeton : 30 minutes
 			$tempsValiditeJeton = time()-(30*60);
 			
-			
 			// On appelle le manager des Users
 			$managerUser = $this->getManagers()->getManagerOf('Utilisateur');
 			// On récupère l'utilisateur de la base selon l'id
