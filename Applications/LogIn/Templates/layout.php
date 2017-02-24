@@ -84,8 +84,7 @@ Go to https://www.noolib.com/Hire/ .
 		<!-- Informations à l'utilisateur-->
 		<div class="informationsClient" id="informationsClient">
 			<?php if($user->getMessageClient()->hasErreur()) { ?>
-				<div class="alert alert-danger alert-dismissable" id="informationExists">
-					<button type="button" class="close" data-dismiss="alert">x</button>
+				<div class="alert alert-danger" id="informationExists">
 					<h3>Warning</h3>
 					<?php foreach($user->getMessageClient()->getErreurs() as $erreur) { ?>
 						<p><?php echo($erreur); ?></p>
@@ -94,8 +93,7 @@ Go to https://www.noolib.com/Hire/ .
 
 			<?php }
 			if($user->getMessageClient()->hasReussite()){ ?>
-				<div class="alert alert-success alert-dismissable" id="informationExists">
-					<button type="button" class="close" data-dismiss="alert">x</button>
+				<div class="alert alert-success" id="informationExists">
 					<h3>Information</h3>
 					<?php foreach($user->getMessageClient()->getReussites() as $reussite) { ?>
 						<p><?php echo($reussite); ?></p>
