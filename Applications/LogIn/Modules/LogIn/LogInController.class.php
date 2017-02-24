@@ -531,14 +531,11 @@ class LogInController extends \Library\BackController{
 				$idUtilisateur = $donneesUtilisateur['idMembre'];
 				$timeJeton = $donneesUtilisateur['time'];
 				
-				//On déclare le temps de validation du jeton : 6 heures
-				$tempsValiditeJeton = time()-(6*60*60);
-				
 				//On récupère l'utilisateur grâce à son Mail
 				$userVerif= $managerUser->getUtilisateurById($idUtilisateur);
 			
-				//Si la date de validité du jeton est dépassée
-				if( !$timeJeton >= (time()-$tempsValiditeJeton )){
+				//Si la date de validité du jeton est dépassée: 6 heures
+				if( $timeJeton >= (time()-6*60*60)){
 					//On redirige vers l'acceuil
 					$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_ACTIVATE_ACCOUNT);
 					$response->redirect('/LogIn/');
@@ -697,9 +694,6 @@ class LogInController extends \Library\BackController{
 			$timeJeton = $donneesUtilisateur['time'];
 			$password_crc32 = $donneesUtilisateur['password_crc32'];
 			
-			//On déclare le temps de validation du jeton : 5 minutes
-			$tempsValiditeJeton = time()-(5*60);
-			
 			// On appelle le manager des Users
 			$managerUser = $this->getManagers()->getManagerOf('Utilisateur');
 			// On récupère l'utilisateur de la base selon l'id
@@ -725,8 +719,8 @@ class LogInController extends \Library\BackController{
 						$response->redirect('/LogIn/');
 					}
 					
-					//Si la date de validité du jeton est dépassée
-					if( !$timeJeton >= (time()-$tempsValiditeJeton )){
+					//Si la date de validité du jeton est dépassée : 5 minutes
+					if( $timeJeton >= (time()-5*60)){
 						//On redirige vers l'acceuil
 						$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);
 						$response->redirect('/LogIn/');
@@ -776,9 +770,6 @@ class LogInController extends \Library\BackController{
 			$timeJeton = $donneesUtilisateur['time'];
 			$password_crc32 = $donneesUtilisateur['password_crc32'];
 			
-			//On déclare le temps de validation du jeton : 5 minutes
-			$tempsValiditeJeton = time()-(5*60);
-			
 			// On appelle le manager des Users
 			$managerUser = $this->getManagers()->getManagerOf('Utilisateur');
 			// On récupère l'utilisateur de la base selon l'id
@@ -804,8 +795,8 @@ class LogInController extends \Library\BackController{
 						$response->redirect('/LogIn/');
 					}
 					
-					//Si la date de validité du jeton est dépassée
-					if( !$timeJeton >= (time()-$tempsValiditeJeton )){
+					//Si la date de validité du jeton est dépassée: 5min
+					if( $timeJeton >= (time()-5*60)){
 						//On redirige vers l'acceuil
 						$user->getMessageClient()->addErreur(self::LOGIN_INVALID_LINK_RESET_PASSWORD);
 						$response->redirect('/LogIn/');
