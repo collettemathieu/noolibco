@@ -1,5 +1,5 @@
-	<div class="container-fluid">
-		<div class="row-fluid fadeIn">
+	<div class="container">
+		<div class="row fadeIn">
 			<div class="col-lg-12 centering maxWidth">
 				<!-- Info Mobile -->
 			    <div class="col-lg-6 text-center alert alert-warning">
