@@ -31,6 +31,7 @@ html, body{
 
 body{
   background: url("/Images/BackgroundUtilisateurs/background_defaut.jpg");
+  background-size: cover;
   margin: auto;
   font-family: "ComicNeue-Angular-Regular";
 }
@@ -67,6 +68,11 @@ footer a:hover{
   height: 100%; 
   display:table-cell; 
   vertical-align: middle;
+}
+
+.centering {
+  float:none;
+  margin:0 auto;
 }
 
 

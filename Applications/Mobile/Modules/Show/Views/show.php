@@ -1,11 +1,11 @@
 	<div class="container-fluid">
 		<div class="row-fluid fadeIn">
 			<!-- Version Mobile -->
-		    <div class="col-lg-5 alert alert-warning">
+		    <div class="col-lg-12 centering alert alert-warning">
 	        	<span>Use NooLib on your mobile.</span>
 	        	<span>Please stay tune !</span>
 		    </div><br>
-			<div class="col-lg-5">
+			<div class="col-lg-12 centering">
 		        <div id="content">
 					<h1>Welcome to NooLib.</h1>
 					<h2>NooLib offers a library of scientific applications for Research.</h2>
