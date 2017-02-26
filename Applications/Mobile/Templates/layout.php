@@ -65,7 +65,7 @@ Go to https://www.noolib.com/Hire/ .
 		
 		<!-- HEADER -->
 		<header></header>
-		
+
 		<!-- SECTION -->
 		<section>
 		<?php
@@ -79,12 +79,6 @@ Go to https://www.noolib.com/Hire/ .
 				<div class="row-fluid">
 					<div class="col-lg-12 centering">
 						<h5>© 2017 NooLib - All rights reserved - </h5>
-						<button ng-click="contactModal()" class="btn btn-default btn-xs">Contact</button>
-						<ul>
-							<li><a href="https://twitter.com/NoolibApp" target="_blank"><img src="/Images/Social/twitter.png"/></a></li>
-							<li><a href="https://www.facebook.com/Noolib-1648329638748950/" target="_blank"><img src="/Images/Social/facebook.png" alt="lien facebook"/></a></li>
-							<li><a href="https://www.linkedin.com/company/noolib" target="_blank"><img src="/Images/Social/linkedin.png" alt="lien linkedin"/></a></li>
-						</ul>
 					</div>
 				</div>
 			</div>
