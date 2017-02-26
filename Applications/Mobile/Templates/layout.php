@@ -18,8 +18,7 @@ Go to https://www.noolib.com/Hire/ .
 		<meta charset="UTF-8">
 
 		<!-- Chargement des librairies CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="/Css/styleMobile.css" />
+		<?php echo $librairiesCSS; ?>
 
 		<!-- Insertion d'une icône dans la barre latérale du navigateur -->
 		<link rel="apple-touch-icon" sizes="57x57" href="/Images/Favicon/apple-icon-57x57.png">
@@ -44,10 +43,10 @@ Go to https://www.noolib.com/Hire/ .
 		
 		<meta name="description" content="Create and promote your scientific applications for your researches."/>
 		<title>Welcome - NooLib Web Application</title>
-
 	</head>
 
-	<body>
+	<body ng-app="LogIn" ng-controller="logInController" ng-strict-di><!-- ng-strict-di for throwing an exception when minify operation errors appeared -->
+
 		<!-- LOADER -->
 		<?php if($_SERVER['REQUEST_URI'] != '/LogIn/JSNotActivated'){?>
 		<div class="overlay">
@@ -67,9 +66,25 @@ Go to https://www.noolib.com/Hire/ .
 			echo $content;
 		?>
 		</section>
-	
+		
+		<!-- FOOTER -->
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-5 centering" >
+						<h5>© 2017 NooLib - All rights reserved - </h5>
+						<button ng-click="contactModal()" class="btn btn-default btn-xs">Contact</button>
+						<ul>
+							<li><a href="https://twitter.com/NoolibApp" target="_blank"><img src="/Images/Social/twitter.png"/></a></li>
+							<li><a href="https://www.facebook.com/Noolib-1648329638748950/" target="_blank"><img src="/Images/Social/facebook.png" alt="lien facebook"/></a></li>
+							<li><a href="https://www.linkedin.com/company/noolib" target="_blank"><img src="/Images/Social/linkedin.png" alt="lien linkedin"/></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</footer>
+		
 		<!-- Chargement des librairies JS -->
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+		<?php echo $librairiesJS; ?>
 	</body>
 </html>
