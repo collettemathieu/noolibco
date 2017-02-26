@@ -77,8 +77,8 @@ Go to https://www.noolib.com/Hire/ .
 		<footer>
 			<div class="container-fluid">
 				<div class="row-fluid">
-					<div class="col-lg-12 centering">
-						<h5>© 2017 NooLib - All rights reserved - </h5>
+					<div class="col-lg-12">
+						<h5>© 2017 NooLib - All rights reserved</h5>
 					</div>
 				</div>
 			</div>
