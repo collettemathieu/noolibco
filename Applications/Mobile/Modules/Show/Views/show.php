@@ -1,5 +1,5 @@
-	<div class="container">
-		<div class="row">
+	<div class="container-fluid">
+		<div class="row-fluid">
 			<!-- Version Mobile -->
 		    <div class="col-sm-5 alert alert-warning alertJS centering">
 	        	<span>Use NooLib on your mobile.</span>
