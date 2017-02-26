@@ -41,6 +41,14 @@ header{
   height: 5%;
 }
 
+section{
+  height: 89%;
+}
+
+footer{
+  height: 5%;
+}
+
 
 footer a{
   color: black;
