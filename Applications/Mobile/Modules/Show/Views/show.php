@@ -1,5 +1,5 @@
-	<div class="container-fluid">
-		<div class="row-fluid fadeIn">
+	<div class="container">
+		<div class="row fadeIn">
 			<!-- Version Mobile -->
 		    <div class="col-lg-5 alert alert-warning alertJS">
 	        	<span>Use NooLib on your mobile.</span>
