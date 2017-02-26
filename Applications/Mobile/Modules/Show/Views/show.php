@@ -1,7 +1,7 @@
 	<div class="container">
 		<div class="row fadeIn">
 			<!-- Version Mobile -->
-		    <div class="col-lg-5 alert alert-warning alertJS">
+		    <div class="col-lg-5 alert alert-warning">
 	        	<span>Use NooLib on your mobile.</span>
 	        	<span>Please stay tune !</span>
 		    </div><br>

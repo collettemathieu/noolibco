@@ -60,9 +60,6 @@ Go to https://www.noolib.com/Hire/ .
 		</script>
 
 		
-		<!-- HEADER -->
-		<header></header>
-
 		<!-- SECTION -->
 		<section>
 		<?php
