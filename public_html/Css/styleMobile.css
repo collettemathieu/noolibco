@@ -36,12 +36,16 @@ body{
   font-family: "ComicNeue-Angular-Regular";
 }
 
+header{
+  height: 20%;
+}
+
 section{
-  
+  height: 74%;
 }
 
 footer{
-  
+  height: 4%;
 }
 
 footer a{
