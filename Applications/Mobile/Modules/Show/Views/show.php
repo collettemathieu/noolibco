@@ -1,14 +1,12 @@
 	<div class="container">
 		<div class="row">
-			<!-- Si JS n'est pas activé -->
-		    <noscript>
-			    <div class="col-lg-12 alertJS">
-			        <div class="col-lg-5 alert alert-warning">
-			        	<span>NooLib on your mobile !</span>
-			        	<span>Please stay tune !</span>
-			        </div>
-			    </div>
-		    </noscript>
+			<!-- Version Mobile -->
+		    <div class="col-lg-12 alertJS">
+		        <div class="col-lg-5 alert alert-warning">
+		        	<span>Use NooLib on your mobile.</span>
+		        	<span>Please stay tune !</span>
+		        </div>
+		    </div>
 			<div class="col-lg-12 fadeIn">
 				<div class="col-sm-6">	
 			        <div id="content">
