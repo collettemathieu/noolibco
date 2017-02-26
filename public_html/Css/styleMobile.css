@@ -41,6 +41,14 @@ header{
   height: 5%;
 }
 
+section{
+  height: 90%;
+}
+
+footer{
+  height: 4%;
+}
+
 /* Pour le centrage verticale des éléments */
 .container-fluid{
   height:100%;

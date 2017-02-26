@@ -73,6 +73,19 @@ Go to https://www.noolib.com/Hire/ .
 		?>
 		</section>
 		
+		<!-- FOOTER -->
+		<footer>
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="col-lg-12 centering maxWidth">
+						<div class="col-lg-6 text-center">
+							<h5>© 2017 NooLib - All rights reserved</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
 		<!-- Chargement des librairies JS -->
 		<?php echo $librairiesJS; ?>
 	</body>

@@ -13,9 +13,6 @@
 					<h2>Interact smartly with others applications and share your results...</h2>
 					<button class="btn btn-default" ng-click="aboutModal()">About !</button>
 				</div>
-				<div class="col-lg-6 text-center">
-					<h5>© 2017 NooLib - All rights reserved</h5>
-				</div>
 			</div>
 		</div>
 	</div>
