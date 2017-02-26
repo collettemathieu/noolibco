@@ -41,19 +41,6 @@ header{
   height: 5%;
 }
 
-section{
-  height: 89%;
-}
-
-footer{
-  height: 5%;
-}
-
-
-#contact h2{
-  color: black;
-}
-
 /* Pour le centrage verticale des éléments */
 .container-fluid{
   height:100%;
