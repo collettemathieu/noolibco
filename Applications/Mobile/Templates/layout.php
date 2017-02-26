@@ -60,6 +60,9 @@ Go to https://www.noolib.com/Hire/ .
 		</script>
 
 		
+		<!-- HEADER -->
+		<header></header>
+
 		<!-- SECTION -->
 		<section>
 		<?php
@@ -83,7 +86,7 @@ Go to https://www.noolib.com/Hire/ .
 				</div>
 			</div>
 		</footer>
-		
+
 		<!-- Chargement des librairies JS -->
 		<?php echo $librairiesJS; ?>
 	</body>
