@@ -74,7 +74,7 @@ Go to https://www.noolib.com/Hire/ .
 		<footer>
 			<div class="container-fluid">
 				<div class="row-fluid">
-					<div class="col-sm-5 centering" >
+					<div class="col-lg-5" >
 						<h5>© 2017 NooLib - All rights reserved - </h5>
 						<button ng-click="contactModal()" class="btn btn-default btn-xs">Contact</button>
 						<ul>
