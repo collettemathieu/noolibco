@@ -1,7 +1,7 @@
 	<div class="container-fluid">
 		<div class="row-fluid fadeIn">
 			<!-- Version Mobile -->
-		    <div class="col-lg-11 centering text-center alert alert-warning">
+		    <div class="col-sm-10 centering text-center alert alert-warning">
 	        	<span>Use NooLib on your mobile.</span>
 	        	<span>Please stay tune !</span>
 		    </div><br>
