@@ -144,3 +144,13 @@ h2{
   text-align: justify;
   color: white;
 }
+
+/* Media queries */
+@media screen and (max-width: 560px) {
+  h1{
+    font-size: 2.2em;
+  }
+  h1{
+    font-size: 1.2em;
+  }
+}
