@@ -1,10 +1,10 @@
 	<div class="container">
 		<div class="row">
 			<!-- Version Mobile -->
-		    <div class="col-sm-5 alert alert-warning alertJS centering">
+		    <div class="col-sm-4 alert alert-warning alertJS centering">
 	        	<span>Use NooLib on your mobile.</span>
 	        	<span>Please stay tune !</span>
-		    </div>
+		    </div><br>
 			<div class="col-sm-5 centering fadeIn">
 		        <div id="content">
 					<h1>Welcome to NooLib.</h1>
