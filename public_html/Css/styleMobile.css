@@ -38,7 +38,7 @@ body{
 }
 
 header{
-  height: 2%;
+  height: 5%;
 }
 
 section{
@@ -71,6 +71,11 @@ footer{
 .centering {
   float:none;
   margin:0 auto;
+}
+
+/* Pour la taille maximale de certains containers */
+.maxWidth{
+  max-width: 960px;
 }
 
 

@@ -1,6 +1,6 @@
 	<div class="container-fluid">
 		<div class="row-fluid fadeIn">
-			<div class="col-lg-12 centering">
+			<div class="col-lg-12 centering maxWidth">
 				<!-- Info Mobile -->
 			    <div class="col-lg-6 text-center alert alert-warning">
 		        	<span>Use NooLib on your mobile.</span>
