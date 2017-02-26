@@ -30,7 +30,8 @@ html, body{
 }
 
 body{
-  background-color: grey;
+  background: url("/Images/BackgroundUtilisateurs/background_defaut.jpg");
+  background-size: cover;
   margin: auto;
   font-family: "ComicNeue-Angular-Regular";
 }
