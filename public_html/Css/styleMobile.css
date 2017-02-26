@@ -50,14 +50,6 @@ footer{
 }
 
 
-footer a{
-  color: black;
-}
-
-footer a:hover{
-  color: black;
-}
-
 #contact h2{
   color: black;
 }
@@ -144,7 +136,7 @@ animation-duration:0.7s;
 h1{
   font-size: 2.8em;
   color: white;
-  padding: 0;
+  padding: 0px 10px 0px 10px;
   margin: 0px 0px 40px 0px;
 }
 
