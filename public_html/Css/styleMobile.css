@@ -31,8 +31,6 @@ html, body{
 
 body{
   background: url("/Images/BackgroundUtilisateurs/background_defaut.jpg");
-  background-size: cover;
-  background-attachment: fixed;
   margin: auto;
   font-family: "ComicNeue-Angular-Regular";
 }
