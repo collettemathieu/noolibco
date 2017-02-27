@@ -45,7 +45,7 @@ class MailInscriptionController extends \Library\BackController
 
 		if($jeton){
 			//On définit le lien de validation				
-			$lienValidation ='http://noolib.com/LogIn/ValidationMail/j='.$jeton;
+			$lienValidation ='https://www.noolib.com/LogIn/ValidationMail/j='.$jeton;
 			
 			// On envoit les variables à la page avec les noms de variables spécifiques
 			$this->page->addVar('expediteur', $expediteur);

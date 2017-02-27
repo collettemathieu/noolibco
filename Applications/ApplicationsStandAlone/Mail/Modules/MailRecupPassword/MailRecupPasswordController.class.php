@@ -49,7 +49,7 @@ class MailRecupPasswordController extends \Library\BackController{
 			$user->setAttribute('jetonUser', $jeton);
 
 			//On définit le lien de validation				
-			$lienRecupPassword ='http://noolib.com/LogIn/ResetPassword/j='.$jeton;
+			$lienRecupPassword ='https://www.noolib.com/LogIn/ResetPassword/j='.$jeton;
 			
 			// On envoit les variables à la page avec les noms de variables spécifiques
 			$this->page->addVar('expediteur', $expediteur);
