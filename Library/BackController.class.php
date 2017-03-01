@@ -117,7 +117,7 @@ abstract class BackController extends ApplicationComponent
 
 	/* Mail */
 	const MAIL_MESSAGE_SENT = 'Your message has been sent successfully.';
-	const MAIL_SUBSCRIPTION = 'Welcome to NooLib !';
+	const MAIL_SUBSCRIPTION = 'Welcome to NooLib Web Application !';
 	const MAIL_RESET_PASSWORD = 'Reset your password.';
 
 	/* Backend */
