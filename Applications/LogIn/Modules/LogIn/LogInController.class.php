@@ -571,6 +571,10 @@ class LogInController extends \Library\BackController{
 			}
 		}else{
 			$user->getMessageClient()->addErreur(self::LOGIN_ALREADY_LOGGED);
+			
+			// On procède à la redirection
+			$response = $this->app->getHTTPResponse();
+			$response->redirect('/');
 		}
 	}
 

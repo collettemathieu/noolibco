@@ -189,10 +189,6 @@ class InscriptionController extends \Library\BackController{
 			}else{
 				// On ajoute la variable d'erreurs à la page
 				$user->getMessageClient()->addErreur(self::INSCRIPTION_USER_ALREADY_LOGGED);
-				
-				// On procède à la redirection
-				$response = $this->app->getHTTPResponse();
-				$response->redirect('/');
 			}
 		}else{
 			// On procède à la redirection
