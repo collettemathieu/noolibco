@@ -266,7 +266,7 @@ class PDOEtablissementManager extends \Library\Models\EtablissementManager
 	public function getAllEtablissements(){
 		
 		//preparation de la requete
-		$requete = $this->dao->prepare("SELECT * FROM etablissement");
+		$requete = $this->dao->prepare("SELECT * FROM etablissement ORDER BY nom_etablissement ASC");
 		
 		//execution de la requete sinon envoi d'une erreur
 		try {
