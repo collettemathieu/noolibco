@@ -91,13 +91,13 @@ if(isValid === null){
                     var texte = '<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>';
                         if(name != 'unknown' && name != 'ie'){
                             texte += 'This version of your browser ' + name+ ' is obsolete and NooLib can present unwanted malfunctions.<br/>';
-                            texte += 'We recommmend updating your current browser.';
+                            texte += 'We recommend updating your current browser.';
                         }else if(name == 'ie'){
                             texte += 'All versions of Internet Explorer are not supported by NooLib and the plateform can present unwanted malfunctions.<br/>';
-                            texte += 'We recommmend changing to another updated browser.';
+                            texte += 'We recommend changing to another updated browser.';
                         }else{
                             texte += 'Your browser is unknown and NooLib can present unwanted malfunctions.<br/>';
-                            texte += 'We recommmend changing to another updated browser.';
+                            texte += 'We recommend changing to another updated browser.';
                         }
                         $('#alertBrowser').removeClass('hidden').append(texte);
                 }   
