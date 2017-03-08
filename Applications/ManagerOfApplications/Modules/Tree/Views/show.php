@@ -4,7 +4,7 @@
 				<div class="row">
 					<div class="col-sm-12 informationApplication">
 						<div class="col-sm-12">
-							<a data-toggle="modal" href="#changerLogoApplication">
+							<a ng-click="logoApplicationModal()">
 								<img class="infoBulle" data-toggle="tooltip" title="Edit the picture of <?php echo $app->getNomApplication();?>" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())); ?>"/>
 							</a>
 							<a data-toggle="modal" href="#changerNameApplication">
@@ -95,36 +95,6 @@
 									<textarea class="form-control input-lg" name="descriptionVersionApplication" id="descriptionVersionApplication" placeholder="Short description..." cols="10" maxlength="100"></textarea>
 								</div>
 								<input type="hidden" name="idApp" value="<?php echo $app->getIdApplication();?>"/>
-								<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">Send</button>
-							</form>
-						</div>
-					</div>
-				</div>
-	      	</div>
-	    </div>
-	  </div>
-	</div>
-
-
-	<div id="changerLogoApplication" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-
-	    <!-- Modal content-->
-	    <div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">x</button>
-				<h2 class="modal-title">Edit the picture of <?php echo $app->getNomApplication();?></h2>
-			</div>
-			<div class="modal-body">
-				<div class="container-fluid">
-					<div class="row-fluid">
-						<div class="col-lg-10 centering">
-							<form id="formChangePictureApplication" class="well well-lg" enctype="multipart/form-data">
-								<div class="form-group">
-									<label for="logoApplication">Select an icon for your application (PNG, JPEG, 128px*128px, < 12ko) <a href="https://www.iconfinder.com" target="_blank">IconFinder</a></label>
-									<input type="file" class="form-control input-sm" name="logoApplication" id="logoApplication"/>
-									<input type="hidden" name="idApp" value="<?php echo $app->getIdApplication();?>"/>
-								</div>
 								<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">Send</button>
 							</form>
 						</div>

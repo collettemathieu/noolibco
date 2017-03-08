@@ -11,4 +11,5 @@
 <script type="text/javascript" src="/JavaScript/Frameworks/angular-animate.min.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/ui-bootstrap-tpls-1.2.5.min.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/applicationRun.js"></script>
-<script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/applicationsController.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/mainController.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/logoController.js"></script>

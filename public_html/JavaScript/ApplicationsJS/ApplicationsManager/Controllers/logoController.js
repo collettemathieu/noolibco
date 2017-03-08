@@ -3,18 +3,21 @@
 // +----------------------------------------------------------------------+
 // | Copyright (c) 2017 NooLib			         				          |
 // +----------------------------------------------------------------------+
-// | Controleur pour l'arbre des applications							  |
+// | Controleur pour la fenêtre modale Logo								  |
 // +----------------------------------------------------------------------+
 // | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>    			  |
 // +----------------------------------------------------------------------+
 
 /**
- * @name:  applicationsController
+ * @name:  logoController
  * @access: public
  * @version: 1
  */
 
-application.controller('applicationsController', ['$scope', '$http', '$window', '$uibModal', function($scope, $http, $window, $uibModal){
-	alert('ici controller');
+application.controller('logoController', ['$scope', '$uibModalInstance', function($scope, $uibModalInstance){
+	// Pour fermer la fenêtre modale
+	$scope.close = function(){
+		 $uibModalInstance.dismiss('cancel');
+	};
 }]);
 
