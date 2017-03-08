@@ -2,11 +2,11 @@
 /*   Arbre Application  */
 /************************/
 
-#modifierAuteursApplication img{
+.auteur img{
 	width: 60px;
 }
 
-#modifierAuteursApplication .auteur{
+.auteur{
 	margin: 15px;
 	padding: 5px;
 	box-shadow: 2px 2px 10px grey;
