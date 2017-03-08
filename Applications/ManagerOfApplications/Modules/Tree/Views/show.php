@@ -1,4 +1,4 @@
-	<div class="container-fluid" ng-app="applicationApplicationsManager" ng-controller="applicationsController">
+	<div class="container-fluid" ng-app="applicationApplicationsManager" ng-controller="mainController">
 		<div class="row-fluid">
 			<div class="col-sm-10 centering sousMenu maxWidth fadeIn">
 				<div class="row">
