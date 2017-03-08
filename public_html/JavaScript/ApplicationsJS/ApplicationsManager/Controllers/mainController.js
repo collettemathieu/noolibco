@@ -16,7 +16,7 @@
 
 application.controller('mainController', ['$scope', '$http', '$window', '$uibModal', function($scope, $http, $window, $uibModal){
 	
-	// Action lors de l'ouverture de la fenêtre modale "About"
+	// Action lors de l'ouverture de la fenêtre modale "Logo"
 	$scope.logoApplicationModal = function(){
 		$uibModal.open({
 	      animation: true,
