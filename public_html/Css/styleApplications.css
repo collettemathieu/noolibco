@@ -1,0 +1,48 @@
+/******************************************/
+/*    Applications (Librairie et arbre)   */
+/******************************************/
+
+/* Pour la librairie des applications */
+.applicationView img{
+	width: 64px;
+}
+
+.noA{
+	color: black;
+}
+
+.noA:hover{
+	color:black;
+}
+
+table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+/* Pour créer une marge sur les boutons */
+.btn-margin{
+  margin-left: 4px;
+}
+
+/* Pour l'affichage de la page de l'application dans la librairie */
+
+.informationApplication img, .informationApplication h3{
+	display: inline-block;
+}
+
+.informationApplication h3{
+	margin-left: 20px;
+}
+
+
+/* Pour l'arbre des applications */
+.auteur img{
+	width: 60px;
+}
+
+.auteur{
+	margin: 15px;
+	padding: 5px;
+	box-shadow: 2px 2px 10px grey;
+}
