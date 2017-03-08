@@ -24,3 +24,5 @@ application.config(['$locationProvider', '$httpProvider', '$compileProvider', fu
 	$compileProvider.debugInfoEnabled(false); // Désactivation des informations de debug afin de gagner en performance
 
 }]);
+
+alert("ici");
