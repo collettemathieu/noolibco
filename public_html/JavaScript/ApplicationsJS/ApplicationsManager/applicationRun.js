@@ -25,3 +25,4 @@ application.config(['$locationProvider', '$httpProvider', '$compileProvider', fu
 
 }]);
 
+alert("ici");
