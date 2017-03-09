@@ -14,7 +14,7 @@
  * @version: 1
  */
 
-application.controller('mainController', ['$scope', '$http', '$window', '$uibModal', 'applicationService' function($scope, $http, $window, $uibModal, applicationService){
+application.controller('mainController', ['$scope', '$http', '$window', '$uibModal', 'applicationService', function($scope, $http, $window, $uibModal, applicationService){
 	
 	// Récupération des éléments de l'application
 	var applicationElement = document.querySelector('#application');
