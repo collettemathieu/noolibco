@@ -24,7 +24,7 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		if(response['erreurs']){
 			displayInformationsClient(response);
 		}else{
-			console.log(response);
+			$scope.application = response;
 		}
 	}, function(error){
 		var response = {
