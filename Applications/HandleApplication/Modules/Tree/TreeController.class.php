@@ -57,7 +57,7 @@ class TreeController extends \Library\BackController
 			$userSession = unserialize($user->getAttribute('userSession'));
 
 			// On récupère l'ID de l'application à mettre en cache
-			$idApp = (int) $request->getPostData('idApplication');
+			$idApp = (int) $request->getPostData('idApp');
 
 			// On récupère le manager des applications
 			$managerApplication = $this->getManagers()->getManagerOf('Application');
