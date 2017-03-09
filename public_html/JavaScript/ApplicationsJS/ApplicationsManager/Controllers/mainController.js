@@ -18,9 +18,10 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	
 	// Récupération des éléments de l'application
 	var applicationElement = document.querySelector('#application');
-	console.log(parseInt(applicationElement.getAttribute('idApplication')));
-	//var application = applicationService->getApplication();
-
+	
+	var application = applicationService->getApplication(parseInt(applicationElement.getAttribute('idApplication')));
+	console.log(application);
+	
 	// Action lors de l'ouverture de la fenêtre modale "Logo"
 	$scope.logoApplicationModal = function(){
 		$uibModal.open({
