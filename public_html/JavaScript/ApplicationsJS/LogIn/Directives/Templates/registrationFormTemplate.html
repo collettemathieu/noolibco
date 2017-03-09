@@ -20,7 +20,7 @@
 			<span ng-show="registrationForm.adresseMail.$invalid && registrationForm.adresseMail.$dirty" class="help-block">Enter a valid e-mail address.</span>
 		</div>
 		<div class="form-group">
-			<select name="statutUtilisateur" required ng-init="statutUtilisateur = statuts[0]" ng-options="statut.nameType for statut in statuts"class="form-control" ng-model="statutUtilisateur" selectDesignDirective></select>
+			<select name="statutUtilisateur" required ng-init="statutUtilisateur = statuts[0]" ng-options="statut.nameType for statut in statuts"class="form-control" ng-model="statutUtilisateur" select-design-directive></select>
 		</div>
 		<div class="form-group has-feedback" ng-class="{'has-error':registrationForm.motDePasseFormulaire.$invalid && registrationForm.motDePasseFormulaire.$dirty, 'has-success':registrationForm.motDePasseFormulaire.$valid}">
 			<input type="password" required class="form-control input-lg" name="motDePasseFormulaire" ng-model="motDePasseFormulaire" ng-pattern="/(?=(.*[A-Z]){1,})(?=(.*[a-z]){1,})(?=(.*[0-9]){1,})/" placeholder="Your password"/>
