@@ -5,7 +5,7 @@
 					<div class="col-sm-12 informationApplication">
 						<div class="col-sm-12">
 							<a ng-click="logoApplicationModal()">
-								<img class="infoBulle" data-toggle="tooltip" title="Edit the picture of {{application.nom}}" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())); ?>"/>
+								<img class="infoBulle" data-toggle="tooltip" ng-attr-title="Edit the logo of {{application.nom}}" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())); ?>"/>
 							</a>
 							<a data-toggle="modal" href="#changerNameApplication">
 								<h3 class="infoBulle" data-toggle="tooltip" title="Edit the name of <?php echo $app->getNomApplication();?>"><?php echo $app->getNomApplication();?></h3>
