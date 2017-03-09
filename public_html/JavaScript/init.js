@@ -41,6 +41,12 @@
 	// Pour activer les carrousels
 	$('.carousel').carousel('pause');
 
+	// Pour modifier le design des inputs file
+	$(":file").filestyle({
+		buttonName: "btn-primary",
+		iconName: "glyphicon-inbox"
+	});
+
 	// Pour afficher l'aide à l'utilisateur
 	$('#helperButton').click(function(e){
 		e.preventDefault();
@@ -109,6 +115,7 @@
         });
 	});
 
+	/* Fonctions */
 	function isJson(text){
 		try{
 			JSON.parse(text);
