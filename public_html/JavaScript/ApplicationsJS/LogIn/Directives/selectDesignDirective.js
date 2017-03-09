@@ -18,7 +18,7 @@ application.directive('selectDesignDirective', function(){
 	return{
 		restrict: 'A',
 		require: 'ngModel',
-		priority: 0,
+		terminal: true,
 		link: function(scope, element){
 			element.selectpicker();	
 		}
