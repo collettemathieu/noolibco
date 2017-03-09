@@ -17,10 +17,10 @@
 application.controller('mainController', ['$scope', '$http', '$window', '$uibModal', 'applicationService', function($scope, $http, $window, $uibModal, applicationService){
 	
 	// Récupération des éléments de l'application
-	var applicationElement = document.querySelector('#application');
+	var applicationElement = document.querySelector('#application'),
+		idApplication = parseInt(applicationElement.getAttribute('idApplication'));
 	
-	var application = applicationService.getApplication(parseInt(applicationElement.getAttribute('idApplication')));
-	applicationService.getApplication().then(function(response){ // <- c'est une promise
+	applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
 		if(response['erreurs']){
 			displayInformationsClient(response);
 		}else{

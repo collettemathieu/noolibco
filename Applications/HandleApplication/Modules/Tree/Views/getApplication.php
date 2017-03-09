@@ -1,6 +1,6 @@
 <?php 
 if(isset($application)){
-	$reponse = $application
+	$reponse = $application;
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';
 	foreach($user->getMessageClient()->getErreurs() as $erreur){
