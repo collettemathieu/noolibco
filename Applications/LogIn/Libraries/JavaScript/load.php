@@ -19,4 +19,5 @@
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/LogIn/Controllers/contactController.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/LogIn/Controllers/registrationController.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/LogIn/Directives/switchDirective.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/LogIn/Directives/selectDesignDirective.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/LogIn/Directives/passwordValidatorDirective.js"></script>
