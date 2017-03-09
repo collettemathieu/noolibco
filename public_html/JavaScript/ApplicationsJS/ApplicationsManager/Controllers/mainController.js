@@ -19,9 +19,22 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	// Récupération des éléments de l'application
 	var applicationElement = document.querySelector('#application');
 	
-	var application = applicationService->getApplication(parseInt(applicationElement.getAttribute('idApplication')));
-	console.log(application);
+	var application = applicationService.getApplication(parseInt(applicationElement.getAttribute('idApplication')));
+	applicationService.getApplication().then(function(response){ // <- c'est une promise
+		if(response['erreurs']){
+			displayInformationsClient(response);
+		}else{
+			console.log(response);
+		}
+	}, function(error){
+		var response = {
+			'erreurs': '<p>A system error has occurred: '+error+'</p>'
+		};
+		displayInformationsClient(response);
+	});
+
 	
+
 	// Action lors de l'ouverture de la fenêtre modale "Logo"
 	$scope.logoApplicationModal = function(){
 		$uibModal.open({
