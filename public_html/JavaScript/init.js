@@ -48,8 +48,6 @@
 
 	// Pour modifier le design des select
 	$('select').selectpicker({
-	  style: 'btn-info',
-	  size: 4
 	});
 
 	// Pour afficher l'aide à l'utilisateur
