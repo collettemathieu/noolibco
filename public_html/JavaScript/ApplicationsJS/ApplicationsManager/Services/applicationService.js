@@ -20,7 +20,7 @@ application.factory('applicationService', ['$q', '$http', function($q, $http){
 			var deferred = $q.defer();
 			$http({
 				method: 'POST',
-				url: '/HandleApplication/DeletePublication',
+				url: '/HandleApplication/GetApplication',
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: function(obj) {
 			        var str = [];
