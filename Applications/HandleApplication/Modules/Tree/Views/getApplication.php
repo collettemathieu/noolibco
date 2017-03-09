@@ -4,7 +4,7 @@ if(isset($application)){
 		'id' => $application->getIdApplication(),
 		'nom' => $application->getNomApplication(),
 		'description' => $application->getDescriptionApplication(),
-		'urlLogo' => base64_encode(file_get_contents($application->getUrlLogoApplication()),
+		'urlLogo' => base64_encode(file_get_contents($application->getUrlLogoApplication())),
 		'motCles' => $application->getMotCles()
 	);
 }elseif($user->getMessageClient()->hasErreur()){
