@@ -41,6 +41,66 @@ class TreeController extends \Library\BackController
 
 
 	/**
+	* Méthode pour récupérer une application
+	*/
+	public function executeGetApplication($request){
+
+		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
+		if ($request->isAjaxRequest()) {
+			// On récupère l'utilisateur système
+			$user = $this->app->getUser();
+
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
+
+			// On récupère l'utilisateur de session
+			$userSession = unserialize($user->getAttribute('userSession'));
+
+			// On récupère l'ID de l'application à mettre en cache
+			$idApp = (int) $request->getPostData('idApplication');
+
+			// On récupère le manager des applications
+			$managerApplication = $this->getManagers()->getManagerOf('Application');
+
+			// On récupère l'application via son ID
+			$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
+
+			// On oriente l'utilisateur selon le statut de dépôt de l'application.
+			if($application && ($application->getStatut()->getNomStatut()==='Inactive' || $application->getStatut()->getNomStatut()==='Validated' || $application->getStatut()->getNomStatut()==='Not validated')){
+				
+				// On charge les utilisateurs autorisés 
+				$idAuteursAutorises = array();
+				// On récupère le manager des Utilisateurs
+				$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
+				// On ajoute le créateur comme ID autorisé
+				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
+				foreach($application->getAuteurs() as $auteur){
+					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					if($utilisateur){
+						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
+					}
+				}
+
+				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
+					// On retourne l'application à la page
+					$this->page->addVar('application', $application);
+				}else{
+					// On ajoute la variable d'erreurs
+					$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
+				}
+			}else{
+				// On ajoute la variable d'erreurs
+				$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
+			}
+		}else{
+			// On procède à la redirection
+			$response = $this->app->getHTTPResponse();
+			$response->redirect('/');
+		}
+	}
+
+
+	/**
 	* Méthode pour récupérer les données de l'arbre de l'application
 	*/
 	public function executeDataApplication($request){

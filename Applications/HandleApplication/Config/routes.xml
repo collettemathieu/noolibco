@@ -2,6 +2,7 @@
 <routes>
 	<route url="/HandleApplication/" module="Defaut" action="show"/>
 
+	<route url="/HandleApplication/GetApplication" module="Tree" action="getApplication"/>
 	<route url="/HandleApplication/DataApplication" module="Tree" action="dataApplication"/>
 	<route url="/HandleApplication/ChangePictureApplication" module="Tree" action="changePictureApplication"/>
 	<route url="/HandleApplication/ChangeNameApplication" module="Tree" action="changeNameApplication"/>

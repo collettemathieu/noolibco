@@ -14,8 +14,13 @@
  * @version: 1
  */
 
-application.controller('mainController', ['$scope', '$http', '$window', '$uibModal', function($scope, $http, $window, $uibModal){
+application.controller('mainController', ['$scope', '$http', '$window', '$uibModal', 'applicationService' function($scope, $http, $window, $uibModal, applicationService){
 	
+	// Récupération des éléments de l'application
+	var applicationElement = document.querySelector('#application');
+	alert(applicationElement.idApplication);
+	//var application = applicationService->getApplication();
+
 	// Action lors de l'ouverture de la fenêtre modale "Logo"
 	$scope.logoApplicationModal = function(){
 		$uibModal.open({
