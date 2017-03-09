@@ -1,6 +1,12 @@
 <?php 
 if(isset($application)){
-	$reponse = $application;
+	$reponse = array(
+		'idApplication' => $application->getIdApplication(),
+		'nomApplication' => $application->getNomApplication(),
+		'descriptionApplication' => $application->getDescriptionApplication(),
+		'urlLogoApplication' => $application->getUrlLogoApplication(),
+		'motClesApplication' => $application->getMotCles()
+	);
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';
 	foreach($user->getMessageClient()->getErreurs() as $erreur){
