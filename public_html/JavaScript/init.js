@@ -43,7 +43,7 @@
 
 	// Pour modifier le design des inputs file
 	$('[type="file"]').filestyle({
-		buttonName: "btn-primary"
+		iconName: 'glyphicon-download-alt'
 	});
 
 	// Pour afficher l'aide à l'utilisateur
