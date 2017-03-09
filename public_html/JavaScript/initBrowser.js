@@ -88,7 +88,7 @@ if(isValid === null){
                 if(response['isValid'] === 1){
                 	setCookie('browser', 1);
                 }else{
-                    var texte = '<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>';
+                    var texte = '';
                         if(name != 'unknown' && name != 'ie'){
                             texte += 'This version of your browser ' + name+ ' is obsolete and NooLib can present unwanted malfunctions.<br/>';
                             texte += 'We recommend updating your current browser.';
