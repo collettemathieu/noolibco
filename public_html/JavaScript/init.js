@@ -42,9 +42,8 @@
 	$('.carousel').carousel('pause');
 
 	// Pour modifier le design des inputs file
-	$(":file").filestyle({
-		buttonName: "btn-primary",
-		iconName: "glyphicon-download-alt"
+	$('[type="file"]').filestyle({
+		buttonName: "btn-primary"
 	});
 
 	// Pour afficher l'aide à l'utilisateur
