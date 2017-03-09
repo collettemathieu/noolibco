@@ -40,7 +40,8 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		$uibModal.open({
 	      animation: true,
 	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/logoTemplate.html',
-	      controller: 'logoController'
+	      controller: 'logoController',
+	      scope: $scope
 	    });
 	}
 
