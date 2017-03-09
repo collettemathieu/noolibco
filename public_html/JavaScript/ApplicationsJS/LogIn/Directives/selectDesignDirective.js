@@ -13,12 +13,13 @@
  * @access: public
  * @version: 1
  */
-
+alert('là');
 application.directive('selectDesignDirective', function(){
 	return{
 		restrict: 'A',
 		require: 'ngModel',
 		link: function(scope, element){
+			alert('ici');
 			element.selectpicker();	
 		}
 	};
