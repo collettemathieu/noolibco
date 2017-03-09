@@ -48,6 +48,7 @@
 
 	// Pour modifier le design des select
 	$('select').selectpicker({
+		data-live-search="true"
 	});
 
 	// Pour afficher l'aide à l'utilisateur
