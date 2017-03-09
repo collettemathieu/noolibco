@@ -44,7 +44,7 @@
 	// Pour modifier le design des inputs file
 	$(":file").filestyle({
 		buttonName: "btn-primary",
-		iconName: "glyphicon-inbox"
+		iconName: "glyphicon-download-alt"
 	});
 
 	// Pour afficher l'aide à l'utilisateur

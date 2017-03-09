@@ -6,6 +6,7 @@
 <script type="text/javascript" src="/JavaScript/Frameworks/jquery.easing.1.3.min.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/jquery.jBreadCrumb.1.1.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/JavaScript/Frameworks/bootstrap-filestyle.min.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/angular.min.js"></script>
 
 <script type="text/javascript" src="https://code.highcharts.com/stock/highstock.js"></script>
