@@ -16,8 +16,6 @@
 
 application.controller('logoController', ['$scope', '$uibModalInstance', function($scope, $uibModalInstance){
 	
-	console.log($scope.application);
-
 	// Pour fermer la fenêtre modale
 	$scope.close = function(){
 		 $uibModalInstance.dismiss('cancel');
