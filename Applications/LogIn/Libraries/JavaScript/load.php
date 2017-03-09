@@ -6,6 +6,9 @@
 <script type="text/javascript" src="/JavaScript/initBrowser.js"></script>
 <script type="text/javascript" src="/JavaScript/displayInformationsClient.js"></script>
 
+<!-- Design -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
 <!-- Files JS -->
 <script type="text/javascript" src="/JavaScript/Frameworks/angular.min.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/angular-animate.min.js"></script>
