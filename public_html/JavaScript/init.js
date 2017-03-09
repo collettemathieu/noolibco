@@ -41,15 +41,13 @@
 	// Pour activer les carrousels
 	$('.carousel').carousel('pause');
 
-	// Pour modifier le design des inputs file
+	// Pour améliorer le design des inputs file
 	$('[type="file"]').filestyle({
 		iconName: 'glyphicon glyphicon-download-alt'
 	});
 
-	// Pour modifier le design des select
-	$('select').selectpicker({
-		data-live-search="true"
-	});
+	// Pour améliorer le design des select
+	$('select').selectpicker();
 
 	// Pour afficher l'aide à l'utilisateur
 	$('#helperButton').click(function(e){

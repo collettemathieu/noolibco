@@ -10,7 +10,7 @@
 					</div>
 					<div class="form-group">
 						<label for="categorieRecherche">Search by category :</label>
-						<select name="categorie" class="form-control">
+						<select name="categorie" class="form-control" data-live-search="true">
 							<option selected value="0">All categories</option>
 							<?php echo($categoriesAAfficher); ?>
 						</select>
