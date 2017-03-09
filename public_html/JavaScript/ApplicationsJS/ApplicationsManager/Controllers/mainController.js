@@ -25,7 +25,7 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 			displayInformationsClient(response);
 		}else{
 			$scope.application = response;
-			console.log($scope.application.nom);
+			console.log(response.nom);
 		}
 	}, function(error){
 		var response = {
