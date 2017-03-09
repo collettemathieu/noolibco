@@ -142,9 +142,6 @@ Go to https://www.noolib.com/Hire/ .
 		<script type="text/javascript" src="/JavaScript/Frameworks/bootstrap-filestyle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
-		<script type="text/javascript" src="/JavaScript/Frameworks/Highstock.js"></script>
-		<script type="text/javascript" src="/JavaScript/Frameworks/HighchartsExportingModule.js"></script>
-		
 		<!-- Critical scripts -->
 		<script type="text/javascript" src="/JavaScript/initBrowser.js"></script>
 

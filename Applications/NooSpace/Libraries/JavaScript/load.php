@@ -1,4 +1,6 @@
 <!-- FrameWorks and Libraries JS -->
+<script type="text/javascript" src="/JavaScript/Frameworks/Highstock.js"></script>
+<script type="text/javascript" src="/JavaScript/Frameworks/HighchartsExportingModule.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/screenFull.min.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/FileSaver.min.js"></script>
 
