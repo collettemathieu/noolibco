@@ -1,11 +1,11 @@
 <?php 
 if(isset($application)){
 	$reponse = array(
-		'idApplication' => $application->getIdApplication(),
-		'nomApplication' => $application->getNomApplication(),
-		'descriptionApplication' => $application->getDescriptionApplication(),
-		'urlLogoApplication' => $application->getUrlLogoApplication(),
-		'motClesApplication' => $application->getMotCles()
+		'id' => $application->getIdApplication(),
+		'nom' => $application->getNomApplication(),
+		'description' => $application->getDescriptionApplication(),
+		'urlLogo' => $application->getUrlLogoApplication(),
+		'motCles' => $application->getMotCles()
 	);
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';
