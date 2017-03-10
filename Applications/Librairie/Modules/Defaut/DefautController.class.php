@@ -46,7 +46,7 @@ class DefautController extends \Library\BackController
 		
 			if($categorie->getSurcategorie()->getNomSurcategorie() === $surCategorie){
 			
-				$categoriesAAfficher.='<option title="'.$categorie->getDescriptionCategorie().'" value="'.$categorie->getIdCategorie().'">'.$categorie->getNomCategorie().'</option>';
+				$categoriesAAfficher.='<option value="'.$categorie->getIdCategorie().'">'.$categorie->getNomCategorie().'</option>';
 			
 			}else{
 				$categoriesAAfficher .= '</optgroup>';
