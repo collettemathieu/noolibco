@@ -27,7 +27,7 @@
 						<form id="addPublicationForm" ng-submit="addPublication()" name="formAddPublication" class="well well-lg col-lg-12 centering">
 							<div class="form-group has-feedback" ng-class="{'has-error':formAddPublication.selectedType.$invalid && formAddPublication.selectedType.$dirty, 'has-success':formAddPublication.selectedType.$valid}">
 								<label for="typePublication">Select a type for your publication</label>
-								<select name="selectedType" required ng-options="type.nameType for type in types" ng-model="selectedType" class="form-control"></select>
+								<select name="selectedType" required ng-options="type.nameType for type in types" ng-model="selectedType" class="form-control" select-design-directive></select>
 							</div>
 							<div class="form-group has-feedback" ng-class="{'has-error':formAddPublication.titrePublication.$invalid && formAddPublication.titrePublication.$dirty, 'has-success':formAddPublication.titrePublication.$valid}">
 								<input type="text" ng-model="titrePublication" name="titrePublication" ng-minlength="3" ng-maxlength="300" required class="form-control" placeholder="Title of the publication"/>
