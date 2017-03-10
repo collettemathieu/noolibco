@@ -54,10 +54,8 @@ class UtilisateursController extends \Library\BackController
 			$statutAAfficher = '';
 			foreach($statuts as $statut)
 			{
-				if($statut->getIdStatut() != 1)
-				{
-					$statutAAfficher.='<option value="'.$statut->getIdStatut().'">'.$statut->getNomStatut().'</option>';
-				}
+				$statutAAfficher.='<option value="'.$statut->getIdStatut().'">'.$statut->getNomStatut().'</option>';
+				
 			}
 			$this->page->addVar('statutAAfficher', $statutAAfficher);
 			
