@@ -42,7 +42,7 @@
 	$('.carousel').carousel('pause');
 
 	// Pour améliorer le design des inputs file
-	$('[type="file"] [class!="withoutBootstrap"]').filestyle({
+	$('[type="file" class!="withoutBootstrap"]').filestyle({
 		iconName: 'glyphicon glyphicon-download-alt'
 	});
 
