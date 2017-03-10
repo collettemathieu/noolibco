@@ -67,10 +67,8 @@ class DefautController extends \Library\BackController
 		$statutAAfficher = '';
 		foreach($statuts as $statut)
 		{
-			if($statut->getIdStatut() != 1)
-			{
-				$statutAAfficher.='<option value="'.$statut->getNomStatut().'">'.$statut->getNomStatut().'</option>';
-			}
+			$statutAAfficher.='<option value="'.$statut->getNomStatut().'">'.$statut->getNomStatut().'</option>';
+			
 		}
 		$this->page->addVar('statutAAfficher', $statutAAfficher);
 	}
