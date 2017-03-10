@@ -205,13 +205,13 @@ form a{
 
 
 /* Pour le footer */
-ul{
+footer ul{
 	display: inline-block;
 	list-style-type: none;
 	padding: 0;
 }
 
-li{
+footer li{
 	display: inline-block;
 	cursor: pointer;
 }
