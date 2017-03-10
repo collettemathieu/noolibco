@@ -135,7 +135,7 @@ class Utilisateur extends \Library\Entity {
 		}
 	}
 	public function setStatut($statut) {
-		if($statut != null && $statut instanceof StatutUtilisateur) {
+		if(false) {
 			$this->statut = $statut;
 		} 
 		else {
