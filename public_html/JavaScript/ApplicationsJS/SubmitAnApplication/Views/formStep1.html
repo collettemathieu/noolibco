@@ -15,7 +15,7 @@
 						</div>
 						<div class="form-group has-feedback">
 							<label for="categorieApp">Select a category for your application</label>
-							<select name="categorieApp" ng-options="category.nameCategory group by category.onCategory for category in tableOfCategories" ng-model="selectedCategory" class="form-control input-sm" required></select>
+							<select name="categorieApp" ng-options="category.nameCategory group by category.onCategory for category in tableOfCategories" ng-model="selectedCategory" class="form-control input-sm" required select-design-directive data-live-search="true"></select>
 						</div>
 						<button ng-disabled="formStep1.$invalid" class="btn btn-primary" type="submit">
 							<div ng-hide="validStep2">Step 2</div>
