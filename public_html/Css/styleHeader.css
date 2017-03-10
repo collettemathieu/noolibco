@@ -47,3 +47,7 @@ header .modal-body li{
 	width: 100%;
 	z-index: 10000000;
 }
+
+.teamPicture{
+	display: inline-block;
+}
