@@ -108,8 +108,8 @@
 				<div class="modal-body">
 					<ul class="list-unstyled">
 						<li><h3>Authors (Thanks a lot)</h3>
-							<ul class="list-unstyled">
-								<li><img src="/Images/Team/profil_defaut.png">Léna Buron (2 months)</li>
+							<ul>
+								<li><img src="/Images/Team/profil_defaut.png"><p>Léna Buron (2 months)</p></li>
 								<li><img src="/Images/Team/profil_defaut.png">Corentin Chevallier (2 months)</li>
 								<li><img src="/Images/Team/profil_defaut.png">Guénaël Dequeker (5 months)</li>
 								<li><img src="/Images/Team/profil_defaut.png">Steve Despres (3 months)</li>
