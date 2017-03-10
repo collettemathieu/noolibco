@@ -246,7 +246,7 @@ class PDOStatutUtilisateurManager extends \Library\Models\StatutUtilisateurManag
 		$requete->closeCursor ();
 		
 		if (count($donnees) == 0) {
-			return false;
+			return null;
 		}
 		else {
 			$statut = $this->constructStatut($donnees[0]);
