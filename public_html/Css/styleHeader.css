@@ -51,4 +51,5 @@ header .modal-body li{
 .teamPicture{
 	display: inline-block;
 	width: 80px;
+	vertical-align: top;
 }
