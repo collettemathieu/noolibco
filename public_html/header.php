@@ -275,7 +275,7 @@
 			    <label id="labelSubmitLocalData">
 			        <img src="/Images/upload.png" data-html="true" data-toggle="popover" data-content=""/>
 			    </label>
-			    <input id="fileLocalData" name="urlLocalData" type="file"/>
+			    <input id="fileLocalData" name="urlLocalData" type="file" class="withoutBootstrap"/>
 				<form method="POST" enctype="multipart/form-data" id="formUploadLocalData">
 				    <input type="submit" name="submit" id="submitLocalData"/>
 				    <input type="hidden" value="" name="ext" id="extensionFichierData"/>
