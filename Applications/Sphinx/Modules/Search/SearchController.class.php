@@ -80,8 +80,7 @@ class SearchController extends \Library\BackController
 					}
 				}
 				if(!$val){
-					$idCategorieApplication = $applicationsBis[$i]->getCategorie()->getIdCategorie();
-					print_r($applicationsBis[$i]);
+					$idCategorieApplication = intval($applicationsBis[$i]->getCategorie()->getIdCategorie());
 					if($idCategorieApplication === $idCategorie || $idCategorie === 0){
 						if($applicationsBis[$i]->getStatut()->getIdStatut() > 4){
 							array_push($applications, $applicationsBis[$i]);
