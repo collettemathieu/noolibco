@@ -41,7 +41,7 @@ class SearchController extends \Library\BackController
 		// On récupère le contenu de cette requête: l'expression à rechercher et la catégorie.
 		$motRecherche = $request->getPostData('rechercheApplication');
 		$idCategorie = intval($request->getPostData('categorie'));
-		
+		echo $idCategorie; exit();
 		$this->page->addVar('motRecherche',$motRecherche);
 		
 		//On appelle le manager Sphinx

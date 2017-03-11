@@ -16,6 +16,7 @@
                   contentType: false,
                   processData: false,
                   success: function(response) {
+                        console.log(repsonse);
                   	btn.button('reset');
                   	$('#informationRecherche').html(response);
                   	
