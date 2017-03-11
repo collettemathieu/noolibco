@@ -41,7 +41,7 @@ class SearchController extends \Library\BackController
 		// On récupère le contenu de cette requête: l'expression à rechercher et la catégorie.
 		$motRecherche = $request->getPostData('rechercheApplication');
 		$idCategorie = intval($request->getPostData('categorie'));
-		echo $motRecherche; exit();
+		
 		
 		//On appelle le manager Sphinx
 		$managerSphinx = $this->getManagers()->getManagerOf('Sphinx');
@@ -81,6 +81,7 @@ class SearchController extends \Library\BackController
 				}
 				if(!$val){
 					$idCategorieApplication = $applicationsBis[$i]->getCategorie()->getIdCategorie();
+					echo $idCategorieApplication.' = '$idCategorie.; exit();
 					if($idCategorieApplication === $idCategorie || $idCategorie === 0){
 						if($applicationsBis[$i]->getStatut()->getIdStatut() > 4){
 							array_push($applications, $applicationsBis[$i]);
