@@ -46,7 +46,7 @@
 			<tr>
 				<td style="text-align: justify;">
 					<ul>
-						<li>You have received this message because a user need some help about the NooLib plateform.</li><br>
+						<li>You have received this message from the NooLib plateform.</li><br>
 						<li>You can response directly to the author of this email. If you do not want to response, your email will remain confidential for the sender.</li>
 					</ul>
 				</td>

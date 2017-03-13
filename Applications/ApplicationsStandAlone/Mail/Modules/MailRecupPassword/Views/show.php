@@ -55,7 +55,7 @@
 						<li>You will be redirected to a secured page in order to create a new password for your account.</li><br>
 					 	<li>The link above allows to guarantee your authentication on NooLib Web Application.</li><br>
 						<li>Whether you have received this message in error, please delete it.</li><br>
-						<li>For any questions, please contact: <a href="mailto:contactteam@noolib.com">contact@noolib.com</a></li><br>
+						<li>For any questions, please contact: <a href="mailto:contactteam@noolib.com">contactteam@noolib.com</a></li><br>
 					</ul>
 				</td>
 			</tr>
