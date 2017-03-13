@@ -47,7 +47,7 @@
 	});
 
 	// Pour améliorer le design des select
-	$('select').selectpicker();
+	$('select[class!="withoutBootstrap"]').selectpicker();
 
 	// Pour afficher l'aide à l'utilisateur
 	$('#helperButton').click(function(e){
