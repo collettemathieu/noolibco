@@ -108,20 +108,20 @@
 				<div class="modal-body">
 					<ul class="list-unstyled">
 						<li><h3>Authors (Thanks a lot)</h3>
-							<ul class="list-unstyled text-center centering">
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Léna Buron (2 months)</p></li>
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Corentin Chevallier (2 months)</p></li>
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Guénaël Dequeker (5 months)</p></li>
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Steve Despres (3 months)</p></li>
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Remi Dugue (2 months)</p></li>
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Antoine Fauchard (2 months)</p></li>
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Kévin Grosbois (1 month)</p></li>
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Baptiste Houssais (1 month)</p></li>
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Brian Le Bras (1 month)</p></li>
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Jean Mainguy (1 month)</p></li>
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Baptiste Maudet (2 months)</p></li>
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Yohann Pichois (1 month)</p></li>
-								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p>Clément Richard (1 month)</p></li>
+							<ul class="list-unstyled centering">
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Léna Buron (2 months)</p></li>
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Corentin Chevallier (2 months)</p></li>
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Guénaël Dequeker (5 months)</p></li>
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Steve Despres (3 months)</p></li>
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Remi Dugue (2 months)</p></li>
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Antoine Fauchard (2 months)</p></li>
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Kévin Grosbois (1 month)</p></li>
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Baptiste Houssais (1 month)</p></li>
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Brian Le Bras (1 month)</p></li>
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Jean Mainguy (1 month)</p></li>
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Baptiste Maudet (2 months)</p></li>
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Yohann Pichois (1 month)</p></li>
+								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Clément Richard (1 month)</p></li>
 							</ul>
 						</li>
 						<li><h3>Founder & author</h3><ul class="list-unstyled"><li class="teamPicture"><a href="/Profile/idAuteur=58"><img src="/Images/Team/profil_defaut.png"><p>Mathieu Collette</p></a></li></ul></li>
