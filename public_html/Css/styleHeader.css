@@ -53,9 +53,3 @@ header .modal-body li{
 	width: 80px;
 	vertical-align: top;
 }
-
-#infoNoolibApplication .modal-content{
-	width: 800px;
-	display: block;
-	margin: auto;
-}

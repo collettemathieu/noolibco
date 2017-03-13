@@ -97,7 +97,7 @@
 		<?php } ?>
 
 		<div id="infoNoolibApplication" class="modal fade" role="dialog">
-		  <div class="modal-dialog">
+		  <div class="modal-dialog modal-lg">
 
 		    <!-- Modal content-->
 		    <div class="modal-content">
@@ -124,7 +124,7 @@
 								<li class="teamPicture"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Clément Richard (1 month)</p></li>
 							</ul>
 						</li>
-						<li><h3>Founder & author</h3><ul class="list-unstyled"><li class="teamPicture"><a href="/Profile/idAuteur=58"><img src="/Images/Team/profil_defaut.png"><p>Mathieu Collette</p></a></li></ul></li>
+						<li><h3>Founder & author</h3><ul class="list-unstyled"><li class="teamPicture"><a href="/Profile/idAuteur=58"><img src="/Images/Team/profil_defaut.png"><p class="text-center">Mathieu Collette</p></a></li></ul></li>
 						<li><h3>Settings</h3>
 							<ul class="list-unstyled">
 								<li>Status: in development</li>
