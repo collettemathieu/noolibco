@@ -108,7 +108,7 @@
 				<div class="modal-body">
 					<ul class="list-unstyled">
 						<li><h3>Authors (Thanks a lot)</h3>
-							<ul class="list-unstyled centering">
+							<ul class="list-unstyled">
 								<li class="teamPicture"><span></span><p class="text-center">Léna Buron (2 months)</p></li>
 								<li class="teamPicture"><span></span><p class="text-center">Corentin Chevallier (2 months)</p></li>
 								<li class="teamPicture"><span></span><p class="text-center">Guénaël Dequeker (5 months)</p></li>
