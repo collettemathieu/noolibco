@@ -66,6 +66,7 @@ header .modal-body li{
 }
 
 .teamPicture:nth-child(2) span{
+	border: 1px red solid;
 	background-position: 120px 0px;
 }
 
