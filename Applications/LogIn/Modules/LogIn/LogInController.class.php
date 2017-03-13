@@ -556,10 +556,23 @@ class LogInController extends \Library\BackController{
 						$managerUser->saveUtilisateur($userVerif);
 						$user->getMessageClient()->addReussite(self::LOGIN_ACCOUNT_ACTIVATED);
 
-						// Execution du script Bash pour créer un utilisateur linux
+						// Execution du script Bash pour créer les répertoires de l'utilisateur linux
 						// On execute l'objet Exec
 						$exec = $this->getApp()->getExec();
 						$exec->createUser($userVerif);
+
+						// Envoi d'un email à hostmaster pour information qu'un nouvel utilisateur s'est inscrit
+						$variablesArray = array(
+							'mailUtilisateur' => $userVerif->getMailUtilisateur(),
+							'titreMessage' => 'New user subscribed :-)',
+							'messageMail' => 'A new user has been subscribed on NooLib. This name is '.$userVerif->getPrenomUtilisateur().' '.strtoupper($userVerif->getNomUtilisateur())
+						);
+
+						// On envoi un mail à l'auteur
+						// On place la variable en Flash pour qu'elle soit récupérée par l'application Mail
+						$user->setFlash($variablesArray);
+						$mailApplication = new \Applications\ApplicationsStandAlone\Mail\MailApplication;
+						$mailApplication->execute('SendMailToNooLib', 'sendAMessage'); // Module = SendMailToNooLib ; action = sendAMessage
 					}
 				}else{
 					$user->getMessageClient()->addErreur(self::LOGIN_WRONG_EMAIL);
