@@ -295,13 +295,13 @@
 										</tr>
 										<tr>
 											<td>
-												<select size="4" select-design-directive required ng-options="institution.name for institution in institutions track by institution.id" name="selectedInstitution" ng-model="selectedInstitution"></select>
+												<select size="4" required ng-options="institution.name for institution in institutions track by institution.id" name="selectedInstitution" ng-model="selectedInstitution" select-design-directive></select>
 											</td>
 											<td>
-												<select size="4" select-design-directive required ng-options="laboratory.name for laboratory in laboratories track by laboratory.id" name="selectedLaboratory" ng-model="selectedLaboratory"></select>
+												<select size="4" required ng-options="laboratory.name for laboratory in laboratories track by laboratory.id" name="selectedLaboratory" ng-model="selectedLaboratory" select-design-directive></select>
 											</td>
 											<td>
-												<select size="4" select-design-directive required ng-options="team.name for team in teams track by team.id" name="selectedTeam" ng-model="selectedTeam"></select>
+												<select size="4" required ng-options="team.name for team in teams track by team.id" name="selectedTeam" ng-model="selectedTeam" select-design-directive></select>
 											</td>
 										</tr>
 									</table>
