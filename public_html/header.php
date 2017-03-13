@@ -124,7 +124,7 @@
 								<li class="teamPicture"><span></span><p class="text-center">Clément Richard (1 month)</p></li>
 							</ul>
 						</li>
-						<li><h3>Founder & author</h3><ul class="list-unstyled"><li class="teamPicture"><a href="/Profile/idAuteur=58"><span></span><p class="text-center">Mathieu Collette</p></a></li></ul></li>
+						<li><h3>Founder & author</h3><ul class="list-unstyled"><li class="teamPicture founder"><a href="/Profile/idAuteur=58"><span></span><p class="text-center">Mathieu Collette</p></a></li></ul></li>
 						<li><h3>Settings</h3>
 							<ul class="list-unstyled">
 								<li>Status: in development</li>
