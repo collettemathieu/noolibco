@@ -114,7 +114,10 @@ header .modal-body li{
 	background-position: -360px -120px;
 }
 /* Mathieu */
-.founder span{
-	border: 1px red solid;
+.founder{
+	display: block;
+	width: 120px;
+	height: 120px;
+	background: url("/Images/NooLibTeam/spritesheet.jpg") no-repeat;
 	background-position: 0px -240px;
 }
