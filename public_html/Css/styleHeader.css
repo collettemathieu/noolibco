@@ -55,6 +55,8 @@ header .modal-body li{
 }
 
 .teamPicture span{
+	display: inline-block;
+	border: 1px red solid;
 	width: 80px;
 	height: 80px;
 	background:url("/Images/NooLibTeam/spritesheet.jpg") no-repeat;
