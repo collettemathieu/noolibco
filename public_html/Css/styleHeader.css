@@ -96,3 +96,23 @@ header .modal-body li{
 .teamPicture:nth-child(12) span{
 	background-position: -240px -240px;
 }
+
+.teamPicture:nth-child(3) span{
+	background-position: 0px -360px;
+}
+
+.teamPicture:nth-child(7) span{
+	background-position: 0px -360px;
+}
+
+.teamPicture:nth-child(8) span{
+	background-position: 0px -360px;
+}
+
+.teamPicture:nth-child(11) span{
+	background-position: 0px -360px;
+}
+
+.teamPicture:nth-child(13) span{
+	background-position: 0px -360px;
+}
