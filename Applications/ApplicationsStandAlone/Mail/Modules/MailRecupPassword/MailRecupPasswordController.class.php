@@ -35,7 +35,7 @@ class MailRecupPasswordController extends \Library\BackController{
 		// On récupère la variable Flash
 		$mailUtilisateur = $user->getFlash();
 
-		$expediteur = 'contact@noolib.com';
+		$expediteur = 'contactteam@noolib.com';
 
 		//On définit le titre du mail
 		$titre = self::MAIL_RESET_PASSWORD;

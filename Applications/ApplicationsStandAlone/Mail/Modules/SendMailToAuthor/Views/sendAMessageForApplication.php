@@ -49,7 +49,7 @@
 						<li>You have received this email because your application <?php echo $nomApplication;?> is currently not validated by scientific publications on NooLib. Your correspondent could propose to work with you in order to validate your application.</li><br>
 						<li>You can response directly to the author of this email. If you do not want to response, your email will remain confidential for the sender.</li><br>
 						<li>If you have received this email in error, please notify the system manager <a href="mailto:contact@noolib.com">contact@noolib.com</a>. This message contains confidential information and is intended only for the individual named. If you are not the named addressee you should not disseminate, distribute or copy this e-mail.</li><br>
-						<li>For further informations, please contact : <a href="mailto:contact@noolib.com">contact@noolib.com</a></li><br>
+						<li>For further informations, please contact : <a href="mailto:contactteam@noolib.com">contact@noolib.com</a></li><br>
 					</ul>
 				</td>
 			</tr>

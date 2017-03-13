@@ -11,8 +11,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
 <!-- Files JS -->
-<script type="text/javascript" src="/JavaScript/Frameworks/angular.min.js"></script>
-<script type="text/javascript" src="/JavaScript/Frameworks/angular-animate.min.js"></script>
+<script type="text/javascript" src="https://code.angularjs.org/1.5.9/angular.min.js"></script>
+<script type="text/javascript" src="https://code.angularjs.org/1.5.9/angular-animate.min.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/ui-bootstrap-tpls-1.2.5.min.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/LogIn/applicationRun.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/LogIn/Controllers/logInController.js"></script>
