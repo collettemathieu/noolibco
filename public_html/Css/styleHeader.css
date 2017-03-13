@@ -54,10 +54,6 @@ header .modal-body li{
 	vertical-align: top;
 }
 
-.teamPicture p{
-	width: 80px;
-}
-
-#infoNoolibApplication .modal-body{
+#infoNoolibApplication .modal-content{
 	width: 900px;
 }
