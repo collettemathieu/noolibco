@@ -66,34 +66,33 @@ header .modal-body li{
 }
 
 .teamPicture:nth-child(2) span{
-	border: 1px red solid;
 	background-position: -120px 0px;
 }
 
 .teamPicture:nth-child(3) span{
-	background-position: 240px 0px;
+	background-position: -240px 0px;
 }
 
 .teamPicture:nth-child(4) span{
-	background-position: 0px 120px;
+	background-position: 0px -120px;
 }
 
 .teamPicture:nth-child(5) span{
-	background-position: 120px 120px;
+	background-position: -120px -120px;
 }
 
 .teamPicture:nth-child(6) span{
-	background-position: 240px 120px;
+	background-position: -240px -120px;
 }
 
 .teamPicture:nth-child(7) span{
-	background-position: 0px 240px;
+	background-position: 0px -240px;
 }
 
 .teamPicture:nth-child(8) span{
-	background-position: 120px 240px;
+	background-position: -120px -240px;
 }
 
 .teamPicture:nth-child(9) span{
-	background-position: 240px 240px;
+	background-position: -240px -240px;
 }
