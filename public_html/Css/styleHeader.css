@@ -54,10 +54,45 @@ header .modal-body li{
 	vertical-align: top;
 }
 
-.teamPicture:first-child span{
+.teamPicture span{
 	display: inline-block;
 	width: 120px;
 	height: 120px;
 	background: url("/Images/NooLibTeam/spritesheet.jpg") no-repeat;
+}
+
+.teamPicture:first-child span{
 	background-position: 0px 0px;
+}
+
+.teamPicture:nth-child(2) span{
+	background-position: 120px 0px;
+}
+
+.teamPicture:nth-child(3) span{
+	background-position: 240px 0px;
+}
+
+.teamPicture:nth-child(4) span{
+	background-position: 0px 120px;
+}
+
+.teamPicture:nth-child(5) span{
+	background-position: 120px 120px;
+}
+
+.teamPicture:nth-child(6) span{
+	background-position: 240px 120px;
+}
+
+.teamPicture:nth-child(7) span{
+	background-position: 0px 240px;
+}
+
+.teamPicture:nth-child(8) span{
+	background-position: 120px 240px;
+}
+
+.teamPicture:nth-child(9) span{
+	background-position: 240px 240px;
 }
