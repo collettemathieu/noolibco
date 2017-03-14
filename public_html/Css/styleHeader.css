@@ -88,27 +88,27 @@ header .modal-body li{
 }
 /* Kevin */
 .teamPicture:nth-child(7) span{
-	background-position: -240px 0px;
+	background-position: 0px -240px;
 }
 /* Baptiste Houssais */
 .teamPicture:nth-child(8) span{
-	background-position: -360px 0px;
+	background-position: 0px -360px;
 }
 /* Brian */
 .teamPicture:nth-child(9) span{
-	background-position: 0px -120px;
+	background-position: -120px 0px;
 }
 /* Jean */
 .teamPicture:nth-child(10) span{
-	background-position: -120px -240px;
+	background-position: -240px -120px;
 }
 /* Baptiste Maudet */
 .teamPicture:nth-child(11) span{
-	background-position: -360px 0px;
+	background-position: 0px -360px;
 }
 /* Yohann */
 .teamPicture:nth-child(12) span{
-	background-position: -240px -360px;
+	background-position: -360px -240px;
 }
 /* Clément */
 .teamPicture:nth-child(13) span{
