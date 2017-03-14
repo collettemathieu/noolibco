@@ -61,13 +61,14 @@ header .modal-body li{
 	background: url("/Images/NooLibTeam/spritesheet.jpg") no-repeat;
 }
 
+/* background-position: (colonne)px (ligne)px; */
 /* Léna */
 .teamPicture:nth-child(1) span{
-	background-position: -240px -120px;
+	background-position: -120px -240px;
 }
 /* Corentin */
 .teamPicture:nth-child(2) span{
-	background-position: -120px 0px;
+	background-position: 0px -120px;
 }
 /* Guénaël */
 .teamPicture:nth-child(3) span{
@@ -75,11 +76,11 @@ header .modal-body li{
 }
 /* Steve */
 .teamPicture:nth-child(4) span{
-	background-position: -120px -360px;
+	background-position: -360px -120px;
 }
 /* Rémi */
 .teamPicture:nth-child(5) span{
-	background-position: 0px -360px;
+	background-position: -360px 0px;
 }
 /* Antoine */
 .teamPicture:nth-child(6) span{
@@ -111,7 +112,7 @@ header .modal-body li{
 }
 /* Clément */
 .teamPicture:nth-child(13) span{
-	background-position: 0px -240px;
+	background-position: -240px 0px;
 }
 /* Mathieu */
 .founder{
@@ -119,5 +120,5 @@ header .modal-body li{
 	width: 120px;
 	height: 120px;
 	background: url("/Images/NooLibTeam/spritesheet.jpg") no-repeat;
-	background-position: -360px -240px;
+	background-position: -240px -240px;
 }
