@@ -2,9 +2,9 @@
 namespace Library;
 
 // +----------------------------------------------------------------------+
-// | PHP Version 5                                                        |
+// | PHP Version 7                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2014 NooLib                                            |
+// | Copyright (c) 2017 NooLib                                            |
 // +----------------------------------------------------------------------+
 // | Classe abstraite PHP BackController pour les contrôleurs des   	  |
 // | applications constituant l'architecture de la plateforme NooLib.     |
