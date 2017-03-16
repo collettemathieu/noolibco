@@ -55,5 +55,15 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	    });
 	}
 
+	// Action lors de l'ouverture de la fenêtre modale "Description"
+	$scope.descriptionApplicationModal = function(){
+		$uibModal.open({
+	      animation: true,
+	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/descriptionTemplate.html',
+	      controller: 'descriptionController',
+	      scope: $scope
+	    });
+	}
+
 }]);
 

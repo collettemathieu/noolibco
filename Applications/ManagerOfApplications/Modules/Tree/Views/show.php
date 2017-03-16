@@ -23,7 +23,7 @@
 							<a id="testInNooSpace" class="infoBulle pull-right btn btn-primary btn-margin btn-lg" href="/NooSpace/a=<?php echo $app->getIdApplication();?>v=<?php echo $app->getVersions()[count($app->getVersions())-1]->getIdVersion();?>" target="_blank" title="Test it in the noospace"><i class="glyphicon glyphicon-log-out"></i></a>
 							<button type="button" class="infoBulle pull-right btn btn-info btn-margin btn-lg" data-toggle="modal" href="#addPublication" title="Manage its publications"><i class="glyphicon glyphicon-education"></i></button>
 							<button type="button" class="infoBulle pull-right btn btn-success btn-margin btn-lg" data-toggle="modal" href="#modifierAuteursApplication" title="Manage its authors"><i class="glyphicon glyphicon-user"></i></button>
-							<button type="button" class="infoBulle pull-right btn btn-default btn-margin btn-lg" data-toggle="modal" href="#modifierDescriptionApplication" title="Edit its description, category and keywords"><i class="glyphicon glyphicon-tags"></i></button>
+							<button type="button" class="infoBulle pull-right btn btn-default btn-margin btn-lg" ng-click="descriptionApplicationModal()" title="Edit its description, category and keywords"><i class="glyphicon glyphicon-tags"></i></button>
 						</div>
 					</div>
 					<div class="col-lg-12"><hr></div>
@@ -95,46 +95,6 @@
 									<textarea class="form-control input-lg" name="descriptionVersionApplication" id="descriptionVersionApplication" placeholder="Short description..." cols="10" maxlength="100"></textarea>
 								</div>
 								<input type="hidden" name="idApp" value="<?php echo $app->getIdApplication();?>"/>
-								<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">Send</button>
-							</form>
-						</div>
-					</div>
-				</div>
-	      	</div>
-	    </div>
-	  </div>
-	</div>
-
-
-	<div id="modifierDescriptionApplication" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-
-	    <!-- Modal content-->
-	    <div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">x</button>
-				<h2 class="modal-title">Change attributs of <?php echo $app->getNomApplication();?></h2>
-			</div>
-			<div class="modal-body">
-				<div class="container-fluid">
-					<div class="row-fluid">
-						<div class="col-lg-10 centering">
-							<form id="formDescriptionApplication" class="well well-lg">
-								<div class="form-group">
-									<label for="descriptionApp">Enter a short description for this application (>50 chars).</label>
-									<textarea name="descriptionApp" id="descriptionApp" class="form-control input-lg"><?php if($app!=null && $app->getDescriptionApplication() != null){echo $app->getDescriptionApplication();}?></textarea>
-								</div>
-								<div class="form-group">
-									<label for="categorieApp">Select a new category for this application</label>
-									<select name="categorieApp" id="categorieApp" class="form-control input-sm">
-										<?php echo $categoriesAAfficher; ?>
-									</select>
-								</div>
-								<div class="form-group">
-									<label for="motsClesApp">Add/remove some keywords for this application (comma-separated keywords)</label>
-									<input type="text" id="motsClesApp" name="motsClesApp" class="form-control input-lg" <?php if($app!=null && $app->getMotCles() != null){echo 'value="'.implode(', ',$app->getMotCles()).'"';}?>/>
-									<input type="hidden" name="idApp" value="<?php echo $app->getIdApplication();?>"/>
-								</div>
 								<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">Send</button>
 							</form>
 						</div>
@@ -346,7 +306,7 @@
 	    <div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">x</button>
-				<h2 class="modal-title">Do you want to delete <?php echo $app->getNomApplication();?> permanently ?</h2>
+				<h2 class="modal-title">Do you want to delete it permanently?</h2>
 			</div>
 			<div class="modal-body">
 				<div class="container-fluid">
