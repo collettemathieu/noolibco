@@ -366,6 +366,9 @@ class TreeController extends \Library\BackController
 										// On retourne un message de confirmation
 										$user->getMessageClient()->addReussite(self::TREE_PICTURE_APPLICATION_EDITED);
 
+										// On retourne l'application à la page
+										$this->page->addVar('application', $application);
+
 									}else{
 										// On ajoute la variable d'erreurs
 										$user->getMessageClient()->addErreur($file->getErreurs());

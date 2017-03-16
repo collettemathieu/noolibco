@@ -33,7 +33,7 @@ application.controller('controllerStep2', ['$scope', '$http', '$location', funct
 			})
 			.success(function(response){
 				if(response['reussites']){
-					$location.url('/SubmitAnApplicationStep3/');
+					$location.url('/SubmitAnApplicationStep3/'); // Changement d'URL
 					$location.replace(); // Permet de ne pas créer d'historique
 				}else{
 					displayInformationsClient(response);

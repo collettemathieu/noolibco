@@ -14,3 +14,4 @@
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Services/applicationService.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/mainController.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/logoController.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Directives/logoApplicationValidator.js"></script>
