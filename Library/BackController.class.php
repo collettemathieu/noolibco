@@ -36,7 +36,7 @@ abstract class BackController extends ApplicationComponent
 	const NO_TASK = 'The task asked does not exist.';
 	const NO_FUNCTION = 'The function asked does not exist.';
 	const NO_PARAMETER = 'The parameter asked does not exist.';
-	const APPLICATION_NOT_ACTIVATED = 'This application is not activated. Please stay tune !';
+	const APPLICATION_NOT_ACTIVATED = 'This application is not activated. Please stay tune!';
 	const APPLICATION_HAS_NO_TASK = 'This application has no task or no data as parameter.';
 	const APPLICATION_HAS_NO_MULE = 'The mule of this application cannot be loaded.';
 	const DENY_HANDLE_DATA = 'You are not authorized to edit this data.';
@@ -62,7 +62,7 @@ abstract class BackController extends ApplicationComponent
 	/* AddData controller */
 	const ADD_DATA_MEMORY_EXCEEDED = 'The size of data exceeds the limit authorized. Please try again with a smaller interval.';
 	const ADD_DATA_LOADED_DATA = 'The data is now loaded in your data manager.';
-	const ADD_DATA_NO_DATA_SENT = 'No data has been sent. Please try again !';
+	const ADD_DATA_NO_DATA_SENT = 'No data has been sent. Please try again!';
 	const ADD_DATA_DATA_NOT_TAKEN_INTO_ACCOUNT = 'Sorry, this format of data is not yet taken into account by NooLib.';
 	const ADD_DATA_ERROR_ENCODING = 'An error while encoding has occurred.';
 	const ADD_DATA_DATA_ALREADY_LOADED = 'A data request is already loading. Please wait a while.';
@@ -108,7 +108,7 @@ abstract class BackController extends ApplicationComponent
 	const TREE_ADD_PUBLICATION_ARG_EMPTY = 'Please, enter a valid DOI for your article.';
 	const TREE_DOI_NOT_FOUND = 'Sorry, the DOI entered does not match with any article.';
 	const TREE_VERSION_NOT_FOUND = 'Sorry, the version of this application has not been found.';
-	const TREE_VERSION_NOT_ACTIVATED = 'Sorry, any version of this application is activated. Please, stay tune !';
+	const TREE_VERSION_NOT_ACTIVATED = 'Sorry, any version of this application is activated. Please, stay tune!';
 	const TREE_VERSION_ALREADY_EXIST = 'Sorry, you cannot use twice the same version of the application.';
 	const TREE_VERSION_WRONG = 'Enter a valid name of version (eg. 1.0.0).';
 
@@ -117,7 +117,7 @@ abstract class BackController extends ApplicationComponent
 
 	/* Mail */
 	const MAIL_MESSAGE_SENT = 'Your message has been sent successfully.';
-	const MAIL_SUBSCRIPTION = 'Welcome to NooLib Web Application !';
+	const MAIL_SUBSCRIPTION = 'Welcome to NooLib Web Application!';
 	const MAIL_RESET_PASSWORD = 'Reset your password.';
 
 	/* Backend */
@@ -135,21 +135,21 @@ abstract class BackController extends ApplicationComponent
 	/* LogIn controller */
 	const LOGIN_ACCOUNT_NOT_ACTIVATED = 'You have not yet activated your account. Check your email.';
 	const LOGIN_WRONG_PASSWORD = 'The password entered does not match with your account.';
-	const LOGIN_WRONG_EMAIL = 'This e-mail address is not registered on NooLib.';
+	const LOGIN_WRONG_EMAIL = 'This email address is not registered on NooLib.';
 	const LOGIN_INVALID_LINK_ACTIVATE_ACCOUNT = 'This link has expired. Please try to register again.';
 	const LOGIN_INVALID_LINK_RESET_PASSWORD = 'This link has expired. Please try to reset your password again.';
-	const LOGIN_ACCOUNT_ALDREADY_ACTIVATED = 'Your account is already activated. You can log to NooLib !';
-	const LOGIN_ACCOUNT_ACTIVATED = 'Your account is now activated. You can log !';
+	const LOGIN_ACCOUNT_ALDREADY_ACTIVATED = 'Your account is already activated. You can log to NooLib!';
+	const LOGIN_ACCOUNT_ACTIVATED = 'Your account is now activated. You can log!';
 	const LOGIN_ALREADY_LOGGED = 'Your are already logged.';
-	const LOGIN_ENTER_VALID_EMAIL = 'Enter a valid e-mail address.';
-	const LOGIN_RESET_PASSWORD = 'An e-mail has been sent to you with a link to reset your password.';
+	const LOGIN_ENTER_VALID_EMAIL = 'Enter a valid email address.';
+	const LOGIN_RESET_PASSWORD = 'An email has been sent to you with a link to reset your password.';
 	const LOGIN_PASSWORD_EDITED = 'Your new password has been edited successfully.';
 	const LOGIN_WELCOME = 'Welcome';
 	const LOGIN_MAIL_NOT_VALID = 'The email entered is not valid.';
 
 	/* Inscription controller */
-	const INSCRIPTION_ALREADY_REGISTRED = 'You appear to be a registered user. Please log in !';
-	const INSCRIPTION_REGISTRATION_SUCCESSFUL = 'Your registration has been successful submitted. Please confirm your e-mail of registration in order to activate your account.';
+	const INSCRIPTION_ALREADY_REGISTRED = 'You appear to be a registered user. Please log in!';
+	const INSCRIPTION_REGISTRATION_SUCCESSFUL = 'Your registration has been successfully submitted. Please confirm your email of registration in order to activate your account.';
 	const INSCRIPTION_USER_ALREADY_LOGGED = 'Your appear to be already logged.';
 
 	/* Helper */
@@ -158,7 +158,7 @@ abstract class BackController extends ApplicationComponent
 	/* Settings */
 	const SETTINGS_NOT_AUTHORIZE_TO_REMOVE = 'Your are not authorized to remove this account user.';
 	const SETTINGS_PASSWORD_INCORRECT = 'The password entered is incorrect.';
-	const SETTINGS_ACCOUNT_REMOVED = 'Your account has been well removed. See you soon !';
+	const SETTINGS_ACCOUNT_REMOVED = 'Your account has been well removed. See you soon!';
 	const SETTINGS_WALLPAPER_CHANGED = 'The wallpaper has been well edited.';
 	const SETTINGS_DEFAULT_WALLPAPER = 'The default wallpaper has been restored.';
 	const SETTINGS_DEFAULT_WALLPAPER_ALREADY_RESTORED = 'The default wallpaper is already restored.';
@@ -173,7 +173,7 @@ abstract class BackController extends ApplicationComponent
 	const PROFILE_STATUS_NOT_EXIST = 'The status selected does not exist.';
 	const PROFILE_DESCRIPTION_CHANGED = 'Your description has been edited successfully.';
 	const PROFILE_PAGE_CHANGED = 'The link to your personal page has been edited successfully.';
-	const PROFILE_EMAIL_CHANGED = 'Your e-mail address has been edited successfully.';
+	const PROFILE_EMAIL_CHANGED = 'Your email address has been edited successfully.';
 	const PROFILE_SURNAME_CHANGED = 'Your surname has been edited successfully.';
 	const PROFILE_NAME_CHANGED = 'Your name has been edited successfully.';
 	const PROFILE_CONTACT_NOT_EXIST = 'This user does not exist anymore.';

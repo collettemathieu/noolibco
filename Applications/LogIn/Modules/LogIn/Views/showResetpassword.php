@@ -3,7 +3,7 @@
 			<div class="col-lg-12 fadeIn">
 				<div class="col-lg-6">
 					<h1>Reset your password.</h1>
-					<h2>Enter a new password of at least eight letters in length with at least one number, uppercase and lowercase.</h2>
+					<h2>Enter a new password of at least eight characters in length with at least one number, uppercase and lowercase.</h2>
 				</div>
 
 				<form class="well well-lg col-lg-5" method="post" action="/LogIn/ResetPassword/">

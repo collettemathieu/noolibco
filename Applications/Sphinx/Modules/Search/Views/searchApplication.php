@@ -2,7 +2,7 @@
 	<?php if($absenceResultat) { ?>
 		<div class="alert alert-dismissable alert-danger">
 			<button type="button" class="close" data-dismiss="alert">×</button>
-			No result found !
+			No result found!
 		</div>
 	<?php } else { ?>
 
@@ -33,6 +33,6 @@
 <?php }else{ ?>
 <div class="alert alert-dismissable alert-warning">
 	<button type="button" class="close" data-dismiss="alert">×</button>
-	Please enter at least a keyword for your search !
+	Please enter at least a keyword for your search!
 </div>
 <?php } ?>

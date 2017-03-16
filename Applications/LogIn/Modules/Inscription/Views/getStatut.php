@@ -13,7 +13,7 @@ if($user->getMessageClient()->hasErreur()){
 	);
 }else{
 	$reponse = array(
-		'erreurs' => '[Server] An system error has occurred.'
+		'erreurs' => 'A system error has occurred.'
 	);
 }
 

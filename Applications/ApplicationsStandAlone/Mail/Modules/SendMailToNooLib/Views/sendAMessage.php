@@ -35,7 +35,7 @@
 		<table border="0" cellpadding="0" cellspacing="0" width="100%">
 			<tr>
 				<td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-					<h3>Message from an user</h3>
+					<h3>Message from a user</h3>
 				</td>
 			</tr>
 			<tr>
@@ -47,7 +47,7 @@
 				<td style="text-align: justify;">
 					<ul>
 						<li>You have received this message from the NooLib plateform.</li><br>
-						<li>You can response directly to the author of this email. If you do not want to response, your email will remain confidential for the sender.</li>
+						<li>You can reply directly to the author of this email. If you do not want to respond, your email will remain confidential for the sender.</li>
 					</ul>
 				</td>
 			</tr>

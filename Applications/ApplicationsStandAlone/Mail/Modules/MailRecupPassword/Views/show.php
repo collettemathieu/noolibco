@@ -35,7 +35,7 @@
 		<table border="0" cellpadding="0" cellspacing="0" width="100%">
 			<tr>
 				<td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-					<h3>Forgotten password !</h3>
+					<h3>Forgotten password!</h3>
 				</td>
 			</tr>
 			<tr>
@@ -51,10 +51,10 @@
 			<tr>
 				<td style="text-align: justify;">
 					<ul>
-						<li>The link remains valid during 5 minutes.</li><br>
+						<li>The link remains valid for 5 minutes.</li><br>
 						<li>You will be redirected to a secured page in order to create a new password for your account.</li><br>
-					 	<li>The link above allows to guarantee your authentication on NooLib Web Application.</li><br>
-						<li>Whether you have received this message in error, please delete it.</li><br>
+					 	<li>The above link allows your authentication on NooLib Web Application to be guaranteed.</li><br>
+						<li>If you have received this message in error, please delete it.</li><br>
 						<li>For any questions, please contact: <a href="mailto:contactteam@noolib.com">contactteam@noolib.com</a></li><br>
 					</ul>
 				</td>
