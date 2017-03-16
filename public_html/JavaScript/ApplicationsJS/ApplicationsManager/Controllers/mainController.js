@@ -45,5 +45,15 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	    });
 	}
 
+	// Action lors de l'ouverture de la fenêtre modale "Name"
+	$scope.nameApplicationModal = function(){
+		$uibModal.open({
+	      animation: true,
+	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/nameTemplate.html',
+	      controller: 'nameController',
+	      scope: $scope
+	    });
+	}
+
 }]);
 

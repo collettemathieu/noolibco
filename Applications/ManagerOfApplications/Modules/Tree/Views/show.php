@@ -7,7 +7,7 @@
 							<a ng-click="logoApplicationModal()">
 								<img class="infoBulle" data-toggle="tooltip" title="Edit its logo" ng-src="data:image/png;charset=utf8;base64,{{application.urlLogo}}"/>
 							</a>
-							<a data-toggle="modal" href="#changerNameApplication">
+							<a ng-click="nameApplicationModal()">
 								<h3 class="infoBulle" data-toggle="tooltip" title="Edit its name">{{application.nom}}</h3>
 							</a>
 							<button type="button" class="infoBulle pull-right btn btn-danger btn-margin btn-lg" data-toggle="modal" href="#supprimerApplication" title="Delete it"><i class="glyphicon glyphicon-trash"></i></button>

@@ -306,7 +306,7 @@ class TreeController extends \Library\BackController
 					// On charge l'objet File avec la configuration du logo de l'application
 					
 					$tagName= array( 'categorie' => 'application', 'sousCategorie' => 'logo');
-					$file = $this->getApp()->getFileUpload('logoApplication', $tagName);
+					$file = $this->getApp()->getFileUpload('logoApp', $tagName);
 					
 					if(count($file->getErreurs()) == 0){
 						
@@ -449,7 +449,7 @@ class TreeController extends \Library\BackController
 				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
 					// On met à jour l'objet App avec le nouveau logo de l'application
 					$application->hydrate(array(
-						'nomApplication' => $request->getPostData('nameApplication')
+						'nomApplication' => $request->getPostData('nomApp')
 						));
 
 					// On contrôle qu'il n'y a pas eu d'erreurs
@@ -469,6 +469,9 @@ class TreeController extends \Library\BackController
 
 							// On retourne un message de confirmation
 							$user->getMessageClient()->addReussite(self::TREE_NAME_CHANGED_SUCCESSFULLY);
+
+							// On retourne l'application à la page
+							$this->page->addVar('application', $application);
 						}else{
 							// On ajoute la variable d'erreurs
 							$user->getMessageClient()->addErreur(self::TREE_CHANGE_NAME);

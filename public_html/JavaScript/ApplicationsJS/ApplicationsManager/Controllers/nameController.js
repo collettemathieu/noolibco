@@ -14,7 +14,7 @@
  * @version: 1
  */
 
-application.controller('logoController', ['$scope', '$uibModalInstance', '$http', function($scope, $uibModalInstance, $http){
+application.controller('nameController', ['$scope', '$uibModalInstance', '$http', 'invalidNameTooShort',function($scope, $uibModalInstance, $http, invalidNameTooShort){
 	
 	// Position par defaut du bouton envoyer
 	$scope.displayButtonForm = false;
@@ -24,22 +24,25 @@ application.controller('logoController', ['$scope', '$uibModalInstance', '$http'
 		 $uibModalInstance.dismiss('cancel');
 	};
 
+	// On renseigne les variables d'information
+	$scope.infoInvalidNameApplication = invalidNameTooShort;
+
 	// Pour soumettre le formulaire
 	$scope.validFormLogo = function(){
-		if($scope.formLogoApp.$valid){
+		if($scope.formNameApp.$valid){
 			$scope.displayButtonForm = true;
 
-			var form = document.querySelector('#formLogoApp'),
+			var form = document.querySelector('#formNameApp'),
 				formData = new FormData(form);
 			$http({
 				method: 'POST',
-				url: '/HandleApplication/ChangePictureApplication',
+				url: '/HandleApplication/ChangeNameApplication',
 				headers: {'Content-Type': undefined},
 				data: formData
 			})
 			.success(function(response){
-				if(response['urlLogo']){
-					$scope.application.urlLogo = response['urlLogo'];
+				if(response['nameApplication']){
+					$scope.application.nom = response['nameApplication'];
 				}
 
 				displayInformationsClient(response);
