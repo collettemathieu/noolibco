@@ -105,34 +105,6 @@
 	  </div>
 	</div>
 
-	<div id="changerNameApplication" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-
-	    <!-- Modal content-->
-	    <div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">x</button>
-				<h2 class="modal-title">Edit the name of <?php echo $app->getNomApplication();?></h2>
-			</div>
-			<div class="modal-body">
-				<div class="container-fluid">
-					<div class="row-fluid">
-						<div class="col-lg-10 centering">
-							<form id="formChangeNameApplication" class="well well-lg">
-								<div class="form-group">
-									<label for="nameApplication" for="submit">Enter a new name for this application (3-20 chars)</label>
-									<input type="text" class="form-control input-lg" name="nameApplication" id="nameApplication" placeholder="Name of the application"/>
-									<input type="hidden" name="idApp" value="<?php echo $app->getIdApplication();?>"/>
-								</div>
-								<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">Send</button>
-							</form>
-						</div>
-					</div>
-				</div>
-	      	</div>
-	    </div>
-	  </div>
-	</div>
 
 	<div id="modifierDescriptionApplication" class="modal fade" role="dialog">
 	  <div class="modal-dialog">
