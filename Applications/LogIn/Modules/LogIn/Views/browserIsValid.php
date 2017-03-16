@@ -6,7 +6,7 @@ if(isset($isValid)){
 
 }else{
 	$reponse = array(
-		'erreurs' => 'Une erreur est apparue.'
+		'erreurs' => 'A system error has occured.'
 	);
 }
 

@@ -62,7 +62,7 @@ if($user->getMessageClient()->hasErreur()){
 		);
 }else{
 	$reponse = array(
-			'erreurs' => '<p>An system error has occurred.</p>'
+			'erreurs' => '<p>A system error has occurred.</p>'
 		);
 }
 

@@ -17,7 +17,7 @@ if($user->getMessageClient()->hasErreur()){
 	);
 }else{
 	$reponse = array(
-		'erreurs' => '<p>DataManager :: An system error has occurred !</p>'
+		'erreurs' => '<p>A system error has occurred !</p>'
 	);
 }
 

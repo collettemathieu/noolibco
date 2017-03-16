@@ -4,12 +4,12 @@
 			<div class="row">
 				
 				<form class="well centering col-lg-6" id="formRechercheApplication">
-					<legend>Need an application ?</legend>
+					<legend>Need an application?</legend>
 					<div class="form-group">
 						<input type="text" class="form-control" name="rechercheApplication" placeholder="Keywords..." autofocus/>
 					</div>
 					<div class="form-group">
-						<label for="categorieRecherche">Search by category :</label>
+						<label for="categorieRecherche">Search by category:</label>
 						<select name="categorie" class="form-control" data-live-search="true">
 							<option selected value="0">All categories</option>
 							<?php echo($categoriesAAfficher); ?>

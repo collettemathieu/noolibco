@@ -51,9 +51,9 @@
 			<tr>
 				<td style="text-align: justify;">
 					<ul>
-						<li>The link remains valid during 6 hours.</li><br>
-						<li>The link above allows to guarantee your authentication on NooLib Web Application.</li><br>
-						<li>Whether you have received this message in error, please delete it. You are not registered until you do not click on the link above.</li><br>
+						<li>The link remains valid for 6 hours.</li><br>
+						<li>The above link allows your authentication on NooLib Web Application to be guaranteed.</li><br>
+						<li>If you have received this message in error, please delete it. You are not registered until you click on the link.</li><br>
 						<li>For any questions, please contact: <a href="mailto:contactteam@noolib.com">contactteam@noolib.com</a></li><br>
 					</ul>
 				</td>
