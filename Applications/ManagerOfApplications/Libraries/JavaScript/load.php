@@ -21,3 +21,5 @@
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/descriptionController.js"></script>
 <script type="text/javascript" src="/JavaScript/ShareFolderApplication/Directives/logoApplicationValidator.js"></script>
 <script type="text/javascript" src="/JavaScript/ShareFolderApplication/Directives/nameApplicationValidator.js"></script>
+<script type="text/javascript" src="/JavaScript/ShareFolderApplication/Directives/selectDesignDirective.js"></script>
+<script type="text/javascript" src="/JavaScript/ShareFolderApplication/Directives/fileDesignDirective.js"></script>

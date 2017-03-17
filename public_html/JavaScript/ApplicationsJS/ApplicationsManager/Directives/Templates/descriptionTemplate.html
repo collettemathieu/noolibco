@@ -1,5 +1,5 @@
 <div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal">x</button>
+	<button type="button" class="close" ng-click="close()">x</button>
 	<h2 class="modal-title">Change attributs of {{application.nom}}</h2>
 </div>
 <div class="modal-body">
@@ -15,7 +15,7 @@
 					</div>
 					<div class="form-group has-feedback">
 						<label>Its category</label>
-						<select name="categorieApp" ng-options="category.nameCategory group by category.onCategory for category in tableOfCategories" ng-model="selectedCategory" class="form-control input-sm" required></select>
+						<select name="categorieApp" ng-options="category.nameCategory group by category.onCategory for category in tableOfCategories" ng-model="selectedCategory" class="form-control input-sm" required select-design-directive data-live-search="true"></select>
 					</div>
 					<div class="form-group has-feedback" ng-class="{'has-error':formDescriptionApp.motsClesApp.$invalid && formDescriptionApp.motsClesApp.$dirty, 'has-success':formDescriptionApp.motsClesApp.$valid}">
 						<label>Its keywords (comma-separated keywords)</label>

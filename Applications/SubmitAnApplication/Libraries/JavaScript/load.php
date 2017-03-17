@@ -8,8 +8,8 @@
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/SubmitAnApplication/constants.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/SubmitAnApplication/Services/applicationService.js"></script>
 
-<script type="text/javascript" src="/JavaScript/ApplicationsJS/SubmitAnApplication/Directives/selectDesignDirective.js"></script>
-<script type="text/javascript" src="/JavaScript/ApplicationsJS/SubmitAnApplication/Directives/fileDesignDirective.js"></script>
+<script type="text/javascript" src="/JavaScript/ShareFolderApplication/Directives/selectDesignDirective.js"></script>
+<script type="text/javascript" src="/JavaScript/ShareFolderApplication/Directives/fileDesignDirective.js"></script>
 
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/SubmitAnApplication/Controllers/controllerStep1.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/SubmitAnApplication/Controllers/controllerStep2.js"></script>
