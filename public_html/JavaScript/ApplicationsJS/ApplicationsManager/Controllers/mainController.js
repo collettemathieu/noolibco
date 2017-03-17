@@ -61,7 +61,30 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	      animation: true,
 	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/descriptionTemplate.html',
 	      controller: 'descriptionController',
-	      scope: $scope
+	      scope: $scope,
+	      resolve: {
+				// On récupère les catégories pour l'affichage dans le select
+				tableOfCategories: ['$http', '$q', function($http, $q){
+					
+					// On récupère l'ensemble des catégories
+					var deferred = $q.defer(); // -> promise
+					$http({
+						method: 'POST',
+						url: '/SubmitAnApplication/GetAllCategories'
+					})
+					.success(function(response){
+						deferred.resolve(response);
+					})
+					.error(function(error){
+						var response = {
+							'erreurs': '<p>A system error has occurred: '+error+'</p>'
+						};
+						displayInformationsClient(response);
+					});
+
+					return deferred.promise;
+				}
+			]}
 	    });
 	}
 

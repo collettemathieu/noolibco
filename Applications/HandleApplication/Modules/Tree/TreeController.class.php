@@ -19,6 +19,7 @@
 
 
 namespace Applications\HandleApplication\Modules\Tree;
+use Library\Entities\Categorie;
 use Library\Entities\Tache;
 use Library\Entities\VersionTache;
 use Library\Entities\TacheTypeDonneeUtilisateur;
@@ -553,17 +554,13 @@ class TreeController extends \Library\BackController
 					/* GESTION DES CATEGORIES  */
 					/***************************/
 
-					// On crée l'objet Categorie à partir de la base de données. Si celui-ci n'existe pas, on le créé dans la base de données.
+					// On crée l'objet Categorie à partir de la base de données. Si celui-ci n'existe pas, cela retournera une erreur.
 					$managerCategorie = $this->getManagers()->getManagerOf('Categorie');
 					$categorie = $managerCategorie->getCategorieByNom($request->getPostData('categorieApp'));
-					if (!$categorie){
-						$categorie = new Categorie(array(
-								'nomCategorie' => $request->getPostData('categorieApp'),
-								'descriptionCategorie' => 'Imagerie médicale tout azimut'
-						));
-						// On ajoute la nouvelle catégorie à la BDD
-						$managerCategorie->addCategorie($categorie);
-					}
+
+					/*****************************/
+					/* NOUVEL OBJET APPLICATION  */
+					/*****************************/
 
 					// On sauvegarde les précédents mots-clés de l'application
 					$motCleSaved = $application->getMotCles();
@@ -626,6 +623,9 @@ class TreeController extends \Library\BackController
 
 						// On retourne un message de confirmation
 						$user->getMessageClient()->addReussite(self::TREE_APPLICATION_EDITED_SUCCESSFULLY);
+
+						// On retourne l'application à la page
+						$this->page->addVar('application', $application);
 					}else{
 						// On ajoute la variable d'erreurs
 						$user->getMessageClient()->addErreur($application->getErreurs());

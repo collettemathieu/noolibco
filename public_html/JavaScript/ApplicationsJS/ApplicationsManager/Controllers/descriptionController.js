@@ -14,7 +14,7 @@
  * @version: 1
  */
 
-application.controller('descriptionController', ['$scope', '$uibModalInstance', '$http', function($scope, $uibModalInstance, $http){
+application.controller('descriptionController', ['$scope', '$uibModalInstance', '$http', 'tableOfCategories', function($scope, $uibModalInstance, $http, tableOfCategories){
 	
 	// Position par defaut du bouton envoyer
 	$scope.displayButtonForm = false;
@@ -24,22 +24,46 @@ application.controller('descriptionController', ['$scope', '$uibModalInstance', 
 		 $uibModalInstance.dismiss('cancel');
 	};
 
+	// Pour initialiser le formulaire
+	$scope.idApp = $scope.application.id;
+	$scope.descriptionApp = $scope.application.description;
+	$scope.motsClesApp = $scope.application.motCles;
+	$scope.tableOfCategories = tableOfCategories;
+	// On récupère la catégorie de l'application
+	for(var i=0, c=tableOfCategories.length; i<c; ++i){
+		if($scope.application.idCategorie == tableOfCategories[i].id){
+			$scope.selectedCategory = $scope.tableOfCategories[i];
+			break;
+		}
+	}
+
 	// Pour soumettre le formulaire
 	$scope.validFormDescription = function(){
 		if($scope.formDescriptionApp.$valid){
 			$scope.displayButtonForm = true;
 
-			var form = document.querySelector('#formDescriptionApp'),
-				formData = new FormData(form);
 			$http({
 				method: 'POST',
 				url: '/HandleApplication/ChangeDescriptionApplication',
-				headers: {'Content-Type': undefined},
-				data: formData
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				transformRequest: function(obj) {
+			        var str = [];
+			        for(var p in obj)
+			        	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			        return str.join("&");
+			    },
+				data: {
+					idApp: $scope.idApp,
+					motsClesApp: $scope.motsClesApp,
+					descriptionApp: $scope.descriptionApp,
+					categorieApp: $scope.selectedCategory.nameCategory
+				}
 			})
 			.success(function(response){
-				if(response['nameApplication']){
-					$scope.application.nom = response['nameApplication'];
+				if(response['description'] && response['motCles'] && response['idCategorie']){
+					$scope.application.description = response['description'];
+					$scope.application.motCles = response['motCles'];
+					$scope.application.idCategorie = response['idCategorie'];
 				}
 
 				displayInformationsClient(response);

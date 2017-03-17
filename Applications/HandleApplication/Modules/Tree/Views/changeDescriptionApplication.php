@@ -1,12 +1,15 @@
 <?php 
-if($user->getMessageClient()->hasReussite()){
+if($user->getMessageClient()->hasReussite() && isset($application)){
 	$texte = '';
 	foreach($user->getMessageClient()->getReussites() as $reussite){
 		$texte .= '<p>'.$reussite.'</p>';
 	}
 
 	$reponse = array(
-			'reussites' => $texte
+			'reussites' => $texte,
+			'description' => $application->getDescriptionApplication(),
+			'motCles' => implode(', ', $application->getMotCles()),
+			'idCategorie' => $application->getCategorie()->getIdCategorie()
 		);
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';
