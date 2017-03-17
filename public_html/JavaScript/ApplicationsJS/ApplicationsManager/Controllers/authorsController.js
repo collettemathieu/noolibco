@@ -24,15 +24,14 @@ application.controller('authorsController', ['$scope', '$uibModalInstance', '$ht
 		 $uibModalInstance.dismiss('cancel');
 	};
 
-
 	// Pour soumettre le formulaire
-	$scope.validFormDescription = function(){
-		if($scope.formDescriptionApp.$valid){
+	$scope.validFormContributor = function(){
+		if($scope.formAddContributor.$valid){
 			$scope.displayButtonForm = true;
 
 			$http({
 				method: 'POST',
-				url: '/HandleApplication/ChangeDescriptionApplication',
+				url: '/HandleApplication/AddAuthor',
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				transformRequest: function(obj) {
 			        var str = [];
@@ -41,10 +40,10 @@ application.controller('authorsController', ['$scope', '$uibModalInstance', '$ht
 			        return str.join("&");
 			    },
 				data: {
-					idApp: $scope.idApp,
-					motsClesApp: $scope.motsClesApp,
-					descriptionApp: $scope.descriptionApp,
-					categorieApp: $scope.selectedCategory.nameCategory
+					idApplication: $scope.application.id,
+					mail: $scope.mail,
+					firstname: $scope.firstname,
+					lastname: $scope.lastname
 				}
 			})
 			.success(function(response){

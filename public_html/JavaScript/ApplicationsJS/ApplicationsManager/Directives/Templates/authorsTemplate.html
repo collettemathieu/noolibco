@@ -5,11 +5,37 @@
 <div class="modal-body">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-10 centering">
+			<div class="col-lg-8 centering">
 				<div class="alert alert-warning">
 					<p>You can add contributors to help you in the developement of your application. The contributor needs to be registred on NooLib to modify the application online.</p>
 				</div>
 			</div>
+			<div class="col-lg-8 centering">
+				<legend>Add a new contributor</legend>
+				<form class="well well-lg" ng-submit="validFormContributor()" name="formAddContributor">
+					<div class="form-group has-feedback" ng-class="{'has-error':formAddContributor.firstname.$invalid && formAddContributor.firstname.$dirty, 'has-success':formAddContributor.firstname.$valid}">
+						<input type="text" required class="form-control input-lg" name="firstname" ng-minlength="2" ng-model="firstname" placeholder="His(her) first name"/>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formAddContributor.firstname.$invalid && formAddContributor.firstname.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formAddContributor.firstname.$valid}"></span>
+						<span ng-show="formAddContributor.firstname.$invalid && formAddContributor.firstname.$dirty" class="help-block">Enter a first name of at least two letters.</span>
+					</div>
+					<div class="form-group has-feedback" ng-class="{'has-error':formAddContributor.lastname.$invalid && formAddContributor.lastname.$dirty, 'has-success':formAddContributor.lastname.$valid}">
+						<input type="text" required class="form-control input-lg" name="lastname" ng-minlength="2" ng-model="lastname" placeholder="His(her) last name"/>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formAddContributor.lastname.$invalid && formAddContributor.lastname.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formAddContributor.lastname.$valid}"></span>
+						<span ng-show="formAddContributor.lastname.$invalid && formAddContributor.lastname.$dirty" class="help-block">Enter a last name of at least two letters.</span>
+					</div>
+					<div class="form-group has-feedback" ng-class="{'has-error':formAddContributor.mail.$invalid && formAddContributor.mail.$dirty, 'has-success':formAddContributor.mail.$valid}">
+						<input type="email" required class="form-control input-lg" name="mail" ng-pattern="/^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/" ng-model="mail" placeholder= "His(her) email address"/>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formAddContributor.mail.$invalid && formAddContributor.mail.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formAddContributor.mail.$valid}"></span>
+						<span ng-show="formAddContributor.mail.$invalid && formAddContributor.mail.$dirty" class="help-block">Enter a valid email address.</span>
+					</div>
+					<button ng-disabled="formAddContributor.$invalid" class="btn btn-primary" type="submit">
+						<div ng-hide="displayButtonForm">Add this contributor</div>
+						<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
+					</button>
+				</form>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-lg-12">
 				<ul class="list-unstyled">
 					<?php foreach($authors as $auteur){?>
@@ -43,52 +69,6 @@
 
 					<?php } ?>
 				</ul>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-10 centering">
-				<form class="well well-lg" ng-submit="validContributor()" name="formAddContributor">
-					<div class="form-group has-feedback">
-						<input type="text" class="form-control input-lg" name="firstname" placeholder= "His(her) first name" value=""/>
-						<span class="glyphicon form-control-feedback"></span>
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group has-feedback">
-						<input type="email" class="form-control input-lg" name="adresseMailLogIn" placeholder= "Your email address" value="<?php if($user->getAttribute('mailUser') != null){echo $user->getAttribute('mailUser');}?>"/>
-						<span class="glyphicon form-control-feedback"></span>
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group has-feedback">
-						<input type="password" class="form-control input-lg" name="motDePasseFormulaireLogIn" id="motDePasseFormulaireLogIn" placeholder="Your password"/>
-						<span class="glyphicon form-control-feedback"></span>
-						<span class="help-block"></span>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" name="resterConnecte"/> Remember me?
-						</label>
-						<a href="/LogIn/RecupPassword/">Forgot password?</a>
-					</div>
-					<button class="btn btn-primary" type="submit">Log In</button>
-				</form>
-				<form id="formAuteursApplication" class="well well-lg" ng-submit="" name="formAuteursApplication">
-					<div class="form-group has-feedback">
-						<legend>Add a new contributor</legend>
-						<div class="alert">
-							<span class="label label-primary">First name</span>
-							<input name="firstname" type="text" class="form-control" placeholder="Enter a first name." value=""/>
-							<span class="label label-primary">Last name</span>
-							<input name="lastname" type="text" class="form-control" placeholder="Enter a last name." value=""/>
-							<span class="label label-primary">Mail</span>
-							<input name="mail" type="text" class="form-control" placeholder="Enter an email address." value=""/>
-							<input type="hidden" name="idApplication" value="<?php echo $app->getIdApplication();?>"/>
-						</div>
-					</div>
-					<button ng-disabled="formAuthor.$invalid" class="btn btn-primary" type="submit">
-						<div ng-hide="displayButtonForm">Add this contributor</div>
-						<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
-					</button>
-				</form>
 			</div>
 		</div>
 	</div>
