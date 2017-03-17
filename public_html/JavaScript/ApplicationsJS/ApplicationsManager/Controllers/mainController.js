@@ -88,5 +88,16 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	    });
 	}
 
+	// Action lors de l'ouverture de la fenêtre modale "Authors"
+	$scope.authorsApplicationModal = function(){
+		$uibModal.open({
+	      animation: true,
+	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/authorsTemplate.html',
+	      controller: 'authorsController',
+	      scope: $scope,
+	      size: 'lg'
+	    });
+	}
+
 }]);
 

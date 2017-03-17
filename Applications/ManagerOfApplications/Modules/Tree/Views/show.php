@@ -1,3 +1,4 @@
+	<?php $utilisateur = unserialize($user->getAttribute('userSession'));?>
 	<div id="application" class="container-fluid" ng-app="applicationApplicationsManager" ng-controller="mainController" idapplication="<?php echo $app->getIdApplication();?>">
 		<div class="row-fluid">
 			<div class="col-sm-10 centering sousMenu maxWidth fadeIn">
@@ -10,7 +11,10 @@
 							<a ng-click="nameApplicationModal()">
 								<h3 class="infoBulle" data-toggle="tooltip" title="Edit its name">{{application.nom}}</h3>
 							</a>
+							<?php							
+							if($utilisateur->getIdUtilisateur() === $app->getCreateur()->getIdUtilisateur() || $user->getAttribute('isAdmin')){?>
 							<button type="button" class="infoBulle pull-right btn btn-danger btn-margin btn-lg" data-toggle="modal" href="#supprimerApplication" title="Delete it"><i class="glyphicon glyphicon-trash"></i></button>
+							<?php }?>
 							<?php 
 							if($user->getAttribute('isAdmin')){
 								$numStatutApp = (int) $app->getStatut()->getIdStatut(); ?>
@@ -22,7 +26,10 @@
 							<?php } ?>
 							<a id="testInNooSpace" class="infoBulle pull-right btn btn-primary btn-margin btn-lg" href="/NooSpace/a=<?php echo $app->getIdApplication();?>v=<?php echo $app->getVersions()[count($app->getVersions())-1]->getIdVersion();?>" target="_blank" title="Test it in the noospace"><i class="glyphicon glyphicon-log-out"></i></a>
 							<button type="button" class="infoBulle pull-right btn btn-info btn-margin btn-lg" data-toggle="modal" href="#addPublication" title="Manage its publications"><i class="glyphicon glyphicon-education"></i></button>
-							<button type="button" class="infoBulle pull-right btn btn-success btn-margin btn-lg" data-toggle="modal" href="#modifierAuteursApplication" title="Manage its authors"><i class="glyphicon glyphicon-user"></i></button>
+							<?php							
+							if($utilisateur->getIdUtilisateur() === $app->getCreateur()->getIdUtilisateur() || $user->getAttribute('isAdmin')){?>
+							<button type="button" class="infoBulle pull-right btn btn-success btn-margin btn-lg" ng-click="authorsApplicationModal()" title="Manage its authors"><i class="glyphicon glyphicon-user"></i></button>
+							<?php } ?>
 							<button type="button" class="infoBulle pull-right btn btn-default btn-margin btn-lg" ng-click="descriptionApplicationModal()" title="Edit its description, category and keywords"><i class="glyphicon glyphicon-tags"></i></button>
 						</div>
 					</div>
@@ -105,77 +112,6 @@
 	  </div>
 	</div>
 
-	<div id="modifierAuteursApplication" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-
-	    <!-- Modal content-->
-	    <div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">x</button>
-				<h2 class="modal-title">Manage authors of <?php echo $app->getNomApplication();?></h2>
-			</div>
-			<div class="modal-body">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-lg-12">
-							<ul class="list-unstyled">
-								<?php foreach($authors as $auteur){?>
-								<li>
-									<div class="col-lg-5 auteur">
-										<div class="col-lg-2">
-											<form class="removeAuthor">
-												<button type="submit" class="pull-right infoBulle btn btn-danger btn-margin btn-sm" title="Remove this author from the application"><i class="glyphicon glyphicon-remove"></i></button>
-												<input type="hidden" name="idApplication" value="<?php echo $app->getIdApplication();?>"/>
-												<input type="hidden" name="idAuteur" value="<?php echo $auteur->getIdAuteur(); ?>"/>
-											</form>
-										</div>
-										<div class="col-lg-4">
-											<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($auteur->getUrlPhotoUtilisateur())); ?>"/>
-										</div>
-										<div class="col-lg-6">
-
-											<?php if(!empty($auteur->getIdUtilisateur())){?>
-											<a href="/Profile/idAuteur=<?php echo $auteur->getIdUtilisateur(); ?>">
-												<?php echo $auteur->getNomUtilisateur().' '.$auteur->getPrenomUtilisateur(); ?>
-											</a>
-											<?php }else{ ?>
-											<p><?php echo $auteur->getNomUtilisateur().' '.$auteur->getPrenomUtilisateur(); ?></p>
-											<?php } ?>
-											<p><?php if(!empty($auteur->getStatut())){echo $auteur->getStatut()->getNomStatut();}else{echo 'This author is not registered.';} ?></p>
-											<p><?php if(!empty($auteur->getDateInscriptionUtilisateur())){echo 'member since '.$auteur->getDateInscriptionUtilisateur();} ?></p>
-										</div>
-										
-									</div>
-								</li>
-
-								<?php } ?>
-							</ul>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-10 centering">
-							<form id="formAuteursApplication" class="well well-lg">
-								<div class="form-group has-feedback">
-									<legend>Add a new Author</legend>
-									<div class="alert">
-										<span class="label label-primary">First name</span>
-										<input name="firstname" type="text" class="form-control" placeholder="Enter a first name." value=""/>
-										<span class="label label-primary">Last name</span>
-										<input name="lastname" type="text" class="form-control" placeholder="Enter a last name." value=""/>
-										<span class="label label-primary">Mail</span>
-										<input name="mail" type="text" class="form-control" placeholder="Enter an email address." value=""/>
-										<input type="hidden" name="idApplication" value="<?php echo $app->getIdApplication();?>"/>
-									</div>
-								</div>
-								<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">Add</button>
-							</form>
-						</div>
-					</div>
-				</div>
-	      	</div>
-	    </div>
-	  </div>
-	</div>
 
 	<div id="addPublication" class="modal fade" role="dialog">
 	  <div class="modal-dialog">

@@ -1,0 +1,95 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="close()">x</button>
+	<h2 class="modal-title">Manage the contributors of {{application.nom}}</h2>
+</div>
+<div class="modal-body">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-10 centering">
+				<div class="alert alert-warning">
+					<p>You can add contributors to help you in the developement of your application. The contributor needs to be registred on NooLib to modify the application online.</p>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<ul class="list-unstyled">
+					<?php foreach($authors as $auteur){?>
+					<li>
+						<div class="col-lg-5 auteur">
+							<div class="col-lg-2">
+								<form class="removeAuthor">
+									<button type="submit" class="pull-right infoBulle btn btn-danger btn-margin btn-sm" title="Remove this author from the application"><i class="glyphicon glyphicon-remove"></i></button>
+									<input type="hidden" name="idApplication" value="<?php echo $app->getIdApplication();?>"/>
+									<input type="hidden" name="idAuteur" value="<?php echo $auteur->getIdAuteur(); ?>"/>
+								</form>
+							</div>
+							<div class="col-lg-4">
+								<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($auteur->getUrlPhotoUtilisateur())); ?>"/>
+							</div>
+							<div class="col-lg-6">
+
+								<?php if(!empty($auteur->getIdUtilisateur())){?>
+								<a href="/Profile/idAuteur=<?php echo $auteur->getIdUtilisateur(); ?>">
+									<?php echo $auteur->getNomUtilisateur().' '.$auteur->getPrenomUtilisateur(); ?>
+								</a>
+								<?php }else{ ?>
+								<p><?php echo $auteur->getNomUtilisateur().' '.$auteur->getPrenomUtilisateur(); ?></p>
+								<?php } ?>
+								<p><?php if(!empty($auteur->getStatut())){echo $auteur->getStatut()->getNomStatut();}else{echo 'This author is not registered.';} ?></p>
+								<p><?php if(!empty($auteur->getDateInscriptionUtilisateur())){echo 'member since '.$auteur->getDateInscriptionUtilisateur();} ?></p>
+							</div>
+							
+						</div>
+					</li>
+
+					<?php } ?>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-10 centering">
+				<form class="well well-lg" ng-submit="validContributor()" name="formAddContributor">
+					<div class="form-group has-feedback">
+						<input type="text" class="form-control input-lg" name="firstname" placeholder= "His(her) first name" value=""/>
+						<span class="glyphicon form-control-feedback"></span>
+						<span class="help-block"></span>
+					</div>
+					<div class="form-group has-feedback">
+						<input type="email" class="form-control input-lg" name="adresseMailLogIn" placeholder= "Your email address" value="<?php if($user->getAttribute('mailUser') != null){echo $user->getAttribute('mailUser');}?>"/>
+						<span class="glyphicon form-control-feedback"></span>
+						<span class="help-block"></span>
+					</div>
+					<div class="form-group has-feedback">
+						<input type="password" class="form-control input-lg" name="motDePasseFormulaireLogIn" id="motDePasseFormulaireLogIn" placeholder="Your password"/>
+						<span class="glyphicon form-control-feedback"></span>
+						<span class="help-block"></span>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="resterConnecte"/> Remember me?
+						</label>
+						<a href="/LogIn/RecupPassword/">Forgot password?</a>
+					</div>
+					<button class="btn btn-primary" type="submit">Log In</button>
+				</form>
+				<form id="formAuteursApplication" class="well well-lg" ng-submit="" name="formAuteursApplication">
+					<div class="form-group has-feedback">
+						<legend>Add a new contributor</legend>
+						<div class="alert">
+							<span class="label label-primary">First name</span>
+							<input name="firstname" type="text" class="form-control" placeholder="Enter a first name." value=""/>
+							<span class="label label-primary">Last name</span>
+							<input name="lastname" type="text" class="form-control" placeholder="Enter a last name." value=""/>
+							<span class="label label-primary">Mail</span>
+							<input name="mail" type="text" class="form-control" placeholder="Enter an email address." value=""/>
+							<input type="hidden" name="idApplication" value="<?php echo $app->getIdApplication();?>"/>
+						</div>
+					</div>
+					<button ng-disabled="formAuthor.$invalid" class="btn btn-primary" type="submit">
+						<div ng-hide="displayButtonForm">Add this contributor</div>
+						<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
