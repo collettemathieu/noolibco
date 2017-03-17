@@ -9,7 +9,7 @@ if($user->getMessageClient()->hasReussite() && isset($application)){
 			'reussites' => $texte,
 			'description' => $application->getDescriptionApplication(),
 			'motCles' => implode(', ', $application->getMotCles()),
-			'idCategorie' => $application->getCategorie()->getIdCategorie()
+			'categorie' => $application->getCategorie()->getNomCategorie()
 		);
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';

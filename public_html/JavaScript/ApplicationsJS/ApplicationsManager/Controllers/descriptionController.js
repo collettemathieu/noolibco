@@ -29,13 +29,6 @@ application.controller('descriptionController', ['$scope', '$uibModalInstance', 
 	$scope.descriptionApp = $scope.application.description;
 	$scope.motsClesApp = $scope.application.motCles;
 	$scope.tableOfCategories = tableOfCategories;
-	// On récupère la catégorie de l'application
-	for(var i=0, c=tableOfCategories.length; i<c; ++i){
-		if($scope.application.idCategorie == tableOfCategories[i].id){
-			$scope.selectedCategory = $scope.tableOfCategories[i];
-			break;
-		}
-	}
 
 	// Pour soumettre le formulaire
 	$scope.validFormDescription = function(){
@@ -60,10 +53,10 @@ application.controller('descriptionController', ['$scope', '$uibModalInstance', 
 				}
 			})
 			.success(function(response){
-				if(response['description'] && response['motCles'] && response['idCategorie']){
+				if(response['description'] && response['motCles'] && response['categorie']){
 					$scope.application.description = response['description'];
 					$scope.application.motCles = response['motCles'];
-					$scope.application.idCategorie = response['idCategorie'];
+					$scope.application.categorie = response['categorie'];
 				}
 
 				displayInformationsClient(response);
