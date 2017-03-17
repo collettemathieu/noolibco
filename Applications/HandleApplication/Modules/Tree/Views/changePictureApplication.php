@@ -1,12 +1,13 @@
 <?php 
-if($user->getMessageClient()->hasReussite()){
+if($user->getMessageClient()->hasReussite() && isset($application)){
 	$texte = '';
 	foreach($user->getMessageClient()->getReussites() as $reussite){
 		$texte .= '<p>'.$reussite.'</p>';
 	}
 
 	$reponse = array(
-			'reussites' => $texte
+			'reussites' => $texte,
+			'urlLogo' => base64_encode(file_get_contents($application->getUrlLogoApplication()))
 		);
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';

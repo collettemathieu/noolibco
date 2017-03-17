@@ -48,10 +48,10 @@ class Step1Controller extends \Library\BackController{
 
 			$tableOfCategories = array();
 			
-			foreach($categories as $id=>$categorie){
+			foreach($categories as $categorie){
 
 				$categorieTemp = array(
-					'id' => $id,
+					'id' => $categorie->getIdCategorie(),
 					'nameCategory' => $categorie->getNomCategorie(),
 					'onCategory' => $categorie->getSurcategorie()->getNomSurcategorie(),
 					'descriptionCategory' => $categorie->getDescriptionCategorie()

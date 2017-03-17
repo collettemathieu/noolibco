@@ -1,0 +1,35 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">x</button>
+	<h2 class="modal-title">Change attributs of {{application.nom}}</h2>
+</div>
+<div class="modal-body">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="col-lg-10 centering">
+				<form id="formDescriptionApp" name="formDescriptionApp" ng-submit="validFormDescription()" class="well well-lg">
+					<div class="form-group has-feedback" ng-class="{'has-error':formDescriptionApp.descriptionApp.$invalid && formDescriptionApp.descriptionApp.$dirty, 'has-success':formDescriptionApp.descriptionApp.$valid}">
+						<label>Its description</label>
+						<textarea name="descriptionApp" ng-model="descriptionApp" ng-minlength="50" required class="form-control input-lg" placeholder="Enter a short description of your application (>50 chars)."></textarea>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formDescriptionApp.descriptionApp.$invalid && formDescriptionApp.descriptionApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formDescriptionApp.descriptionApp.$valid}"></span>
+						<span ng-show="formDescriptionApp.descriptionApp.$invalid && formDescriptionApp.descriptionApp.$dirty" class="help-block">This description is too short !</span>
+					</div>
+					<div class="form-group has-feedback">
+						<label>Its category</label>
+						<select name="categorieApp" ng-options="category.nameCategory group by category.onCategory for category in tableOfCategories" ng-model="selectedCategory" class="form-control input-sm" required></select>
+					</div>
+					<div class="form-group has-feedback" ng-class="{'has-error':formDescriptionApp.motsClesApp.$invalid && formDescriptionApp.motsClesApp.$dirty, 'has-success':formDescriptionApp.motsClesApp.$valid}">
+						<label>Its keywords (comma-separated keywords)</label>
+						<input type="text" name="motsClesApp" ng-model="motsClesApp" ng-pattern="/^([a-zA-Z0-9\-\s]{3,}, {0,1})+[a-zA-Z0-9\-\s]{3,}$/" required class="form-control input-lg" placeholder="keyword1, keyword2, keyword3, ..."/>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formDescriptionApp.motsClesApp.$invalid && formDescriptionApp.motsClesApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formDescriptionApp.motsClesApp.$valid}"></span>
+						<span ng-show="formDescriptionApp.motsClesApp.$invalid && formDescriptionApp.motsClesApp.$dirty" class="help-block">Select at least 2 keywords for your application (keyword1, key-word2, keyword3)</span>
+					</div>
+					<input type="hidden" name="idApp" ng-model="idApp"/>
+					<button ng-disabled="formDescriptionApp.$invalid" class="btn btn-primary" type="submit">
+						<div ng-hide="displayButtonForm">Send</div>
+						<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>

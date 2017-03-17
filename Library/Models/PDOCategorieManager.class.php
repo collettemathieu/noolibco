@@ -213,7 +213,7 @@ class PDOCategorieManager extends \Library\Models\CategorieManager
 		$requete->closeCursor ();
 		
 		if (count($donnees) == 0) {
-			return false;
+			return null;
 		}
 		else {
 			$categorie = $this->constructCategorie($donnees[0]);
@@ -242,7 +242,7 @@ class PDOCategorieManager extends \Library\Models\CategorieManager
 		$requete->closeCursor ();
 	
 		if (count($donnees) == 0) {
-			return false;
+			return null;
 		}
 		else {
 			$categorie = $this->constructCategorie($donnees[0]);

@@ -3,51 +3,47 @@
 // +----------------------------------------------------------------------+
 // | Copyright (c) 2017 NooLib			         				          |
 // +----------------------------------------------------------------------+
-// | Controleur pour Step2 de l'application SubmitAnApplication			  |
+// | Service pour récupérer des informations d'une application.			  |
 // +----------------------------------------------------------------------+
 // | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>    			  |
 // +----------------------------------------------------------------------+
 
 /**
- * @name:  controllerStep2
+ * @name:  Service applicationService
  * @access: public
  * @version: 1
  */
 
-application.controller('controllerStep2', ['$scope', '$http', '$location', function($scope, $http, $location){
-	
-	// Initialisation
-	$scope.validStep3 = false;
-
-	// Action lors de la soumission du formulaire
-	$scope.validStep2 = function(){
-		if($scope.formStep2.$valid){
-			$scope.validStep3 = true;
-			var form = document.querySelector('#form'),
-				formData = new FormData(form);
+application.factory('applicationService', ['$q', '$http', function($q, $http){
+	return{
+		getApplication: function(idApplication){
+			var deferred = $q.defer();
 			$http({
 				method: 'POST',
-				url: '/SubmitAnApplication/ValidStep2',
-				headers: {'Content-Type': undefined},
-				data: formData
+				url: '/HandleApplication/GetApplication',
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				transformRequest: function(obj) {
+			        var str = [];
+			        for(var p in obj)
+			        	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			        return str.join("&");
+			    },
+				data: {
+					idApp: idApplication
+				}
 			})
 			.success(function(response){
-				if(response['reussites']){
-					$location.url('/SubmitAnApplicationStep3/'); // Changement d'URL
-					$location.replace(); // Permet de ne pas créer d'historique
-				}else{
-					displayInformationsClient(response);
-				}
+				deferred.resolve(response);
 			})
 			.error(function(error){
 				var response = {
 					'erreurs': '<p>A system error has occurred: '+error+'</p>'
 				};
 				displayInformationsClient(response);
-				$scope.validStep3 = false;
 			});
+
+			return deferred.promise;
 		}
-	}
-	
+	};
 }]);
 

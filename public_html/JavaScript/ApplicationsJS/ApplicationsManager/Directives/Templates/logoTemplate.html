@@ -1,0 +1,25 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="close()">x</button>
+	<h2 class="modal-title">Logo of {{application.nom}}</h2>
+</div>
+<div class="modal-body">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="col-lg-10 centering">
+				<form id="formLogoApp" ng-submit="validFormLogo()" name="formLogoApp" class="well well-lg">
+					<div class="form-group has-feedback">
+						<label for="fileLogoApp">Select an icon for your application (PNG, JPEG, 128px*128px, < 12ko) <a href="https://www.iconfinder.com" target="_blank">IconFinder</a></label>
+						<input type="file" name="logoApp" ng-model="logoApp" class="form-control" logo-application-validator size="40"/>
+						<div id="affichageMiniatureLogo"></div>
+					</div>
+					<input type="hidden" name="idApp" value="{{application.id}}"/>
+
+					<button ng-disabled="formLogoApp.$invalid" class="btn btn-primary" type="submit">
+						<div ng-hide="displayButtonForm">Send</div>
+						<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

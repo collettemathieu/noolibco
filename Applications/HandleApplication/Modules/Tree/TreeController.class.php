@@ -19,6 +19,7 @@
 
 
 namespace Applications\HandleApplication\Modules\Tree;
+use Library\Entities\Categorie;
 use Library\Entities\Tache;
 use Library\Entities\VersionTache;
 use Library\Entities\TacheTypeDonneeUtilisateur;
@@ -38,6 +39,66 @@ class TreeController extends \Library\BackController
 {
 	
 	use \Library\Traits\MethodeApplicationControleur;
+
+
+	/**
+	* Méthode pour récupérer une application
+	*/
+	public function executeGetApplication($request){
+
+		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
+		if ($request->isAjaxRequest()) {
+			// On récupère l'utilisateur système
+			$user = $this->app->getUser();
+
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
+
+			// On récupère l'utilisateur de session
+			$userSession = unserialize($user->getAttribute('userSession'));
+
+			// On récupère l'ID de l'application à mettre en cache
+			$idApp = (int) $request->getPostData('idApp');
+
+			// On récupère le manager des applications
+			$managerApplication = $this->getManagers()->getManagerOf('Application');
+
+			// On récupère l'application via son ID
+			$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
+
+			// On oriente l'utilisateur selon le statut de dépôt de l'application.
+			if($application && ($application->getStatut()->getNomStatut()==='Inactive' || $application->getStatut()->getNomStatut()==='Validated' || $application->getStatut()->getNomStatut()==='Not validated')){
+				
+				// On charge les utilisateurs autorisés 
+				$idAuteursAutorises = array();
+				// On récupère le manager des Utilisateurs
+				$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
+				// On ajoute le créateur comme ID autorisé
+				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
+				foreach($application->getAuteurs() as $auteur){
+					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					if($utilisateur){
+						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
+					}
+				}
+
+				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
+					// On retourne l'application à la page
+					$this->page->addVar('application', $application);
+				}else{
+					// On ajoute la variable d'erreurs
+					$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
+				}
+			}else{
+				// On ajoute la variable d'erreurs
+				$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
+			}
+		}else{
+			// On procède à la redirection
+			$response = $this->app->getHTTPResponse();
+			$response->redirect('/');
+		}
+	}
 
 
 	/**
@@ -246,7 +307,7 @@ class TreeController extends \Library\BackController
 					// On charge l'objet File avec la configuration du logo de l'application
 					
 					$tagName= array( 'categorie' => 'application', 'sousCategorie' => 'logo');
-					$file = $this->getApp()->getFileUpload('logoApplication', $tagName);
+					$file = $this->getApp()->getFileUpload('logoApp', $tagName);
 					
 					if(count($file->getErreurs()) == 0){
 						
@@ -305,6 +366,9 @@ class TreeController extends \Library\BackController
 
 										// On retourne un message de confirmation
 										$user->getMessageClient()->addReussite(self::TREE_PICTURE_APPLICATION_EDITED);
+
+										// On retourne l'application à la page
+										$this->page->addVar('application', $application);
 
 									}else{
 										// On ajoute la variable d'erreurs
@@ -386,7 +450,7 @@ class TreeController extends \Library\BackController
 				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
 					// On met à jour l'objet App avec le nouveau logo de l'application
 					$application->hydrate(array(
-						'nomApplication' => $request->getPostData('nameApplication')
+						'nomApplication' => $request->getPostData('nomApp')
 						));
 
 					// On contrôle qu'il n'y a pas eu d'erreurs
@@ -406,6 +470,9 @@ class TreeController extends \Library\BackController
 
 							// On retourne un message de confirmation
 							$user->getMessageClient()->addReussite(self::TREE_NAME_CHANGED_SUCCESSFULLY);
+
+							// On retourne l'application à la page
+							$this->page->addVar('application', $application);
 						}else{
 							// On ajoute la variable d'erreurs
 							$user->getMessageClient()->addErreur(self::TREE_CHANGE_NAME);
@@ -487,17 +554,13 @@ class TreeController extends \Library\BackController
 					/* GESTION DES CATEGORIES  */
 					/***************************/
 
-					// On crée l'objet Categorie à partir de la base de données. Si celui-ci n'existe pas, on le créé dans la base de données.
+					// On crée l'objet Categorie à partir de la base de données. Si celui-ci n'existe pas, cela retournera une erreur.
 					$managerCategorie = $this->getManagers()->getManagerOf('Categorie');
 					$categorie = $managerCategorie->getCategorieByNom($request->getPostData('categorieApp'));
-					if (!$categorie){
-						$categorie = new Categorie(array(
-								'nomCategorie' => $request->getPostData('categorieApp'),
-								'descriptionCategorie' => 'Imagerie médicale tout azimut'
-						));
-						// On ajoute la nouvelle catégorie à la BDD
-						$managerCategorie->addCategorie($categorie);
-					}
+
+					/*****************************/
+					/* NOUVEL OBJET APPLICATION  */
+					/*****************************/
 
 					// On sauvegarde les précédents mots-clés de l'application
 					$motCleSaved = $application->getMotCles();
@@ -560,6 +623,9 @@ class TreeController extends \Library\BackController
 
 						// On retourne un message de confirmation
 						$user->getMessageClient()->addReussite(self::TREE_APPLICATION_EDITED_SUCCESSFULLY);
+
+						// On retourne l'application à la page
+						$this->page->addVar('application', $application);
 					}else{
 						// On ajoute la variable d'erreurs
 						$user->getMessageClient()->addErreur($application->getErreurs());

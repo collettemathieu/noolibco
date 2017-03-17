@@ -1,14 +1,14 @@
-	<div class="container-fluid">
+	<div id="application" class="container-fluid" ng-app="applicationApplicationsManager" ng-controller="mainController" idapplication="<?php echo $app->getIdApplication();?>">
 		<div class="row-fluid">
 			<div class="col-sm-10 centering sousMenu maxWidth fadeIn">
 				<div class="row">
 					<div class="col-sm-12 informationApplication">
 						<div class="col-sm-12">
-							<a data-toggle="modal" href="#changerLogoApplication">
-								<img class="infoBulle" data-toggle="tooltip" title="Edit the picture of <?php echo $app->getNomApplication();?>" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())); ?>"/>
+							<a ng-click="logoApplicationModal()">
+								<img class="infoBulle" data-toggle="tooltip" title="Edit its logo" ng-src="data:image/png;charset=utf8;base64,{{application.urlLogo}}"/>
 							</a>
-							<a data-toggle="modal" href="#changerNameApplication">
-								<h3 class="infoBulle" data-toggle="tooltip" title="Edit the name of <?php echo $app->getNomApplication();?>"><?php echo $app->getNomApplication();?></h3>
+							<a ng-click="nameApplicationModal()">
+								<h3 class="infoBulle" data-toggle="tooltip" title="Edit its name">{{application.nom}}</h3>
 							</a>
 							<button type="button" class="infoBulle pull-right btn btn-danger btn-margin btn-lg" data-toggle="modal" href="#supprimerApplication" title="Delete it"><i class="glyphicon glyphicon-trash"></i></button>
 							<?php 
@@ -23,7 +23,7 @@
 							<a id="testInNooSpace" class="infoBulle pull-right btn btn-primary btn-margin btn-lg" href="/NooSpace/a=<?php echo $app->getIdApplication();?>v=<?php echo $app->getVersions()[count($app->getVersions())-1]->getIdVersion();?>" target="_blank" title="Test it in the noospace"><i class="glyphicon glyphicon-log-out"></i></a>
 							<button type="button" class="infoBulle pull-right btn btn-info btn-margin btn-lg" data-toggle="modal" href="#addPublication" title="Manage its publications"><i class="glyphicon glyphicon-education"></i></button>
 							<button type="button" class="infoBulle pull-right btn btn-success btn-margin btn-lg" data-toggle="modal" href="#modifierAuteursApplication" title="Manage its authors"><i class="glyphicon glyphicon-user"></i></button>
-							<button type="button" class="infoBulle pull-right btn btn-default btn-margin btn-lg" data-toggle="modal" href="#modifierDescriptionApplication" title="Edit its description, category and keywords"><i class="glyphicon glyphicon-tags"></i></button>
+							<button type="button" class="infoBulle pull-right btn btn-default btn-margin btn-lg" ng-click="descriptionApplicationModal()" title="Edit its description, category and keywords"><i class="glyphicon glyphicon-tags"></i></button>
 						</div>
 					</div>
 					<div class="col-lg-12"><hr></div>
@@ -95,104 +95,6 @@
 									<textarea class="form-control input-lg" name="descriptionVersionApplication" id="descriptionVersionApplication" placeholder="Short description..." cols="10" maxlength="100"></textarea>
 								</div>
 								<input type="hidden" name="idApp" value="<?php echo $app->getIdApplication();?>"/>
-								<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">Send</button>
-							</form>
-						</div>
-					</div>
-				</div>
-	      	</div>
-	    </div>
-	  </div>
-	</div>
-
-
-	<div id="changerLogoApplication" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-
-	    <!-- Modal content-->
-	    <div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">x</button>
-				<h2 class="modal-title">Edit the picture of <?php echo $app->getNomApplication();?></h2>
-			</div>
-			<div class="modal-body">
-				<div class="container-fluid">
-					<div class="row-fluid">
-						<div class="col-lg-10 centering">
-							<form id="formChangePictureApplication" class="well well-lg" enctype="multipart/form-data">
-								<div class="form-group">
-									<label for="logoApplication">Select an icon for your application (PNG, JPEG, 128px*128px, < 12ko) <a href="https://www.iconfinder.com" target="_blank">IconFinder</a></label>
-									<input type="file" class="form-control input-sm" name="logoApplication" id="logoApplication"/>
-									<input type="hidden" name="idApp" value="<?php echo $app->getIdApplication();?>"/>
-								</div>
-								<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">Send</button>
-							</form>
-						</div>
-					</div>
-				</div>
-	      	</div>
-	    </div>
-	  </div>
-	</div>
-
-	<div id="changerNameApplication" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-
-	    <!-- Modal content-->
-	    <div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">x</button>
-				<h2 class="modal-title">Edit the name of <?php echo $app->getNomApplication();?></h2>
-			</div>
-			<div class="modal-body">
-				<div class="container-fluid">
-					<div class="row-fluid">
-						<div class="col-lg-10 centering">
-							<form id="formChangeNameApplication" class="well well-lg">
-								<div class="form-group">
-									<label for="nameApplication" for="submit">Enter a new name for this application (3-20 chars)</label>
-									<input type="text" class="form-control input-lg" name="nameApplication" id="nameApplication" placeholder="Name of the application"/>
-									<input type="hidden" name="idApp" value="<?php echo $app->getIdApplication();?>"/>
-								</div>
-								<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">Send</button>
-							</form>
-						</div>
-					</div>
-				</div>
-	      	</div>
-	    </div>
-	  </div>
-	</div>
-
-	<div id="modifierDescriptionApplication" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-
-	    <!-- Modal content-->
-	    <div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">x</button>
-				<h2 class="modal-title">Change attributs of <?php echo $app->getNomApplication();?></h2>
-			</div>
-			<div class="modal-body">
-				<div class="container-fluid">
-					<div class="row-fluid">
-						<div class="col-lg-10 centering">
-							<form id="formDescriptionApplication" class="well well-lg">
-								<div class="form-group">
-									<label for="descriptionApp">Enter a short description for this application (>50 chars).</label>
-									<textarea name="descriptionApp" id="descriptionApp" class="form-control input-lg"><?php if($app!=null && $app->getDescriptionApplication() != null){echo $app->getDescriptionApplication();}?></textarea>
-								</div>
-								<div class="form-group">
-									<label for="categorieApp">Select a new category for this application</label>
-									<select name="categorieApp" id="categorieApp" class="form-control input-sm">
-										<?php echo $categoriesAAfficher; ?>
-									</select>
-								</div>
-								<div class="form-group">
-									<label for="motsClesApp">Add/remove some keywords for this application (comma-separated keywords)</label>
-									<input type="text" id="motsClesApp" name="motsClesApp" class="form-control input-lg" <?php if($app!=null && $app->getMotCles() != null){echo 'value="'.implode(', ',$app->getMotCles()).'"';}?>/>
-									<input type="hidden" name="idApp" value="<?php echo $app->getIdApplication();?>"/>
-								</div>
 								<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">Send</button>
 							</form>
 						</div>
@@ -404,7 +306,7 @@
 	    <div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">x</button>
-				<h2 class="modal-title">Do you want to delete <?php echo $app->getNomApplication();?> permanently ?</h2>
+				<h2 class="modal-title">Do you want to delete it permanently?</h2>
 			</div>
 			<div class="modal-body">
 				<div class="container-fluid">
