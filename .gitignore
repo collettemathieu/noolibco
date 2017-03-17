@@ -16,3 +16,4 @@
 /public_html/Images/BackgroundUtilisateurs/*
 *.DS_Store
 *.directory
+*routeur.txt
