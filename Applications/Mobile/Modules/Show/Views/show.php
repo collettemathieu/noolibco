@@ -4,7 +4,7 @@
 				<!-- Info Mobile -->
 			    <div class="col-lg-6 text-center alert alert-warning">
 		        	<span>Use NooLib on your mobile.</span>
-		        	<span>Please stay tune !</span>
+		        	<span>Please stay tuned !</span>
 			    </div><br>
 				<div class="col-lg-6">
 					<h1>Welcome to NooLib.</h1>
