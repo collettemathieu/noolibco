@@ -183,7 +183,7 @@ abstract class Application{
 		// On vérifie dans un premier temps que l'utilisateur n'est pas sur mobile
 		if(!$this->user->isMobile() && !$this->user->isAuthenticated() && !$this->user->jsIsActivated()){
 
-			$detect = new \Library\Mobile_Detect();
+			$detect = new \Library\MobileDetect();
 			if($detect->isMobile() && !$detect->isTablet()){
 
 				// L'utilisateur est sur un mobile ou sur une tablette
