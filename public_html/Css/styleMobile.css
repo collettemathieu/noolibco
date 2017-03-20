@@ -146,7 +146,7 @@ h2{
 }
 
 /* Media queries */
-@media only screen and (max-width: 560px) {
+@media only screen and (min-width: 560px) {
   h1{
     font-size: 2.5em;
   }
@@ -155,7 +155,7 @@ h2{
   }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (min-width: 400px) {
   h1{
     font-size: 2.1em;
   }
