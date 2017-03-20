@@ -182,19 +182,11 @@ abstract class Application{
 		
 		// On vérifie dans un premier temps que l'utilisateur n'est pas sur mobile
 		if(!$this->user->isMobile() && !$this->user->isAuthenticated() && !$this->user->jsIsActivated()){
-			
-			// On récupère les informations du navigateur client
-			$br = new \Library\Browscap('../Applications/LogIn/Cache');
-			$br->doAutoUpdate = false;
-			//$br->updateCache();
 
-			// Get information about the current browser's user agent
-			$current_browser = $br->getBrowser(null, true);
-			$isMobile = (bool) $current_browser['isMobileDevice'];
-			
-			if($isMobile){
+			$detect = new \Library\Mobile_Detect();
+			if($detect->isMobile() && !$detect->isTablet()){
 
-				// L'utilisateur est sur un mobile
+				// L'utilisateur est sur un mobile ou sur une tablette
 				$this->user->setIsMobile(true);
 
 				// On procède à la redirection vers la page pour mobile (qui proposera de télécharger l'application)
