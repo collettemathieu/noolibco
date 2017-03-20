@@ -85,6 +85,41 @@ class TreeController extends \Library\BackController
 				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
 					// On retourne l'application à la page
 					$this->page->addVar('application', $application);
+
+					// On récupère les auteurs de l'application et on les affiche avec un lien s'ils sont enregistrés sur NooLib
+					$contributeurs = array();
+					$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
+					// On charge le fichier de configuration
+					$config = $this->getApp()->getConfig();
+					foreach($application->getAuteurs() as $auteur){
+						$utilisateurBDD = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
+						if($utilisateurBDD){
+							$contributeur = array(
+								'id' => $auteur->getIdAuteur(),
+								'idUtilisateur' => $utilisateurBDD->getIdUtilisateur(),
+								'isRegistred' => true,
+								'nom' => $utilisateurBDD->getNomUtilisateur(),
+								'prenom' => $utilisateurBDD->getPrenomUtilisateur(),
+								'status' => $utilisateurBDD->getStatut()->getNomStatut(),
+								'photo' => base64_encode(file_get_contents($utilisateurBDD->getUrlPhotoUtilisateur())),
+								'date' => $utilisateurBDD->getDateInscriptionUtilisateur()
+							);
+							
+						}else{
+							$contributeur = array(
+								'id' => $auteur->getIdAuteur(),
+								'isRegistred' => false,
+								'nom' => $auteur->getNomAuteur(),
+								'prenom' => $auteur->getPrenomAuteur(),
+								'status' => null,
+								'photo' => base64_encode(file_get_contents($config->getVar('divers', 'divers', 'photoProfilDefault'))),
+								'date' => null
+							);
+						}
+						array_push($contributeurs, $contributeur);
+					}
+					$this->page->addVar('contributeurs', $contributeurs);
+
 				}else{
 					// On ajoute la variable d'erreurs
 					$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
@@ -908,6 +943,44 @@ class TreeController extends \Library\BackController
 						if($etatAjoutAuthor){
 							// On retourne un message de confirmation
 							$user->getMessageClient()->addReussite(self::TREE_AUTHOR_ADDED);
+
+							// On récupère les auteurs de l'application et on les affiche avec un lien s'ils sont enregistrés sur NooLib
+							// On récupère l'application mise à jour
+							$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
+							$contributeurs = array();
+							$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
+							// On charge le fichier de configuration
+							$config = $this->getApp()->getConfig();
+							foreach($application->getAuteurs() as $auteur){
+								$utilisateurBDD = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
+								if($utilisateurBDD){
+									$contributeur = array(
+										'id' => $auteur->getIdAuteur(),
+										'idUtilisateur' => $utilisateurBDD->getIdUtilisateur(),
+										'isRegistred' => true,
+										'nom' => $utilisateurBDD->getNomUtilisateur(),
+										'prenom' => $utilisateurBDD->getPrenomUtilisateur(),
+										'status' => $utilisateurBDD->getStatut()->getNomStatut(),
+										'photo' => base64_encode(file_get_contents($utilisateurBDD->getUrlPhotoUtilisateur())),
+										'date' => $utilisateurBDD->getDateInscriptionUtilisateur()
+									);
+									
+								}else{
+									$contributeur = array(
+										'id' => $auteur->getIdAuteur(),
+										'isRegistred' => false,
+										'nom' => $auteur->getNomAuteur(),
+										'prenom' => $auteur->getPrenomAuteur(),
+										'status' => null,
+										'photo' => base64_encode(file_get_contents($config->getVar('divers', 'divers', 'photoProfilDefault'))),
+										'date' => null
+									);
+								}
+								array_push($contributeurs, $contributeur);
+							}
+							$this->page->addVar('contributeurs', $contributeurs);
+
+
 						}
 					}else{
 						// On ajoute la variable d'erreurs

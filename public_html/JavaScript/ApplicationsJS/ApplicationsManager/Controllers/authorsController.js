@@ -47,17 +47,18 @@ application.controller('authorsController', ['$scope', '$uibModalInstance', '$ht
 				}
 			})
 			.success(function(response){
-				if(response['description'] && response['motCles'] && response['categorie']){
-					$scope.application.description = response['description'];
-					$scope.application.motCles = response['motCles'];
-					$scope.application.categorie = response['categorie'];
+				if(response['contributeurs']){
+					$scope.application.contributeurs = response['contributeurs'];
 				}
 
 				displayInformationsClient(response);
+				
 				// Position par defaut du bouton envoyer
 				$scope.displayButtonForm = false;
-				// Fermer la fenêtre modale
-				$uibModalInstance.dismiss('cancel');
+				if(!response['erreurs']){
+					// Fermer la fenêtre modale
+					$uibModalInstance.dismiss('cancel');
+				}
 			})
 			.error(function(error){
 				var response = {
@@ -70,6 +71,46 @@ application.controller('authorsController', ['$scope', '$uibModalInstance', '$ht
 				$uibModalInstance.dismiss('cancel');
 			});
 		}
-	}
+	};
+
+	// Pour supprimer un auteur de l'application
+    $scope.removeAuthor = function(idApp, idAuteur){
+    	alert(idApp + ' ' +idAuteur);
+        e.preventDefault();
+        var formData = new FormData(e.target);
+
+        // Envoi de la requête HTTP en mode asynchrone
+        $http({
+			method: 'POST',
+			url: '/HandleApplication/RemoveAuthor',
+			headers: {'Content-Type': undefined},
+			data: formData
+		})
+		.success(function(response){
+			if(response['contributeurs']){
+				$scope.application.contributeurs = response['contributeurs'];
+			}
+
+			displayInformationsClient(response);
+			
+			// Position par defaut du bouton envoyer
+			$scope.displayButtonForm = false;
+			if(!response['erreurs']){
+				// Fermer la fenêtre modale
+				$uibModalInstance.dismiss('cancel');
+			}
+		})
+		.error(function(error){
+			var response = {
+				'erreurs': '<p>A system error has occurred: '+error+'</p>'
+			};
+			displayInformationsClient(response);
+			// Position par defaut du bouton envoyer
+			$scope.displayButtonForm = false;
+			// Fermer la fenêtre modale
+			$uibModalInstance.dismiss('cancel');
+		});
+    };
+
 }]);
 

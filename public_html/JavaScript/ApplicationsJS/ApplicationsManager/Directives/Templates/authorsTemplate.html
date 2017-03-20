@@ -36,38 +36,32 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12">
-				<ul class="list-unstyled">
-					<?php foreach($authors as $auteur){?>
+			<div class="col-lg-11 centering">
+				<ul class="list-unstyled" ng-repeat="contributeur in application.contributeurs">
 					<li>
-						<div class="col-lg-5 auteur">
+						<div class="col-lg-3 auteur">
 							<div class="col-lg-2">
-								<form class="removeAuthor">
-									<button type="submit" class="pull-right infoBulle btn btn-danger btn-margin btn-sm" title="Remove this author from the application"><i class="glyphicon glyphicon-remove"></i></button>
-									<input type="hidden" name="idApplication" value="<?php echo $app->getIdApplication();?>"/>
-									<input type="hidden" name="idAuteur" value="<?php echo $auteur->getIdAuteur(); ?>"/>
+								<form class="removeAuthor" ng-submit="removeAuthor(application.id, contributeur.id)">
+									<button type="submit" class="pull-right btn btn-danger btn-margin btn-sm" title="Remove this contributor from the application"><i class="glyphicon glyphicon-remove"></i></button>
+									<input type="hidden" name="idApplication" value="{{application.id}}"/>
+									<input type="hidden" name="idAuteur" value="{{contributeur.id}}"/>
 								</form>
 							</div>
 							<div class="col-lg-4">
-								<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($auteur->getUrlPhotoUtilisateur())); ?>"/>
+								<img ng-src="data:image/png;charset=utf8;base64,{{contributeur.photo}}"/>
 							</div>
 							<div class="col-lg-6">
-
-								<?php if(!empty($auteur->getIdUtilisateur())){?>
-								<a href="/Profile/idAuteur=<?php echo $auteur->getIdUtilisateur(); ?>">
-									<?php echo $auteur->getNomUtilisateur().' '.$auteur->getPrenomUtilisateur(); ?>
+								<a ng-show="contributeur.isRegistred" ng-href="/Profile/idAuteur={{contributeur.idUtilisateur}}">
+									{{contributeur.nom}} {{contributeur.prenom}}
 								</a>
-								<?php }else{ ?>
-								<p><?php echo $auteur->getNomUtilisateur().' '.$auteur->getPrenomUtilisateur(); ?></p>
-								<?php } ?>
-								<p><?php if(!empty($auteur->getStatut())){echo $auteur->getStatut()->getNomStatut();}else{echo 'This author is not registered.';} ?></p>
-								<p><?php if(!empty($auteur->getDateInscriptionUtilisateur())){echo 'member since '.$auteur->getDateInscriptionUtilisateur();} ?></p>
+								<p ng-hide="contributeur.isRegistred">{{contributeur.nom}} {{contributeur.prenom}}</p>
+								<p ng-show="contributeur.isRegistred">{{contributeur.status}}</p>
+								<p ng-hide="contributeur.isRegistred">This author is not registered.</p>
+								<p ng-show="contributeur.isRegistred">Member since {{contributeur.date}}</p>
 							</div>
 							
 						</div>
 					</li>
-
-					<?php } ?>
 				</ul>
 			</div>
 		</div>

@@ -41,7 +41,7 @@ abstract class BackController extends ApplicationComponent
 	const APPLICATION_HAS_NO_MULE = 'The mule of this application cannot be loaded.';
 	const DENY_HANDLE_DATA = 'You are not authorized to edit this data.';
 	const DENY_HANDLE_APPLICATION = 'You are not authorized to edit this application.';
-	const DENY_HANDLE_AUTHORS_APPLICATION = 'You are not authorized to edit the authors of this application.';
+	const DENY_HANDLE_AUTHORS_APPLICATION = 'You are not authorized to edit the contributors of this application.';
 	const DENY_HANDLE_TASK = 'You are not authorized to edit this task.';
 	const DENY_HANDLE_FUNCTION = 'You are not authorized to edit this function.';
 	const DENY_HANDLE_PARAMETER = 'You are not authorized to edit this parameter.';
@@ -100,10 +100,10 @@ abstract class BackController extends ApplicationComponent
 	const TREE_PARAMETER_EDITED = 'The parameter has been edited successfully.';
 	const TREE_NO_TYPE_PARAMETER = 'Please, enter a description for the type of data used.';
 	const TREE_TYPE_DISPLAY_PARAMETER_NOT_FOUND = 'The type of display of the parameter has not been found.';
-	const TREE_AUTHOR_REMOVED = 'The author has been removed successfully.';
-	const TREE_AUTHOR_ADDED = 'The author has been added successfully.';
-	const TREE_AUTHOR_NOT_EXIST = 'The author entered does not exist or has already been removed.';
-	const TREE_AUTHOR_NOT_AUTHORIZED = 'You cannot add yourself as a new author of this application.';
+	const TREE_AUTHOR_REMOVED = 'The contributor has been removed successfully.';
+	const TREE_AUTHOR_ADDED = 'The contributor has been added successfully.';
+	const TREE_AUTHOR_NOT_EXIST = 'The contributor entered does not exist or has already been removed.';
+	const TREE_AUTHOR_NOT_AUTHORIZED = 'You cannot add yourself as a new contributor of this application.';
 	const DENY_DELETE_APPLICATION = 'You are not authorized to delete this application.';
 	const TREE_ADD_PUBLICATION_ARG_EMPTY = 'Please, enter a valid DOI for your article.';
 	const TREE_DOI_NOT_FOUND = 'Sorry, the DOI entered does not match with any article.';
@@ -113,7 +113,7 @@ abstract class BackController extends ApplicationComponent
 	const TREE_VERSION_WRONG = 'Enter a valid name of version (eg. 1.0.0).';
 
 	/* Library */
-	const LIBRARY_NO_AUTHOR = 'This author does not exist anymore.';
+	const LIBRARY_NO_AUTHOR = 'This contributor does not exist anymore.';
 
 	/* Mail */
 	const MAIL_MESSAGE_SENT = 'Your message has been sent successfully.';
@@ -129,7 +129,7 @@ abstract class BackController extends ApplicationComponent
 	/* SubmitApplication */
 	const SUBMITAPPLICATION_ERROR_REGISTRATION = 'A system error has occurred during the registration.';
 	const SUBMITAPPLICATION_CHANGE_NAME_APPLICATION = 'Sorry, the name of this application already exists. Please, change the name of your application.';
-	const SUMBIT_AUTHOR_NOT_AUTHORIZED = 'You cannot add yourself as a new author. You are already considered as an author.';
+	const SUMBIT_AUTHOR_NOT_AUTHORIZED = 'You cannot add yourself as a new contributor. You are already considered as a contributor.';
 	const SUBMITAPPLICATION_ERROR_STEP_APPLICATION = 'Error in the routing of the application.';
 
 	/* LogIn controller */
@@ -185,8 +185,9 @@ abstract class BackController extends ApplicationComponent
 	const TRAIT_LINK_NOT_EXIST = 'This link does not exist.';
 
 	/* Trait Application */
-	const TRAIT_APPLICATION_FIELD_AUTHOR_EMPTY = 'Please, fill all fields to add a new author.';
-	const TRAIT_APPLICATION_FIELD_AUTHOR_IS_CREATOR = 'The owner of this application cannot be also an author.';
+	const TRAIT_APPLICATION_FIELD_AUTHOR_EMPTY = 'Please, fill all fields to add a new contributor.';
+	const TRAIT_APPLICATION_FIELD_AUTHOR_IS_CREATOR = 'The owner of this application cannot be also a contributor.';
+	const TRAIT_APPLICATION_FIELD_AUTHOR_IS_ALREADY_REGISTERED = 'This contributor is already registrered for this application.';
 
 	/* Définition des attributs */
 	protected $action = '',

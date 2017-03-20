@@ -589,7 +589,7 @@ trait MethodeApplicationControleur
 		}
 
 		$managerApplication = $this->getManagers()->getManagerOf('Application');
-		$application = $managerApplication->getApplicationById($idApplication);
+		$application = $managerApplication->getApplicationByIdWithAllParameters($idApplication);
 
 		if($application){
 
@@ -619,13 +619,27 @@ trait MethodeApplicationControleur
 						}else{
 							$nouvelAuteur = $auteurBDD;
 						}
-						// On enregistre le lien entre l'auteur et l'application en BDD
-						$applicationAuteur = new \Library\Entities\ApplicationAuteur(array(
-							'application' => $application,
-							'auteur' => $nouvelAuteur
-							));
-						$managerApplicationAuteur->addApplicationAuteur($applicationAuteur);
-						return true;
+
+						// On vérifie que l'auteur n'est pas déjà collaborateur de l'application
+						$bool = false;
+						foreach($application->getAuteurs() as $auteur){
+							if($nouvelAuteur->getMailAuteur() === $auteur->getMailAuteur()){
+								$bool = true;break;
+							}
+						}
+						
+						if(!$bool){
+							// On enregistre le lien entre l'auteur et l'application en BDD
+							$applicationAuteur = new \Library\Entities\ApplicationAuteur(array(
+								'application' => $application,
+								'auteur' => $nouvelAuteur
+								));
+							$managerApplicationAuteur->addApplicationAuteur($applicationAuteur);
+							return true;
+						}else{
+							$user->getMessageClient()->addErreur(self::TRAIT_APPLICATION_FIELD_AUTHOR_IS_ALREADY_REGISTERED);
+							return false;
+						}
 					}else{
 						$user->getMessageClient()->addErreur(self::TRAIT_APPLICATION_FIELD_AUTHOR_IS_CREATOR);
 						return false;

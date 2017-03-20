@@ -21,6 +21,7 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		idApplication = parseInt(applicationElement.getAttribute('idApplication'));
 	
 	applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
+	
 		if(response['erreurs']){
 			displayInformationsClient(response);
 		}else{

@@ -194,7 +194,7 @@
 							<div class="form-group has-feedback">
 								<label for="typePubli">Select a type for your publication</label>
 								<select name="typePublication" class="form-control">
-									<?php echo $typeAAfficher; ?>
+									
 								</select>
 								<span class="glyphicon form-control-feedback"></span>
 								<span class="help-block"></span>

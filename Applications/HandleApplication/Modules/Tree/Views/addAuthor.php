@@ -6,7 +6,8 @@ if($user->getMessageClient()->hasReussite()){
 	}
 
 	$reponse = array(
-			'reussites' => $texte
+			'reussites' => $texte,
+			'contributeurs' => $contributeurs
 		);
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';
