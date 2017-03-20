@@ -38,17 +38,17 @@ body{
 }
 
 header{
-  display: inline-block;
+  display: block;
   height: 5%;
 }
 
 section{
-  display: inline-block;
+  display: block;
   height: 90%;
 }
 
 footer{
-  display: inline-block;
+  display: block;
   height: 4%;
 }
 
