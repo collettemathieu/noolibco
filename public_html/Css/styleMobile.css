@@ -38,17 +38,15 @@ body{
 }
 
 header{
-  display: block;
   height: 5%;
 }
 
 section{
-  display: block;
   height: 90%;
+  min-height: 600px;
 }
 
 footer{
-  display: block;
   height: 4%;
 }
 
