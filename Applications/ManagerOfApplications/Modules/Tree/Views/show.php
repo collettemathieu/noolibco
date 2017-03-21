@@ -13,7 +13,7 @@
 							</a>
 							<?php							
 							if($utilisateur->getIdUtilisateur() === $app->getCreateur()->getIdUtilisateur() || $user->getAttribute('isAdmin')){?>
-							<button type="button" class="infoBulle pull-right btn btn-danger btn-margin btn-lg" data-toggle="modal" href="#supprimerApplication" title="Delete it"><i class="glyphicon glyphicon-trash"></i></button>
+							<button type="button" class="infoBulle pull-right btn btn-danger btn-margin btn-lg" ng-click="deleteApplicationModal()" title="Delete it"><i class="glyphicon glyphicon-trash"></i></button>
 							<?php }?>
 							<?php 
 							if($user->getAttribute('isAdmin')){
@@ -25,7 +25,7 @@
 								</form>
 							<?php } ?>
 							<a id="testInNooSpace" class="infoBulle pull-right btn btn-primary btn-margin btn-lg" href="/NooSpace/a=<?php echo $app->getIdApplication();?>v=<?php echo $app->getVersions()[count($app->getVersions())-1]->getIdVersion();?>" target="_blank" title="Test it in the noospace"><i class="glyphicon glyphicon-log-out"></i></a>
-							<button type="button" class="infoBulle pull-right btn btn-info btn-margin btn-lg" data-toggle="modal" href="#addPublication" title="Manage its publications"><i class="glyphicon glyphicon-education"></i></button>
+							<button type="button" class="infoBulle pull-right btn btn-info btn-margin btn-lg" ng-click="publicationsModal()" title="Manage its publications"><i class="glyphicon glyphicon-education"></i></button>
 							<?php							
 							if($utilisateur->getIdUtilisateur() === $app->getCreateur()->getIdUtilisateur() || $user->getAttribute('isAdmin')){?>
 							<button type="button" class="infoBulle pull-right btn btn-success btn-margin btn-lg" ng-click="authorsApplicationModal()" title="Manage its authors"><i class="glyphicon glyphicon-user"></i></button>
@@ -227,32 +227,6 @@
 							<input type="hidden" value="<?php echo $app->getIdApplication(); ?>" name="idApplication"/>
 							<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">Add</button>
 						</form>
-					</div>
-				</div>
-	      	</div>
-	    </div>
-	  </div>
-	</div>
-
-
-	<div id="supprimerApplication" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-
-	    <!-- Modal content-->
-	    <div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">x</button>
-				<h2 class="modal-title">Do you want to delete it permanently?</h2>
-			</div>
-			<div class="modal-body">
-				<div class="container-fluid">
-					<div class="row-fluid">
-						<div class="col-lg-10 centering">
-							<form id="formDeleteApplication" class="well">
-								<input type="hidden" name="idApplication" value="<?php echo $app->getIdApplication();?>"/>
-								<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Loading..." type="submit">Yes, delete this application</button>
-							</form>
-						</div>
 					</div>
 				</div>
 	      	</div>

@@ -20,6 +20,8 @@
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/nameController.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/descriptionController.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/authorsController.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/deleteController.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/managePublicationsController.js"></script>
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/logoApplicationValidator.js"></script>
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/nameApplicationValidator.js"></script>
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/selectDesignDirective.js"></script>

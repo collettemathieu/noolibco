@@ -34,7 +34,46 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		displayInformationsClient(response);
 	});
 
-	
+	// Pour supprimer définitivement l'application
+	$scope.deleteApplicationModal = function(){
+		$uibModal.open({
+	      animation: true,
+	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/deleteTemplate.html',
+	      controller: 'deleteController',
+	      scope: $scope
+	    });
+	}
+
+	// Pour gérér les publications
+	$scope.publicationsModal = function(){
+		$uibModal.open({
+	      animation: true,
+	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/publicationsTemplate.html',
+	      controller: 'managePublicationsController',
+	      scope: $scope,
+	      resolve: {
+	        // On récupère les types des publications pour le select
+			dataStep3: ['$http', '$q', function($http, $q){
+				var deferred = $q.defer(); // -> promise
+				$http({
+					method: 'POST',
+					url: '/SubmitAnApplication/GetDataStep3'
+				})
+				.success(function(response){
+					deferred.resolve(response);
+				})
+				.error(function(error){
+					var response = {
+						'erreurs': '<p>A system error has occurred: '+error+'</p>'
+					};
+					displayInformationsClient(response);
+				});
+
+				return deferred.promise;
+			}
+	      ]}
+	    });
+	}
 
 	// Action lors de l'ouverture de la fenêtre modale "Logo"
 	$scope.logoApplicationModal = function(){

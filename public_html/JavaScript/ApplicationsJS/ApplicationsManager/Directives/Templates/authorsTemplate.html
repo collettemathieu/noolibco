@@ -36,16 +36,12 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-11 centering">
+			<div class="col-lg-8 centering">
 				<ul class="list-unstyled" ng-repeat="contributeur in application.contributeurs">
 					<li>
-						<div class="col-lg-3 auteur">
+						<div class="col-lg-4 auteur">
 							<div class="col-lg-2">
-								<form class="removeAuthor" ng-submit="removeAuthor(application.id, contributeur.id)">
-									<button type="submit" class="pull-right btn btn-danger btn-margin btn-sm" title="Remove this contributor from the application"><i class="glyphicon glyphicon-remove"></i></button>
-									<input type="hidden" name="idApplication" value="{{application.id}}"/>
-									<input type="hidden" name="idAuteur" value="{{contributeur.id}}"/>
-								</form>
+								<button ng-click="removeAuthor(application.id, contributeur.id)" class="removeAuthor pull-right btn btn-danger btn-margin btn-sm" title="Remove this contributor from the application"><i class="glyphicon glyphicon-remove"></i></button>
 							</div>
 							<div class="col-lg-4">
 								<img ng-src="data:image/png;charset=utf8;base64,{{contributeur.photo}}"/>
@@ -59,7 +55,6 @@
 								<p ng-hide="contributeur.isRegistred">This author is not registered.</p>
 								<p ng-show="contributeur.isRegistred">Member since {{contributeur.date}}</p>
 							</div>
-							
 						</div>
 					</li>
 				</ul>

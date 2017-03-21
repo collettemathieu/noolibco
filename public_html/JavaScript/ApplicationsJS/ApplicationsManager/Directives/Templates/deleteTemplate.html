@@ -1,0 +1,16 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">x</button>
+	<h2 class="modal-title">Do you want to delete it permanently?</h2>
+</div>
+<div class="modal-body">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="col-lg-12">
+				<button  class="btn btn-primary" ng-click="removeApplication(application.id)">
+					<div ng-hide="displayButtonForm">Delete this application</div>
+					<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

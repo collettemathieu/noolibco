@@ -55,10 +55,6 @@ application.controller('authorsController', ['$scope', '$uibModalInstance', '$ht
 				
 				// Position par defaut du bouton envoyer
 				$scope.displayButtonForm = false;
-				if(!response['erreurs']){
-					// Fermer la fenêtre modale
-					$uibModalInstance.dismiss('cancel');
-				}
 			})
 			.error(function(error){
 				var response = {
@@ -75,16 +71,21 @@ application.controller('authorsController', ['$scope', '$uibModalInstance', '$ht
 
 	// Pour supprimer un auteur de l'application
     $scope.removeAuthor = function(idApp, idAuteur){
-    	alert(idApp + ' ' +idAuteur);
-        e.preventDefault();
-        var formData = new FormData(e.target);
-
         // Envoi de la requête HTTP en mode asynchrone
         $http({
 			method: 'POST',
 			url: '/HandleApplication/RemoveAuthor',
-			headers: {'Content-Type': undefined},
-			data: formData
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+			        var str = [];
+			        for(var p in obj)
+			        	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			        return str.join("&");
+		    },
+			data: {
+				idApplication: idApp,
+				idAuteur: idAuteur
+			}
 		})
 		.success(function(response){
 			if(response['contributeurs']){
@@ -95,10 +96,6 @@ application.controller('authorsController', ['$scope', '$uibModalInstance', '$ht
 			
 			// Position par defaut du bouton envoyer
 			$scope.displayButtonForm = false;
-			if(!response['erreurs']){
-				// Fermer la fenêtre modale
-				$uibModalInstance.dismiss('cancel');
-			}
 		})
 		.error(function(error){
 			var response = {
