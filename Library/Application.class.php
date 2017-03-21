@@ -184,7 +184,7 @@ abstract class Application{
 		if(!$this->user->isMobile() && !$this->user->isAuthenticated() && !$this->user->jsIsActivated()){
 
 			$detect = new \Library\MobileDetect();
-			if($detect->isMobile() && !$detect->isTablet()){
+			if($detect->isMobile() || $detect->isTablet()){
 
 				// L'utilisateur est sur un mobile ou sur une tablette
 				$this->user->setIsMobile(true);
