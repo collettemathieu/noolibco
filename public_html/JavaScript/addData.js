@@ -4,7 +4,7 @@ function addData(){
 
   // On cache l'indicateur de progression
   $('#image-local-waiter').hide();
-  $('#labelFileLocalData img').attr('data-content', 'Add a new data');
+  $('#labelFileLocalData img').attr('data-content', 'Add a new data item');
 
   // Gérer la pré-visualisation et traitement des données
   $('#fileLocalData').change(function(){
@@ -167,7 +167,7 @@ function addData(){
             }
             catch(e){
                 var response = {
-                    'erreurs': '<p>Sorry, this file does not seem to contain data for displaying.</p>'
+                    'erreurs': '<p>Sorry, this file does not contain any data for displaying.</p>'
                 };
 
                 displayInformationsClient(response);
@@ -196,7 +196,7 @@ function addData(){
             }
             catch(e){
                 var response = {
-                    'erreurs': '<p>[JS] A system error has occured: '+e+'</p>'
+                    'erreurs': '<p>A system error has occured: '+e+'</p>'
                 };
 
                 displayInformationsClient(response);

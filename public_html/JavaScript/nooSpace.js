@@ -255,7 +255,7 @@ $(function(){
 										initMule(nomFirstTache, listTypeDonnee);
 
 										// On ajoute les boutons
-										$('<button type="submit" data-loading-text="<span class=\'glyphicon glyphicon-refresh spinning\'></span> Running..." class="btn btn-default pull-right">Go forward !</button>').insertAfter('.task:last');
+										$('<button type="submit" data-loading-text="<span class=\'glyphicon glyphicon-refresh spinning\'></span> Running..." class="btn btn-default pull-right">Go forward</button>').insertAfter('.task:last');
 										$('<button class="btn btn-default pull-left" disabled>&ndash;</button>').insertAfter('.task:last');
 										$('<button class="btn btn-default pull-left">+</button>').insertAfter('.task:last');
 

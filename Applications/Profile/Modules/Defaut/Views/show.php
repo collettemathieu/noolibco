@@ -140,7 +140,7 @@
 							<div id="item3" class="panel-collapse collapse out">
 								<div class="panel-body">
 									Change your email address:
-									<div class="alert alert-warning">This option is not available yet. Please stay tune !</div>
+									<div class="alert alert-warning">This option is not available yet. Please stay tuned!</div>
 								</div>
 							</div> 
 						</div>
