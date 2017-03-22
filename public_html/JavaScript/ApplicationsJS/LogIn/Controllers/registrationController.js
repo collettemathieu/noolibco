@@ -57,7 +57,7 @@ application.controller('registrationController', ['$scope', '$http', '$uibModalI
 
 				// On indique à l'utilisateur que son inscription s'est bien passée.
                 var content = document.getElementById('content');
-                content.innerHTML = '<h1>Congratulations.</h1><h2>Your registration has been successful submitted.</h2><h2> Please confirm your e-mail of registration in order to activate your account.</h2>';
+                content.innerHTML = '<h1>Congratulations.</h1><h2>Your registration has been successfully submitted.</h2><h2> Please confirm your email of registration in order to activate your account.</h2>';
                 
                 // On ferme la fenêtre
                 $uibModalInstance.dismiss('cancel');
