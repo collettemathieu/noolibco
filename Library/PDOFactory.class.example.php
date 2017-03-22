@@ -30,7 +30,7 @@ class PDOFactory
 				$ipServeurDistant = 'xxx.xxx.xxx.xxx';
 				if($ipServeur != $ipServeurDistant)
 				{
-					$bdd = new \PDO('mysql:host=localhost; dbname=xxx', 'xxx', 'xxx');
+					$bdd = new \PDO('mysql:host=localhost; dbname='xxx', 'xxx', 'xxx');
 					$bdd->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);				
 				}
 				else
