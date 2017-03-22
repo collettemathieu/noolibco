@@ -50,21 +50,11 @@ class Step3Controller extends \Library\BackController
 
 			// On vérifie que le bon contrôleur est appelé
 			if($newApp && $newApp->getStatut()->getNomStatut() === 'Step3Deposit'){
-				$publicationsApplication = array();
-				foreach($newApp->getPublications() as $publication){
-					$premierAuteur = $publication->getAuteurs()[0];
-					array_push($publicationsApplication, array(
-						'idPublication' => $publication->getIdPublication(),
-						'idApplication' => $newApp->getIdApplication(),
-						'titrePublication' => $publication->getTitrePublication(),
-						'auteursPublication' => $premierAuteur->getPrenomAuteur().' '.$premierAuteur->getNomAuteur().' et al',
-						'journalPublication' => $publication->getJournalPublication(),
-						'anneePublication' => $publication->getAnneePublication(),
-						'typePublication' => $publication->getTypePublication()->getNomTypePublication(),
-						'urlPublication' => $publication->getUrlPublication()
-						));
+				// On récupère les publications de l'application
+				$publications = $this->getPublications($newApp);
+				if(is_array($publications)){
 					// On ajoute la variable à la page
-					$this->page->addVar('publicationsApplication', $publicationsApplication);
+					$this->page->addVar('publicationsApplication', $publications);
 				}
 			}else{
 				// On ajoute la variable de réussites
@@ -89,20 +79,8 @@ class Step3Controller extends \Library\BackController
 			// On informe que c'est un chargement Ajax
 			$user->setAjax(true);
 		
-			// On récupère la liste des types de publication
-			// On appelle le manager des types de publication
-			$managerTypePublication = $this->getManagers()->getManagerOf('TypePublication');
-			$typesPublication = $managerTypePublication->getAllTypePublications();
-			// On créé le tableau des types de publication
-			$typeAAfficher = array();
-			foreach($typesPublication as $id=>$type){
-				$typePublication = array(
-					'id' => $id,
-					'nameType' => $type->getNomTypePublication()
-					);
-				array_push($typeAAfficher, $typePublication);
-			}
-			// On ajoute la variable à la page
+			// On ajoute le résultat à la page
+			$typeAAfficher = $this->getTypePublications();
 			$this->page->addVar('typeAAfficher', $typeAAfficher);
 
 			// On récupère l'application en cours de dépôt si elle existe

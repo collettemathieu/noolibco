@@ -21,6 +21,7 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		idApplication = parseInt(applicationElement.getAttribute('idApplication'));
 	
 	applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
+	
 		if(response['erreurs']){
 			displayInformationsClient(response);
 		}else{
@@ -33,7 +34,46 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		displayInformationsClient(response);
 	});
 
-	
+	// Pour supprimer définitivement l'application
+	$scope.deleteApplicationModal = function(){
+		$uibModal.open({
+	      animation: true,
+	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/deleteTemplate.html',
+	      controller: 'deleteController',
+	      scope: $scope
+	    });
+	}
+
+	// Pour gérér les publications
+	$scope.publicationsModal = function(){
+		$uibModal.open({
+	      animation: true,
+	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/publicationsTemplate.html',
+	      controller: 'managePublicationsController',
+	      scope: $scope,
+	      resolve: {
+	        // On récupère les types des publications pour le select
+			typePublications: ['$http', '$q', function($http, $q){
+				var deferred = $q.defer(); // -> promise
+				$http({
+					method: 'POST',
+					url: '/HandleApplication/GetTypePublications'
+				})
+				.success(function(response){
+					deferred.resolve(response);
+				})
+				.error(function(error){
+					var response = {
+						'erreurs': '<p>A system error has occurred: '+error+'</p>'
+					};
+					displayInformationsClient(response);
+				});
+
+				return deferred.promise;
+			}
+	      ]}
+	    });
+	}
 
 	// Action lors de l'ouverture de la fenêtre modale "Logo"
 	$scope.logoApplicationModal = function(){
@@ -85,6 +125,17 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 					return deferred.promise;
 				}
 			]}
+	    });
+	}
+
+	// Action lors de l'ouverture de la fenêtre modale "Authors"
+	$scope.authorsApplicationModal = function(){
+		$uibModal.open({
+	      animation: true,
+	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/authorsTemplate.html',
+	      controller: 'authorsController',
+	      scope: $scope,
+	      size: 'lg'
 	    });
 	}
 

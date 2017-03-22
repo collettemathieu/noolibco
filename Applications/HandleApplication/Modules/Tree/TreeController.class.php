@@ -85,6 +85,41 @@ class TreeController extends \Library\BackController
 				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
 					// On retourne l'application à la page
 					$this->page->addVar('application', $application);
+
+					// On récupère les auteurs de l'application et on les affiche avec un lien s'ils sont enregistrés sur NooLib
+					$contributeurs = array();
+					$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
+					// On charge le fichier de configuration
+					$config = $this->getApp()->getConfig();
+					foreach($application->getAuteurs() as $auteur){
+						$utilisateurBDD = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
+						if($utilisateurBDD){
+							$contributeur = array(
+								'id' => $auteur->getIdAuteur(),
+								'idUtilisateur' => $utilisateurBDD->getIdUtilisateur(),
+								'isRegistred' => true,
+								'nom' => $utilisateurBDD->getNomUtilisateur(),
+								'prenom' => $utilisateurBDD->getPrenomUtilisateur(),
+								'status' => $utilisateurBDD->getStatut()->getNomStatut(),
+								'photo' => base64_encode(file_get_contents($utilisateurBDD->getUrlPhotoUtilisateur())),
+								'date' => $utilisateurBDD->getDateInscriptionUtilisateur()
+							);
+							
+						}else{
+							$contributeur = array(
+								'id' => $auteur->getIdAuteur(),
+								'isRegistred' => false,
+								'nom' => $auteur->getNomAuteur(),
+								'prenom' => $auteur->getPrenomAuteur(),
+								'status' => null,
+								'photo' => base64_encode(file_get_contents($config->getVar('divers', 'divers', 'photoProfilDefault'))),
+								'date' => null
+							);
+						}
+						array_push($contributeurs, $contributeur);
+					}
+					$this->page->addVar('contributeurs', $contributeurs);
+
 				}else{
 					// On ajoute la variable d'erreurs
 					$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
@@ -93,6 +128,28 @@ class TreeController extends \Library\BackController
 				// On ajoute la variable d'erreurs
 				$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
 			}
+		}else{
+			// On procède à la redirection
+			$response = $this->app->getHTTPResponse();
+			$response->redirect('/');
+		}
+	}
+
+	// Récupérer les types des publications
+	public function executeGetTypePublications($request){
+		
+		// On vérifie que la requête est bien effectuée en ajax
+		if ($request->isAjaxRequest()) {
+
+			// On récupère l'objet User
+			$user = $this->app->getUser();
+
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
+		
+			// On ajoute le résultat à la page
+			$typeAAfficher = $this->getTypePublications();
+			$this->page->addVar('typeAAfficher', $typeAAfficher);
 		}else{
 			// On procède à la redirection
 			$response = $this->app->getHTTPResponse();
@@ -646,6 +703,70 @@ class TreeController extends \Library\BackController
 	}
 
 	/**
+	* Méthode pour récupérer les publication de l'application
+	*/
+	public function executeGetPublications($request){
+
+		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
+		if ($request->isAjaxRequest()) {
+			// On récupère l'utilisateur système
+			$user = $this->app->getUser();
+
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
+
+			// On récupère l'utilisateur de session
+			$userSession = unserialize($user->getAttribute('userSession'));
+
+			// On récupère l'ID de l'application à mettre en cache
+			$idApp = (int) $request->getPostData('idApp');
+
+			// On récupère le manager des applications
+			$managerApplication = $this->getManagers()->getManagerOf('Application');
+
+			// On récupère l'application via son ID
+			$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
+
+			// On vérifie que l'application existe
+			if($application){
+				// On charge les utilisateurs autorisés 
+				$idAuteursAutorises = array();
+				// On récupère le manager des Utilisateurs
+				$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
+				// On ajoute le créateur comme ID autorisé
+				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
+				foreach($application->getAuteurs() as $auteur){
+					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					if($utilisateur){
+						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
+					}
+				}
+
+				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
+
+					// On récupère les publications de l'application
+					$publications = $this->getPublications($application);
+					if(is_array($publications)){
+						// On ajoute la variable à la page
+						$this->page->addVar('publications', $publications);
+					}
+				}else{
+					// On ajoute la variable d'erreurs
+					$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
+				}	
+			}else{
+				// On ajoute la variable d'erreurs
+				$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
+			}
+		}else{
+			// On procède à la redirection
+			$response = $this->app->getHTTPResponse();
+			$response->redirect('/');
+		}
+	}
+
+
+	/**
 	* Méthode pour ajouter une publication à l'application
 	*/
 	public function executeAddPublication($request){
@@ -908,6 +1029,42 @@ class TreeController extends \Library\BackController
 						if($etatAjoutAuthor){
 							// On retourne un message de confirmation
 							$user->getMessageClient()->addReussite(self::TREE_AUTHOR_ADDED);
+
+							// On récupère les auteurs de l'application et on les affiche avec un lien s'ils sont enregistrés sur NooLib
+							// On récupère l'application mise à jour
+							$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
+							$contributeurs = array();
+							$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
+							// On charge le fichier de configuration
+							$config = $this->getApp()->getConfig();
+							foreach($application->getAuteurs() as $auteur){
+								$utilisateurBDD = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
+								if($utilisateurBDD){
+									$contributeur = array(
+										'id' => $auteur->getIdAuteur(),
+										'idUtilisateur' => $utilisateurBDD->getIdUtilisateur(),
+										'isRegistred' => true,
+										'nom' => $utilisateurBDD->getNomUtilisateur(),
+										'prenom' => $utilisateurBDD->getPrenomUtilisateur(),
+										'status' => $utilisateurBDD->getStatut()->getNomStatut(),
+										'photo' => base64_encode(file_get_contents($utilisateurBDD->getUrlPhotoUtilisateur())),
+										'date' => $utilisateurBDD->getDateInscriptionUtilisateur()
+									);
+									
+								}else{
+									$contributeur = array(
+										'id' => $auteur->getIdAuteur(),
+										'isRegistred' => false,
+										'nom' => $auteur->getNomAuteur(),
+										'prenom' => $auteur->getPrenomAuteur(),
+										'status' => null,
+										'photo' => base64_encode(file_get_contents($config->getVar('divers', 'divers', 'photoProfilDefault'))),
+										'date' => null
+									);
+								}
+								array_push($contributeurs, $contributeur);
+							}
+							$this->page->addVar('contributeurs', $contributeurs);
 						}
 					}else{
 						// On ajoute la variable d'erreurs
@@ -983,6 +1140,43 @@ class TreeController extends \Library\BackController
 
 						// On retourne un message de confirmation
 						$user->getMessageClient()->addReussite(self::TREE_AUTHOR_REMOVED);
+
+						// On récupère les auteurs de l'application et on les affiche avec un lien s'ils sont enregistrés sur NooLib
+						// On récupère l'application mise à jour
+						$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
+						$contributeurs = array();
+						$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
+						// On charge le fichier de configuration
+						$config = $this->getApp()->getConfig();
+						foreach($application->getAuteurs() as $auteur){
+							$utilisateurBDD = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
+							if($utilisateurBDD){
+								$contributeur = array(
+									'id' => $auteur->getIdAuteur(),
+									'idUtilisateur' => $utilisateurBDD->getIdUtilisateur(),
+									'isRegistred' => true,
+									'nom' => $utilisateurBDD->getNomUtilisateur(),
+									'prenom' => $utilisateurBDD->getPrenomUtilisateur(),
+									'status' => $utilisateurBDD->getStatut()->getNomStatut(),
+									'photo' => base64_encode(file_get_contents($utilisateurBDD->getUrlPhotoUtilisateur())),
+									'date' => $utilisateurBDD->getDateInscriptionUtilisateur()
+								);
+								
+							}else{
+								$contributeur = array(
+									'id' => $auteur->getIdAuteur(),
+									'isRegistred' => false,
+									'nom' => $auteur->getNomAuteur(),
+									'prenom' => $auteur->getPrenomAuteur(),
+									'status' => null,
+									'photo' => base64_encode(file_get_contents($config->getVar('divers', 'divers', 'photoProfilDefault'))),
+									'date' => null
+								);
+							}
+							array_push($contributeurs, $contributeur);
+						}
+						$this->page->addVar('contributeurs', $contributeurs);
+
 					}else{
 						// On ajoute la variable d'erreurs
 						$user->getMessageClient()->addErreur(self::TREE_AUTHOR_NOT_EXIST);

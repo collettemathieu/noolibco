@@ -1,0 +1,64 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="close()">x</button>
+	<h2 class="modal-title">Manage the contributors of {{application.nom}}</h2>
+</div>
+<div class="modal-body">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-8 centering">
+				<div class="alert alert-warning">
+					<p>You can add contributors to help you in the developement of your application. The contributor needs to be registred on NooLib to modify the application online.</p>
+				</div>
+			</div>
+			<div class="col-lg-8 centering">
+				<legend>Add a new contributor</legend>
+				<form class="well well-lg" ng-submit="validFormContributor()" name="formAddContributor">
+					<div class="form-group has-feedback" ng-class="{'has-error':formAddContributor.firstname.$invalid && formAddContributor.firstname.$dirty, 'has-success':formAddContributor.firstname.$valid}">
+						<input type="text" required class="form-control input-lg" name="firstname" ng-minlength="2" ng-model="firstname" placeholder="His(her) first name"/>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formAddContributor.firstname.$invalid && formAddContributor.firstname.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formAddContributor.firstname.$valid}"></span>
+						<span ng-show="formAddContributor.firstname.$invalid && formAddContributor.firstname.$dirty" class="help-block">Enter a first name of at least two letters.</span>
+					</div>
+					<div class="form-group has-feedback" ng-class="{'has-error':formAddContributor.lastname.$invalid && formAddContributor.lastname.$dirty, 'has-success':formAddContributor.lastname.$valid}">
+						<input type="text" required class="form-control input-lg" name="lastname" ng-minlength="2" ng-model="lastname" placeholder="His(her) last name"/>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formAddContributor.lastname.$invalid && formAddContributor.lastname.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formAddContributor.lastname.$valid}"></span>
+						<span ng-show="formAddContributor.lastname.$invalid && formAddContributor.lastname.$dirty" class="help-block">Enter a last name of at least two letters.</span>
+					</div>
+					<div class="form-group has-feedback" ng-class="{'has-error':formAddContributor.mail.$invalid && formAddContributor.mail.$dirty, 'has-success':formAddContributor.mail.$valid}">
+						<input type="email" required class="form-control input-lg" name="mail" ng-pattern="/^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/" ng-model="mail" placeholder= "His(her) email address"/>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formAddContributor.mail.$invalid && formAddContributor.mail.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formAddContributor.mail.$valid}"></span>
+						<span ng-show="formAddContributor.mail.$invalid && formAddContributor.mail.$dirty" class="help-block">Enter a valid email address.</span>
+					</div>
+					<button ng-disabled="formAddContributor.$invalid" class="btn btn-primary" type="submit">
+						<div ng-hide="displayButtonForm">Add this contributor</div>
+						<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
+					</button>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-8 centering">
+				<ul class="list-unstyled" ng-repeat="contributeur in application.contributeurs">
+					<li>
+						<div class="col-lg-4 auteur">
+							<div class="col-lg-2">
+								<button ng-click="removeAuthor(application.id, contributeur.id)" class="removeAuthor pull-right btn btn-danger btn-margin btn-sm" title="Remove this contributor from the application"><i class="glyphicon glyphicon-remove"></i></button>
+							</div>
+							<div class="col-lg-4">
+								<img ng-src="data:image/png;charset=utf8;base64,{{contributeur.photo}}"/>
+							</div>
+							<div class="col-lg-6">
+								<a ng-show="contributeur.isRegistred" ng-href="/Profile/idAuteur={{contributeur.idUtilisateur}}">
+									{{contributeur.nom}} {{contributeur.prenom}}
+								</a>
+								<p ng-hide="contributeur.isRegistred">{{contributeur.nom}} {{contributeur.prenom}}</p>
+								<p ng-show="contributeur.isRegistred">{{contributeur.status}}</p>
+								<p ng-hide="contributeur.isRegistred">This author is not registered.</p>
+								<p ng-show="contributeur.isRegistred">Member since {{contributeur.date}}</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

@@ -27,7 +27,10 @@ application.factory('applicationService', ['$q', '$http', function($q, $http){
 				deferred.resolve(response);
 			})
 			.error(function(error){
-				displayInformationsClient(error);
+				var response = {
+					'erreurs': '<p>A system error has occurred: '+error+'</p>'
+				};
+				displayInformationsClient(response);
 			});
 
 			return deferred.promise;
@@ -54,7 +57,10 @@ application.factory('applicationService', ['$q', '$http', function($q, $http){
 				deferred.resolve(response);
 			})
 			.error(function(error){
-				displayInformationsClient(error);
+				var response = {
+					'erreurs': '<p>A system error has occurred: '+error+'</p>'
+				};
+				displayInformationsClient(response);
 			});
 
 			return deferred.promise;

@@ -1,12 +1,14 @@
 <?php 
 if(isset($application)){
+
 	$reponse = array(
 		'id' => $application->getIdApplication(),
 		'nom' => $application->getNomApplication(),
 		'description' => $application->getDescriptionApplication(),
 		'urlLogo' => base64_encode(file_get_contents($application->getUrlLogoApplication())),
 		'motCles' => implode(', ', $application->getMotCles()),
-		'categorie' => $application->getCategorie()->getNomCategorie()
+		'categorie' => $application->getCategorie()->getNomCategorie(),
+		'contributeurs' => $contributeurs
 	);
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';

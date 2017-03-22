@@ -1,14 +1,9 @@
 <?php 
-if($user->getMessageClient()->hasReussite()){
-	$texte = '';
-	foreach($user->getMessageClient()->getReussites() as $reussite){
-		$texte .= '<p>'.$reussite.'</p>';
-	}
-
+if(isset($typeAAfficher)){
 	$reponse = array(
-			'reussites' => $texte,
-			'contributeurs' => $contributeurs
+			'typePublication' => $typeAAfficher
 		);
+	
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';
 	foreach($user->getMessageClient()->getErreurs() as $erreur){
@@ -24,7 +19,6 @@ if($user->getMessageClient()->hasReussite()){
 }
 
 // On envoie la réponse au format JSON
-
 echo json_encode($reponse);
 
 ?>

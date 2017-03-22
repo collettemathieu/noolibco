@@ -58,7 +58,6 @@ trait MethodeApplicationControleur
 	/**
 	* Permet de supprimer une application du dock lorsque l'application est supprimer définitivement
 	**/
-	
 	private function removeApplicationFromDock($application){
 		if($application instanceof \Library\Entities\Application){
 			// On récupère l'id de l'application
@@ -160,6 +159,54 @@ trait MethodeApplicationControleur
 		}
 	
 	}
+
+	/**
+	* Permet de récupérer les types des publications
+	**/
+	private function getTypePublications(){
+		// On récupère la liste des types de publication
+		// On appelle le manager des types de publication
+		$managerTypePublication = $this->getManagers()->getManagerOf('TypePublication');
+		$typesPublication = $managerTypePublication->getAllTypePublications();
+		// On créé le tableau des types de publication
+		$typeAAfficher = array();
+		foreach($typesPublication as $id=>$type){
+			$typePublication = array(
+				'id' => $id,
+				'nameType' => $type->getNomTypePublication()
+				);
+			array_push($typeAAfficher, $typePublication);
+		}
+		// On retourne le résultat
+		return $typeAAfficher;
+	}
+
+
+	/**
+	* Permet de récupérer les publications d'une application
+	**/
+	private function getPublications($application){
+		if($application instanceof \Library\Entities\Application){
+			$publicationsApplication = array();
+			foreach($application->getPublications() as $publication){
+				$premierAuteur = $publication->getAuteurs()[0];
+				array_push($publicationsApplication, array(
+					'idPublication' => $publication->getIdPublication(),
+					'idApplication' => $application->getIdApplication(),
+					'titrePublication' => $publication->getTitrePublication(),
+					'auteursPublication' => $premierAuteur->getPrenomAuteur().' '.$premierAuteur->getNomAuteur().' et al',
+					'journalPublication' => $publication->getJournalPublication(),
+					'anneePublication' => $publication->getAnneePublication(),
+					'typePublication' => $publication->getTypePublication()->getNomTypePublication(),
+					'urlPublication' => $publication->getUrlPublication()
+					));
+			}
+			return $publicationsApplication;
+		}else{
+			return null;
+		}
+	}
+
 
 	/**
 	* Permet de supprimer une publication définitivement
@@ -589,7 +636,7 @@ trait MethodeApplicationControleur
 		}
 
 		$managerApplication = $this->getManagers()->getManagerOf('Application');
-		$application = $managerApplication->getApplicationById($idApplication);
+		$application = $managerApplication->getApplicationByIdWithAllParameters($idApplication);
 
 		if($application){
 
@@ -619,13 +666,27 @@ trait MethodeApplicationControleur
 						}else{
 							$nouvelAuteur = $auteurBDD;
 						}
-						// On enregistre le lien entre l'auteur et l'application en BDD
-						$applicationAuteur = new \Library\Entities\ApplicationAuteur(array(
-							'application' => $application,
-							'auteur' => $nouvelAuteur
-							));
-						$managerApplicationAuteur->addApplicationAuteur($applicationAuteur);
-						return true;
+
+						// On vérifie que l'auteur n'est pas déjà collaborateur de l'application
+						$bool = false;
+						foreach($application->getAuteurs() as $auteur){
+							if($nouvelAuteur->getMailAuteur() === $auteur->getMailAuteur()){
+								$bool = true;break;
+							}
+						}
+						
+						if(!$bool){
+							// On enregistre le lien entre l'auteur et l'application en BDD
+							$applicationAuteur = new \Library\Entities\ApplicationAuteur(array(
+								'application' => $application,
+								'auteur' => $nouvelAuteur
+								));
+							$managerApplicationAuteur->addApplicationAuteur($applicationAuteur);
+							return true;
+						}else{
+							$user->getMessageClient()->addErreur(self::TRAIT_APPLICATION_FIELD_AUTHOR_IS_ALREADY_REGISTERED);
+							return false;
+						}
 					}else{
 						$user->getMessageClient()->addErreur(self::TRAIT_APPLICATION_FIELD_AUTHOR_IS_CREATOR);
 						return false;

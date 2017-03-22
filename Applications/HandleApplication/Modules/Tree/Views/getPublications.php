@@ -1,14 +1,8 @@
 <?php 
-if($user->getMessageClient()->hasReussite()){
-	$texte = '';
-	foreach($user->getMessageClient()->getReussites() as $reussite){
-		$texte .= '<p>'.$reussite.'</p>';
-	}
+if(isset($publications)){
 
-	$reponse = array(
-			'reussites' => $texte,
-			'contributeurs' => $contributeurs
-		);
+	$reponse = $publications;
+	
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';
 	foreach($user->getMessageClient()->getErreurs() as $erreur){
