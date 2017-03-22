@@ -61,18 +61,18 @@ abstract class BackController extends ApplicationComponent
 
 	/* AddData controller */
 	const ADD_DATA_MEMORY_EXCEEDED = 'The size of data exceeds the limit authorized. Please try again with a smaller interval.';
-	const ADD_DATA_LOADED_DATA = 'The data is now loaded in your data manager.';
+	const ADD_DATA_LOADED_DATA = 'The data has now been loaded in your data manager.';
 	const ADD_DATA_NO_DATA_SENT = 'No data has been sent. Please try again!';
 	const ADD_DATA_DATA_NOT_TAKEN_INTO_ACCOUNT = 'Sorry, this format of data is not yet taken into account by NooLib.';
 	const ADD_DATA_ERROR_ENCODING = 'An error while encoding has occurred.';
 	const ADD_DATA_DATA_ALREADY_LOADED = 'A data request is already loading. Please wait a while.';
 
 	/* DataManager Controller */
-	const DATA_MANAGER_UPDATE_DATA = 'The data is now updated.';
+	const DATA_MANAGER_UPDATE_DATA = 'The data has now been updated.';
 	const DATA_MANAGER_NOT_DISPLAY_AS_GRAPH = 'You cannot display this data with a graph.';
 	const DATA_MANAGER_INTERVAL_NOT_VALID = 'The intervals selected are not valid.';
 	const DATA_MANAGER_DATA_NOT_BE_SAVED = 'Sorry, you cannot save this type of data.';
-	const DATA_MANAGER_DATA_UPDATE_DATE = 'Your data is now saved on NooLib for 30 days.';
+	const DATA_MANAGER_DATA_UPDATE_DATE = 'Your data has now been saved on NooLib for 30 days.';
 
 	/* Engine controller */
 	const ENGINE_NO_ACTION_FOR_TASK = 'No action is associated to this task.';
@@ -122,7 +122,7 @@ abstract class BackController extends ApplicationComponent
 
 	/* Backend */
 	const BACKEND_WRONG_PASSWORD = 'The password you entered is not valid.';
-	const BACKEND_WELCOME_ADMIN = 'You are now logged as administrator.';
+	const BACKEND_WELCOME_ADMIN = 'You are logged as administrator.';
 	const BACKEND_APPLICATION_CANNOT_BE_ACTIVATED_WITHOUT_VALID_VERSION = 'The application cannot be activated without validating at least one version of this application.';
 	const BACKEND_VERSION_NOT_FOUND = 'The version of application asked is not found.';
 
@@ -139,7 +139,7 @@ abstract class BackController extends ApplicationComponent
 	const LOGIN_INVALID_LINK_ACTIVATE_ACCOUNT = 'This link has expired. Please try to register again.';
 	const LOGIN_INVALID_LINK_RESET_PASSWORD = 'This link has expired. Please try to reset your password again.';
 	const LOGIN_ACCOUNT_ALDREADY_ACTIVATED = 'Your account is already activated. You can log to NooLib!';
-	const LOGIN_ACCOUNT_ACTIVATED = 'Your account is now activated. You can log!';
+	const LOGIN_ACCOUNT_ACTIVATED = 'Your account has now been activated. You can log!';
 	const LOGIN_ALREADY_LOGGED = 'Your are already logged.';
 	const LOGIN_ENTER_VALID_EMAIL = 'Enter a valid email address.';
 	const LOGIN_RESET_PASSWORD = 'An email has been sent to you with a link to reset your password.';
@@ -158,8 +158,8 @@ abstract class BackController extends ApplicationComponent
 	/* Settings */
 	const SETTINGS_NOT_AUTHORIZE_TO_REMOVE = 'Your are not authorized to remove this account user.';
 	const SETTINGS_PASSWORD_INCORRECT = 'The password entered is incorrect.';
-	const SETTINGS_ACCOUNT_REMOVED = 'Your account has been well removed. See you soon!';
-	const SETTINGS_WALLPAPER_CHANGED = 'The wallpaper has been well edited.';
+	const SETTINGS_ACCOUNT_REMOVED = 'Your account has been removed. See you soon!';
+	const SETTINGS_WALLPAPER_CHANGED = 'The wallpaper has been edited.';
 	const SETTINGS_DEFAULT_WALLPAPER = 'The default wallpaper has been restored.';
 	const SETTINGS_DEFAULT_WALLPAPER_ALREADY_RESTORED = 'The default wallpaper is already restored.';
 

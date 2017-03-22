@@ -189,9 +189,9 @@
 			</div>
 			<div id="inSectionGestionnaireDonnees">
 				<div id="boiteAOutils">
-					<img id="boutonImporter" class="infoBulleDataManager" data-toggle="modal" href="#overlayFormulaireAjoutDonneeLocale" src="/Images/addData.png" title="Load a new data">
-					<img id="boutonSaveDataOnServer" class="infoBulleDataManager" src="/Images/save.png" title="Drag and drop a data to save it on NooLib for 30 days">
-					<img id="poubelleDonneeUtilisateur" class="infoBulleDataManager" src="/Images/trash.png" title="Drag and drop a data to delete it permanently">	
+					<img id="boutonImporter" class="infoBulleDataManager" data-toggle="modal" href="#overlayFormulaireAjoutDonneeLocale" src="/Images/addData.png" title="Load a new data item">
+					<img id="boutonSaveDataOnServer" class="infoBulleDataManager" src="/Images/save.png" title="Drag and drop a data item to save it on NooLib for 30 days">
+					<img id="poubelleDonneeUtilisateur" class="infoBulleDataManager" src="/Images/trash.png" title="Drag and drop a data item to delete it permanently">	
 				</div>
 				<div id="listeDonneesUser">
 					<div id="inListeDonneesUser">
