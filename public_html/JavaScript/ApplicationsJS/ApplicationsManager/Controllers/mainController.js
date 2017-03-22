@@ -53,11 +53,11 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	      scope: $scope,
 	      resolve: {
 	        // On récupère les types des publications pour le select
-			dataStep3: ['$http', '$q', function($http, $q){
+			typePublications: ['$http', '$q', function($http, $q){
 				var deferred = $q.defer(); // -> promise
 				$http({
 					method: 'POST',
-					url: '/SubmitAnApplication/GetDataStep3'
+					url: '/HandleApplication/GetTypePublications'
 				})
 				.success(function(response){
 					deferred.resolve(response);

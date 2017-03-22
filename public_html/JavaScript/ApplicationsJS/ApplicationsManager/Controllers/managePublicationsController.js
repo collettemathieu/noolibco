@@ -14,14 +14,27 @@
  * @version: 1
  */
 
-application.controller('managePublicationsController', ['applicationService', '$http', '$scope', '$rootScope', '$uibModalInstance', 'dataStep3', function(applicationService, $http, $scope, $rootScope, $uibModalInstance, dataStep3){
+application.controller('managePublicationsController', ['applicationService', '$http', '$scope', '$rootScope', '$uibModalInstance', 'typePublications', function(applicationService, $http, $scope, $rootScope, $uibModalInstance, typePublications){
 	
-	// On ajoute les types des publications à la balise select
-	$scope.types = dataStep3['typePublication'];
+    // On récupère les publications de l'application
+
+	applicationService.getPublications($scope.application.id).then(function(response){ // <- c'est une promise
+        if(response['erreurs']){
+            displayInformationsClient(response);
+        }else{
+            $scope.application.publications = response;
+        }
+    }, function(error){
+        var response = {
+            'erreurs': '<p>A system error has occurred: '+error+'</p>'
+        };
+        displayInformationsClient(response);
+    });
+
+    // On ajoute les types des publications à la balise select
+	$scope.types = typePublications['typePublication'];
 	$scope.selectedType = $scope.types[1];
 
-	// On ajoute l'id de l'application à l'input hidden
-	$scope.idApplication = dataStep3['idApp'];
     // On initialise le button de recherche par DOI
     $scope.loading = false;
     $scope.loadingAddPublication = false;
@@ -104,6 +117,27 @@ application.controller('managePublicationsController', ['applicationService', '$
                 displayInformationsClient(response);
             });
         }
+    };
+
+    // Action pour supprimer une publication
+    $scope.deletePublication = function(idPublication, idApplication){
+        $scope.deletingPublication = true;
+        applicationService.deletePublication(idPublication, idApplication)
+        .then(function(){
+            return applicationService.getPublications($scope.application.id);
+        })
+        .then(function(publications){
+            // On met à jour la variable
+            $scope.application.publications = publications;
+            $scope.deletingPublication = false;
+        })
+        .catch(function(error){
+            var response = {
+                'erreurs': '<p>A system error has occurred: '+error+'</p>'
+            };
+            displayInformationsClient(response);
+            $scope.deletingPublication = false;
+        });
     };
 	
 	// Pour fermer la fenêtre modale

@@ -135,6 +135,28 @@ class TreeController extends \Library\BackController
 		}
 	}
 
+	// Récupérer les types des publications
+	public function executeGetTypePublications($request){
+		
+		// On vérifie que la requête est bien effectuée en ajax
+		if ($request->isAjaxRequest()) {
+
+			// On récupère l'objet User
+			$user = $this->app->getUser();
+
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
+		
+			// On ajoute le résultat à la page
+			$typeAAfficher = $this->getTypePublications();
+			$this->page->addVar('typeAAfficher', $typeAAfficher);
+		}else{
+			// On procède à la redirection
+			$response = $this->app->getHTTPResponse();
+			$response->redirect('/');
+		}
+	}
+
 
 	/**
 	* Méthode pour récupérer les données de l'arbre de l'application
@@ -679,6 +701,70 @@ class TreeController extends \Library\BackController
 			$response->redirect('/');
 		}
 	}
+
+	/**
+	* Méthode pour récupérer les publication de l'application
+	*/
+	public function executeGetPublications($request){
+
+		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
+		if ($request->isAjaxRequest()) {
+			// On récupère l'utilisateur système
+			$user = $this->app->getUser();
+
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
+
+			// On récupère l'utilisateur de session
+			$userSession = unserialize($user->getAttribute('userSession'));
+
+			// On récupère l'ID de l'application à mettre en cache
+			$idApp = (int) $request->getPostData('idApp');
+
+			// On récupère le manager des applications
+			$managerApplication = $this->getManagers()->getManagerOf('Application');
+
+			// On récupère l'application via son ID
+			$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
+
+			// On vérifie que l'application existe
+			if($application){
+				// On charge les utilisateurs autorisés 
+				$idAuteursAutorises = array();
+				// On récupère le manager des Utilisateurs
+				$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
+				// On ajoute le créateur comme ID autorisé
+				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
+				foreach($application->getAuteurs() as $auteur){
+					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					if($utilisateur){
+						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
+					}
+				}
+
+				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
+
+					// On récupère les publications de l'application
+					$publications = $this->getPublications($application);
+					if(is_array($publications)){
+						// On ajoute la variable à la page
+						$this->page->addVar('publications', $publications);
+					}
+				}else{
+					// On ajoute la variable d'erreurs
+					$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
+				}	
+			}else{
+				// On ajoute la variable d'erreurs
+				$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
+			}
+		}else{
+			// On procède à la redirection
+			$response = $this->app->getHTTPResponse();
+			$response->redirect('/');
+		}
+	}
+
 
 	/**
 	* Méthode pour ajouter une publication à l'application
