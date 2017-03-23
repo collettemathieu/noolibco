@@ -20,7 +20,9 @@ application.directive('selectDesignDirective', function(){
 		require: 'ngModel',
 		priority: 10001,
 		link: function(scope, element){
-			element.selectpicker();	
+			scope.$watch('selectedType', function(){
+				element.selectpicker('refresh');
+			});
 		}
 	};
 });

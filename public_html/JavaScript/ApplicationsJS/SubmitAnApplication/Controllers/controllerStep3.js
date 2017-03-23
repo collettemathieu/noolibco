@@ -18,7 +18,10 @@ application.controller('controllerStep3', ['applicationService', 'publicationsAp
 	
 	// Initialisation
 	$scope.validDeposit = false;
-	$scope.deletingPublication = false;
+	$scope.deletingPublication = new Array();
+    for(var i=0, c=publicationsApplication.length; i<c; ++i){
+        $scope.deletingPublication[i] = false;
+    }
 
 	// On met à jour les publications de l'application
 	$scope.publicationsApplication = publicationsApplication;
@@ -61,8 +64,8 @@ application.controller('controllerStep3', ['applicationService', 'publicationsAp
 
 
 	// Action pour supprimer une publication
-	$scope.deletePublication = function(idPublication, idApplication){
-		$scope.deletingPublication = true;
+	$scope.deletePublication = function(idPublication, idApplication, index){
+		$scope.deletingPublication[index] = true;
 		applicationService.deletePublication(idPublication, idApplication)
 		.then(function(){
 			return applicationService.getPublications();
@@ -70,14 +73,14 @@ application.controller('controllerStep3', ['applicationService', 'publicationsAp
 		.then(function(publications){
 			// On met à jour la variable
 			$scope.publicationsApplication = publications;
-			$scope.deletingPublication = false;
+			$scope.deletingPublication[index] = false;
 		})
 		.catch(function(error){
 			var response = {
 				'erreurs': '<p>A system error has occurred: '+error+'</p>'
 			};
 			displayInformationsClient(response);
-			$scope.deletingPublication = false;
+			$scope.deletingPublication[index] = false;
 		});
 	};
 

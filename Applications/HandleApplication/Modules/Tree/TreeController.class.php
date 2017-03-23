@@ -878,7 +878,7 @@ class TreeController extends \Library\BackController
 				// On traite les résultats via le DOM XML
 				$dom = new \DomDocument();
 				$dom->loadXML($results);
-
+				
 				$query = $dom->getElementsByTagName('query');
 				if($query->item(0)->hasAttribute('status')){
 					if($query->item(0)->getAttribute('status') === 'resolved'){

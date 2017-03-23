@@ -18,7 +18,7 @@ application.controller('controllerModalAddPublication', ['applicationService', '
 	
 	// On ajoute les types des publications à la balise select
 	$scope.types = dataStep3['typePublication'];
-	$scope.selectedType = $scope.types[1];
+	$scope.selectedType = $scope.types[0];
 
 	// On ajoute l'id de l'application à l'input hidden
 	$scope.idApplication = dataStep3['idApp'];
@@ -55,6 +55,7 @@ application.controller('controllerModalAddPublication', ['applicationService', '
                 	$scope.anneePublication = response['reussites']['yearPublication'];
                 	$scope.journalPublication = response['reussites']['titleJournal'];
                 	$scope.urlPublication = response['reussites']['urlRessource'];
+                    $scope.selectedType = $scope.types[1];
                 }
             })
             .error(function(){

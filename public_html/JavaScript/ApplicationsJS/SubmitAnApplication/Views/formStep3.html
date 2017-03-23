@@ -24,9 +24,9 @@
 										<td>{{publication.typePublication}}</td>
 										<td><a href="{{publication.urlPublication}}" target="_blank">See</a></td>
 										<td>
-											<button ng-click="deletePublication(publication.idPublication, publication.idApplication)" class="btn btn-primary">
-												<div ng-hide="deletingPublication">Delete</div>
-												<div ng-show="deletingPublication"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
+											<button ng-click="deletePublication(publication.idPublication, publication.idApplication, $index)" class="btn btn-primary">
+												<div ng-hide="deletingPublication[$index]">Delete</div>
+												<div ng-show="deletingPublication[$index]"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
 											</button>
 										</td>
 						      		</tr>
