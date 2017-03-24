@@ -26,3 +26,12 @@
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/nameApplicationValidator.js"></script>
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/selectDesignDirective.js"></script>
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/fileDesignDirective.js"></script>
+
+<script type="text/javascript">
+		
+		$('.subMenu').click(function(e){
+			$(this).next('ul').toggle();
+			e.stopPropagation();
+			e.preventDefault();
+		});
+	</script>

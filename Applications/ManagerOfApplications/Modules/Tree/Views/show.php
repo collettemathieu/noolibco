@@ -36,33 +36,32 @@
 					<div class="col-lg-12"><hr></div>
 
 					<div class="col-lg-12">
-						<div class="col-lg-2">
-							<form>
-								<span class="label label-primary">Version</span>
-								<select class="btn btn-default" type="button" id="selectVersion" name="idVersion">
-									<?php 
+						<span>Version</span>
+						<!-- Split button -->
+						<div class="btn-group pull-right">
+						  <button data-toggle="modal" href="#formulaireApplication" id="boutonAjouterTache" type="button" class="btn btn-primary">New task</button>
+						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+						  </button>
+						  <ul class="dropdown-menu">
+						    <li><a data-toggle="modal" href="#formulaireNouvelleVersion" id="boutonCreerNewVersion">Create a new version</a></li>
+							<?php 
+							if($user->getAttribute('isAdmin')){?>
+							<li><a id="validVersionApplication" href="/PourAdminSeulement/Applications/ActivateVersion/a=<?php echo $app->getIdApplication();?>v=<?php echo $app->getVersions()[count($app->getVersions())-1]->getIdVersion();?>">Valid this version</a></li>
+							<?php }?>
+						    <li role="separator" class="divider"></li>
+						    <li class="dropdown-submenu">
+						    	<a class="subMenu" data-toggle="dropdown" href="#">Version(s) <span class="caret"></span></a>
+						    	<ul class="dropdown-menu pull-right">
+						    		<?php 
 									$size = count($app->getVersions());
 									foreach($app->getVersions() as $key=>$version){?>
-									<option value="<?php echo $version->getIdVersion();?>" <?php if($key === $size-1){echo "selected";}?>><?php echo $version->getNumVersion();?></option>
+									<li class="text-center version" idVersion="<?php echo $version->getIdVersion();?>"><a href=""><?php echo $version->getNumVersion();?></a></li>
 									<?php } ?>
-								</select>
-							</form>
-						</div>
-						<div class="dropdown pull-right">
-							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-								Action
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-								<li><a data-toggle="modal" href="#formulaireApplication" id="boutonAjouterTache">Add a new task</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a data-toggle="modal" href="#formulaireNouvelleVersion" id="boutonCreerNewVersion">Create a new version</a></li>
-								<?php 
-								if($user->getAttribute('isAdmin')){?>
-								<li role="separator" class="divider"></li>
-								<li><a id="validVersionApplication" href="/PourAdminSeulement/Applications/ActivateVersion/a=<?php echo $app->getIdApplication();?>v=<?php echo $app->getVersions()[count($app->getVersions())-1]->getIdVersion();?>">Valid this version</a></li>
-								<?php }?>
-							</ul>
+						    	</ul>
+						    </li>
+						  </ul>
 						</div>
 						<div id="containerTreeApplication" class="containerTreeApplication" idApp="<?php echo $app->getIdApplication();?>"></div>
 					</div>
@@ -70,6 +69,7 @@
 			</div>
 		</div>
 	</div>
+
 
 
 	<!-- Affichage des formulaires -->
