@@ -128,7 +128,7 @@
                 url: '/HandleApplication/DataApplication',
                 type:'POST',
                 data:{
-                    idApp:parseInt($('#containerTreeApplication').attr('idApp')),
+                    idApp:parseInt($('#application').attr('idapplication')),
                     idVersion:parseInt(idVersion)
                 },
                 async: true,
@@ -574,17 +574,7 @@
                 }
             });
         }
-        initTreeApplication(); // initialisation au 1er chargement
-        // Pour sélectionner une autre version de l'application
-        $('.version').on('click', function(e){
-            // On met à jour l'arbre de l'application
-            initTreeApplication($(this).attr('idVersion'));
-            // On met à jour l'url de la requête NooSpace
-            $('#testInNooSpace').attr('href', '/NooSpace/a='+parseInt($('#containerTreeApplication').attr('idApp'))+'v='+parseInt($(this).attr('idVersion')));
-             // On met à jour l'url de la requête Version
-            $('#validVersionApplication').attr('href', '/PourAdminSeulement/Applications/ActivateVersion/a='+parseInt($('#containerTreeApplication').attr('idApp'))+'v='+parseInt($(this).attr('idVersion')));
-        });
-
+        //initTreeApplication(); // initialisation au 1er chargement    
     }
 })();
 

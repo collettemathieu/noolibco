@@ -26,6 +26,11 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 			displayInformationsClient(response);
 		}else{
 			$scope.application = response;
+			// Initialisation des variables
+			$scope.idVersion = $scope.application.versions[$scope.application.versions.length-1].id;
+			$scope.numVersion = $scope.application.versions[$scope.application.versions.length-1].numero;
+			$scope.noteVersion = $scope.application.versions[$scope.application.versions.length-1].note;
+			applicationService.createTree($scope.idVersion, $scope.application.id);
 		}
 	}, function(error){
 		var response = {
@@ -33,6 +38,17 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		};
 		displayInformationsClient(response);
 	});
+
+	// Pour créer une nouvelle version
+	$scope.createVersionModal = function(){
+		$uibModal.open({
+	      animation: true,
+	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/versionTemplate.html',
+	      controller: 'versionController',
+	      scope: $scope
+	    });
+	}
+
 
 	// Pour supprimer définitivement l'application
 	$scope.deleteApplicationModal = function(){
@@ -138,6 +154,5 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	      size: 'lg'
 	    });
 	}
-
 }]);
 

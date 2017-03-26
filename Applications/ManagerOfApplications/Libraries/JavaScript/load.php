@@ -22,16 +22,11 @@
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/authorsController.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/deleteController.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/managePublicationsController.js"></script>
+
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/versionController.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Directives/selectVersion.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Directives/displayAllVersions.js"></script>
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/logoApplicationValidator.js"></script>
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/nameApplicationValidator.js"></script>
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/selectDesignDirective.js"></script>
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/fileDesignDirective.js"></script>
-
-<script type="text/javascript">
-		
-		$('.subMenu').click(function(e){
-			$(this).next('ul').toggle();
-			e.stopPropagation();
-			e.preventDefault();
-		});
-	</script>

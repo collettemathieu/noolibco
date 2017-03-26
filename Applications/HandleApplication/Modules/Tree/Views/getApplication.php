@@ -8,7 +8,8 @@ if(isset($application)){
 		'urlLogo' => base64_encode(file_get_contents($application->getUrlLogoApplication())),
 		'motCles' => implode(', ', $application->getMotCles()),
 		'categorie' => $application->getCategorie()->getNomCategorie(),
-		'contributeurs' => $contributeurs
+		'contributeurs' => $contributeurs,
+		'versions' => $versions
 	);
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';

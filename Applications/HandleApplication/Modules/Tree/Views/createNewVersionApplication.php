@@ -1,7 +1,12 @@
 <?php 
-if(isset($newIdVersion)){
+if(isset($versions)){
+	$texte = '';
+	foreach($user->getMessageClient()->getReussites() as $reussite){
+		$texte .= '<p>'.$reussite.'</p>';
+	}
 	$reponse = array(
-			'newIdVersion' => $newIdVersion
+			'versions' => $versions,
+			'reussites' => $texte
 		);
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';

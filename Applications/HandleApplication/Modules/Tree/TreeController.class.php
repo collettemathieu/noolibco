@@ -120,6 +120,16 @@ class TreeController extends \Library\BackController
 					}
 					$this->page->addVar('contributeurs', $contributeurs);
 
+					// On récupère les versions de l'application
+					$versions = array();
+					foreach($application->getVersions() as $version){
+						array_push($versions, array(
+							'id' => $version->getIdVersion(),
+							'numero' => $version->getNumVersion(),
+							'note' => $version->getNoteMajVersion()
+							));
+					}
+					$this->page->addVar('versions', $versions);
 				}else{
 					// On ajoute la variable d'erreurs
 					$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
@@ -3691,6 +3701,8 @@ class TreeController extends \Library\BackController
 								$managerVersionTache = $this->getManagers()->getManagerOf('VersionTache');
 								// On appelle le manager des taches-typeDonneeUtilisateur
 								$managerTacheTypeDonneeUtilisateur = $this->getManagers()->getManagerOf('TacheTypeDonneeUtilisateur');
+								// Valeur de contrôle d'erreur
+								$hasError = false;
 
 								// On insère dans la BDD les tâches de la nouvelle version de l'application
 								foreach($lastVersion->getTaches() as $tache){
@@ -3791,30 +3803,52 @@ class TreeController extends \Library\BackController
 															
 															// On met à la jour la Fonction-Parametre de la BDD
 															$managerFonctionParametre->addFonctionParametre($fonctionParametre);
-
 														}else{
-															
+															$hasError = true;
 															// On ajoute la variable d'erreurs à la page
 															$user->getMessageClient()->addErreur($fonctionParametre->getErreurs());
+															break;
 														}
 													
 													}else{
-													
+														$hasError = true;
 														// On ajoute la variable d'erreurs à la page
 														$user->getMessageClient()->addErreur($nouveauParametre->getErreurs());
+														break;
 													}
 												}
 											}else{
-												
+												$hasError = true;
 												// On ajoute la variable d'erreurs à la page
 												$user->getMessageClient()->addErreur($tacheFonction->getErreurs());
+												break;
 											}
 										}else{
-											
+											$hasError = true;
 											// On ajoute la variable d'erreurs à la page
 											$user->getMessageClient()->addErreur($nouvelleFonction->getErreurs());
+											break;
 										}
 									}
+								}
+								if(!$hasError){
+									// On récupère l'application via son ID
+									$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
+
+									// On récupère les versions de l'application
+									$versionsApp = array();
+									foreach($application->getVersions() as $version){
+										array_push($versionsApp, array(
+											'id' => $version->getIdVersion(),
+											'numero' => $version->getNumVersion(),
+											'note' => $version->getNoteMajVersion()
+											));
+									}
+									
+									$this->page->addVar('versions', $versionsApp);
+									
+									// On ajoute un message à l'utilisateur
+									$user->getMessageClient()->addReussite(self::TREE_VERSION_CREATED);
 								}
 							}else{
 								// On ajoute la variable d'erreurs à la variable flash de la session
