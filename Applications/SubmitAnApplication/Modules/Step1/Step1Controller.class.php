@@ -194,7 +194,7 @@ class Step1Controller extends \Library\BackController{
 				'nomApplication' => $request->getPostData('nomApp'),
 				'variableFixeApplication' => $variableFixeApplication,
 				'descriptionApplication' => $request->getPostData('descriptionApp'),
-				'lienApplication' => $request->getPostData('lienApp');
+				'lienApplication' => $request->getPostData('lienApp'),
 				'categorie' => $categorie,
 				'statut' => $statut,
 				'urlLogoApplication' => $config->getVar('divers', 'divers', 'urlLogoApplicationDefault')
