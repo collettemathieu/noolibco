@@ -34,7 +34,7 @@ class Application extends \Library\Entity {
 	const FORMAT_MOTSCLES_EMPTY = 'You must enter at least one keyword.';
 	const VARIABLE_FIXE_APPLICATION = 'The fixed variable of the application must contain at least 4 characters in length.';
 	//*****
-	const LIEN_APPLICATION='link not valid.';
+	const LIEN_APPLICATION='link is not valid.';
 	//*****
 	
 	

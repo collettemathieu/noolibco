@@ -330,13 +330,14 @@ class PDOApplicationManager extends \Library\Models\ApplicationManager
 			//modified bu Naoures
 			$requete = $this->dao->prepare("UPDATE application 
 					SET description_application = :descriptionApplication,
-					    
+					    lien_application = :lienApplication,
 						id_categorie = :idCategorie
 					WHERE id_application = :idApplication");
 			//bind des parametre
 			$requete->bindValue(':descriptionApplication', $application->getDescriptionApplication(), \PDO::PARAM_STR);
 			//***
-			
+			$requete->bindValue(':lienApplication',$application->getLienApplication(), \PDO::PARAM_STR);
+			//***
 			$requete->bindValue(':idCategorie', $application->getCategorie()->getIdCategorie(), \PDO::PARAM_INT);
 			$requete->bindValue(':idApplication', $application->getIdApplication(), \PDO::PARAM_INT);
 			
