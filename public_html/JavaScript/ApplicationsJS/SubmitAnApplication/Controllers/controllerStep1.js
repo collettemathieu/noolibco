@@ -21,6 +21,7 @@ application.controller('controllerStep1', ['$scope', '$http', '$location', 'tabl
 
 	// On renseigne les catégories dans le select
 	$scope.tableOfCategories = tableOfCategories;
+	console.log(tableOfCategories);
 	$scope.selectedCategory = $scope.tableOfCategories[0];
 
 	// On renseigne les variables d'information
