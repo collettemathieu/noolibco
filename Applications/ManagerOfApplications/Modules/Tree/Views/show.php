@@ -39,7 +39,7 @@
 						<span>Version {{numVersion}}</span>
 						<!-- Split button -->
 						<div class="btn-group pull-right">
-						  <button data-toggle="modal" href="#formulaireApplication" id="boutonAjouterTache" type="button" class="btn btn-primary">New task</button>
+						  <button type="button" ng-click="createTaskModal()" class="btn btn-primary">New task</button>
 						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    <span class="caret"></span>
 						    <span class="sr-only">Toggle Dropdown</span>
@@ -63,12 +63,4 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<!-- Affichage des formulaires -->
-	<div id="formulaireApplication" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	    <!-- Modal content-->
-	    <div class="modal-content" id="contenuForm"></div>
-	  </div>
 	</div>

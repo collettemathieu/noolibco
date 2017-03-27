@@ -25,7 +25,7 @@ class Version extends \Library\Entity {
 	protected $idVersion, $activeVersion, $numVersion, $datePublicationVersion, $noteMajVersion, $application, $taches = array();
 	
 	/* Déclaration des constantes d'erreurs particulières à */
-	const NOM_VERSION = 'The name of the version must contain 5 letters (e.g. 1.0.0).';
+	const NOM_VERSION = 'The name of the version must contain 8 letters (e.g. 12.34.56).';
 	const DESCRIPTION_VERSION = 'The description of the version must contain at least 1 letter and be less than 100 letters in length.';
 
 	/**
@@ -47,7 +47,7 @@ class Version extends \Library\Entity {
 	}
 	public function setNumVersion($numVersion) {
 		if (is_string ( $numVersion )) {
-			if (mb_strlen($numVersion, 'UTF8') === 5){
+			if (mb_strlen($numVersion, 'UTF8') <= 8){
 				$this->numVersion = $numVersion;
 			}
 			else {

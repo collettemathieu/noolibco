@@ -41,13 +41,41 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 
 	// Pour créer une nouvelle version
 	$scope.createVersionModal = function(){
-		$uibModal.open({
+		var modal = $uibModal.open({
 	      animation: true,
 	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/versionTemplate.html',
 	      controller: 'versionController',
 	      scope: $scope
 	    });
+
+		// On met à jour les variables lorsque la fenêtre se ferme
+	    modal.result.then(function(e){
+	    }, function(){
+	    	// Mise à jour des variables
+			$scope.idVersion = $scope.application.versions[$scope.application.versions.length-1].id;
+			$scope.numVersion = $scope.application.versions[$scope.application.versions.length-1].numero;
+			$scope.noteVersion = $scope.application.versions[$scope.application.versions.length-1].note;
+			applicationService.createTree($scope.idVersion, $scope.application.id);
+	    });
 	}
+
+	// Pour créer une nouvelle tâche
+	$scope.createTaskModal = function(){
+		var modal = $uibModal.open({
+	      animation: true,
+	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/newTaskTemplate.html',
+	      controller: 'newTaskController',
+	      scope: $scope,
+	      size: 'lg'
+	    });
+
+		// On met à jour les variables lorsque la fenêtre se ferme
+	    modal.result.then(function(e){
+	    }, function(){
+			applicationService.createTree($scope.idVersion, $scope.application.id);
+	    });
+	}
+
 
 
 	// Pour supprimer définitivement l'application
@@ -118,6 +146,7 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/descriptionTemplate.html',
 	      controller: 'descriptionController',
 	      scope: $scope,
+	      size: 'lg',
 	      resolve: {
 				// On récupère les catégories pour l'affichage dans le select
 				tableOfCategories: ['$http', '$q', function($http, $q){

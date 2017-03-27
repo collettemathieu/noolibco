@@ -1598,9 +1598,6 @@ class TreeController extends \Library\BackController
 							// On appelle le manager des taches-typeDonneeUtilisateur
 							$managerTacheTypeDonneeUtilisateur = $this->getManagers()->getManagerOf('TacheTypeDonneeUtilisateur');
 
-							// On insère dans la BDD la nouvelle tâche de l'application
-							$managerTache->addTache($nouvelleTache);
-
 							// On crée l'objet VersionTache
 							// On récupère la version de l'application demandée
 							$idVersion = (int) $request->getPostData('idVersion');
@@ -1612,6 +1609,10 @@ class TreeController extends \Library\BackController
 									}
 								}
 								if(isset($version)){
+
+									// On insère dans la BDD la nouvelle tâche de l'application
+									$managerTache->addTache($nouvelleTache);
+
 									$versionTache = new VersionTache(array(
 									'version' => $version,
 									'tache' => $nouvelleTache
@@ -3653,9 +3654,33 @@ class TreeController extends \Library\BackController
 					// On récupère le numéro de la nouvelle version
 					$nameVersion = $request->getPostData('nameVersionApplication');
 					$versionInvalid = false;
-					$pattern = '/^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$/';
-					if(preg_match($pattern, $nameVersion)){
+					$pattern = '/^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,2})$/';
+					if(preg_match($pattern, $nameVersion, $matches)){
 						foreach($application->getVersions() as $version){
+							
+							// On vérifie que la version est bien supérieure à la précédente
+							$numberOne = (int) $matches[1];
+							$numberTwo = (int) $matches[2];
+							$numberThree = (int) $matches[3];
+
+							preg_match($pattern, $version->getNumVersion(), $value);
+							$one = (int) $value[1];
+							$two = (int) $value[2];
+							$three = (int) $value[3];
+
+							if($numberOne < $one){
+								$versionInvalid = true;break;
+							}else{
+								if($numberTwo < $two && $numberOne == $one){
+									$versionInvalid = true;break;
+								}else{
+									if($numberThree < $three && $numberTwo == $two && $numberOne == $one){
+										$versionInvalid = true;break;
+									}
+								}
+							}
+
+							// On vérifie qu'une version n'existe pas déjà
 							if($version->getNumVersion() === $nameVersion){
 								$versionInvalid = true;
 								break;
@@ -3856,7 +3881,7 @@ class TreeController extends \Library\BackController
 							}
 						}else{
 							// On ajoute la variable d'erreurs
-							$user->getMessageClient()->addErreur(self::TREE_VERSION_ALREADY_EXIST);
+							$user->getMessageClient()->addErreur(self::TREE_VERSION_NOT_CORRECT);
 						}
 					}else{
 						// On ajoute la variable d'erreurs
