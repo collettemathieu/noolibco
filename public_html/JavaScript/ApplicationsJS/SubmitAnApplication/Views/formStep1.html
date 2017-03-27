@@ -16,9 +16,9 @@
 						<!--Added by Naoures -->
 						<!-- ***************** -->
 						<div class="form-group has-feedback" ng-class="{'has-error':formStep1.lienApp.$invalid && formStep1.lienApp.$dirty, 'has-success':formStep1.lienApp.$valid}">
-							<input name="lienApp" ng-model="lienApp" placeholder="Enter a link for your application if it exists"/>
+							<input name="lienApp" ng-model="lienApp" class="form-control input-lg" placeholder="Enter a link for your application if it exists"/>
 							<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formStep1.lienApp.$invalid && formStep1.lienApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formStep1.lienApp.$valid}"></span>
-							<span ng-show="formStep1.lienApp.$invalid && formStep1.lienApp.$dirty" class="help-block"> link not valid !</span> 
+							<span ng-show="formStep1.lienApp.$invalid && formStep1.lienApp.$dirty" class="help-block"> link not valid</span> 
 						</div>
 
 						<!-- ***************** -->
