@@ -25,11 +25,6 @@ application.controller('controllerStep1', ['$scope', '$http', '$location', 'tabl
 
 	// On renseigne les variables d'information
 	$scope.infoInvalidNameApplication = invalidNameTooShort;
-	$scope.$watch('lienApp',function(newValue, oldValue){
-		if(newValue==="")
-			$scope.lienApp=null;
-			});
-	
 
 	// Action lors de la soumission du formulaire
 	$scope.validStep1 = function(){

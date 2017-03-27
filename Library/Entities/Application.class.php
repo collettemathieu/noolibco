@@ -124,8 +124,8 @@ class Application extends \Library\Entity {
 	//Added by Naoures
 	//setter for Application link
 	public function setLienApplication($lienApplication){
-		if($lienApplication==null){
-			$this->lienApplication==null;
+		if($lienApplication===""){
+			$this->lienApplication=null;
 		}
 		elseif(filter_var($lienApplication, FILTER_VALIDATE_URL)){
 			$this->lienApplication= $lienApplication;
