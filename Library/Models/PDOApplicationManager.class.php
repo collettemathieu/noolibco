@@ -34,13 +34,16 @@ class PDOApplicationManager extends \Library\Models\ApplicationManager
 		
 			//préparatin de la requete d'insertion dans une base de données
 			$requete = $this->dao->prepare("INSERT INTO application 
-					(nom_application, variable_fixe_application, description_application, date_soumission_application, url_logo_application, id_categorie, id_statut, id_utilisateur) 
-					VALUES (:nomApplication, :variableFixeApplication, :descriptionApplication, CURDATE(), :urlLogoApplication, :idCategorie, :idStatut, :idUtilisateur)");
+					(nom_application, variable_fixe_application, description_application, lien_application, date_soumission_application, url_logo_application, id_categorie, id_statut, id_utilisateur) 
+					VALUES (:nomApplication, :variableFixeApplication, :descriptionApplication, :lienApplication, CURDATE(), :urlLogoApplication, :idCategorie, :idStatut, :idUtilisateur)");
 			
 			//bind des parametre
 			$requete->bindValue(':nomApplication', $application->getNomApplication(), \PDO::PARAM_STR);
 			$requete->bindValue(':variableFixeApplication', $application->getVariableFixeApplication(), \PDO::PARAM_STR);
 			$requete->bindValue(':descriptionApplication', $application->getDescriptionApplication(), \PDO::PARAM_STR);
+			//***
+			$requete->bindValue(':lienApplication',$application->getLienApplication(), \PDO::PARAM_STR);
+			//***
 			$requete->bindValue(':urlLogoApplication', $application->getUrlLogoApplication(), \PDO::PARAM_STR);
 			$requete->bindValue(':idCategorie', $application->getCategorie()->getIdCategorie(), \PDO::PARAM_INT);
 			$requete->bindValue(':idStatut', $application->getStatut()->getIdStatut(), \PDO::PARAM_INT);
@@ -231,10 +234,12 @@ class PDOApplicationManager extends \Library\Models\ApplicationManager
 	public function saveAllApplication($application){
 	
 		if($application instanceof Application){
-		
+
+			//modified by Naoures
 			$requete = $this->dao->prepare("UPDATE application 
 					SET nom_application = :nomApplication, 
 					description_application = :descriptionApplication,
+					lien_application = :lienApplication, 
 					date_soumission_application = :dateSoumissionApplication, 
 					date_validation_application = :dateValidationApplication, 
 					date_mise_hors_service_application = :dateMiseHorsServiceApplication, 
@@ -246,6 +251,9 @@ class PDOApplicationManager extends \Library\Models\ApplicationManager
 			//bind des parametre
 			$requete->bindValue(':nomApplication', $application->getNomApplication(), \PDO::PARAM_STR);
 			$requete->bindValue(':descriptionApplication', $application->getDescriptionApplication(), \PDO::PARAM_STR);
+			//***
+			$requete->bindValue(':lienApplication',$application->getLienApplication(), \PDO::PARAM_STR);
+			//***
 			$requete->bindValue(':dateSoumissionApplication', $application->getDateSoumissionApplication(), \PDO::PARAM_STR);
 			$requete->bindValue(':dateValidationApplication', $application->getDateValidationApplication(), \PDO::PARAM_STR);
 			$requete->bindValue(':dateMiseHorsServiceApplication', $application->getDateMiseHorsServiceApplication(), \PDO::PARAM_STR);
@@ -319,12 +327,17 @@ class PDOApplicationManager extends \Library\Models\ApplicationManager
 	
 		if($application instanceof Application){
 		
+			//modified bu Naoures
 			$requete = $this->dao->prepare("UPDATE application 
 					SET description_application = :descriptionApplication,
+					    lien_application = :lienApplication,
 						id_categorie = :idCategorie
 					WHERE id_application = :idApplication");
 			//bind des parametre
 			$requete->bindValue(':descriptionApplication', $application->getDescriptionApplication(), \PDO::PARAM_STR);
+			//***
+			$requete->bindValue(':lienApplication',$application->getLienApplication(), \PDO::PARAM_STR);
+			//***
 			$requete->bindValue(':idCategorie', $application->getCategorie()->getIdCategorie(), \PDO::PARAM_INT);
 			$requete->bindValue(':idApplication', $application->getIdApplication(), \PDO::PARAM_INT);
 			
@@ -1189,12 +1202,13 @@ class PDOApplicationManager extends \Library\Models\ApplicationManager
 	 	$pdoStatut = new PDOStatutApplicationManager($this->dao);
 	
 		$pdoUtilisateur = new PDOUtilisateurManager($this->dao);
-		
+		//modified by Naoures
 		$data = [
 		'idApplication' => $donnee ['id_application'],
 		'nomApplication' => $donnee ['nom_application'],
 		'variableFixeApplication' => $donnee ['variable_fixe_application'],
 		'descriptionApplication' => $donnee ['description_application'],
+		'lienApplication' => $donnee ['lien_application'],
 		'dateSoumissionApplication' => $donnee ['date_soumission_application'],
 		'dateValidationApplication' => $donnee ['date_validation_application'],
 		'dateMiseHorsServiceApplication' => $donnee ['date_mise_hors_service_application'],

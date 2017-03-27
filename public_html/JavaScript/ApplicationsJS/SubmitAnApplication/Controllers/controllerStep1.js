@@ -43,6 +43,7 @@ application.controller('controllerStep1', ['$scope', '$http', '$location', 'tabl
 				data: {
 					nomApp: $scope.nomApp,
 					descriptionApp: $scope.descriptionApp,
+					lienApp: $scope.lienApp, //Added by Naoures
 					categorieApp: $scope.selectedCategory.nameCategory
 				}
 			})
