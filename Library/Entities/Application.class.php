@@ -124,7 +124,7 @@ class Application extends \Library\Entity {
 	//Added by Naoures
 	//setter for Application link
 	public function setLienApplication($lienApplication){
-		if(empty($lienApplication)){
+		if(empty($lienApplication) || $lienApplication=== undefined){
 			$this->lienApplication=null;
 		}
 		elseif(preg_match("#^((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9\#:?=&;,]*)?)?)$#", $lienPagePersoUtilisateur)){
