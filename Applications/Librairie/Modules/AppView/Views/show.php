@@ -53,19 +53,24 @@
 						       		</li>
 									<li>KeyWords: <?php if($app!=null && $app->getMotCles() != null){echo implode(', ',$app->getMotCles());}?>
 						       		</li>
-						       		<!-- Added by Naoures-->
-						       		<!-- ******** -->
-						       		<?php 
+						       		<li>Date: <?php echo $app->getDateSoumissionApplication();?>
+						       		</li>
+								</ul>
+							</li>
+							<!-- *************** -->
+							<li><h3>Settings</h3>
+								<ul class="list-unstyled">
+								<?php 
 							           if (sizeof($app->getLienApplication()) != 0){
 						       		        echo "<li>Link: <a href='".$app->getLienApplication()."' target='_blank'>"; 
 							           		echo $app->getLienApplication();
 							       			echo "</a></li>";
 						       		}?>
-						       		<!-- ****** -->
-						       		<li>Date: <?php echo $app->getDateSoumissionApplication();?>
-						       		</li>
 								</ul>
-							</li>
+								</li>
+							<!-- *************** -->
+
+
 							<li><h3>Publication(s)</h3>
 								<?php if(count($app->getPublications()) != 0){?>
 								<table class="table table-bordered table-striped table-condensed">
