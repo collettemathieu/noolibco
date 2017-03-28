@@ -8,7 +8,7 @@ if($user->getMessageClient()->hasReussite() && isset($application)){
 	$reponse = array(
 			'reussites' => $texte,
 			'description' => $application->getDescriptionApplication(),
-			'lien' => $application-> getLienApplication(), //added by Naoures
+			'lien' => $application->getLienApplication(), //added by Naoures
 			'motCles' => implode(', ', $application->getMotCles()),
 			'categorie' => $application->getCategorie()->getNomCategorie()
 		);
