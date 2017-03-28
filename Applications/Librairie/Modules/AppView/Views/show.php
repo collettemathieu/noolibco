@@ -57,12 +57,12 @@
 						       		</li>
 								</ul>
 							</li>
-							<!-- *************** -->
-							<li><h3>Settings</h3>
+							<!-- ******Naoures********* -->
+							<li><h3>Link</h3>
 								<ul class="list-unstyled">
 								<?php 
 							           if (sizeof($app->getLienApplication()) != 0){
-						       		        echo "<li>Link: <a href='".$app->getLienApplication()."' target='_blank'>"; 
+						       		        echo "<li><a href='".$app->getLienApplication()."' target='_blank'>"; 
 							           		echo $app->getLienApplication();
 							       			echo "</a></li>";
 						       		}?>
