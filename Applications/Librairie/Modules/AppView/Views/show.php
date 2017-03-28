@@ -57,7 +57,7 @@
 						       		<!-- ******** -->
 						       		<?php 
 							           if (sizeof($app->getLienApplication()) != 0){
-						       		        echo "<li>Link: <a href='".$app->getLienApplication()."'>"; 
+						       		        echo "<li>Link: <a href='".$app->getLienApplication()."' target='_blank'>"; 
 							           		echo $app->getLienApplication();
 							       			echo "</a></li>";
 						       		}?>
