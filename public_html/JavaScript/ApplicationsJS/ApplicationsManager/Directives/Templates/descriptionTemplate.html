@@ -20,14 +20,14 @@
 
 					<!--Added by Naoures -->
 					<!-- ****************** -->
-					<div class="form-group has-feedback" ng-class="{'has-error':formDescriptionApp.descriptionApp.$invalid && formDescriptionApp.descriptionApp.$dirty, 'has-success':formDescriptionApp.descriptionApp.$valid}">
+					<div class="form-group has-feedback" ng-class="{'has-error':formDescriptionApp.descriptionApp.$invalid && formDescriptionApp.descriptionApp.$dirty, 'has-success':formDescriptionApp.lienApp.$valid}">
 						<label>Its link</label>
 						<input name="linkApp" ng-model="lienApp" class="form-control input-lg" placeholder="Enter a link."/>
 						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formDescriptionApp.lienApp.$invalid && formDescriptionApp.lienApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formDescriptionApp.lienApp.$valid}"></span>
 						<span ng-show="formDescriptionApp.lienApp.$invalid && formDescriptionApp.lienApp.$dirty" class="help-block">link format not valid. </span>
 					</div>
 					<!-- ****************** -->
-					
+
 					<div class="form-group has-feedback" ng-class="{'has-error':formDescriptionApp.motsClesApp.$invalid && formDescriptionApp.motsClesApp.$dirty, 'has-success':formDescriptionApp.motsClesApp.$valid}">
 						<label>Its keywords (comma-separated keywords)</label>
 						<input type="text" name="motsClesApp" ng-model="motsClesApp" ng-pattern="/^([a-zA-Z0-9\-\s]{3,}, {0,1})+[a-zA-Z0-9\-\s]{3,}$/" required class="form-control input-lg" placeholder="keyword1, keyword2, keyword3, ..."/>
