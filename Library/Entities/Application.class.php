@@ -127,7 +127,7 @@ class Application extends \Library\Entity {
 		if(empty($lienApplication) || $lienApplication=== undefined){
 			$this->lienApplication=null;
 		}
-		elseif(preg_match("#^((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9\#:?=&;,]*)?)?)$#", $lienPagePersoUtilisateur)){
+		elseif(preg_match("#^((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9\#:?=&;,]*)?)?)$#", $lienApplication)){
 			$this->lienApplication= $lienApplication;
 		}
 			else{
