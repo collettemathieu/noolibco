@@ -23,7 +23,7 @@
 					
 					<div class="form-group has-feedback" ng-class="{'has-error':formDescriptionApp.lienApp.$invalid && formDescriptionApp.lienApp.$dirty, 'has-success':formDescriptionApp.lienApp.$valid}">
 						<label>Its link</label>
-						<input name="linkApp" ng-model="lienApp" class="form-control input-lg" placeholder="Enter a link."/>
+						<input name="linkApp" ng-model="lienApp" class="form-control input-lg" placeholder="Enter a link." ng-pattern="/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/" placeholder="Enter a link for your application if it exists"/>
 						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formDescriptionApp.lienApp.$invalid && formDescriptionApp.lienApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formDescriptionApp.lienApp.$valid}"></span>
 						<span ng-show="formDescriptionApp.lienApp.$invalid && formDescriptionApp.lienApp.$dirty" class="help-block">link format not valid. </span>
 					</div>
