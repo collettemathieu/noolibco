@@ -53,6 +53,14 @@
 						       		</li>
 									<li>KeyWords: <?php if($app!=null && $app->getMotCles() != null){echo implode(', ',$app->getMotCles());}?>
 						       		</li>
+						       		<!-- Added by Naoures-->
+						       		<!-- ******** -->
+						       		<li>Link: <?php 
+							           if (sizeof($app->getLienApplication()) != 0){
+							           		echo $app->getLienApplication();
+							       		}?>
+						       		</li>
+						       		<!-- ****** -->
 						       		<li>Date: <?php echo $app->getDateSoumissionApplication();?>
 						       		</li>
 								</ul>
