@@ -568,7 +568,7 @@ class TreeController extends \Library\BackController
 					// On met à jour l'objet App avec le nouveau logo de l'application
 					$application->hydrate(array(
 						'descriptionApplication' => $request->getPostData('descriptionApp'),
-						//'lienApplication' => $request->getPostData('lienApp'), //Added by Naoures
+						'lienApplication' => $request->getPostData('lienApp'), //Added by Naoures
 						'categorie' => $categorie,
 						'motCles' => $motsClesEntreUtilisateur
 						));
