@@ -57,9 +57,9 @@
 						       		<!-- ******** -->
 						       		<?php 
 							           if (sizeof($app->getLienApplication()) != 0){
-						       		        echo "<li>Link: "; 
+						       		        echo "<li>Link: <a href='".$app->getLienApplication()."'>"; 
 							           		echo $app->getLienApplication();
-							       			echo "</li>";
+							       			echo "</a></li>";
 						       		}?>
 						       		<!-- ****** -->
 						       		<li>Date: <?php echo $app->getDateSoumissionApplication();?>
