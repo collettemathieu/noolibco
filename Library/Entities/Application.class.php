@@ -124,16 +124,17 @@ class Application extends \Library\Entity {
 	//Added by Naoures
 	//setter for Application link
 	public function setLienApplication($lienApplication){
-		if($lienApplication===null || $lienApplication=== undefined){
+		if(empty($lienApplication)){
 			$this->lienApplication=null;
 		}
-		elseif(filter_var($lienApplication, FILTER_VALIDATE_URL)){
+		elseif(preg_match("#^((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9\#:?=&;,]*)?)?)$#", $lienPagePersoUtilisateur)){
 			$this->lienApplication= $lienApplication;
 		}
 			else{
 				$this->setErreurs(self::LIEN_APPLICATION);
 			}
 	}
+
 
 	//*****
 	
