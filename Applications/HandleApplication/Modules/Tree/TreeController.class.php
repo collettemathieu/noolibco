@@ -568,7 +568,7 @@ class TreeController extends \Library\BackController
 					// On met à jour l'objet App avec le nouveau logo de l'application
 					$application->hydrate(array(
 						'descriptionApplication' => $request->getPostData('descriptionApp'),
-						//'lienApplication' => $request->getPostData('lienApp'), //Added by Naoures
+						'lienApplication' => $request->getPostData('lienApp'), //Added by Naoures
 						'categorie' => $categorie,
 						'motCles' => $motsClesEntreUtilisateur
 						));
@@ -1195,7 +1195,7 @@ class TreeController extends \Library\BackController
 	* Méthode pour afficher le formulaire d'ajout d'un paramètre à une fonction
 	*/
 	public function executeShowFormParametre($request)
-	{s
+	{
 		
 		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
 		if ($request->isAjaxRequest()) {

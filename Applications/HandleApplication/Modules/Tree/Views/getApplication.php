@@ -4,7 +4,7 @@ if(isset($application)){
 		'id' => $application->getIdApplication(),
 		'nom' => $application->getNomApplication(),
 		'description' => $application->getDescriptionApplication(),
-		//'lien' => $application->getLienApplication(), //Added by Naoures
+		'lien' => $application->getLienApplication(), //Added by Naoures
 		'urlLogo' => base64_encode(file_get_contents($application->getUrlLogoApplication())),
 		'motCles' => implode(', ', $application->getMotCles()),
 		'categorie' => $application->getCategorie()->getNomCategorie()
