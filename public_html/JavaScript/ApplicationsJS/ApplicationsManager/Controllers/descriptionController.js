@@ -28,7 +28,7 @@ application.controller('descriptionController', ['$scope', '$uibModalInstance', 
 	$scope.idApp = $scope.application.id;
 	$scope.descriptionApp = $scope.application.description;
 	//******Naoures
-	$scope.lienApp= $scope.application.lien;
+	$scope.lienApp = $scope.application.lien;
 	//******
 	$scope.motsClesApp = $scope.application.motCles;
 	$scope.tableOfCategories = tableOfCategories;
