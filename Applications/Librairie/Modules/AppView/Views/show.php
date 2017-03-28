@@ -58,11 +58,11 @@
 								</ul>
 							</li>
 							<!-- ******Naoures********* -->
-							<li><h3>Link</h3>
-								<ul class="list-unstyled">
+							
+						        <!-- S'il y a un lien il l'affiche-->
 								<?php 
 							           if (sizeof($app->getLienApplication()) != 0){
-						       		        echo "<li><a href='".$app->getLienApplication()."' target='_blank'>"; 
+						       		        echo "<li><h3>Link</h3><ul class="list-unstyled"><li><a href='".$app->getLienApplication()."' target='_blank'>"; 
 							           		echo $app->getLienApplication();
 							       			echo "</a></li>";
 						       		}?>
