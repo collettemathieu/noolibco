@@ -55,11 +55,12 @@
 						       		</li>
 						       		<!-- Added by Naoures-->
 						       		<!-- ******** -->
-						       		<li>Link: <?php 
+						       		<?php 
 							           if (sizeof($app->getLienApplication()) != 0){
+						       		        echo "<li>Link: "; 
 							           		echo $app->getLienApplication();
-							       		}?>
-						       		</li>
+							       			echo "</li>";
+						       		}?>
 						       		<!-- ****** -->
 						       		<li>Date: <?php echo $app->getDateSoumissionApplication();?>
 						       		</li>
