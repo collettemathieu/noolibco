@@ -1,6 +1,6 @@
 <div class="modal-header">
 	<button type="button" class="close" ng-click="close()">x</button>
-	<h2 class="modal-title">Change attributs of {{application.nom}}</h2>
+	<h2 class="modal-title">Hello world!! Change attributs of {{application.nom}}</h2>
 </div>
 <div class="modal-body">
 	<div class="container-fluid">
@@ -17,6 +17,18 @@
 						<label>Its currently category: {{application.categorie}}</label>
 						<select name="categorieApp" ng-options="category.nameCategory group by category.onCategory for category in tableOfCategories" ng-model="selectedCategory" class="form-control input-sm" required select-design-directive data-live-search="true"></select>
 					</div>
+
+					<!--Added by Naoures -->
+					<!-- ****************** -->
+					
+					<div class="form-group has-feedback" ng-class="{'has-error':formDescriptionApp.lienApp.$invalid && formDescriptionApp.lienApp.$dirty, 'has-success':formDescriptionApp.lienApp.$valid}">
+						<label>Its link</label>
+						<input name="lienApp" ng-model="lienApp" class="form-control input-lg" placeholder="Enter a link." ng-pattern="/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/"/>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formDescriptionApp.lienApp.$invalid && formDescriptionApp.lienApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formDescriptionApp.lienApp.$valid}"></span>
+						<span ng-show="formDescriptionApp.lienApp.$invalid && formDescriptionApp.lienApp.$dirty" class="help-block">link format not valid. </span>
+					</div>
+					<!-- ****************** -->
+
 					<div class="form-group has-feedback" ng-class="{'has-error':formDescriptionApp.motsClesApp.$invalid && formDescriptionApp.motsClesApp.$dirty, 'has-success':formDescriptionApp.motsClesApp.$valid}">
 						<label>Its keywords (comma-separated keywords)</label>
 						<input type="text" name="motsClesApp" ng-model="motsClesApp" ng-pattern="/^([a-zA-Z0-9\-\s]{3,}, {0,1})+[a-zA-Z0-9\-\s]{3,}$/" required class="form-control input-lg" placeholder="keyword1, keyword2, keyword3, ..."/>

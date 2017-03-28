@@ -188,11 +188,13 @@ class Step1Controller extends \Library\BackController{
 			$variableFixeApplication = $this->cleanFileName($request->getPostData('nomApp')).$nombre;
 
 			// On créé l'objet Application avec les données entrées par l'utilisateur
+			//modified by Naoures
 			$newApp = new \Library\Entities\Application(array(
 				'createur' => $utilisateur,
 				'nomApplication' => $request->getPostData('nomApp'),
 				'variableFixeApplication' => $variableFixeApplication,
 				'descriptionApplication' => $request->getPostData('descriptionApp'),
+				'lienApplication' => $request->getPostData('lienApp'),
 				'categorie' => $categorie,
 				'statut' => $statut,
 				'urlLogoApplication' => $config->getVar('divers', 'divers', 'urlLogoApplicationDefault')

@@ -25,6 +25,7 @@ application.controller('controllerStep1', ['$scope', '$http', '$location', 'tabl
 
 	// On renseigne les variables d'information
 	$scope.infoInvalidNameApplication = invalidNameTooShort;
+	
 
 	// Action lors de la soumission du formulaire
 	$scope.validStep1 = function(){
@@ -43,6 +44,7 @@ application.controller('controllerStep1', ['$scope', '$http', '$location', 'tabl
 				data: {
 					nomApp: $scope.nomApp,
 					descriptionApp: $scope.descriptionApp,
+					lienApp: $scope.lienApp, //Added by Naoures
 					categorieApp: $scope.selectedCategory.nameCategory
 				}
 			})

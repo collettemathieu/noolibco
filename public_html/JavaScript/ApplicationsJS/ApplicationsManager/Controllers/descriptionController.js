@@ -27,6 +27,9 @@ application.controller('descriptionController', ['$scope', '$uibModalInstance', 
 	// Pour initialiser le formulaire
 	$scope.idApp = $scope.application.id;
 	$scope.descriptionApp = $scope.application.description;
+	//******Naoures
+	$scope.lienApp = $scope.application.lien;
+	//******
 	$scope.motsClesApp = $scope.application.motCles;
 	$scope.tableOfCategories = tableOfCategories;
 
@@ -49,12 +52,14 @@ application.controller('descriptionController', ['$scope', '$uibModalInstance', 
 					idApp: $scope.idApp,
 					motsClesApp: $scope.motsClesApp,
 					descriptionApp: $scope.descriptionApp,
+					lienApp: $scope.lienApp, //added by Naoures
 					categorieApp: $scope.selectedCategory.nameCategory
 				}
 			})
 			.success(function(response){
-				if(response['description'] && response['motCles'] && response['categorie']){
+				if(response['description'] && response['lien'] && response['motCles'] && response['categorie']){
 					$scope.application.description = response['description'];
+					$scope.application.lien = response['lien']; //added by Naoures
 					$scope.application.motCles = response['motCles'];
 					$scope.application.categorie = response['categorie'];
 				}

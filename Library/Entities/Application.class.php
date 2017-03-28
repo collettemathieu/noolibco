@@ -23,7 +23,7 @@ namespace Library\Entities;
 class Application extends \Library\Entity {
 	
 	/* Définition des attributs */
-	protected $idApplication, $variableFixeApplication, $createur, $auteurs = array(), $statut, $categorie, $nomApplication, $descriptionApplication, $dateSoumissionApplication, 
+	protected $idApplication, $variableFixeApplication, $createur, $auteurs = array(), $statut, $categorie, $nomApplication, $descriptionApplication, $lienApplication, $dateSoumissionApplication, 
 	$dateValidationApplication, $dateMiseHorsServiceApplication, $urlLogoApplication, $utilisateurs = array(), 
 	$motCles = array(), $publications = array(), $versions = array();
 	
@@ -33,6 +33,9 @@ class Application extends \Library\Entity {
 	const DESCRIPTION_APPLICATION = 'The description of your application must contain at least 50 letters.';
 	const FORMAT_MOTSCLES_EMPTY = 'You must enter at least one keyword.';
 	const VARIABLE_FIXE_APPLICATION = 'The fixed variable of the application must contain at least 4 characters in length.';
+	//*****
+	const LIEN_APPLICATION='link is not valid.';
+	//*****
 	
 	
 	/**
@@ -117,6 +120,23 @@ class Application extends \Library\Entity {
 			$this->setErreurs ("Application setDescriptionApplication " . self::FORMAT_STRING );
 		}
 	}
+	//**************
+	//Added by Naoures
+	//setter for Application link
+	public function setLienApplication($lienApplication){
+		if(empty($lienApplication) || $lienApplication=== undefined){
+			$this->lienApplication=null;
+		}
+		elseif(preg_match("#^((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9\#:?=&;,]*)?)?)$#", $lienApplication)){
+			$this->lienApplication= $lienApplication;
+		}
+			else{
+				$this->setErreurs(self::LIEN_APPLICATION);
+			}
+	}
+
+
+	//*****
 	
 	public function setDateSoumissionApplication($dateSoumissionApplication) {
 		//Pas de vérification sur les dates car elles sont automatiquement détèctées lors de l'écriture ou de la lecture dans la BDD.
@@ -209,6 +229,11 @@ class Application extends \Library\Entity {
 	public function getDescriptionApplication() {
 		return $this->descriptionApplication;
 	}
+	//*****
+	public function getLienApplication(){
+		return $this->lienApplication;
+	}
+	//*****
 	public function getDateSoumissionApplication() {
 		return $this->dateSoumissionApplication;
 	}
