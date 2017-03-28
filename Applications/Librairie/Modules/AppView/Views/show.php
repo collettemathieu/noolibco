@@ -63,7 +63,7 @@
 								<?php 
 							           if (sizeof($app->getLienApplication()) != 0){
 							           		echo "<li>";
-							           		echo "<h3>Link</h3>";
+							           		echo "<h3>Personal Page</h3>";
 						       		        echo "<ul class='list-unstyled'><li><a href='".$app->getLienApplication()."' target='_blank'>"; 
 							           		echo $app->getLienApplication();
 							       			echo "</a></li></ul></li>";
