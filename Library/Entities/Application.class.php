@@ -130,9 +130,9 @@ class Application extends \Library\Entity {
 		elseif(preg_match("#^((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9\#:?=&;,]*)?)?)$#", $lienPagePersoUtilisateur)){
 			$this->lienApplication= $lienApplication;
 		}
-			/*else{
+			else{
 				$this->setErreurs(self::LIEN_APPLICATION);
-			}*/
+			}
 	}
 
 
