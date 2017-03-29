@@ -6,7 +6,7 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="col-lg-10 centering">
-				<form id="formNewTask" name="formNewTask" ng-submit="formValidNewTask()" class="well well-lg">
+				<form id="formNewTask" name="formNewTask" ng-submit="formValidNewTask()">
 
 					<div class="form-group has-feedback" ng-class="{'has-error':formNewTask.nomTache.$invalid && formNewTask.nomTache.$dirty, 'has-success':formNewTask.nomTache.$valid}">
 						<div class="input-group">
@@ -29,21 +29,29 @@
 					</div>
 
 					<div class="form-group has-feedback col-lg-9 centering">
-						<label>Enter data required for running the task</label>
-						<div class="alert">
-							<span class="label label-primary">Description</span>
-							<input name="description0" type="text" class="form-control" maxlength="40" placeholder="Enter a short description of the data (between 1 and 40 chars)." value=""/>
-							<span class="label label-primary">Data type</span>
-							<select name="typeDonneeUtilisateur0" class="form-control input-sm selectTypeDonneeUtilisateur">
-								<?php echo $typeDonneeUtilisateurAAfficher; ?>
-							</select>
-							<span class="label label-primary">Data unit</span>
-							<select name="uniteDonneeUtilisateur0" class="form-control input-sm selectUniteDonneeUtilisateur">
-								<?php echo $uniteDonneeUtilisateurAAfficher; ?>
-							</select>
+						<label class="label label-lg label-primary">Enter data required for running the task</label>
+						<div class="jumbotron">
+							<div class="form-group has-feedback" ng-class="{'has-error':formNewTask.description0.$invalid && formNewTask.description0.$dirty, 'has-success':formNewTask.description0.$valid}">
+								<div class="input-group">
+									<div class="input-group-addon">Description</div>
+									<input name="description0" required ng-model="description0" type="text" class="form-control" ng-maxlength="40" ng-minlength="1" maxlength="40" placeholder="Enter a short description of the data." value=""/>
+								</div>
+								<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formNewTask.description0.$invalid && formNewTask.description0.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formNewTask.description0.$valid}"></span>
+								<span ng-show="formNewTask.description0.$invalid && formNewTask.description0.$dirty" class="help-block">Enter a description between 1 and 40 characters.</span>
+							</div>
+							<div class="input-group">
+								<div class="input-group-addon">Type</div>
+								<select required name="typeDonneeUtilisateur0" ng-model="typeDonneeUtilisateur0" class="form-control input-sm selectTypeDonneeUtilisateur">
+								</select>
+							</div>
+							<div class="input-group">
+								<div class="input-group-addon">Unit</div>
+								<select required name="uniteDonneeUtilisateur0" ng-model="uniteDonneeUtilisateur0" class="form-control input-sm selectUniteDonneeUtilisateur">
+								</select>
+							</div>
 						</div>
-						<button class="btn btn-default btn-sm pull-right" disabled id="deleteTypeDonneeUtilisateur">Delete the last data</button>
-						<button class="btn btn-default btn-sm pull-right" id="addNewTypeDonneeUtilisateur">Add a new data</button>
+						<button class="btn btn-default btn-sm pull-right" disabled remove-data>Delete the last data</button>
+						<button class="btn btn-default btn-sm pull-right" add-data>Add a new data</button>
 					</div>
 					<input type="hidden" name="idApp" value="{{application.id}}"/>
 					<input type="hidden" name="idVersion" value="{{idVersion}}"/>

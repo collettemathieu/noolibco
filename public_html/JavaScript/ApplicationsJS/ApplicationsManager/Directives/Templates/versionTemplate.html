@@ -6,11 +6,11 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="col-lg-10 centering">
-				<form id="formCreateNewVersion" name="formNewVersion" ng-submit="validFormVersion()" class="well well-lg">
+				<form id="formCreateNewVersion" name="formNewVersion" ng-submit="validFormVersion()">
 					<div class="form-group has-feedback" ng-class="{'has-error':formNewVersion.nameVersionApplication.$invalid && formNewVersion.nameVersionApplication.$dirty, 'has-success':formNewVersion.nameVersionApplication.$valid}">
 						<div class="input-group">
 							<div class="input-group-addon">Version number</div>
-							<input type="text" name="nameVersionApplication" ng-model="nameVersionApplication" ng-pattern="/^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$/" required class="form-control input-lg" placeholder="Enter a new number version (e.g. 1.0.0)."/>
+							<input type="text" name="nameVersionApplication" ng-model="nameVersionApplication" ng-pattern="/^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$/" required class="form-control" placeholder="Enter a number of version (e.g. 1.0.0)."/>
 						</div>
 						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formNewVersion.nameVersionApplication.$invalid && formNewVersion.nameVersionApplication.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formNewVersion.nameVersionApplication.$valid}"></span>
 						<span ng-show="formNewVersion.nameVersionApplication.$invalid && formNewVersion.nameVersionApplication.$dirty" class="help-block">You must enter a valid version such as 1.0.0</span>
@@ -19,7 +19,7 @@
 					<div class="form-group has-feedback" ng-class="{'has-error':formNewVersion.descriptionVersionApplication.$invalid && formNewVersion.descriptionVersionApplication.$dirty, 'has-success':formNewVersion.descriptionVersionApplication.$valid}">
 						<div class="input-group">
 							<div class="input-group-addon">Description</div>
-							<textarea name="descriptionVersionApplication" ng-model="descriptionVersionApplication" ng-minlength="0" ng-maxlength="100" required class="form-control input-lg" rows="5" maxLength="100" placeholder="Add a short description (0-100 chars) presenting the new features of this version."></textarea>
+							<textarea name="descriptionVersionApplication" ng-model="descriptionVersionApplication" ng-minlength="0" ng-maxlength="100" required class="form-control" rows="5" maxLength="100" placeholder="Add a short description (0-100 chars) presenting the new features of this version."></textarea>
 						</div>
 						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formNewVersion.descriptionVersionApplication.$invalid && formNewVersion.descriptionVersionApplication.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formNewVersion.descriptionVersionApplication.$valid}"></span>
 						<span ng-show="formNewVersion.descriptionVersionApplication.$invalid && formNewVersion.descriptionVersionApplication.$dirty" class="help-block">You must enter a description </span>

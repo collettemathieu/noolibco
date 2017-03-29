@@ -25,7 +25,7 @@ application.controller('newTaskController', ['$scope', '$uibModalInstance', '$ht
 	};
 
 	// Pour initialiser le formulaire
-	
+
 
 	// Pour soumettre le formulaire
 	$scope.validFormNewTask = function(){

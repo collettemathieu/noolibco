@@ -146,7 +146,6 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/descriptionTemplate.html',
 	      controller: 'descriptionController',
 	      scope: $scope,
-	      size: 'lg',
 	      resolve: {
 				// On récupère les catégories pour l'affichage dans le select
 				tableOfCategories: ['$http', '$q', function($http, $q){
