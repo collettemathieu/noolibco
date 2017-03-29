@@ -59,7 +59,12 @@ application.controller('descriptionController', ['$scope', '$uibModalInstance', 
 			.success(function(response){
 				if(response['description'] && response['lien'] && response['motCles'] && response['categorie']){
 					$scope.application.description = response['description'];
-					$scope.application.lien = response['lien']; //added by Naoures
+					if(response['lien']){
+						$scope.application.lien = response['lien']; //added by Naoures
+					}else{
+						$scope.application.lien = '';
+					}
+					
 					$scope.application.motCles = response['motCles'];
 					$scope.application.categorie = response['categorie'];
 				}
