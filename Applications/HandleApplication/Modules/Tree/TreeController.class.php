@@ -2656,7 +2656,7 @@ class TreeController extends \Library\BackController
 			$utilisateur = unserialize($user->getAttribute('userSession'));
 
 			// On vérifie que l'utilisateur supprime bien une de ses applications
-			if(!empty($application) && ($utilisateur->getIdUtilisateur() === $application->getCreateur()->getIdUtilisateur() || $user->getAttribute('idAdmin'))){
+			if(!empty($application) && ($utilisateur->getIdUtilisateur() === $application->getCreateur()->getIdUtilisateur() || $user->getAttribute('isAdmin'))){
 				//On appelle la fonction Delete du trait pour supprimer l'application
 				$this->executeDeleteApplication($request);
 			}else{

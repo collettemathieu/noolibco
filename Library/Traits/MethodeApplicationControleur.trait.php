@@ -105,16 +105,15 @@ trait MethodeApplicationControleur
 		}else{
 			//Sinon, si Id en post
 			if($request->getPostData('idApplication')){
-				// On récupère l'id de la publication que le client veut ajouter au Dock
+				// On récupère l'id
 				$idApplication = (int) $request->getPostData('idApplication');
 			}else{
+				// On retourne le tableau d'erreurs
+				$user->getMessageClient()->addErreur('No id passed to the function.');
 				return false;
 			}
 		
 		}
-		
-		// On récupère l'id de l'application que le client veut ajouter au Dock
-		$idApplication = (int) $request->getPostData('idApplication');
 
 		// On appelle le manager des applications
 		$managerApplication = $this->getManagers()->getManagerOf('Application');
