@@ -59,22 +59,17 @@
 							</li>
 							<!-- ******Naoures********* -->
 							
-						        <!-- S'il y a un lien il l'affiche-->
-								<?php 
-								//la fonction est mal placée
-								function addhttp($url){
-									if(!preg_match("~^(?:f|ht)tps?://~i",$url)){
+					        <!-- S'il y a un lien il l'affiche-->
+							<?php 
+				           	if (!empty($app->getLienApplication())){
+				           		$url = $app->getLienApplication();
+					           	if(!preg_match("~^(?:f|ht)tps?://~i",$url)){
 										$url="http://".$url;
-									}
-									return $url;
 								}
-							           if (sizeof($app->getLienApplication()) != 0){
-							           		echo "<li>";
-							           		echo "<h3>Personal Page</h3>";
-						       		        echo "<ul class='list-unstyled'><li><a href='".addhttp($app->getLienApplication())."' target='_blank'>"; 
-							           		echo $app->getLienApplication();
-							       			echo "</a></li></ul></li>";
-						       		}?>
+								?>
+					        <li><h3>Personal Page</h3></li>
+				        	<li><a href="<?php echo $url;?>" target="_blank"><?php echo $url;?></a></li>
+				       		<?php }?>
 								
 								
 							<!-- *************** -->
