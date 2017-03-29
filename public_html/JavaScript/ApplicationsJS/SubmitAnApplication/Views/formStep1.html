@@ -4,27 +4,39 @@
 							Step 1: Basic informations
 						</legend>
 						<div class="form-group has-feedback" ng-class="{'has-error':formStep1.nomApp.$invalid && formStep1.nomApp.$dirty, 'has-success':formStep1.nomApp.$valid}">
-							<input type="text" name="nomApp" ng-model="nomApp" ng-minlength="3" ng-maxlength="20" required class="form-control input-lg" maxlength="20" placeholder="Enter a name for your application (3-20 chars)." name-application-validator/>
+							<div class="input-group">
+								<span class="input-group-addon">Name</span>
+								<input type="text" name="nomApp" ng-model="nomApp" 
+								ng-minlength="3" ng-maxlength="20" required class="form-control" maxlength="20" placeholder="Enter a name for your application (3-20 chars)." name-application-validator/>
+							</div>
 							<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formStep1.nomApp.$invalid && formStep1.nomApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formStep1.nomApp.$valid}"></span>
 							<span ng-show="formStep1.nomApp.$invalid && formStep1.nomApp.$dirty" class="help-block" ng-bind="infoInvalidNameApplication"></span>
 						</div>
 						<div class="form-group has-feedback" ng-class="{'has-error':formStep1.descriptionApp.$invalid && formStep1.descriptionApp.$dirty, 'has-success':formStep1.descriptionApp.$valid}">
-							<textarea name="descriptionApp" ng-model="descriptionApp" ng-minlength="50" required class="form-control input-lg" placeholder="Enter a short description of your application (>50 chars)."></textarea>
+							<div class="input-group">
+								<span class="input-group-addon">Description</span>
+								<textarea name="descriptionApp" ng-model="descriptionApp" ng-minlength="50" required class="form-control input-lg" placeholder="Enter a short description of your application (>50 chars)."></textarea>
+							</div>
 							<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formStep1.descriptionApp.$invalid && formStep1.descriptionApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formStep1.descriptionApp.$valid}"></span>
 							<span ng-show="formStep1.descriptionApp.$invalid && formStep1.descriptionApp.$dirty" class="help-block">This description is too short !</span>
 						</div>
 						<!--Added by Naoures -->
 						<!-- ***************** -->
-						<div class="form-group has-feedback" ng-class="{'has-error':formStep1.lienApp.$invalid && formStep1.lienApp.$dirty, 'has-success':formStep1.lienApp.$valid}">
-							<input type="url" name="lienApp" ng-model="lienApp" class="form-control input-lg" ng-pattern="/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/" placeholder="Enter a hyperlink for your application. Leave empty if not applicable."/>
-							<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formStep1.lienApp.$invalid && formStep1.lienApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formStep1.lienApp.$valid}"></span>
+						<div class="form-group has-feedback" ng-class="{'has-error':formStep1.lienApp.$invalid && formStep1.lienApp.$dirty, 'has-success':formStep1.lienApp.$valid && formStep1.lienApp.$dirty}">
+							<div class="input-group">
+								<span class="input-group-addon">Http(s)</span>
+								<input type="url" name="lienApp" ng-model="lienApp" class="form-control" ng-pattern="/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/" placeholder="Enter a hyperlink for your application. Leave empty if not applicable."/>
+							</div>
+							<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formStep1.lienApp.$invalid && formStep1.lienApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formStep1.lienApp.$valid && formStep1.lienApp.$dirty}"></span>
 							<span ng-show="formStep1.lienApp.$invalid && formStep1.lienApp.$dirty" class="help-block">The hyperlink entered is not valid.</span> 
 						</div>
 
 						<!-- ***************** -->
 						<div class="form-group has-feedback">
-							<label for="categorieApp">Select a category for your application</label>
-							<select name="categorieApp" ng-options="category.nameCategory group by category.onCategory for category in tableOfCategories" ng-model="selectedCategory" class="form-control input-sm" required select-design-directive data-live-search="true"></select>
+							<div class="input-group">
+								<span class="input-group-addon">Category</span>
+								<select name="categorieApp" ng-options="category.nameCategory group by category.onCategory for category in tableOfCategories" ng-model="selectedCategory" class="form-control input-sm" required select-design-directive data-live-search="true"></select>
+							</div>
 						</div>
 						<button ng-disabled="formStep1.$invalid" class="btn btn-primary" type="submit">
 							<div ng-hide="validStep2">Step 2</div>

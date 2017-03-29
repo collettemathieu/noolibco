@@ -102,6 +102,7 @@ application.controller('controllerStep3', ['applicationService', 'publicationsAp
 				}else{
 					displayInformationsClient(response);
 				}
+				$scope.validDeposit = false;
 			})
 			.error(function(error){
 				var response = {

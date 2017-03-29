@@ -34,7 +34,7 @@ class Application extends \Library\Entity {
 	const FORMAT_MOTSCLES_EMPTY = 'You must enter at least one keyword.';
 	const VARIABLE_FIXE_APPLICATION = 'The fixed variable of the application must contain at least 4 characters in length.';
 	//*****
-	const LIEN_APPLICATION='link is not valid.';
+	const LIEN_APPLICATION='The hyperlink format entered is not valid.';
 	//*****
 	
 	
@@ -124,15 +124,15 @@ class Application extends \Library\Entity {
 	//Added by Naoures
 	//setter for Application link
 	public function setLienApplication($lienApplication){
-		if(empty($lienApplication) || $lienApplication=== undefined){
-			$this->lienApplication=null;
+		if(empty($lienApplication) || $lienApplication === 'undefined'){
+			$this->lienApplication= '';
 		}
 		elseif(preg_match("#^((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9\#:?=&;,]*)?)?)$#", $lienApplication)){
 			$this->lienApplication= $lienApplication;
 		}
-			else{
-				$this->setErreurs(self::LIEN_APPLICATION);
-			}
+		else{
+			$this->setErreurs(self::LIEN_APPLICATION.$lienApplication);
+		}
 	}
 
 

@@ -38,6 +38,7 @@ application.controller('controllerStep2', ['$scope', '$http', '$location', funct
 				}else{
 					displayInformationsClient(response);
 				}
+				$scope.validStep3 = false;
 			})
 			.error(function(error){
 				var response = {

@@ -55,6 +55,7 @@ application.controller('controllerStep1', ['$scope', '$http', '$location', 'tabl
 				}else{
 					displayInformationsClient(response);
 				}
+				$scope.validStep2 = false;
 			})
 			.error(function(error){
 				var response = {
