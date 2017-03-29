@@ -1,6 +1,6 @@
 <div class="modal-header">
 	<button type="button" class="close" ng-click="close()">x</button>
-	<h2 class="modal-title">Hello world!! Change attributs of {{application.nom}}</h2>
+	<h2 class="modal-title">Change attributs of {{application.nom}}</h2>
 </div>
 <div class="modal-body">
 	<div class="container-fluid">
@@ -22,10 +22,10 @@
 					<!-- ****************** -->
 					
 					<div class="form-group has-feedback" ng-class="{'has-error':formDescriptionApp.lienApp.$invalid && formDescriptionApp.lienApp.$dirty, 'has-success':formDescriptionApp.lienApp.$valid}">
-						<label>Its link</label>
+						<label>Its personal page</label>
 						<input name="lienApp" ng-model="lienApp" class="form-control input-lg" placeholder="Enter a link." ng-pattern="/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/"/>
 						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formDescriptionApp.lienApp.$invalid && formDescriptionApp.lienApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formDescriptionApp.lienApp.$valid}"></span>
-						<span ng-show="formDescriptionApp.lienApp.$invalid && formDescriptionApp.lienApp.$dirty" class="help-block">link format not valid. </span>
+						<span ng-show="formDescriptionApp.lienApp.$invalid && formDescriptionApp.lienApp.$dirty" class="help-block">The hyperlink format is not valid. </span>
 					</div>
 					<!-- ****************** -->
 
