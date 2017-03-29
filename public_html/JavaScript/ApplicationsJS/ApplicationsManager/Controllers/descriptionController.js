@@ -59,6 +59,7 @@ application.controller('descriptionController', ['$scope', '$uibModalInstance', 
 			.success(function(response){
 				if(response['description'] && response['lien'] && response['motCles'] && response['categorie']){
 					$scope.application.description = response['description'];
+					alert(response['lien']);
 					if(response['lien']){
 						$scope.application.lien = response['lien']; //added by Naoures
 					}else{
