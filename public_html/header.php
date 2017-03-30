@@ -164,7 +164,7 @@
 </header>
 
 <!--Data manager-->
-<!?php if($user->isAuthenticated() && $user->jsIsActivated()) {
+<?php if($user->isAuthenticated() && $user->jsIsActivated()) { ?>
 	<!--if((bool) strstr($_SERVER['REQUEST_URI'],'/NooSpace/')) {?-->
 	<div id="boutonShowGestionnaireDonnees">
 		<div class="container-fluid">
