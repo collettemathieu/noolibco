@@ -163,4 +163,4 @@
 	<?php } ?>
 </header>
 
-<!--Data manager-->
+<!-- Deleted and removed to nooSpace/show.php by Naoures -->
