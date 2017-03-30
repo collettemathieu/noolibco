@@ -131,7 +131,6 @@
 		</div>
 
 		<!-- Romoved by Naoures from header.php -->
-		<!-- **************************** -->
 		<?php if($user->isAuthenticated() && $user->jsIsActivated()) {
 	if((bool) strstr($_SERVER['REQUEST_URI'],'/NooSpace/')) {?>
 	<div id="boutonShowGestionnaireDonnees">
