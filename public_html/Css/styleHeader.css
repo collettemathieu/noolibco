@@ -21,8 +21,8 @@ header .modal-body img{
 header .modal-body li{
 	margin-left: 10px;
 }
-
-.fullScreen{
+/* Removed to styleNooSpace by Naoures*/
+/*.fullScreen{
 	margin: 0;
 	display: inline-block;
 	height: 25px;
@@ -33,7 +33,7 @@ header .modal-body li{
 	background-color:rgba(250, 250, 250, 0.95);
 	top: 105px;
 	left: 0px;
-}
+}*/
 
 #helperApplication .modal-dialog{
 	width: 90%;

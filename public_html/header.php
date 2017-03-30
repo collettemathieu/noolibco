@@ -163,8 +163,10 @@
 	<?php } ?>
 </header>
 
+<!-- mooved into nooSpace/show.php -->
 <!--Data manager-->
-<?php if($user->isAuthenticated() && $user->jsIsActivated()) {
+
+<!--?php if($user->isAuthenticated() && $user->jsIsActivated()) {
 	if((bool) strstr($_SERVER['REQUEST_URI'],'/NooSpace/')) {?>
 	<div id="boutonShowGestionnaireDonnees">
 		<div class="container-fluid">
@@ -220,9 +222,10 @@
 	</div>
 
 	<div id="overlayAfficherDonnee" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
+	  <div class="modal-dialog"> -->
 
 	    <!-- Modal content-->
+	    <!--
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal">x</button>
@@ -263,9 +266,9 @@
 	
 
 	<div id="overlayFormulaireAjoutDonneeLocale" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	    <!-- Modal content-->
-	    <div class="modal-content">
+	  <div class="modal-dialog">--><!--!>
+	    <!--><!-- Modal content-->
+	   <!-- <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal">x</button>
 			<div class="image-upload">
@@ -309,4 +312,4 @@
 
 	  </div>
 	</div>
-<?php } } ?>
+<?php } } ?>-->
