@@ -131,6 +131,7 @@
 		</div>
 
 		<!-- Romoved by Naoures from header.php -->
+		<span id="boutonFullScreen" class="glyphicon glyphicon-fullscreen fullScreen infoBulleRight" title="Full screen mode"></span>
 		<?php if($user->isAuthenticated() && $user->jsIsActivated()) {
 	if((bool) strstr($_SERVER['REQUEST_URI'],'/NooSpace/')) {?>
 	<div id="boutonShowGestionnaireDonnees">
