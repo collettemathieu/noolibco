@@ -276,7 +276,7 @@
 	margin: 0;
 	display: inline-block;
 	position: absolute; /* added by Naoures*/
-	z-index: 1; /** Naoures**/
+	z-index: 2; /** Naoures**/
 	height: 25px;
 	width: 29px;
 	cursor: pointer;
