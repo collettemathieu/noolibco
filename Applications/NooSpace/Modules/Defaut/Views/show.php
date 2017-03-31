@@ -1,4 +1,4 @@
-		<div ng-app="NooSpace"  ng-controller="nooSpaceController">
+		<div ng-app="NooSpace"  ng-controller="nooSpaceController" style="height:100%;">
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div id="noospace" class="col-sm-11 text-center centering noospace fadeIn">
