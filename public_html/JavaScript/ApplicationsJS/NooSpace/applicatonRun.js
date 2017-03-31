@@ -14,7 +14,7 @@
  * @version: 1
  */
 
-var application = angular.module('applicationNooSpace', ['ngAnimate', 'ui.bootstrap']);
+var application = angular.module('nooSpace', ['ngAnimate', 'ui.bootstrap']);
 
 /* Configuration */
 application.config(['$locationProvider', '$httpProvider', '$compileProvider', function($locationProvider, $httpProvider, $compileProvider){
