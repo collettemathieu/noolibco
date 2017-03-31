@@ -1,4 +1,5 @@
-		<div class="container-fluid" ng-app="NooSpace" ng-controller="nooSpaceController">
+		<div ng-app="NooSpace">
+		<div class="container-fluid" ng-controller="nooSpaceController">
 			<div class="row-fluid">
 				<div id="noospace" class="col-sm-11 text-center centering noospace fadeIn">
 				<?php if(isset($applicationNooSpace) && isset($version)){
@@ -280,3 +281,4 @@
 	</div>
 		<!-- ******** -->
 		<!--********-->
+		</div>
