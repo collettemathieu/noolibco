@@ -272,7 +272,7 @@
 	overflow-x: hidden;
 }
 
-.fullScreen{
+#boutonFullScreen{
 	margin: 0;
 	display: inline-block;
 	height: 25px;
