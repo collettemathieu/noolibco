@@ -1,5 +1,5 @@
-		<div ng-app="NooSpace" style="height:100%;">
-		<div class="container-fluid" ng-controller="nooSpaceController">
+		<div ng-app="NooSpace"  ng-controller="nooSpaceController" style="height:100%;">
+		<div class="container-fluid">
 			<div class="row-fluid">
 				<div id="noospace" class="col-sm-11 text-center centering noospace fadeIn">
 				<?php if(isset($applicationNooSpace) && isset($version)){
@@ -133,7 +133,7 @@
 
 		<!-- Romoved by Naoures from header.php -->
 		<!-- ******Button full screen****** -->
-		<span id="boutonFullScreen" class="glyphicon glyphicon-fullscreen fullScreen infoBulleRight" title="Full screen mode"></span>
+		<span id="boutonFullScreen" ng-click="screenChange()" ng-class="glyphicon glyphicon-fullscreen fullScreen infoBulleRight" title="Full screen mode"></span>
 		<!-- ************ --> 
 		<!--**** Gestionnaire de données *****-->
 		<div id="boutonShowGestionnaireDonnees">
