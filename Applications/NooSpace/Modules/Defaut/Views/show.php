@@ -1,4 +1,4 @@
-		<div ng-app="NooSpace">
+		<div ng-app="NooSpace" style="width:100%;">
 		<div class="container-fluid" ng-controller="nooSpaceController">
 			<div class="row-fluid">
 				<div id="noospace" class="col-sm-11 text-center centering noospace fadeIn">
@@ -281,4 +281,3 @@
 	</div>
 		<!-- ******** -->
 		<!--********-->
-		</div>
