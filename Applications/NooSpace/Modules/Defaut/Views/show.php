@@ -134,7 +134,7 @@
 		<!-- Romoved by Naoures from header.php -->
 		<!-- ******Button full screen****** -->
 		<!-- <span id="boutonFullScreen" class="glyphicon glyphicon-fullscreen fullScreen infoBulleRight" title="Full screen mode"></span>-->
-		<span id="boutonFullScreen" ng-click="screenChange()" ng-class="glyphicon glyphicon-fullscreen fullScreen infoBulleRight" title={{attribut}}></span>
+		<span id="boutonFullScreen" click="screenChange()" ng-class="glyphicon glyphicon-fullscreen fullScreen infoBulleRight" title={{attribut}}></span>
 		<!-- ************ --> 
 		<!--**** Gestionnaire de données *****-->
 		<div id="boutonShowGestionnaireDonnees">
