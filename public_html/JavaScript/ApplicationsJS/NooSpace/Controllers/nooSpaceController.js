@@ -17,7 +17,7 @@
 
 application.controller('nooSpaceController', ['$scope', '$uibModalInstance', '$http', function($scope, $uibModalInstance, $http){
 
-  $scope.screenChange= function(){
+  $scope.screenChange = function(){
   	if($scope.class=="glyphicon-fullscreen"){
 		$scope.class="glyphicon-resize-small";
 		$scope.attribut="Normal screen mode";
