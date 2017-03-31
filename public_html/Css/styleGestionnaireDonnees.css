@@ -9,7 +9,7 @@
 	left: 0px;
 	padding-right: 5px;
 	text-align: center;
-	
+	z-index: 1; /**  NAoures **/
 	cursor: pointer;
 	width: 55px;
 	height: 40px;
@@ -276,6 +276,7 @@
 	margin: 0;
 	display: inline-block;
 	position: absolute; /* added by Naoures*/
+	z-index: 1; /** Naoures**/
 	height: 25px;
 	width: 29px;
 	cursor: pointer;
