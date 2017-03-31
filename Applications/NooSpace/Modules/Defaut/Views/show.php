@@ -133,4 +133,149 @@
 		<!-- Romoved by Naoures from header.php -->
 		
 		
+		
+		<div id="boutonShowGestionnaireDonnees">
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="centering center">
+						<img src="/Images/dataButtonWhite.png" alt="Your data"/>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="overlayGestionnaireDonnees">
+			<div id="sectionGestionnaireDonnees">
+				<div class="headerGestionnaireDonnees">
+					<div class="inHeaderGestionnaireDonnees">
+						<div class="titreGestionnaire">Data manager</div>
+						<div id="progressBarGestionnaireDonneeUtilisateur">
+							<div><strong id="progressionPourcent"></strong> occupied space</div>
+							<progress id="progressBarEspaceDisponibleData" value="" min="0" max=""></progress>
+						</div>
+					</div>
+				</div>
+				<div id="inSectionGestionnaireDonnees">
+					<div id="boiteAOutils">
+						<img id="boutonImporter" class="infoBulleDataManager" data-toggle="modal" href="#overlayFormulaireAjoutDonneeLocale" src="/Images/addData.png" title="Load a new data item">
+						<img id="boutonSaveDataOnServer" class="infoBulleDataManager" src="/Images/save.png" title="Drag and drop a data item to save it on NooLib for 30 days">
+						<img id="poubelleDonneeUtilisateur" class="infoBulleDataManager" src="/Images/trash.png" title="Drag and drop a data item to delete it permanently">	
+					</div>
+					<div id="listeDonneesUser">
+						<div id="inListeDonneesUser">
+							<div class="image-dataManager-waiter"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading data...</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div id="laMule">
+				<div class="headerGestionnaireDonnees">
+					<div class="inHeaderMule">
+						<div class="titreGestionnaire"></div>
+					</div><br>
+					<form id="formMule" class="col-lg-12 centering">
+						<div class="task">
+							<div class="form-group"></div>
+							<div class="form-group"></div>
+							<hr>
+						</div>
+						<br><br><br>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div id="overlayAfficherDonnee" class="modal fade" role="dialog">
+	 	 <div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">x</button>
+			<div class="image-upload">
+			    <label for="" id="labelSubmitUpdateData">
+			        <img src="/Images/upload.png" data-html="true" data-toggle="popover"/>
+			    </label>
+				<form id="formUpdateData">
+				    <input type="submit" name="submit" id="submitUpdateData"/>
+				    <input type="hidden" name="idDonneeUtilisateur" id="idDonneeUtilisateur" value="">
+				    <input type="hidden" name="debutDonnee" id="debutDonnee" value="">
+				    <input type="hidden" name="finDonnee" id="finDonnee" value="">
+				    <input type="hidden" name="rowSelected" id="rowSelected" value="">
+				</form>
+			</div>
+			<div class="image-waiter" id="image-waiter"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading data...</div>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="row hidden">
+		      	<div class="item col-lg-12">
+					<ul class="nav nav-pills">
+						<li class="active"><a href="#tableResult" data-toggle="tab">Table</a></li>
+						<li><a href="#graphResult" data-toggle="tab">Graph</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active tableResult table-responsive" id="tableResult"><br/>
+							<table class="table table-bordered table-striped table-condensed"></table>
+						</div>
+						<div class="tab-pane graphResult centering" id="graphResult"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row text-center"></div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+
+	<div id="overlayFormulaireAjoutDonneeLocale" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">x</button>
+			<div class="image-upload">
+			    <label for="fileLocalData" id="labelFileLocalData">
+			        <img src="/Images/addData.png" data-html="true" data-toggle="popover" data-content=""/>
+			    </label>
+			    <label id="labelSubmitLocalData">
+			        <img src="/Images/upload.png" data-html="true" data-toggle="popover" data-content=""/>
+			    </label>
+			    <input id="fileLocalData" name="urlLocalData" type="file" class="withoutBootstrap"/>
+				<form method="POST" enctype="multipart/form-data" id="formUploadLocalData">
+				    <input type="submit" name="submit" id="submitLocalData"/>
+				    <input type="hidden" value="" name="ext" id="extensionFichierData"/>
+				    <input type="hidden" value="" name="nomFichier" id="nomFichierData"/>
+				    <input type="hidden" value="" name="donneeUtilisateur" id="localData"/>
+				    <input type="hidden" value="" name="sampleRateDonneeUtilisateur" id="sampleRateDonnee"/>
+				    <input type="hidden" value="" name="tailleDonneeUtilisateur" id="tailleDonnee"/>
+				    <input type="hidden" value="" name="tempsMinimumDonneeUtilisateur" id="tempsMinimumDonneeUtilisateur"/>
+				</form>
+			</div>
+			<div class="image-waiter" id="image-local-waiter"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading data...</div>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="row hidden">
+		      	<div class="item col-lg-12">
+					<ul class="nav nav-pills">
+						<li class="active"><a href="#tableLocalResult" data-toggle="tab">Table</a></li>
+						<li><a href="#graphLocalResult" data-toggle="tab">Graph</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active tableResult table-responsive" id="tableLocalResult"><br/>
+							<table class="table table-bordered table-striped table-condensed"></table>
+						</div>
+						<div class="tab-pane graphResult centering" id="graphLocalResult"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row text-center"></div>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+<?php } } ?>
+
 		<!-- ************ --> 
