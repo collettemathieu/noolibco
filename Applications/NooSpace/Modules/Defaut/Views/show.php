@@ -132,7 +132,7 @@
 
 		<!-- Romoved by Naoures from header.php -->
 		
-		<!?php if((bool) strstr($_SERVER['REQUEST_URI'],'/NooSpace/')){ ?>
+		<?php if((bool) strstr($_SERVER['REQUEST_URI'],'/NooSpace/')){ ?>
 		<span id="boutonFullScreen" class="glyphicon glyphicon-fullscreen fullScreen infoBulleRight" title="Full screen mode"></span>
 		<?php } ?> 
 		
