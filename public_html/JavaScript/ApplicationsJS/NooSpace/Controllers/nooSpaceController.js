@@ -9,7 +9,7 @@
 // +----------------------------------------------------------------------+
 
 /**
- * @name:  mainController
+ * @name:  nooSpaceController
  * @access: public
  * @version: 1
  */
