@@ -17,7 +17,7 @@
 
 application.controller('nooSpaceController', ['$scope', '$uibModalInstance', '$http', function($scope, $uibModalInstance, $http){
 
-  $scope.screenChange().then(function(){
+  $scope.screenChange()= function(){
   	if($scope.class=="glyphicon-fullscreen"){
 		$scope.class='glyphicon-resize-small';
 		$scope.attribut='Normal screen mode';
@@ -25,12 +25,8 @@ application.controller('nooSpaceController', ['$scope', '$uibModalInstance', '$h
 		$scope.class='glyphicon-fullscreen';
 		$scope.attribut='Full screen mode';
 	}
-  },function(error){
-			var response = {
-	             'erreurs': '<p>Failed to enable fullscreen. Your browser is not supported.</p>'
-	                    };
-	           displayInformationsClient(response);}
+  
 
-	       });	
+	       }
 
 }]);
