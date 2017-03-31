@@ -25,6 +25,6 @@ application.controller('nooSpaceController', ['$scope', '$uibModalInstance', '$h
 		$scope.class="glyphicon-fullscreen";
 		$scope.attribut="Full screen mode";
 	}
-	       }
+	       };
 
 }]);
