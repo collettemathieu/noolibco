@@ -11,6 +11,16 @@
 <script type="text/javascript" src="/JavaScript/addData.js"></script>
 <script type="text/javascript" src="/JavaScript/showData.js"></script>
 
+
+<!-- Files JS -->
+<!-- Added by Naoures-->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular-animate.min.js"></script>
+<script type="text/javascript" src="/JavaScript/Frameworks/ui-bootstrap-tpls-1.2.5.min.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/applicationRun.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/Controllers/nooSpaceController.js"></script>
+<!--*****************-->
+
 <!-- DICOM viewer - include the cornerstone library -->
 <script type="text/javascript" src="/JavaScript/Frameworks/cornerstone.min.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/cornerstoneMath.min.js"></script>
@@ -26,11 +36,3 @@
 <script type="text/javascript" src="/JavaScript/edfReader.js"></script>
 <script type="text/javascript" src="/JavaScript/txtReader.js"></script>
 
-<!-- Files JS -->
-<!-- Added by Naoures-->
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular-animate.min.js"></script>
-<script type="text/javascript" src="/JavaScript/Frameworks/ui-bootstrap-tpls-1.2.5.min.js"></script>
-<script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/applicationRun.js"></script>
-<script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/Controllers/nooSpaceController.js"></script>
-<!--*****************-->
