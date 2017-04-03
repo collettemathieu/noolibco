@@ -13,7 +13,7 @@
  * @access: public
  * @version: 1
  */
-
+console.log('from applicationRun I m here');
 var application = angular.module('NooSpace', []);
 
 /* Configuration */
