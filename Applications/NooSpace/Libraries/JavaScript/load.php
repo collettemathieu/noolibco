@@ -4,12 +4,10 @@
 <script type="text/javascript" src="/JavaScript/Frameworks/screenFull.min.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/FileSaver.min.js"></script>
 
-<!-- Critical scripts -->
-<script type="text/javascript" src="/JavaScript/initBrowser.js"></script>
-<script type="text/javascript" src="/JavaScript/displayInformationsClient.js"></script>
+
 
 <!-- Others libraries JS -->
-<!--script type="text/javascript" src="/JavaScript/nooSpace.js"></script>-->
+<script type="text/javascript" src="/JavaScript/nooSpace.js"></script>
 <script type="text/javascript" src="/JavaScript/fonctionsForApplication.js"></script>
 <script type="text/javascript" src="/JavaScript/fonctionsForData.js"></script>
 <script type="text/javascript" src="/JavaScript/addData.js"></script>
