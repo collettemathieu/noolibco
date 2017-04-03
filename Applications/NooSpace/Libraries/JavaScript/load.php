@@ -17,7 +17,6 @@
 <!-- Files JS -->
 <!-- Added by Naoures-->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular-animate.min.js"></script>
 
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/applicationRun.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/Controllers/nooSpaceController.js"></script>
