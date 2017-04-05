@@ -3,28 +3,33 @@
 // +----------------------------------------------------------------------+
 // | Copyright (c) 2017 NooLib			         				          |
 // +----------------------------------------------------------------------+
-// | Controleur pour la fenêtre modale Logo								  |
+// | Directive pour contrôler le switch boostrap du formulaire LogIn.	  |
 // +----------------------------------------------------------------------+
 // | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>    			  |
 // +----------------------------------------------------------------------+
 
 /**
- * @name:  nooSpaceController
+ * @name: overlayGestionnaireDonnesDirective
  * @access: public
  * @version: 1
  */
+application.directive('btnAnimation',function($animate){
+ 	return {
+ 		link: function(scope,element,attrs){
+ 				/*if(attrs.btnAnimation){
+ 					$animate.animate(element,{
+ 						'left':'400px'
+ 					}),1500);
+ 				}
+ 				else{
+ 					$animate.animate(element,{
+ 						'left':'500px'
+ 					}),1500);
 
-
-application.controller('nooSpaceController', ['$scope', '$http', function($scope, $http){
-
-  /*$scope.screenChange = function(){
-  	if($scope.class=="glyphicon-fullscreen"){
-		$scope.class="glyphicon-resize-small";
-		$scope.attribut="Normal screen mode";
-	}else{
-		$scope.class="glyphicon-fullscreen";
-		$scope.attribut="Full screen mode";
-	}
-	       }*/
-	       console.log("Hello");
-	   }]);
+ 				}*/
+ 				//element.addClass("hello");
+ 			
+ 			
+ 		};
+ 	}
+ });

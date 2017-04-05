@@ -9,12 +9,12 @@
 // +----------------------------------------------------------------------+
 
 /**
- * @name:  Application NooSpace
+ * @name:  Application ApplicationsManager
  * @access: public
  * @version: 1
  */
-console.log('from applicationRun I m here');
-var application = angular.module('NooSpace', []);
+
+var application = angular.module('NooSpace', ['ngAnimate', 'ui.bootstrap', 'FullScreenAngular']);
 
 /* Configuration */
 application.config(['$locationProvider', '$httpProvider', '$compileProvider', function($locationProvider, $httpProvider, $compileProvider){

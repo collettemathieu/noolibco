@@ -1,4 +1,6 @@
-		<div ng-app="NooSpace"  ng-controller="nooSpaceController" style="height:100%;">
+		
+		<div ng-app="NooSpace"  ng-controller="mainController"  ng-keydown="changeScreen($event)" style="height:100%;"> <!-- tabindex="0" to detect focus-->
+
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div id="noospace" class="col-sm-11 text-center centering noospace fadeIn">
@@ -134,10 +136,10 @@
 		<!-- Romoved by Naoures from header.php -->
 		<!-- ******Button full screen****** -->
 		<!-- <span id="boutonFullScreen" class="glyphicon glyphicon-fullscreen fullScreen infoBulleRight" title="Full screen mode"></span>-->
-		<span id="boutonFullScreen" ng-click="screenChange()" ng-class="glyphicon-fullscreen" class="glyphicon fullScreen infoBulleRight" title="{{attribut}}"></span>
+		<span id="boutonFullScreen"  ng-click="goFullscreen()" ng-class="{'glyphicon-fullscreen': !isInFullscreen, 'glyphicon-resize-small': isInFullscreen}" class="glyphicon fullScreen infoBulleRight" title="{{attribut}}"></span>
 		<!-- ************ --> 
 		<!--**** Gestionnaire de données *****-->
-		<div id="boutonShowGestionnaireDonnees">
+		<div id="boutonShowGestionnaireDonnees" ng-click="overlayGestionnaireDonnees()" btn-animation="isOverlay">
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="centering center">
@@ -147,7 +149,7 @@
 		</div>
 	</div>
 
-	<div id="overlayGestionnaireDonnees">
+	<div id="overlayGestionnaireDonnees" ng-show="isOverlay">
 		<div id="sectionGestionnaireDonnees">
 			<div class="headerGestionnaireDonnees">
 				<div class="inHeaderGestionnaireDonnees">
