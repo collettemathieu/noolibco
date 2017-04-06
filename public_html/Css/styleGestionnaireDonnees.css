@@ -6,7 +6,7 @@
 	display: inline-block;
 	position: absolute;
 	top: 55px;
-	/*left: 0px;*/
+	left: 0px;
 	padding-right: 5px;
 	text-align: center;
 	z-index: 1; /**  NAoures **/
@@ -29,12 +29,11 @@
 
 
 #overlayGestionnaireDonnees{
-	/*display: none;*/ /* Deleted by Naapures*/
+	display: none; 
 	position: absolute;
-	display: inline-block;/*Added by Naoures*/
-	left: 20px;/*Added by Naoures*/
+	/*display: inline-block;/*Added by Naoures*/
 	top: 50px;
-	/*left: 50px; /*0*/
+	left: 0px; 
 	width: 500px;
 	height: 550px;
 	z-index: 999;
@@ -287,19 +286,4 @@
 	background-color:rgba(250, 250, 250, 0.95);
 	top: 105px;
 	left: 0px; 
-}
-
-@keyframes closeGD{
-	from {left:20px;}
-	to {left:-500px;}
-}
-@keyframes openGD{
-	from {left:-500px;}
-	to {left:20px}
-}
-.ng-hide-add ,.ng-hide-add-active{
-	animation: 1.5s closeGD;
-}
-.ng-hide-remove, .ng-hide-remove-active{
-	animation: 1.5s openGD;
 }

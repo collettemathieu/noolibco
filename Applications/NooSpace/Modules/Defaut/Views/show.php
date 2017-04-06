@@ -139,7 +139,7 @@
 		<span id="boutonFullScreen"  ng-click="goFullscreen()" ng-class="{'glyphicon-fullscreen': !isInFullscreen, 'glyphicon-resize-small': isInFullscreen}" class="glyphicon fullScreen infoBulleRight" title="{{attribut}}"></span>
 		<!-- ************ --> 
 		<!--**** Gestionnaire de données *****-->
-		<div id="boutonShowGestionnaireDonnees" ng-click="overlayGestionnaireDonnees()" btn-animation="isOverlay">
+		<div id="boutonShowGestionnaireDonnees">
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="centering center">
@@ -149,7 +149,7 @@
 		</div>
 	</div>
 
-	<div id="overlayGestionnaireDonnees" ng-show="isOverlay">
+	<div id="overlayGestionnaireDonnees">
 		<div id="sectionGestionnaireDonnees">
 			<div class="headerGestionnaireDonnees">
 				<div class="inHeaderGestionnaireDonnees">

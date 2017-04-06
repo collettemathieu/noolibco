@@ -43,11 +43,5 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		}
 	};
 
-
-//Gestionnaire de donnée
-	$scope.isOverlay=false;	
-	$scope.overlayGestionnaireDonnees = function(){
-		$scope.isOverlay=!$scope.isOverlay;
-	};
 }]);
 
