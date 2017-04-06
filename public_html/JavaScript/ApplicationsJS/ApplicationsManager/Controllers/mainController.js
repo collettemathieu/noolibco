@@ -66,7 +66,28 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/newTaskTemplate.html',
 	      controller: 'newTaskController',
 	      scope: $scope,
-	      size: 'lg'
+	      size: 'lg',
+	      resolve: {
+	        // On récupère les types des données pour le select
+			typeData: ['$http', '$q', function($http, $q){
+				var deferred = $q.defer(); // -> promise
+				$http({
+					method: 'POST',
+					url: '/HandleApplication/GetTypeData'
+				})
+				.success(function(response){
+					deferred.resolve(response);
+				})
+				.error(function(error){
+					var response = {
+						'erreurs': '<p>A system error has occurred: '+error+'</p>'
+					};
+					displayInformationsClient(response);
+				});
+
+				return deferred.promise;
+			}
+	      ]}
 	    });
 
 		// On met à jour les variables lorsque la fenêtre se ferme
@@ -125,7 +146,8 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	      animation: true,
 	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/logoTemplate.html',
 	      controller: 'logoController',
-	      scope: $scope
+	      scope: $scope,
+	      size: 'lg'
 	    });
 	}
 

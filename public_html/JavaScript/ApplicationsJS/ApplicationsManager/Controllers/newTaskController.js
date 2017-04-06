@@ -14,7 +14,7 @@
  * @version: 1
  */
 
-application.controller('newTaskController', ['$scope', '$uibModalInstance', '$http', function($scope, $uibModalInstance, $http){
+application.controller('newTaskController', ['$scope', '$uibModalInstance', '$http', 'typeData', function($scope, $uibModalInstance, $http, typeData){
 	
 	// Position par defaut du bouton envoyer
 	$scope.displayButtonForm = false;
@@ -25,37 +25,26 @@ application.controller('newTaskController', ['$scope', '$uibModalInstance', '$ht
 	};
 
 	// Pour initialiser le formulaire
-
+	$scope.dataTypes = typeData['dataTypes'];
+	$scope.dataUnits = typeData['dataUnits'];
 
 	// Pour soumettre le formulaire
-	$scope.validFormNewTask = function(){
-		if($scope.formDescriptionApp.$valid){
+	$scope.formValidNewTask = function(){
+		if($scope.formNewTask.$valid){
 			$scope.displayButtonForm = true;
 
-			$http({
-				method: 'POST',
-				url: '/HandleApplication/ChangeDescriptionApplication',
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: function(obj) {
-			        var str = [];
-			        for(var p in obj)
-			        	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-			        return str.join("&");
-			    },
-				data: {
-					idApp: $scope.idApp,
-					motsClesApp: $scope.motsClesApp,
-					descriptionApp: $scope.descriptionApp,
-					categorieApp: $scope.selectedCategory.nameCategory
-				}
-			})
-			.success(function(response){
-				if(response['description'] && response['motCles'] && response['categorie']){
-					$scope.application.description = response['description'];
-					$scope.application.motCles = response['motCles'];
-					$scope.application.categorie = response['categorie'];
-				}
+			var form = document.getElementById('formNewTask'),
+    			formData = new FormData(form);
 
+			$http({
+                url: '/HandleApplication/ValidFormTache',
+                method: 'POST',
+                headers: {'Content-Type': undefined},
+                transformRequest: angular.identity,
+                data: formData
+            })
+			.success(function(response){
+				
 				displayInformationsClient(response);
 				// Position par defaut du bouton envoyer
 				$scope.displayButtonForm = false;

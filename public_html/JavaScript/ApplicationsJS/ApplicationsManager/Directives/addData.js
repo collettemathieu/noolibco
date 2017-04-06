@@ -32,7 +32,7 @@ application.directive('addData', ['$compile', function($compile){
 		        divClone.find('div:first').attr('ng-class', '{"has-error":formNewTask.description'+num_data+'.$invalid && formNewTask.description'+num_data+'.$dirty, "has-success":formNewTask.description'+num_data+'.$valid}');
 		        divClone.find('span:first').attr('ng-class', '{"glyphicon form-control-feedback glyphicon-remove":formNewTask.description'+num_data+'.$invalid && formNewTask.description'+num_data+'.$dirty, "glyphicon form-control-feedback glyphicon-ok":formNewTask.description'+num_data+'.$valid}');
 		        divClone.find('span:last').attr('ng-show', 'formNewTask.description'+num_data+'.$invalid && formNewTask.description'+num_data+'.$dirty');
-		        
+		    
 		        // Insertion du nouvel élément
 		        divClone.insertAfter(divNode);
 		        if(num_data == 1){

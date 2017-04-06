@@ -16,7 +16,7 @@
 	<route url="/HandleApplication/RemoveAuthor" module="Tree" action="removeAuthor"/>
 
 
-	<route url="/HandleApplication/FormTache" module="Tree" action="showFormTache"/>
+	<route url="/HandleApplication/GetTypeData" module="Tree" action="getTypeData"/>
 	<route url="/HandleApplication/FormFonction" module="Tree" action="showFormFonction"/>
 	<route url="/HandleApplication/FormParametre" module="Tree" action="showFormParametre"/>
 	<route url="/HandleApplication/ValidFormTache" module="Tree" action="validFormTache"/>

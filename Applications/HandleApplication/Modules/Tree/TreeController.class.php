@@ -1209,9 +1209,9 @@ class TreeController extends \Library\BackController
 
 
 	/**
-	* Méthode pour afficher le formulaire d'ajout d'une tâche à l'application
+	* Méthode pour récupérer les types de données des tâches
 	*/
-	public function executeShowFormTache($request)
+	public function executeGetTypeData($request)
 	{
 		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
 		if ($request->isAjaxRequest()) {
@@ -1221,75 +1221,44 @@ class TreeController extends \Library\BackController
 			// On informe que c'est un chargement Ajax
 			$user->setAjax(true);
 
-			// On récupère l'utilisateur de session
-			$userSession = unserialize($user->getAttribute('userSession'));
+			// On récupère la liste des types de parametre des tâches
+			// On appelle le manager des types de parametre
+			$managerTypeDonneeUtilisateur = $this->getManagers()->getManagerOf('TypeDonneeUtilisateur');
+			$typesDonneeUtilisateur = $managerTypeDonneeUtilisateur->getAllTypeDonneeUtilisateurs();
 
-			// On récupère l'ID de l'application à mettre en cache
-			$idApp = (int) $request->getPostData('idApp');
-
-			// On récupère le manager des applications
-			$managerApplication = $this->getManagers()->getManagerOf('Application');
-
-			// On récupère l'application via son ID
-			$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
-			
-			// On oriente l'utilisateur selon le statut de dépôt de l'application.
-			if($application && ($application->getStatut()->getNomStatut()==='Inactive' || $application->getStatut()->getNomStatut()==='Validated' || $application->getStatut()->getNomStatut()==='Not validated')){
-				
-				// On charge les utilisateurs autorisés 
-				$idAuteursAutorises = array();
-				// On récupère le manager des Utilisateurs
-				$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
-				// On ajoute le créateur comme ID autorisé
-				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
-				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
-					if($utilisateur){
-						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
-					}
-				}
-
-
-				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
-					/* Pour la création des variables liste de formulaires */
-
-					// On récupère la liste des types de parametre des tâches
-					// On appelle le manager des types de parametre
-					$managerTypeDonneeUtilisateur = $this->getManagers()->getManagerOf('TypeDonneeUtilisateur');
-					$typesDonneeUtilisateur = $managerTypeDonneeUtilisateur->getAllTypeDonneeUtilisateurs();
-					// On créé la variable d'affichage à insérer dans la page.
-					$typeDonneeUtilisateurAAfficher = '';
-					foreach($typesDonneeUtilisateur as $type){
-						$typeDonneeUtilisateurAAfficher.='<option value="'.$type->getNomTypeDonneeUtilisateur().'">'.$type->getNomTypeDonneeUtilisateur().'</option>';
-					}
-
-					// On ajoute la variable typeparametreAAfficher à la page
-					$this->page->addVar('typeDonneeUtilisateurAAfficher', $typeDonneeUtilisateurAAfficher);
-
-
-					// On récupère la liste des unités de parametre
-					// On appelle le manager des unité de parametre
-					$managerUniteDonneeUtilisateur = $this->getManagers()->getManagerOf('UniteDonneeUtilisateur');
-					$uniteDonneeUtilisateurs = $managerUniteDonneeUtilisateur->getAllUniteDonneeUtilisateurs();
-					// On créé la variable d'affichage à insérer dans la page.
-					$uniteDonneeUtilisateurAAfficher = '';
-					foreach($uniteDonneeUtilisateurs as $unite){
-						$uniteDonneeUtilisateurAAfficher.='<option value="'.$unite->getNomUniteDonneeUtilisateur().'">'.$unite->getNomUniteDonneeUtilisateur().' ('.$unite->getSymboleUniteDonneeUtilisateur().')'.'</option>';
-					}
-
-					// On ajoute la variable uniteDonneeUtilisateurAAfficher à la page
-					$this->page->addVar('uniteDonneeUtilisateurAAfficher', $uniteDonneeUtilisateurAAfficher);
-
-					// On ajoute la variable application à la page
-					$this->page->addVar('application', $application);
-				}else{
-					// On ajoute la variable d'erreurs
-					$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
-				}
-			}else{
-				// On ajoute la variable d'erreurs
-				$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
+			// On créé le tableau des types de données
+			$typeAAfficher = array();
+			foreach($typesDonneeUtilisateur as $id=>$type){
+				array_push($typeAAfficher, 
+					array(
+					'name' => $type->getNomTypeDonneeUtilisateur(),
+					'id' => $id
+					)
+				);
 			}
+
+			// On ajoute la variable typesDonneeUtilisateur à la page
+			$this->page->addVar('typesDonneeUtilisateur', $typeAAfficher);
+
+			// On récupère la liste des unités de parametre
+			// On appelle le manager des unité de parametre
+			$managerUniteDonneeUtilisateur = $this->getManagers()->getManagerOf('UniteDonneeUtilisateur');
+			$uniteDonneeUtilisateurs = $managerUniteDonneeUtilisateur->getAllUniteDonneeUtilisateurs();
+			
+			// On créé le tableau des types de données
+			$typeAAfficher = array();
+			foreach($uniteDonneeUtilisateurs as $id=>$type){		
+				array_push($typeAAfficher, 
+					array(
+					'name' => $type->getNomUniteDonneeUtilisateur(),
+					'id' => $id
+					)
+				);
+			}
+
+			// On ajoute la variable uniteDonneeUtilisateurs à la page
+			$this->page->addVar('uniteDonneeUtilisateurs', $typeAAfficher);
+			
 		}else{
 			// On procède à la redirection
 			$response = $this->app->getHTTPResponse();

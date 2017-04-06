@@ -56,6 +56,20 @@ application.factory('applicationService', ['$q', '$http', function($q, $http){
 	            cache: true,
 	            success: function(response) {
 
+			// Make monochrome colors and set them as default for all pies
+					Highcharts.getOptions().plotOptions.pie.colors = (function () {
+					    var colors = [],
+					        base = Highcharts.getOptions().colors[0],
+					        i;
+
+					    for (i = 0; i < 10; i += 1) {
+					        // Start out with a darkened base color (negative brighten), and end
+					        // up with a much brighter color
+					        colors.push(Highcharts.Color(base).brighten((i - 3) / 9).get());
+					    }
+					    return colors;
+					}());
+
 	                var response = JSON.parse(response);
 
 	                if(response['erreurs'] != 'undefined'){
@@ -76,7 +90,7 @@ application.factory('applicationService', ['$q', '$http', function($q, $http){
 	                    brightness,
 	                    colors = Highcharts.getOptions().colors;
 
-	                
+
 	                    
 	                // Build the data arrays
 	                for (i = 0; i < dataLen; ++i) {
@@ -85,8 +99,7 @@ application.factory('applicationService', ['$q', '$http', function($q, $http){
 	                    tasksData.push({
 	                        name: task[i],
 	                        y: data[i].y,
-	                        id: data[i].id,
-	                        color: colors[i+5]
+	                        id: data[i].id
 	                    });
 
 	                    // add function data
@@ -98,8 +111,7 @@ application.factory('applicationService', ['$q', '$http', function($q, $http){
 	                            name: data[i].drilldown.fonction[j],
 	                            y: data[i].drilldown.data[j],
 	                            id: data[i].drilldown.id[j],
-	                            tacheId: data[i].drilldown.tacheID,
-	                            color: Highcharts.Color(colors[i+5]).brighten(brightness).get()
+	                            tacheId: data[i].drilldown.tacheID
 	                        });
 
 
@@ -113,8 +125,7 @@ application.factory('applicationService', ['$q', '$http', function($q, $http){
 	                                name: data[i].drilldown.drillparameter[j].parameter[k],
 	                                y: data[i].drilldown.drillparameter[j].data[k],
 	                                id: data[i].drilldown.drillparameter[j].id[k],
-	                                fonctionId: data[i].drilldown.drillparameter[j].fonctionID,
-	                                color: Highcharts.Color(colors[i+5]).brighten(brightness).get()
+	                                fonctionId: data[i].drilldown.drillparameter[j].fonctionID
 	                            });
 	                        }
 	                    }
@@ -138,7 +149,13 @@ application.factory('applicationService', ['$q', '$http', function($q, $http){
 	                    plotOptions: {
 	                        pie: {
 	                            shadow: false,
-	                            center: ['50%', '50%']
+	                            center: ['50%', '50%'],
+	                            dataLabels: {
+					                enabled: true,
+					                style: {
+					                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+					                }
+					            }
 	                        },
 	                        series: {
 	                            cursor: 'pointer'
@@ -158,8 +175,9 @@ application.factory('applicationService', ['$q', '$http', function($q, $http){
 	                        size: '100%',
 	                        innerSize: '5%',
 	                        dataLabels: {
+	                        	enabled: true,
 	                            formatter: function () {
-	                                return this.point.name;
+	                                return 'Task';
 	                            },
 	                            color: 'white',
 	                            distance: -140
@@ -255,7 +273,9 @@ application.factory('applicationService', ['$q', '$http', function($q, $http){
 	                                // display only if larger than 1
 	                                return this.point.name;
 	                            },
-	                            distance: -60
+	                            color: 'white',
+	                            distance: -60,
+	                            y: 30
 	                        },
 	                        point:{
 	                            events:{
