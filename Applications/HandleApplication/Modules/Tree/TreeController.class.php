@@ -123,10 +123,30 @@ class TreeController extends \Library\BackController
 					// On récupère les versions de l'application
 					$versions = array();
 					foreach($application->getVersions() as $version){
+						$taches = array();
+						foreach($version->getTaches() as $tache){
+							$types = array();
+							foreach($tache->getTacheTypeDonneeUtilisateurs() as $type){
+								array_push($types, array(
+									'description' => $type->getDescription(),
+									'nom' => $type->getTypeDonneeUtilisateur()->getNomTypeDonneeUtilisateur(),
+									'unite' => $type->getUniteDonneeUtilisateur()->getNomUniteDonneeUtilisateur()
+									));
+							}
+							
+							array_push($taches, array(
+								'id' => $tache->getIdTache(),
+								'nom' => $tache->getNomTache(),
+								'description' => $tache->getDescriptionTache(),
+								'types' => $types
+								));
+						}
+
 						array_push($versions, array(
 							'id' => $version->getIdVersion(),
 							'numero' => $version->getNumVersion(),
-							'note' => $version->getNoteMajVersion()
+							'note' => $version->getNoteMajVersion(),
+							'taches' => $taches
 							));
 					}
 					$this->page->addVar('versions', $versions);

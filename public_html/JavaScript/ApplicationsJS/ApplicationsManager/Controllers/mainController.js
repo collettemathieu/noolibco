@@ -30,7 +30,9 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 			$scope.idVersion = $scope.application.versions[$scope.application.versions.length-1].id;
 			$scope.numVersion = $scope.application.versions[$scope.application.versions.length-1].numero;
 			$scope.noteVersion = $scope.application.versions[$scope.application.versions.length-1].note;
-			applicationService.createTree($scope.idVersion, $scope.application.id);
+			applicationService.getTree($scope.idVersion, $scope.application.id).then(function(newValue){
+				$scope.tree = newValue;
+			});
 		}
 	}, function(error){
 		var response = {

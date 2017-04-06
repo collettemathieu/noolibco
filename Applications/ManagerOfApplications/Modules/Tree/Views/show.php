@@ -58,7 +58,7 @@
 
 						  </ul>
 						</div>
-						<div id="containerTreeApplication" class="containerTreeApplication"></div>
+						<div tree-application></div>
 					</div>
 				</div>
 			</div>

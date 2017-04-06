@@ -1,0 +1,78 @@
+// +----------------------------------------------------------------------+
+// | AngularJS Version 1.5.9						                      |
+// +----------------------------------------------------------------------+
+// | Copyright (c) 2017 NooLib			         				          |
+// +----------------------------------------------------------------------+
+// | Controleur pour la fenêtre modale New Task							  |
+// +----------------------------------------------------------------------+
+// | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>    			  |
+// +----------------------------------------------------------------------+
+
+/**
+ * @name:  newTaskController
+ * @access: public
+ * @version: 1
+ */
+
+application.controller('taskController', ['$scope', '$uibModalInstance', '$http', 'typeData', 'idTache', function($scope, $uibModalInstance, $http, typeData, idTache){
+	
+	// Position par defaut du bouton envoyer
+	$scope.displayButtonForm = false;
+
+	// Pour fermer la fenêtre modale
+	$scope.close = function(){
+		 $uibModalInstance.dismiss('cancel');
+	};
+
+	// Pour initialiser le formulaire
+	$scope.application.versions.forEach(function(version){
+		version.taches.forEach(function(tache){
+			if(tache.id == idTache){
+				$scope.nomTache = tache.nom;
+				$scope.descriptionTache = tache.description;
+				$scope.typesTache = tache.types;
+			}
+		});
+	});
+	
+
+	$scope.dataTypes = typeData['dataTypes'];
+	$scope.dataUnits = typeData['dataUnits'];
+
+	// Pour soumettre le formulaire
+	$scope.formValidNewTask = function(){
+		if($scope.formNewTask.$valid){
+			$scope.displayButtonForm = true;
+
+			var form = document.getElementById('formNewTask'),
+    			formData = new FormData(form);
+
+			$http({
+                url: '/HandleApplication/ValidFormTache',
+                method: 'POST',
+                headers: {'Content-Type': undefined},
+                transformRequest: angular.identity,
+                data: formData
+            })
+			.success(function(response){
+				
+				displayInformationsClient(response);
+				// Position par defaut du bouton envoyer
+				$scope.displayButtonForm = false;
+				// Fermer la fenêtre modale
+				$uibModalInstance.dismiss('cancel');
+			})
+			.error(function(error){
+				var response = {
+					'erreurs': '<p>A system error has occurred: '+error+'</p>'
+				};
+				displayInformationsClient(response);
+				// Position par defaut du bouton envoyer
+				$scope.displayButtonForm = false;
+				// Fermer la fenêtre modale
+				$uibModalInstance.dismiss('cancel');
+			});
+		}
+	}
+}]);
+

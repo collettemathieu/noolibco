@@ -27,7 +27,9 @@ application.directive('selectVersion', ['applicationService', function(applicati
 				scope.numVersion = version.numero;
 				scope.idVersion = version.id;
 				scope.noteVersion = version.note;
-				applicationService.createTree(scope.idVersion, scope.application.id);
+				applicationService.getTree(scope.idVersion, scope.application.id).then(function(response){
+					scope.tree = response;
+				});
 			};
 		}
 	};
