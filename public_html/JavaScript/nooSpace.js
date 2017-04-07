@@ -1,8 +1,6 @@
 $(function(){
 	if($('#noospace').length !=0){
 
-		
-
 
 		// On contrôle s'il y a une application déjà présente, dans ce cas on la déploie
 		if($('#noospace .runIt').length !=0){

@@ -1,9 +1,9 @@
 		
 		<div ng-app="NooSpace"  ng-controller="mainController"  ng-keydown="changeScreen($event)" style="height:100%;"> <!-- tabindex="0" to detect focus-->
 
-		<div class="container-fluid">
+		<div class="container-fluid" hello>
 			<div class="row-fluid">
-				<div id="noospace" class="col-sm-11 text-center centering noospace fadeIn">
+				<div id="noospace" droppable class="col-sm-11 text-center centering noospace fadeIn" data-drop="true">
 				<?php if(isset($applicationNooSpace) && isset($version)){
 				// On récupère la liste des tâches
 				$taches = $version->getTaches();
