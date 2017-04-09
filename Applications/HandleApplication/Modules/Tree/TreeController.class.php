@@ -121,16 +121,41 @@ class TreeController extends \Library\BackController
 					$this->page->addVar('contributeurs', $contributeurs);
 
 					// On récupère les versions de l'application
+
+					// On récupère la liste des types de parametre des tâches
+					// On appelle le manager des types de parametre
+					$managerTypeDonneeUtilisateur = $this->getManagers()->getManagerOf('TypeDonneeUtilisateur');
+					$typesDonneeUtilisateur = $managerTypeDonneeUtilisateur->getAllTypeDonneeUtilisateurs();
+					// On récupère la liste des unités de parametre
+					// On appelle le manager des unité de parametre
+					$managerUniteDonneeUtilisateur = $this->getManagers()->getManagerOf('UniteDonneeUtilisateur');
+					$uniteDonneeUtilisateurs = $managerUniteDonneeUtilisateur->getAllUniteDonneeUtilisateurs();
+
+
 					$versions = array();
 					foreach($application->getVersions() as $version){
 						$taches = array();
 						foreach($version->getTaches() as $tache){
 							$types = array();
 							foreach($tache->getTacheTypeDonneeUtilisateurs() as $type){
+								// On récupère la position ($key) du type de données pour Select AngularJS.
+								foreach ($typesDonneeUtilisateur as $key => $typeData) {
+									if($type->getTypeDonneeUtilisateur()->getNomTypeDonneeUtilisateur() === $typeData->getNomTypeDonneeUtilisateur()){
+										$idType = $key;break;
+									}
+								}
+
+								// On récupère la position ($key) de l'unité de données pour Select AngularJS.
+								foreach ($uniteDonneeUtilisateurs as $key => $uniteData) {
+									if($type->getUniteDonneeUtilisateur()->getNomUniteDonneeUtilisateur() === $uniteData->getNomUniteDonneeUtilisateur()){
+										$idUnite = $key;break;
+									}
+								}
+								
 								array_push($types, array(
 									'description' => $type->getDescription(),
-									'nom' => $type->getTypeDonneeUtilisateur()->getNomTypeDonneeUtilisateur(),
-									'unite' => $type->getUniteDonneeUtilisateur()->getNomUniteDonneeUtilisateur()
+									'idType'=> $idType,
+									'idUnite' => $idUnite
 									));
 							}
 							

@@ -32,23 +32,23 @@
 						<label class="label label-lg label-primary">Enter data required for running the task</label>
 						<div ng-repeat="type in typesTache">
 							<div class="jumbotron">
-								<div class="form-group has-feedback" ng-class="{'has-error':formNewTask.description.$index.$invalid && formNewTask.description.$index.$dirty, 'has-success':formNewTask.description.$index.$valid}">
+								<div class="form-group has-feedback" ng-class="{'has-error':formNewTask.description{{$index}}.$invalid && formNewTask.description{{$index}}.$dirty, 'has-success':formNewTask.description{{$index}}.$valid}">
 									<div class="input-group">
 										<div class="input-group-addon">Description</div>
-										<input name="description.$index" required ng-model="description.$index" type="text" class="form-control" ng-maxlength="40" ng-minlength="1" maxlength="40" placeholder="Enter a short description of the data." ng-init="description.$index=type.description"/>
+										<input name="description{{$index}}" required ng-model="description[$index]" type="text" class="form-control" ng-maxlength="40" ng-minlength="1" maxlength="40" placeholder="Enter a short description of the data." ng-init="description[$index]=type.description"/>
 									</div>
-									<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formNewTask.description.$index.$invalid && formNewTask.description.$index.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formNewTask.description.$index.$valid}"></span>
-									<span ng-show="formNewTask.description.$index.$invalid && formNewTask.description.$index.$dirty" class="help-block">Enter a description between 1 and 40 characters.</span>
+									<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formNewTask.description{{$index}}.$invalid && formNewTask.description{{$index}}.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formNewTask.description{{$index}}.$valid}"></span>
+									<span ng-show="formNewTask.description{{$index}}.$invalid && formNewTask.description{{$index}}.$dirty" class="help-block">Enter a description between 1 and 40 characters.</span>
 								</div>
 								<div class="input-group">
 									<div class="input-group-addon">Type</div>
-									<select required name="typeDonneeUtilisateur0" ng-model="typeDonneeUtilisateur0" class="form-control input-sm" ng-options="type.name for type in dataTypes track by type.name" ng-init="typeDonneeUtilisateur0=type.nom">
+									<select required name="typeDonneeUtilisateur0" ng-model="typeDonneeUtilisateur0" class="form-control input-sm" ng-options="type.name for type in dataTypes track by type.name" ng-init="typeDonneeUtilisateur0=dataTypes[type.idType]">
 									<option value="">- Please Choose -</option>
 									</select>
 								</div>
 								<div class="input-group">
 									<div class="input-group-addon">Unit</div>
-									<select required name="uniteDonneeUtilisateur0" ng-model="uniteDonneeUtilisateur0" class="form-control input-sm" ng-options="type.name for type in dataUnits track by type.name" ng-init="uniteDonneeUtilisateur0=type.unite">
+									<select required name="uniteDonneeUtilisateur0" ng-model="uniteDonneeUtilisateur0" class="form-control input-sm" ng-options="type.name for type in dataUnits track by type.name" ng-init="uniteDonneeUtilisateur0=dataUnits[type.idUnite]">
 									<option value="">- Please Choose -</option>
 									</select>
 								</div>
@@ -61,6 +61,15 @@
 					<input type="hidden" name="idVersion" value="{{idVersion}}"/>
 					<button ng-disabled="formNewTask.$invalid" class="btn btn-primary" type="submit">
 						<div ng-hide="displayButtonForm">Send</div>
+						<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
+					</button>
+				</form>
+				<br>
+				<form id="formDeleteTask" name="formDeleteTask" ng-submit="formValidDeleteTask()">
+					<input type="hidden" name="idApp" value="{{application.id}}"/>
+					<input type="hidden" name="idVersion" value="{{idVersion}}"/>
+					<button ng-disabled="formDeleteTask.$invalid" class="pull-right btn btn-danger" type="submit">
+						<div ng-hide="displayButtonForm">Delete the task</div>
 						<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
 					</button>
 				</form>

@@ -34,6 +34,12 @@ application.controller('taskController', ['$scope', '$uibModalInstance', '$http'
 			}
 		});
 	});
+	// Initialiser les numéro des types de données
+	var description = [];
+	for (var i = 0; i < $scope.typesTache.length; ++i) {
+		description.push('description'+i);
+	}
+	$scope.description = description;
 	
 
 	$scope.dataTypes = typeData['dataTypes'];
