@@ -6,7 +6,7 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="col-lg-10 centering">
-				<form id="formNewTask" name="formNewTask" ng-submit="formValidNewTask()">
+				<form name="formNewTask" ng-submit="formValidNewTask($event)">
 
 					<div class="form-group has-feedback" ng-class="{'has-error':formNewTask.nomTache.$invalid && formNewTask.nomTache.$dirty, 'has-success':formNewTask.nomTache.$valid}">
 						<div class="input-group">

@@ -25,12 +25,12 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		if(response['erreurs']){
 			displayInformationsClient(response);
 		}else{
-			$scope.application = response;
 			// Initialisation des variables
-			$scope.idVersion = $scope.application.versions[$scope.application.versions.length-1].id;
-			$scope.numVersion = $scope.application.versions[$scope.application.versions.length-1].numero;
-			$scope.noteVersion = $scope.application.versions[$scope.application.versions.length-1].note;
-			applicationService.getTree($scope.idVersion, $scope.application.id).then(function(newValue){
+			$scope.application = response;
+			$scope.idVersion = response.versions[response.versions.length-1].id;
+			$scope.numVersion = response.versions[response.versions.length-1].numero;
+			$scope.noteVersion = response.versions[response.versions.length-1].note;
+			applicationService.getTree($scope.idVersion, response.id).then(function(newValue){
 				$scope.tree = newValue;
 			});
 		}
@@ -94,11 +94,24 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	      ]}
 	    });
 
-		// On met à jour l'arbre de l'application lorsque la fenêtre se ferme
+		// On met à jour l'arbre de l'application et l'application lorsque la fenêtre se ferme
 	    modal.result.then(function(e){
 	    }, function(){
-			applicationService.getTree($scope.idVersion, $scope.application.id).then(function(newValue){
-				$scope.tree = newValue;
+			applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
+				if(response['erreurs']){
+					displayInformationsClient(response);
+				}else{
+					// Initialisation des variables
+					$scope.application = response;
+					applicationService.getTree($scope.idVersion, $scope.application.id).then(function(newValue){
+						$scope.tree = newValue;
+					});
+				}
+			}, function(error){
+				var response = {
+					'erreurs': '<p>A system error has occurred: '+error+'</p>'
+				};
+				displayInformationsClient(response);
 			});
 	    });
 	}

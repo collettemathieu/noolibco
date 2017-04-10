@@ -19,7 +19,6 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 		restrict: 'A',
 		scope: false,
 		replace: true,
-		priority: 5000,
 		link: function(scope, element, attrs){
 			scope.$watch('tree', function(response){
 				if(typeof response != 'undefined'){
@@ -178,11 +177,24 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 											}
 									    });
 
-									    // On met à jour l'arbre de l'application lorsque la fenêtre se ferme
+									    // On met à jour l'arbre de l'application et l'application lorsque la fenêtre se ferme
 									    modal.result.then(function(e){
 									    }, function(){
-											applicationService.getTree(scope.idVersion, scope.application.id).then(function(newValue){
-												scope.tree = newValue;
+											applicationService.getApplication(scope.application.id).then(function(response){ // <- c'est une promise
+												if(response['erreurs']){
+													displayInformationsClient(response);
+												}else{
+													// Initialisation des variables
+													scope.application = response;
+													applicationService.getTree(scope.idVersion, scope.application.id).then(function(newValue){
+														scope.tree = newValue;
+													});
+												}
+											}, function(error){
+												var response = {
+													'erreurs': '<p>A system error has occurred: '+error+'</p>'
+												};
+												displayInformationsClient(response);
 											});
 									    });
 		                            }

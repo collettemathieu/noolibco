@@ -47,22 +47,20 @@ application.controller('taskController', ['$scope', '$uibModalInstance', '$http'
 	
 
 	// Pour mettre à jour la tâche
-	$scope.formValidNewTask = function(){
-		if($scope.formNewTask.$valid){
+	$scope.formValidTask = function(e){
+		if($scope.formTask.$valid){
 			$scope.displayButtonForm = true;
 
-			var form = document.getElementById('formNewTask'),
-    			formData = new FormData(form);
+			var formData = new FormData(e.target);
 
 			$http({
-                url: '/HandleApplication/ValidFormTache',
+                url: '/HandleApplication/ValidModifTache',
                 method: 'POST',
                 headers: {'Content-Type': undefined},
                 transformRequest: angular.identity,
                 data: formData
             })
 			.success(function(response){
-				
 				displayInformationsClient(response);
 				// Position par defaut du bouton envoyer
 				$scope.displayButtonForm = false;

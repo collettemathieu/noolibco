@@ -27,9 +27,6 @@ application.directive('removeData', function(){
                         $(this).attr('disabled', 'disabled');
                     }
                 }
-
-                // On supprime l'élément d'AngularJS
-               	console.log(scope.formNewTask);
 			});
 		}
 	};
