@@ -6,7 +6,7 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="col-lg-10 centering">
-				<form id="formNameApp" ng-submit="validFormLogo()" name="formNameApp">
+				<form ng-submit="validFormName($event)" name="formNameApp">
 					<div class="form-group has-feedback" ng-class="{'has-error':formNameApp.nomApp.$invalid && formNameApp.nomApp.$dirty, 'has-success':formNameApp.nomApp.$valid}">
 						<div class="input-group">
 							<div class="input-group-addon">Name</div>

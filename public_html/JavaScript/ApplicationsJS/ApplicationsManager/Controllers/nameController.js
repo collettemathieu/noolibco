@@ -28,12 +28,12 @@ application.controller('nameController', ['$scope', '$uibModalInstance', '$http'
 	$scope.infoInvalidNameApplication = invalidNameTooShort;
 
 	// Pour soumettre le formulaire
-	$scope.validFormLogo = function(){
+	$scope.validFormName = function(e){
 		if($scope.formNameApp.$valid){
 			$scope.displayButtonForm = true;
 
-			var form = document.querySelector('#formNameApp'),
-				formData = new FormData(form);
+			var formData = new FormData(e.target);
+			
 			$http({
 				method: 'POST',
 				url: '/HandleApplication/ChangeNameApplication',

@@ -157,8 +157,7 @@ class TreeController extends \Library\BackController
 									'idType'=> $idType,
 									'idUnite' => $idUnite
 									));
-							}
-							
+							}						
 							array_push($taches, array(
 								'id' => $tache->getIdTache(),
 								'nom' => $tache->getNomTache(),
@@ -166,7 +165,6 @@ class TreeController extends \Library\BackController
 								'types' => $types
 								));
 						}
-
 						array_push($versions, array(
 							'id' => $version->getIdVersion(),
 							'numero' => $version->getNumVersion(),

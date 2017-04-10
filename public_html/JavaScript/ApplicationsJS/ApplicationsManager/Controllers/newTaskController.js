@@ -29,12 +29,11 @@ application.controller('newTaskController', ['$scope', '$uibModalInstance', '$ht
 	$scope.dataUnits = typeData['dataUnits'];
 
 	// Pour soumettre le formulaire
-	$scope.formValidNewTask = function(){
+	$scope.formValidNewTask = function(e){
 		if($scope.formNewTask.$valid){
 			$scope.displayButtonForm = true;
 
-			var form = document.getElementById('formNewTask'),
-    			formData = new FormData(form);
+			var formData = new FormData(e.target);
 
 			$http({
                 url: '/HandleApplication/ValidFormTache',

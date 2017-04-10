@@ -25,12 +25,12 @@ application.controller('versionController', ['$scope', '$uibModalInstance', '$ht
 	};
 
 	// Pour créer une nouvelle version de l'application
-	$scope.validFormVersion = function(){
+	$scope.validFormVersion = function(e){
 		if($scope.formNewVersion.$valid){
 			$scope.displayButtonForm = true;
 
-			var form = document.querySelector('#formCreateNewVersion'),
-				formData = new FormData(form);
+			var formData = new FormData(e.target);
+			
 			$http({
 				method: 'POST',
 				url: '/HandleApplication/CreateNewVersionApplication',

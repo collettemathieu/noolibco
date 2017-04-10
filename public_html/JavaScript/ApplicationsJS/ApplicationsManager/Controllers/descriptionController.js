@@ -31,26 +31,19 @@ application.controller('descriptionController', ['$scope', '$uibModalInstance', 
 	$scope.tableOfCategories = tableOfCategories;
 
 	// Pour soumettre le formulaire
-	$scope.validFormDescription = function(){
+	$scope.validFormDescription = function(e){
 		if($scope.formDescriptionApp.$valid){
 			$scope.displayButtonForm = true;
 
+			var formData = new FormData(e.target);
+			formData.append('idApp', $scope.application.id);
+			
 			$http({
 				method: 'POST',
 				url: '/HandleApplication/ChangeDescriptionApplication',
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: function(obj) {
-			        var str = [];
-			        for(var p in obj)
-			        	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-			        return str.join("&");
-			    },
-				data: {
-					idApp: $scope.idApp,
-					motsClesApp: $scope.motsClesApp,
-					descriptionApp: $scope.descriptionApp,
-					categorieApp: $scope.selectedCategory.nameCategory
-				}
+				headers: {'Content-Type': undefined},
+                transformRequest: angular.identity,
+                data: formData
 			})
 			.success(function(response){
 				if(response['description'] && response['motCles'] && response['categorie']){

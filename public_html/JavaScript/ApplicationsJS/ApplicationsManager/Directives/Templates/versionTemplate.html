@@ -6,7 +6,7 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="col-lg-10 centering">
-				<form id="formCreateNewVersion" name="formNewVersion" ng-submit="validFormVersion()">
+				<form name="formNewVersion" ng-submit="validFormVersion($event)">
 					<div class="form-group has-feedback" ng-class="{'has-error':formNewVersion.nameVersionApplication.$invalid && formNewVersion.nameVersionApplication.$dirty, 'has-success':formNewVersion.nameVersionApplication.$valid}">
 						<div class="input-group">
 							<div class="input-group-addon">Version number</div>

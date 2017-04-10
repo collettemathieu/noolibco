@@ -57,22 +57,25 @@
 						<button class="btn btn-default btn-sm pull-right" disabled remove-data>Delete the last data</button>
 						<button class="btn btn-default btn-sm pull-right" add-data>Add a new data</button>
 					</div>
+					<input type="hidden" name="idTache" value="{{idTache}}"/>
 					<input type="hidden" name="idApp" value="{{application.id}}"/>
 					<input type="hidden" name="idVersion" value="{{idVersion}}"/>
 					<button ng-disabled="formNewTask.$invalid" class="btn btn-primary" type="submit">
-						<div ng-hide="displayButtonForm">Send</div>
+						<div ng-hide="displayButtonForm">Update</div>
 						<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
 					</button>
-				</form>
-				<br>
-				<form id="formDeleteTask" name="formDeleteTask" ng-submit="formValidDeleteTask()">
-					<input type="hidden" name="idApp" value="{{application.id}}"/>
-					<input type="hidden" name="idVersion" value="{{idVersion}}"/>
-					<button ng-disabled="formDeleteTask.$invalid" class="pull-right btn btn-danger" type="submit">
-						<div ng-hide="displayButtonForm">Delete the task</div>
-						<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
-					</button>
-				</form>
+				</form><br>
+				<div class="modal-footer">
+					<form name="formDeleteTask" ng-submit="formValidDeleteTask($event)">
+						<input type="hidden" name="idTache" value="{{idTache}}"/>
+						<input type="hidden" name="idApp" value="{{application.id}}"/>
+						<input type="hidden" name="idVersion" value="{{idVersion}}"/>
+						<button class="btn btn-danger" type="submit">
+							<div ng-hide="displayButtonDelete">Delete the task</div>
+							<div ng-show="displayButtonDelete"><span class="glyphicon glyphicon-refresh spinning" ></span> Deleting...</div>
+						</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

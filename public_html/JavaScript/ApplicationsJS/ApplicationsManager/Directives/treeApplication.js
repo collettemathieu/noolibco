@@ -14,7 +14,7 @@
  * @version: 1
  */
 
-application.directive('treeApplication', ['$uibModal', function($uibModal){
+application.directive('treeApplication', ['$uibModal', 'applicationService', function($uibModal, applicationService){
 	return{
 		restrict: 'A',
 		scope: false,
@@ -145,115 +145,46 @@ application.directive('treeApplication', ['$uibModal', function($uibModal){
 		                        events:{
 		                            click: function (event) {
 		                            	var idTache = this.id;
-		                            	$uibModal.open({
-									      animation: true,
-									      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/taskTemplate.html',
-									      controller: 'taskController',
-									      scope: scope,
-									      size: 'lg',
-									      resolve: {
-									        // On récupère les types des données pour le select
-											typeData: ['$http', '$q', function($http, $q){
-												
-												var deferred = $q.defer(); // -> promise
-												$http({
-													method: 'POST',
-													url: '/HandleApplication/GetTypeData'
-												})
-												.success(function(response){
-													deferred.resolve(response);
-												})
-												.error(function(error){
-													var response = {
-														'erreurs': '<p>A system error has occurred: '+error+'</p>'
-													};
-													displayInformationsClient(response);
-												});
+		                            	var modal = $uibModal.open({
+											animation: true,
+											templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/taskTemplate.html',
+											controller: 'taskController',
+											scope: scope,
+											size: 'lg',
+											resolve: {
+												// On récupère les types des données pour le select
+												typeData: ['$http', '$q', function($http, $q){
 
-												return deferred.promise;
-												},
-									      	],
-									      	idTache: function(){
-									      		return idTache;
-									      	}
-									  	}
+													var deferred = $q.defer(); // -> promise
+													$http({
+														method: 'POST',
+														url: '/HandleApplication/GetTypeData'
+													})
+													.success(function(response){
+														deferred.resolve(response);
+													})
+													.error(function(error){
+														var response = {
+															'erreurs': '<p>A system error has occurred: '+error+'</p>'
+														};
+														displayInformationsClient(response);
+													});
+
+													return deferred.promise;
+												}],
+												idTache: function(){
+													return idTache;
+												}
+											}
 									    });
 
-		                            	/*
-		                                // Envoi de la requête HTTP en mode asynchrone
-		                                $.ajax({
-		                                    url: '/HandleApplication/ModifTache',
-		                                    type: 'POST',
-		                                    data:{
-		                                        idVersion:parseInt(idVersion),
-		                                        idApp:parseInt(idApplication),
-		                                        idTache:this.id
-		                                    },
-		                                    async: true,
-		                                    cache: true,
-		                                    success: function(response) {
-
-		                                        $('#contenuForm').html(response);
-		                                        $('#formulaireApplication').modal();
-		                                        manageTypeDonneeUtilisateur();
-		                                        initTypeDonneeUtilisateur();
-		                                        
-		                                        // Pour modifier la tâche
-		                                        $('#formulaireApplication form:first').on('submit', function(e){
-		                                        
-		                                            e.preventDefault();
-		                                            var formData = new FormData(e.target);
-		                                            $(this).find('button').button('loading');
-		                                            validerFormulaireApplicationByAjax(formData, '/HandleApplication/ValidModifTache');
-		                                        });
-
-		                                        // Pour supprimer la tâche
-		                                        $('#formulaireApplication form:last').on('submit', function(e){
-		                                            e.preventDefault();
-		                                            var formData = new FormData(e.target),
-		                                                btn = $(this).find('button');
-		                                            btn.button('loading');
-		                                            formData.append('idApp', parseInt(idApplication));
-		                                            formData.append('idVersion', parseInt(idVersion));
-		                                            // Envoi de la requête HTTP en mode asynchrone
-		                                            $.ajax({
-		                                                url: '/HandleApplication/DeleteTache',
-		                                                type: 'POST',
-		                                                data: formData,
-		                                                async: true,
-		                                                cache: false,
-		                                                contentType: false,
-		                                                processData: false,
-		                                                success: function(response) {
-		                                                    btn.button('reset');
-		                                                    var response = JSON.parse(response);
-		                                                    
-		                                                    if(response['reussites']){
-		                                                        setTimeout(function(){
-		                                                                location.reload();
-		                                                        }, 1000);
-		                                                    }
-
-		                                                    displayInformationsClient(response);
-		                                                },
-		                                                error: function(){
-		                                                    btn.button('reset');
-		                                                    var response = {
-		                                                        'erreurs': '<p>A system error has occurred.</p>'
-		                                                    };
-		                                                    displayInformationsClient(response);
-		                                                }
-		                                            });
-		                                        });
-
-		                                    },
-		                                    error: function(){
-		                                        var response = {
-		                                            'erreurs': '<p>A system error has occurred.</p>'
-		                                        };
-		                                        displayInformationsClient(response);
-		                                    }
-		                                });*/
+									    // On met à jour l'arbre de l'application lorsque la fenêtre se ferme
+									    modal.result.then(function(e){
+									    }, function(){
+											applicationService.getTree(scope.idVersion, scope.application.id).then(function(newValue){
+												scope.tree = newValue;
+											});
+									    });
 		                            }
 		                        }
 		                    } 

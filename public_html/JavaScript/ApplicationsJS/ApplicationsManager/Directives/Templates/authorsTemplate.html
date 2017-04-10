@@ -12,7 +12,7 @@
 			</div>
 			<div class="col-lg-8 centering">
 				<legend>Add a new contributor</legend>
-				<form ng-submit="validFormContributor()" name="formAddContributor">
+				<form ng-submit="validFormContributor($event)" name="formAddContributor">
 					<div class="form-group has-feedback" ng-class="{'has-error':formAddContributor.firstname.$invalid && formAddContributor.firstname.$dirty, 'has-success':formAddContributor.firstname.$valid}">
 						<div class="input-group">
 							<div class="input-group-addon">First Name</div>

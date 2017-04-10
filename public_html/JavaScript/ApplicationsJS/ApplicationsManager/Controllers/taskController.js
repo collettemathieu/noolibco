@@ -16,18 +16,22 @@
 
 application.controller('taskController', ['$scope', '$uibModalInstance', '$http', 'typeData', 'idTache', function($scope, $uibModalInstance, $http, typeData, idTache){
 	
-	// Position par defaut du bouton envoyer
+	// Position par defaut des boutons envoyer
 	$scope.displayButtonForm = false;
+	$scope.displayButtonDelete = false;
 
 	// Pour fermer la fenêtre modale
 	$scope.close = function(){
 		 $uibModalInstance.dismiss('cancel');
 	};
 
-	// Pour initialiser le formulaire
+	// Pour initialiser les variables du formulaire
+	$scope.dataTypes = typeData['dataTypes'];
+	$scope.dataUnits = typeData['dataUnits'];
 	$scope.application.versions.forEach(function(version){
 		version.taches.forEach(function(tache){
 			if(tache.id == idTache){
+				$scope.idTache = tache.id;
 				$scope.nomTache = tache.nom;
 				$scope.descriptionTache = tache.description;
 				$scope.typesTache = tache.types;
@@ -42,10 +46,7 @@ application.controller('taskController', ['$scope', '$uibModalInstance', '$http'
 	$scope.description = description;
 	
 
-	$scope.dataTypes = typeData['dataTypes'];
-	$scope.dataUnits = typeData['dataUnits'];
-
-	// Pour soumettre le formulaire
+	// Pour mettre à jour la tâche
 	$scope.formValidNewTask = function(){
 		if($scope.formNewTask.$valid){
 			$scope.displayButtonForm = true;
@@ -79,6 +80,39 @@ application.controller('taskController', ['$scope', '$uibModalInstance', '$http'
 				$uibModalInstance.dismiss('cancel');
 			});
 		}
+	}
+
+
+	// Pour supprimer la tâche
+	$scope.formValidDeleteTask = function(e){
+		$scope.displayButtonDelete = true;
+		var formData = new FormData(e.target);
+		
+		$http({
+            url: '/HandleApplication/DeleteTache',
+            method: 'POST',
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity,
+            data: formData
+        })
+		.success(function(response){
+			
+			displayInformationsClient(response);
+			// Position par defaut du bouton envoyer
+			$scope.displayButtonDelete = false;
+			// Fermer la fenêtre modale
+			$uibModalInstance.dismiss('cancel');
+		})
+		.error(function(error){
+			var response = {
+				'erreurs': '<p>A system error has occurred: '+error+'</p>'
+			};
+			displayInformationsClient(response);
+			// Position par defaut du bouton envoyer
+			$scope.displayButtonDelete = false;
+			// Fermer la fenêtre modale
+			$uibModalInstance.dismiss('cancel');
+		});
 	}
 }]);
 

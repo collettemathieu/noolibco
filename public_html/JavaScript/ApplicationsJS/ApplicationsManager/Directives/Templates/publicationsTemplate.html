@@ -44,7 +44,7 @@
 						<div ng-hide="application.publications.length > 0" class="alert alert-warning"><p>This application is not currently validated by scientific publications.</p></div>
 					</div>
 					<div class="tab-pane" id="automatic">
-						<form id="formDOI" ng-submit="validDOI()" name="formDOI" class=" col-lg-12 centering">
+						<form ng-submit="validDOI($event)" name="formDOI" class=" col-lg-12 centering">
 							<div class="form-group has-feedback" ng-class="{'has-error':formDOI.reqPublication.$invalid && formDOI.reqPublication.$dirty, 'has-success':formDOI.reqPublication.$valid}">
 								<div class="input-group">
 									<div class="input-group-addon">DOI</div>
@@ -60,7 +60,7 @@
 						</form>
 					</div>
 					<div class="tab-pane" id="manuel">
-						<form id="addPublicationForm" ng-submit="addPublication()" name="formAddPublication" class="col-lg-12 centering">
+						<form ng-submit="addPublication($event)" name="formAddPublication" class="col-lg-12 centering">
 							<div class="form-group has-feedback" ng-class="{'has-error':formAddPublication.selectedType.$invalid && formAddPublication.selectedType.$dirty, 'has-success':formAddPublication.selectedType.$valid}">
 								<select name="selectedType" required ng-options="type.nameType for type in types" ng-model="selectedType" class="form-control" select-design-directive></select>
 							</div>
