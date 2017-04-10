@@ -32,6 +32,7 @@ application.controller('newTaskController', ['$scope', '$uibModalInstance', '$ht
 	$scope.formValidNewTask = function(e){
 		if($scope.formNewTask.$valid){
 			$scope.displayButtonForm = true;
+			treeHasChanged = true;
 
 			var formData = new FormData(e.target);
 

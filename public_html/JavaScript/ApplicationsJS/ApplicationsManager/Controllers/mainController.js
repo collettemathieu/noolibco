@@ -19,7 +19,8 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	// Récupération des éléments de l'application
 	var applicationElement = document.querySelector('#application'),
 		idApplication = parseInt(applicationElement.getAttribute('idApplication'));
-	
+	treeHasChanged = false; // variable globale pour éviter de mettre à jour l'arbre inutilement
+
 	applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
 	
 		if(response['erreurs']){
@@ -53,13 +54,28 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		// On met à jour les variables lorsque la fenêtre se ferme
 	    modal.result.then(function(e){
 	    }, function(){
-	    	// Mise à jour des variables
-			$scope.idVersion = $scope.application.versions[$scope.application.versions.length-1].id;
-			$scope.numVersion = $scope.application.versions[$scope.application.versions.length-1].numero;
-			$scope.noteVersion = $scope.application.versions[$scope.application.versions.length-1].note;
-			applicationService.getTree($scope.idVersion, $scope.application.id).then(function(newValue){
-				$scope.tree = newValue;
-			});
+			if(treeHasChanged){
+	    		treeHasChanged = false;
+				applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
+					if(response['erreurs']){
+						displayInformationsClient(response);
+					}else{
+						// Initialisation des variables
+						$scope.application = response;
+						$scope.idVersion = $scope.application.versions[$scope.application.versions.length-1].id;
+						$scope.numVersion = $scope.application.versions[$scope.application.versions.length-1].numero;
+						$scope.noteVersion = $scope.application.versions[$scope.application.versions.length-1].note;
+						applicationService.getTree($scope.idVersion, $scope.application.id).then(function(newValue){
+							$scope.tree = newValue;
+						});
+					}
+				}, function(error){
+					var response = {
+						'erreurs': '<p>A system error has occurred: '+error+'</p>'
+					};
+					displayInformationsClient(response);
+				});
+			}
 	    });
 	}
 
@@ -97,22 +113,25 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		// On met à jour l'arbre de l'application et l'application lorsque la fenêtre se ferme
 	    modal.result.then(function(e){
 	    }, function(){
-			applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
-				if(response['erreurs']){
+	    	if(treeHasChanged){
+	    		treeHasChanged = false;
+				applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
+					if(response['erreurs']){
+						displayInformationsClient(response);
+					}else{
+						// Initialisation des variables
+						$scope.application = response;
+						applicationService.getTree($scope.idVersion, $scope.application.id).then(function(newValue){
+							$scope.tree = newValue;
+						});
+					}
+				}, function(error){
+					var response = {
+						'erreurs': '<p>A system error has occurred: '+error+'</p>'
+					};
 					displayInformationsClient(response);
-				}else{
-					// Initialisation des variables
-					$scope.application = response;
-					applicationService.getTree($scope.idVersion, $scope.application.id).then(function(newValue){
-						$scope.tree = newValue;
-					});
-				}
-			}, function(error){
-				var response = {
-					'erreurs': '<p>A system error has occurred: '+error+'</p>'
-				};
-				displayInformationsClient(response);
-			});
+				});
+			}
 	    });
 	}
 

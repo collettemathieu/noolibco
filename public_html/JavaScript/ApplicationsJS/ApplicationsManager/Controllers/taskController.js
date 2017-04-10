@@ -50,6 +50,7 @@ application.controller('taskController', ['$scope', '$uibModalInstance', '$http'
 	$scope.formValidTask = function(e){
 		if($scope.formTask.$valid){
 			$scope.displayButtonForm = true;
+			treeHasChanged = true;
 
 			var formData = new FormData(e.target);
 
@@ -84,6 +85,7 @@ application.controller('taskController', ['$scope', '$uibModalInstance', '$http'
 	// Pour supprimer la tâche
 	$scope.formValidDeleteTask = function(e){
 		$scope.displayButtonDelete = true;
+		treeHasChanged = true;
 		var formData = new FormData(e.target);
 		
 		$http({

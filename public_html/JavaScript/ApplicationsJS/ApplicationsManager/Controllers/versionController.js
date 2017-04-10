@@ -28,6 +28,7 @@ application.controller('versionController', ['$scope', '$uibModalInstance', '$ht
 	$scope.validFormVersion = function(e){
 		if($scope.formNewVersion.$valid){
 			$scope.displayButtonForm = true;
+			treeHasChanged = true;
 
 			var formData = new FormData(e.target);
 			
