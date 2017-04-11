@@ -24,7 +24,10 @@ application.config(['$locationProvider', '$httpProvider', '$compileProvider', fu
 	$compileProvider.debugInfoEnabled(false); // Désactivation des informations de debug afin de gagner en performance
 
 }]);
-application.directive('droppable',['applicationService','dataService',function(applicationService,dataService){
+
+
+
+/*application.directive('droppable',['applicationService','dataService',function(applicationService,dataService){
 	return{
 	restrict :'A',
 	link : function(scope,element,attrs){
@@ -473,7 +476,8 @@ application.factory('dataService', function(){
            }
 							}
 			});
-application.factory('muleService',['dataService', function(dataService){
+
+/*application.factory('muleService',['dataService', function(dataService){
 	return{
 		
            // Pour ajouter une nouvelle tâche ou la supprimer de la mule
@@ -912,9 +916,10 @@ application.factory('muleService',['dataService', function(dataService){
 					
 				}
 			});
-           }
+  }
 
 	}
-}]);
+}]);  
+*/ 
 
 
