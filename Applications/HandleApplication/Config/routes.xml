@@ -17,6 +17,7 @@
 
 
 	<route url="/HandleApplication/GetTypeData" module="Tree" action="getTypeData"/>
+	<route url="/HandleApplication/GetTextFunction" module="Tree" action="getTextFunction"/>
 	<route url="/HandleApplication/FormFonction" module="Tree" action="showFormFonction"/>
 	<route url="/HandleApplication/FormParametre" module="Tree" action="showFormParametre"/>
 	<route url="/HandleApplication/ValidFormTache" module="Tree" action="validFormTache"/>
@@ -28,7 +29,6 @@
 	<route url="/HandleApplication/Delete" module="Tree" action="delete"/>
 
 	<route url="/HandleApplication/ModifTache" module="Tree" action="modifTache"/>
-	<route url="/HandleApplication/ModifFonction" module="Tree" action="modifFonction"/>
 	<route url="/HandleApplication/ModifParametre" module="Tree" action="modifParametre"/>
 	
 	<route url="/HandleApplication/ValidModifTache" module="Tree" action="validModifTache"/>

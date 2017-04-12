@@ -31,7 +31,7 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 					    for (i = 0; i < 10; i += 1) {
 					        // Start out with a darkened base color (negative brighten), and end
 					        // up with a much brighter color
-					        colors.push(Highcharts.Color(base).brighten((i - 3) / 9).get());
+					        colors.push(Highcharts.Color(base).brighten((i-5) / 9).get());
 					    }
 					    return colors;
 					}());
@@ -221,72 +221,57 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 		                        events:{
 		                            click: function (event) {
 		                                if(this.id != -1){
-		                                    // Envoi de la requête HTTP en mode asynchrone
-		                                    $.ajax({
-		                                        url: '/HandleApplication/ModifFonction',
-		                                        type: 'POST',
-		                                        data:{
-		                                            idVersion:parseInt(scope.idVersion),
-		                                            idApp:parseInt(scope.idApplication),
-		                                            idFonction:this.id
-		                                        },
-		                                        async: true,
-		                                        cache: true,
-		                                        success: function(response) {
-		                                            $('#contenuForm').html(response);
-		                                            $('#formulaireApplication').modal();
 
-		                                            // Pour modifier la fonction
-		                                            addFunctionToTask('/HandleApplication/ValidModifFonction');
+		                                	var idTache = this.tacheId,
+		                                		idFunction = this.id;
+			                            	var modal = $uibModal.open({
+												animation: true,
+												templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/functionTemplate.html',
+												controller: 'functionController',
+												scope: scope,
+												size: 'lg',
+												resolve: {
+													idTache: function(){
+														return idTache;
+													},
+													idFunction: function(){
+														return idFunction;
+													},
+													// On récupère les types des données pour le select
+													textFunction: ['$http', '$q', function($http, $q){
+														var deferred = $q.defer(); // -> promise
+														$http({
+															method: 'POST',
+															url: '/HandleApplication/GetTextFunction',
+															headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+															transformRequest: function(obj) {
+														        var str = [];
+														        for(var p in obj)
+														        	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+														        return str.join("&");
+														    },
+															data: {
+																idFunction: idFunction,
+																idApp: scope.application.id,
+																idVersion: scope.idVersion
+															}
+														})
+														.success(function(response){
+															deferred.resolve(response);
+														})
+														.error(function(error){
+															var response = {
+																'erreurs': '<p>A system error has occurred: '+error+'</p>'
+															};
+															displayInformationsClient(response);
+														});
 
-		                                            // Pour supprimer la fonction
-		                                            $('#formulaireApplication form:last').on('submit', function(e){
-		                                                e.preventDefault();
-		                                                var formData = new FormData(e.target),
-		                                                    btn = $(this).find('button');
-		                                                btn.button('loading');
-		                                                formData.append('idApp', parseInt(idApplication));
-		                                                formData.append('idVersion', parseInt(idVersion));
-		                                                // Envoi de la requête HTTP en mode asynchrone
-		                                                $.ajax({
-		                                                    url: '/HandleApplication/DeleteFonction',
-		                                                    type: 'POST',
-		                                                    data: formData,
-		                                                    cache: false,
-		                                                    contentType: false,
-		                                                    processData: false,
-		                                                    success: function(response) {
-		                                                        btn.button('reset');
-		                                                        var response = JSON.parse(response);
-		                                                        
-		                                                        if(response['reussites']){
-		                                                            setTimeout(function(){
-		                                                                    location.reload();
-		                                                            }, 1000);
-		                                                        }
-
-		                                                        displayInformationsClient(response);
-		                                                    },
-		                                                    error: function(){
-		                                                        btn.button('reset');
-		                                                        var response = {
-		                                                            'erreurs': '<p>A system error has occurred.</p>'
-		                                                        };
-		                                                        displayInformationsClient(response);
-		                                                    }
-		                                                });
-		                                            });
-		                                                
-		                                        },
-		                                        error: function(){
-		                                            var response = {
-		                                                'erreurs': '<p>A system error has occurred.</p>'
-		                                            };
-		                                            displayInformationsClient(response);
-		                                        }
-		                                    });
+														return deferred.promise;
+													}
+											      ]
+												}
+										    });
 		                                }else{
-
 		                                	var idTache = this.tacheId;
 			                            	var modal = $uibModal.open({
 												animation: true,
@@ -300,32 +285,6 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 													}
 												}
 										    });
-		                                   /*
-		                                    // Envoi de la requête HTTP en mode asynchrone
-		                                    $.ajax({
-		                                        url: '/HandleApplication/FormFonction',
-		                                        type: 'POST',
-		                                        data:{
-		                                            idVersion:parseInt(scope.idVersion),
-		                                            idApp:parseInt(scope.idApplication),
-		                                            idTache:this.tacheId
-		                                        },
-		                                        async: true,
-		                                        cache: true,
-		                                        success: function(response) {
-		                                            $('#contenuForm').html(response);
-		                                            $('#formulaireApplication').modal();
-
-		                                            addFunctionToTask('/HandleApplication/ValidFormFonction');
-		                                        },
-		                                        error: function(){
-		                                            var response = {
-		                                                'erreurs': '<p>A system error has occurred.</p>'
-		                                            };
-		                                            displayInformationsClient(response);
-		                                        }
-		                                    });
-		                                    */
 		                                }
 
 		                                // On met à jour l'arbre de l'application et l'application lorsque la fenêtre se ferme

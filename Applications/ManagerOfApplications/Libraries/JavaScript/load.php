@@ -29,6 +29,7 @@
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/newTaskController.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/taskController.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/newFunctionController.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/functionController.js"></script>
 
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Directives/selectVersion.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Directives/treeApplication.js"></script>

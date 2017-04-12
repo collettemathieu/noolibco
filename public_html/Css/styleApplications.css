@@ -50,3 +50,9 @@ table {
 a{
 	cursor: pointer;
 }
+
+.textFormat{
+	display: block;
+	padding: 20px;
+	font-size: 1.5em;
+}

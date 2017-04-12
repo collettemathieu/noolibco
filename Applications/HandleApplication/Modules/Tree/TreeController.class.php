@@ -1356,7 +1356,7 @@ class TreeController extends \Library\BackController
 				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
 					
 					// On vérifie que la tâche appartient bien à l'application et à la bonne version
-					$idTache = $request->getPostData('idTache');
+					$idTache = (int) $request->getPostData('idTache');
 					// On récupère la version de l'application demandée 
 					$idVersion = (int) $request->getPostData('idVersion');
 					if($idVersion != 0){
@@ -2369,7 +2369,7 @@ class TreeController extends \Library\BackController
 				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
 					
 					// On vérifie que la fonction appartient bien à l'application et à la bonne version
-					$idFonction = $request->getPostData('idFonction');
+					$idFonction = (int) $request->getPostData('idFunction');
 					// On récupère la version de l'application demandée 
 					$idVersion = (int) $request->getPostData('idVersion');
 					if($idVersion != 0){
@@ -2413,7 +2413,7 @@ class TreeController extends \Library\BackController
 										foreach($tache->getFonctions() as $fonctionAModifier){
 											if($fonctionAModifier->getIdFonction() != $fonction->getIdFonction()){
 												$fonctionAModifier->hydrate(array(
-													'nomFonction' => 'Fonction '.$k
+													'nomFonction' => 'Function '.$k
 													));
 												// On sauve dans la BDD la fonction.
 												$managerFonction->saveFonction($fonctionAModifier);
@@ -2812,9 +2812,9 @@ class TreeController extends \Library\BackController
 
 
 	/**
-	* Méthode pour modifier une fonction d'une tâche
+	* Méthode pour récupérer le texte (programme) d'une fonction
 	*/
-	public function executeModifFonction($request)
+	public function executeGetTextFunction($request)
 	{
 		
 		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
@@ -2825,7 +2825,7 @@ class TreeController extends \Library\BackController
 			// On informe que c'est un chargement Ajax
 			$user->setAjax(true);
 
-			if($request->getPostData('idFonction')){
+			if($request->getPostData('idFunction')){
 				
 				// On récupère l'utilisateur de session
 				$userSession = unserialize($user->getAttribute('userSession'));
@@ -2858,7 +2858,7 @@ class TreeController extends \Library\BackController
 					if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
 			
 						// On vérifie que la fonction appartient bien à l'application et à la bonne version
-						$idFonction = $request->getPostData('idFonction');
+						$idFonction = (int) $request->getPostData('idFunction');
 						// On récupère la version de l'application demandée 
 						$idVersion = (int) $request->getPostData('idVersion');
 						if($idVersion != 0){
@@ -2896,8 +2896,6 @@ class TreeController extends \Library\BackController
 									}
 
 									$this->page->addVar('texteSource', $texte);
-									$this->page->addVar('fonctionAModifier', $fonctionAModifier);
-									$this->page->addVar('app', $application);
 								}else{
 									// On ajoute la variable d'erreurs
 									$user->getMessageClient()->addErreur(self::DENY_HANDLE_FUNCTION);
@@ -3295,7 +3293,7 @@ class TreeController extends \Library\BackController
 
 				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
 					// On vérifie que la fonction appartient bien à l'application et à la bonne version
-					$idFonction = $request->getPostData('id');
+					$idFonction = (int) $request->getPostData('idFunction');
 					// On récupère la version de l'application demandée 
 					$idVersion = (int) $request->getPostData('idVersion');
 					if($idVersion != 0){

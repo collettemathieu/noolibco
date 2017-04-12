@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------+
 // | Copyright (c) 2017 NooLib			         				          |
 // +----------------------------------------------------------------------+
-// | Directive pour créer une dropZone d'upload							  |
+// | Directive pour créer une dropZone d'upload	des fichiers d'application|
 // +----------------------------------------------------------------------+
 // | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>    			  |
 // +----------------------------------------------------------------------+
@@ -18,15 +18,14 @@ application.directive('dropZone', function(){
 	return{
 		restrict: 'EA',
 		scope: false,
-		replace: true,
+		replace: false,
 		priority: 1,
 		templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/dropZoneTemplate.html',
-		link: function(scope, element, attrs){
-
+		link: function(scope, element, attrs){			
 			// Disabling autoDiscover, otherwise Dropzone will try to attach twice
 		    Dropzone.autoDiscover = false;
 		    var DROPZONE_OPTIONS = {
-		        url: '/HandleApplication/ValidFormFonction',
+		        url: scope.urlDropZone,
 		        paramName: 'urlFonction',  // The name that will be used to transfer the file
 		        maxFiles: 1,
 		        maxFilesize: 5,  // MB
@@ -87,6 +86,7 @@ application.directive('dropZone', function(){
 		            // Initialisation des variables du formulaire
 		            formData.append('idTache', scope.idTache);
 		            formData.append('idVersion', scope.idVersion);
+		            formData.append('idFunction', scope.idFunction);
 		            formData.append('idApp', scope.application.id);
 		            addClass(picker, 'uploading');
 
@@ -102,6 +102,9 @@ application.directive('dropZone', function(){
 		            
 		            // Récupération de la réponse
 					response = JSON.parse(response);
+
+					// On envoie l'évènement terminé
+					scope.$emit('uploadEnded', true);
 		                            
 		            if(response['reussites']){
 		                
