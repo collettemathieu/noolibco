@@ -19,7 +19,7 @@ application.directive('removeData', function(){
 		link: function(scope, element, attrs){
 			element.on('click', function(e){
 				e.preventDefault();
-                var divNode = $(this).parent().find('div[class="jumbotron"]'),
+                var divNode = $(this).parent().find('div[class="panel panel-primary"]'),
                 	name = $(divNode[divNode.length-1]).find('input').attr('name');
                 if(divNode.length > 1){
                     $(divNode[divNode.length-1]).remove();

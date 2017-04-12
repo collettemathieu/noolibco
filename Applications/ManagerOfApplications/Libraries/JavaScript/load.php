@@ -28,12 +28,14 @@
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/versionController.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/newTaskController.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/taskController.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Controllers/newFunctionController.js"></script>
 
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Directives/selectVersion.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Directives/treeApplication.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Directives/displayAllVersions.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Directives/addData.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Directives/removeData.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/ApplicationsManager/Directives/dropZone.js"></script>
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/logoApplicationValidator.js"></script>
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/nameApplicationValidator.js"></script>
 <script type="text/javascript" src="/JavaScript/SharedFolderApplication/Directives/selectDesignDirective.js"></script>

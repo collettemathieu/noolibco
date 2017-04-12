@@ -20,9 +20,10 @@ application.directive('addData', ['$compile', function($compile){
 			element.on('click', function(e){
 				e.preventDefault();
 				// Création du nouvel élément
-				var divNode = $(this).parent().find('div[class="jumbotron"]:last'),
-		            num_data = $(this).parent().find('div[class="jumbotron"]').length,
+				var divNode = $(this).parent().find('div[class="panel panel-primary"]:last'),
+		            num_data = $(this).parent().find('div[class="panel panel-primary"]').length,
 		            divClone = divNode.clone();
+		        divClone.find('h3').html('Data '+num_data);
 		        divClone.find('select:first').attr('name', 'typeDonneeUtilisateur'+num_data).val('');
 		        divClone.find('select:last').attr('name', 'uniteDonneeUtilisateur'+num_data).val('').removeAttr('disabled');
 		        divClone.find('select:first').attr('ng-model', 'typeDonneeUtilisateur'+num_data);

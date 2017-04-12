@@ -1766,7 +1766,7 @@ class TreeController extends \Library\BackController
 				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
 					
 					// On vérifie que la tâche appartient bien à l'application et à la bonne version
-					$idTache = $request->getPostData('id');
+					$idTache = (int) $request->getPostData('idTache');
 					// On récupère la version de l'application demandée
 					$idVersion = (int) $request->getPostData('idVersion');
 					if($idVersion != 0){
