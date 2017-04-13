@@ -22,6 +22,7 @@ function showData(parametres){
                 return $copy;},
 		drag: function(event, ui){
 			$(this).popover('hide');
+			$(event.target).addClass('draggableElemnt'); //Added by Naoures
 		}
 	});
 

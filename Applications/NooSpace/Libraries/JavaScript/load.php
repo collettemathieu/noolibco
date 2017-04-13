@@ -23,6 +23,11 @@
 <script type="text/javascript" src="/JavaScript/Frameworks/ui-bootstrap-tpls-1.2.5.min.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/applicationRun.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/Controllers/mainController.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/Directives/droppable.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/Directives/draggable.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/Services/applicationService.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/Services/dataService.js"></script>
+<script type="text/javascript" src="/JavaScript/ApplicationsJS/NooSpace/Services/muleService.js"></script>
 <!--*****************-->
 
 <!-- DICOM viewer - include the cornerstone library -->

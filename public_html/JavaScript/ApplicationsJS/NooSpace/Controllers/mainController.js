@@ -42,6 +42,18 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 			Fullscreen.cancel();
 		}
 	};
+	 $scope.dragOptions = {
+        start: function(e) {
+          console.log("STARTING");
+        },
+        drag: function(e) {
+          console.log("DRAGGING");
+        },
+        stop: function(e) {
+          console.log("STOPPING");
+        },
+        container: 'container'
+    }
 
 }]);
 

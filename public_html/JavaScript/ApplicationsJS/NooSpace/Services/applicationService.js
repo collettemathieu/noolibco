@@ -16,8 +16,8 @@
 application.factory('applicationService',['dataService','muleService', function(dataService,muleService){
 	return{
 		deployApplication: function(app, element, nouvellePositionElementX, nouvellePositionElementY){
-			if(app.hasClass('runIt')){
-      			app.removeClass('runIt');
+			if(app.className == 'runIt'){
+      			app.classList.remove('runIt');
       		}
       		if(typeof nouvellePositionElementX == 'undefined' || typeof nouvellePositionElementY == 'undefined'){
       			var largeurNooSpace = parseInt($('#noospace').width()),
@@ -25,12 +25,18 @@ application.factory('applicationService',['dataService','muleService', function(
       			nouvellePositionElementX = parseInt(largeurNooSpace/2);
       			nouvellePositionElementY = parseInt(hauteurNooSpace/3);
       		}
-      		var cloneApplication = app.clone();
-      		cloneApplication.appendTo(element);
 
-      		cloneApplication.css('width','240px').css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX-93+'px'); // 93 pour contrer l'ajout de width:240px
+      		var cloneApplication = app.cloneNode(true); //var cloneApplication = app.clone();
+      		element.appendChild(cloneApplication);  //cloneApplication.appendTo(element);
 
-	      	cloneApplication.draggable({
+      		//cloneApplication.css('width','240px').css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX-93+'px'); // 93 pour contrer l'ajout de width:240px
+      		cloneApplication.setAttribute('ng-draggable','dragOptions');
+      		cloneApplication.style.position="absolute";
+      		cloneApplication.style.top=  nouvellePositionElementY+'px';
+      		cloneApplication.style.left=  nouvellePositionElementX-93+'px';
+
+	      	//************A modifier
+	      	$(cloneApplication).draggable({
 				revert: false,
 				containment: '#noospace',
 				start: function(){
@@ -39,23 +45,30 @@ application.factory('applicationService',['dataService','muleService', function(
 	      	});
 
 	      	// On réajuste la taille de l'image de l'application
-	      	cloneApplication.find('.imageApplication').animate({
+	      	console.log(cloneApplication.getElementsByClassName('imageApplication')[0]); // a voir
+	      	cloneApplication.getElementsByClassName('imageApplication')[0].animate([{
 	      		'width':64,
 	      		'height': 64
-	      	}, 1500);
+	      	}], 1500);
 
 	      	// On affiche les boîtes de dialogue supplémentaires autour de l'application
-	      	cloneApplication.children('hr').show().css('display', 'inline-block');
+	      	//cloneApplication.querySelector('hr').show().css('display', 'inline-block');
+	      	
+	      	var hrElements = cloneApplication.getElementsByTagName('hr');
+	      	for(var i=0; i< hrElements.length; i++)
+	      		hrElements[i].style.display ='inline-block';
 			setTimeout(function(){
-				cloneApplication.children('.dataBox').show('slice').css('display', 'inline-block');
+				cloneApplication.querySelector('.dataBox').style.display ='inline-block'; //.show('slice').css('display', 'inline-block');
+  				//$(cloneApplication).children('.dataBox').show('slice').css('display', 'inline-block');
   				setTimeout(function(){
-  					cloneApplication.children('.resultBox').show('slice').css('display', 'inline-block');
+  					cloneApplication.querySelector('.resultBox').style.display ='inline-block';//
+  					//$(cloneApplication).children('.resultBox').show('slice').css('display', 'inline-block');
   				}, 500);
   			}, 200);
   			
-  			
+  			//***************** A modifier plus tard *****************
 	      	// Pour receuillir les données dans la dataBox de l'application
-	      	cloneApplication.children('.dataBox').droppable({
+	      	$(cloneApplication).children('.dataBox').droppable({
 	      		drop: function(event, ui){
 	      			var positionSourisX = event.clientX,
 	      			largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
@@ -71,31 +84,31 @@ application.factory('applicationService',['dataService','muleService', function(
 	      		}
 	      	});
 
-	      	
+	      	//*************
 			// Menu contextuel de l'application
 			$.contextMenu.types.Tache = function(item, opt, root) {
 
-		        $(cloneApplication.children('.tachesApplication').html())
+		        $($(cloneApplication).children('.tachesApplication').html())
 		            .appendTo(this)
 		            .on('click', 'li', function() {
 		               	
 		            	try{
 			               	// On affiche le loader
-				      		cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
+				      		$(cloneApplication).children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
 				      		
 				      		// On ajoute les données et les paramètres pour le lancement de l'application
-				      		var form = paramForm = cloneApplication.find('.parametresApplication form').serializeArray(),
+				      		var form = paramForm = $(cloneApplication).find('.parametresApplication form').serializeArray(),
 				      			formData = new FormData();
 
-							formData.append('tache0data0', 'noolibData_'+cloneApplication.find('.donneeUser').attr('id'));
+							formData.append('tache0data0', 'noolibData_'+$(cloneApplication).find('.donneeUser').attr('id'));
 							formData.append('idApplication', cloneApplication.attr('id'));
-							formData.append('idVersion', cloneApplication.attr('idVersion'));
+							formData.append('idVersion',$(cloneApplication).attr('idVersion'));
 							formData.append('tache0', $(this).attr('id'));
 							// On ajoute le formulaire des paramètres au formulaire général
 							for (var i=0; i<paramForm.length; i++)
 							    formData.append(paramForm[i].name, paramForm[i].value);
 
-							muleService.runTheMule(formData, cloneApplication);
+							muleService.runTheMule(formData, $(cloneApplication));
 						}
 			      		catch(e){
 			      			var response = {
@@ -103,13 +116,13 @@ application.factory('applicationService',['dataService','muleService', function(
 							};
 							displayInformationsClient(response);
 							// On cache le loader
-							cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
+							$(cloneApplication).children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
 
 							// On cache les résultats précédents
-							cloneApplication.find('.resultBox img').hide(600);
+							$(cloneApplication).find('.resultBox img').hide(600);
 
 							// On efface le rapport précédent
-							cloneApplication.find('.applicationReports').html('');
+							 $(cloneApplication).find('.applicationReports').html('');
 			      		}
 		            });
 
@@ -119,8 +132,10 @@ application.factory('applicationService',['dataService','muleService', function(
 		    };
 
 
+
+
 		   	// Pour définir le menu contextuel de l'application
-		    cloneApplication.contextMenu({
+		   $(cloneApplication).contextMenu({
 		    	selector: '.imageApplication',
 		        callback: function(key, options) {
 		            if(key === 'delete'){
@@ -131,7 +146,7 @@ application.factory('applicationService',['dataService','muleService', function(
 		            	// On récupère la mule de l'application
 		            	// On ajoute l'id de l'application
 			      		var formData = new FormData();
-						formData.append('idApplication', cloneApplication.attr('id'));
+						formData.append('idApplication', $(cloneApplication).attr('id'));
 						
 			      		$.ajax({
 							url: '/HandleApplication/ShowMule',
@@ -217,15 +232,15 @@ application.factory('applicationService',['dataService','muleService', function(
 								      		// On récupère la mule de l'application
 							            	// On ajoute l'id de l'application
 								      		var form = document.querySelector('#formMule'),
-								      			paramForm = cloneApplication.find('.parametresApplication form').serializeArray(),
+								      			paramForm = $(cloneApplication).find('.parametresApplication form').serializeArray(),
 								      			formData = new FormData(form);
 								      		// On ajoute le formulaire des paramètres au formulaire général
 											for (var i=0; i<paramForm.length; i++)
 											    formData.append(paramForm[i].name, paramForm[i].value);
 
-											formData.append('idApplication', cloneApplication.attr('id'));
-											formData.append('idVersion', cloneApplication.attr('idVersion'));
-								      		muleService.runTheMule(formData, cloneApplication);
+											formData.append('idApplication', $(cloneApplication).attr('id'));
+											formData.append('idVersion', $(cloneApplication).attr('idVersion'));
+								      		muleService.runTheMule(formData, $(cloneApplication));
 
 								      	});
 									    
@@ -301,16 +316,21 @@ application.factory('applicationService',['dataService','muleService', function(
 		            	icon: "delete"
 		            }
 		        }
-		    });
+		    });/**************************/
 		},
 		verifApplication: function(){
 			if($('#noospace .runIt').length !=0){
-			var widthNoospace = parseInt($('#noospace').css('width'));
+			var widthNoospace = parseInt($('#noospace').css('width'))
+			alert("hello");
 			$('#noospace').css('width', widthNoospace-50+'px'); // Bidouille pour éviter un agrandissement de la noospace
 			
-			var appRunIt = $('#noospace .runIt');
-			this.deployApplication(appRunIt, $('#noospace'));
-			appRunIt.remove();
+			
+			var noospace= document.getElementById('noospace');
+			var appRunIt = noospace.getElementsByClassName('runIt');
+			for(var i=0;i<appRunIt.length;i++){
+			this.deployApplication(appRunIt[i], noospace);
+			 $(appRunIt[i]).remove();
+		   }
 		}
 		}
 }

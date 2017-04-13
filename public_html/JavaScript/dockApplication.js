@@ -12,7 +12,10 @@ $(function(){
 		//Pour rendre les applications présentes dans le dock draggable par JS
 		$('#applicationsInDock .appInDock').draggable({
 			containment: '#noospace',
-			revert: true
+			revert: true,
+			start : function(event,ui){
+				$(event.target).addClass('draggableElemnt'); // Added by Naoures
+			}
 		});
 
 		if($('#overlayDockApplication .appInDock').length !=0){

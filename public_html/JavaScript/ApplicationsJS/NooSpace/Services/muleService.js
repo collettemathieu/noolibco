@@ -101,7 +101,7 @@ application.factory('muleService',['dataService', function(dataService){
 				processData: false,
 				success: function(response) {
 					
-					console.log(response);
+					//console.log(response);
 					// Pour réinitialiser le message d'attente du bouton
 					$('#formMule').find('button:last').button('reset');
 
