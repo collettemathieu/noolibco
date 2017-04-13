@@ -88,9 +88,9 @@ abstract class BackController extends ApplicationComponent
 	const TREE_TASK_ADDED = 'The task has been added to the application.';
 	const TREE_FUNCTION_ADDED = 'The function has been added to the task.';
 	const TREE_PARAMETER_ADDED = 'The parameter has been added to the function.';
-	const TREE_DEFAULT_PARAMETER = 'The default value must be superior to the minimal value and inferior to the maximal value of the parameter.';
-	const TREE_STEP_PARAMETER = 'The step must be inferior to the difference between the minimal and maximal value of the parameter.';
-	const TREE_MINIMAL_VALUE_PARAMETER = 'The minimal value must be inferior to the maximal value.';
+	const TREE_DEFAULT_PARAMETER = 'The default value must be superior to the minimum value and inferior to the maximum value of the parameter.';
+	const TREE_STEP_PARAMETER = 'The step must be inferior to the difference between the minimum and maximum value of the parameter.';
+	const TREE_MINIMAL_VALUE_PARAMETER = 'The minimum value must be inferior to the maximum value.';
 	const TREE_TASK_DELETED = 'The task has been removed successfully.';
 	const TREE_FUNCTION_DELETED = 'The function has been removed successfully.';
 	const TREE_PARAMETER_DELETED = 'The parameter has been removed successfully.';
