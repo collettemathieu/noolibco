@@ -35,14 +35,14 @@ class Utilisateur extends \Library\Entity {
 	const PRENOM_INVALIDE = 'Your first name must contain at least 2 letters in length.';
 	const VARIABLE_FIXE_INVALIDE = 'The fixed variable of the user must contain at least 6 characters in length.';
 	const WORKSPACE_FOLDER_INVALIDE = 'The name of the workspace of the user must contain at least 6 characters in length.';
-	const MAIL_INVALIDE = 'Your e-mail address entered is incorrect.';
+	const MAIL_INVALIDE = 'Your email address entered is incorrect.';
 	const PASSWORD_INVALIDE = 'Your password must contain at least 8 letters in length with at least one number, uppercase and lowercase.';
 	const DESCRIPTION_INVALIDE = 'Your profile description entered is incorrect.';
 	const URL_PHOTO_INVALIDE = 'Your profile picture entered is not valid.';
 	const LIEN_PAGE_PERSO_INVALIDE = 'The link for your personal page is incorrect.';
 	const STATUT_INVALIDE = 'You must select a status.';
 	const CONFIRMATION_PASSWORD_INVALIDE = 'Your second password does not match with the first.';
-	const MAIL_JETABLE = 'Free and disposable e-mail addresses are not accepted.';
+	const MAIL_JETABLE = 'Free and disposable email addresses are not accepted.';
 	
 	
 	/**

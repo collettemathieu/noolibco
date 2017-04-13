@@ -26,7 +26,7 @@ class Publication extends \Library\Entity {
 	
 	
 	const TITRE_PUBLICATION = 'The title of the publication must contain at least 10 letters in length.';
-	const ANNEE_PUBLICATION = 'The year of publication must be in date format xxxx.';
+	const ANNEE_PUBLICATION = 'The year of publication must be in date format yyyy.';
 	const URL_PUBLICATION_INVALIDE = 'The link for this publication is incorrect.';
 	/**
 	 * ******setters******

@@ -26,8 +26,8 @@ class Auteur extends \Library\Entity {
 	protected $idAuteur, $nomAuteur, $prenomAuteur, $mailAuteur, $publications = Array();
 
 	/* Déclaration des constantes d'erreurs */
-	const MAIL_INVALIDE = 'The last e-mail address entered is incorrect.';
-	const MAIL_JETABLE = 'Free and disposable e-mail addresses are not accepted.';
+	const MAIL_INVALIDE = 'The last email address entered is incorrect.';
+	const MAIL_JETABLE = 'Free and disposable email addresses are not accepted.';
 	const NOM_INVALIDE = 'The last name of the author must contain at least 2 letters in length.';
 	const PRENOM_INVALIDE = 'The first name of the author must contain at least 2 letters in length.';
 

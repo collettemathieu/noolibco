@@ -29,7 +29,7 @@ class Application extends \Library\Entity {
 	
 	/* Déclaration des constantes d'erreurs particulières à */
 	const NOM_APPLICATION = 'The name of your application must contain at least 3 letters and be less than 20 letters in length.';
-	const URL_LOGO_APPLICATION = 'The picture of your application must be in PNG or JPEG format and less than 12 ko in weight.';
+	const URL_LOGO_APPLICATION = 'The picture of your application must be in PNG or JPEG format and less than 12 ko in size.';
 	const DESCRIPTION_APPLICATION = 'The description of your application must contain at least 50 letters.';
 	const FORMAT_MOTSCLES_EMPTY = 'You must enter at least one keyword.';
 	const VARIABLE_FIXE_APPLICATION = 'The fixed variable of the application must contain at least 4 characters in length.';

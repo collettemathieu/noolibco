@@ -23,9 +23,9 @@ abstract class BackController extends ApplicationComponent
 
 	/* Définitions des retours d'erreurs */
 	/* Générals */
-	const DATA_REQUIRED = 'User data is required as parameter for this function.';
+	const DATA_REQUIRED = 'User data is required as a parameter for this function.';
 	const ALL_FIELDS_REQUIRED = 'You need to fill in all the fields required.';
-	const ERROR_FILE_OPEN = 'An technical error has occurred while opening file.';
+	const ERROR_FILE_OPEN = 'A technical error has occurred while opening the file.';
 	const NO_FOLDER_OR_FILE = 'No folder or file found.';
 	const FILE_SIZE_EXCEEDED = 'The file size exceeds the limit authorized.';
 	const FILE_EXTENSION = 'This file extension is not authorized.';
@@ -36,8 +36,8 @@ abstract class BackController extends ApplicationComponent
 	const NO_TASK = 'The task asked does not exist.';
 	const NO_FUNCTION = 'The function asked does not exist.';
 	const NO_PARAMETER = 'The parameter asked does not exist.';
-	const APPLICATION_NOT_ACTIVATED = 'This application is not activated. Please stay tune!';
-	const APPLICATION_HAS_NO_TASK = 'This application has no task or no data as parameter.';
+	const APPLICATION_NOT_ACTIVATED = 'This application is not activated. Please stay tuned!';
+	const APPLICATION_HAS_NO_TASK = 'This application has no task or no data as a parameter.';
 	const APPLICATION_HAS_NO_MULE = 'The mule of this application cannot be loaded.';
 	const DENY_HANDLE_DATA = 'You are not authorized to edit this data.';
 	const DENY_HANDLE_APPLICATION = 'You are not authorized to edit this application.';
@@ -48,11 +48,11 @@ abstract class BackController extends ApplicationComponent
 	const DENY_USE_APPLICATION = 'You are not authorized to use this application.';
 	const DENY_EXECUTE_COMMAND = 'Your are not authorized to execute this command.';
 	const DENY_ACCESS_PAGE = 'Access denied: You are not authorized to access this page.';
-	const ERROR_LOADING_DATA = 'An error has occurred while laoding data.';
-	const ERROR_RUNNING_APPLICATION = 'An error has occurred while running application.';
-	const ERROR_LOADING_APPLICATION = 'An error has occurred while loading application.';
-	const ERROR_WRITTING_DATA = 'An error has occurred while writing data.';
-	const ERROR_DELETING_PUBLICATION = 'Some errors have occurred while deleting publication.';
+	const ERROR_LOADING_DATA = 'An error has occurred while loading data.';
+	const ERROR_RUNNING_APPLICATION = 'An error has occurred while running the application.';
+	const ERROR_LOADING_APPLICATION = 'An error has occurred while loading the application.';
+	const ERROR_WRITTING_DATA = 'An error has occurred while writing the data.';
+	const ERROR_DELETING_PUBLICATION = 'Some errors have occurred while deleting the publication.';
 	const ERROR_REQUEST_NOT_VALID = 'This request is not valid.';
 	const PASSWORD_NOT_VALID = 'Enter a password of at least eight letters in length with at least one number, uppercase and lowercase.';
 	const PASSWORD_DIFFERENT_ADMIN = 'Your password must be different than your administrator password.';
@@ -78,7 +78,7 @@ abstract class BackController extends ApplicationComponent
 	const ENGINE_NO_ACTION_FOR_TASK = 'No action is associated to this task.';
 	const ENGINE_NO_DATA = 'No data has been found in the data box of the application.';
 	const ENGINE_NO_DATA_MULE = 'Please, load all data on the mule before running a task.';
-	const ENGINE_NO_MATCH_DATA = 'Data entered do not match with the task called. Please verify data loaded on the mule.';
+	const ENGINE_NO_MATCH_DATA = 'Data entered does not match with the task called. Please verify data loaded on the mule.';
 
 	/* Tree controller */
 	const TREE_CHANGE_NAME = 'The name of this application already exists. Please find another name.';
@@ -88,7 +88,7 @@ abstract class BackController extends ApplicationComponent
 	const TREE_TASK_ADDED = 'The task has been added to the application.';
 	const TREE_FUNCTION_ADDED = 'The function has been added to the task.';
 	const TREE_PARAMETER_ADDED = 'The parameter has been added to the function.';
-	const TREE_DEFAULT_PARAMETER = 'The default value must be suprerior to the minimal value and inferior to the maximal value of the parameter.';
+	const TREE_DEFAULT_PARAMETER = 'The default value must be superior to the minimal value and inferior to the maximal value of the parameter.';
 	const TREE_STEP_PARAMETER = 'The step must be inferior to the difference between the minimal and maximal value of the parameter.';
 	const TREE_MINIMAL_VALUE_PARAMETER = 'The minimal value must be inferior to the maximal value.';
 	const TREE_TASK_DELETED = 'The task has been removed successfully.';
@@ -108,9 +108,9 @@ abstract class BackController extends ApplicationComponent
 	const TREE_ADD_PUBLICATION_ARG_EMPTY = 'Please, enter a valid DOI for your article.';
 	const TREE_DOI_NOT_FOUND = 'Sorry, the DOI entered does not match with any article.';
 	const TREE_VERSION_NOT_FOUND = 'Sorry, the version of this application has not been found.';
-	const TREE_VERSION_NOT_ACTIVATED = 'Sorry, any version of this application is activated. Please, stay tune!';
-	const TREE_VERSION_ALREADY_EXIST = 'Sorry, you cannot use twice the same version of the application.';
-	const TREE_VERSION_WRONG = 'Enter a valid name of version (eg. 1.0.0).';
+	const TREE_VERSION_NOT_ACTIVATED = 'Sorry, any version of this application is activated. Please, stay tuned!';
+	const TREE_VERSION_ALREADY_EXIST = 'Sorry, you cannot use the same version of the application twice.';
+	const TREE_VERSION_WRONG = 'Enter a valid version name (eg. 1.0.0).';
 
 	/* Library */
 	const LIBRARY_NO_AUTHOR = 'This contributor does not exist anymore.';
@@ -139,26 +139,26 @@ abstract class BackController extends ApplicationComponent
 	const LOGIN_INVALID_LINK_ACTIVATE_ACCOUNT = 'This link has expired. Please try to register again.';
 	const LOGIN_INVALID_LINK_RESET_PASSWORD = 'This link has expired. Please try to reset your password again.';
 	const LOGIN_ACCOUNT_ALDREADY_ACTIVATED = 'Your account is already activated. You can log to NooLib!';
-	const LOGIN_ACCOUNT_ACTIVATED = 'Your account has now been activated. You can log!';
-	const LOGIN_ALREADY_LOGGED = 'Your are already logged.';
-	const LOGIN_ENTER_VALID_EMAIL = 'Enter a valid email address.';
+	const LOGIN_ACCOUNT_ACTIVATED = 'Your account has now been activated. You can log in!';
+	const LOGIN_ALREADY_LOGGED = 'You are already logged.';
+	const LOGIN_ENTER_VALID_EMAIL = 'Please enter a valid email address.';
 	const LOGIN_RESET_PASSWORD = 'An email has been sent to you with a link to reset your password.';
 	const LOGIN_PASSWORD_EDITED = 'Your new password has been edited successfully.';
 	const LOGIN_WELCOME = 'Welcome';
 	const LOGIN_MAIL_NOT_VALID = 'The email entered is not valid.';
 
 	/* Inscription controller */
-	const INSCRIPTION_ALREADY_REGISTRED = 'You appear to be a registered user. Please log in!';
+	const INSCRIPTION_ALREADY_REGISTRED = 'You appear to be a registered user. Please log in.';
 	const INSCRIPTION_REGISTRATION_SUCCESSFUL = 'Your registration has been successfully submitted. Please confirm your email of registration in order to activate your account.';
-	const INSCRIPTION_USER_ALREADY_LOGGED = 'Your appear to be already logged.';
+	const INSCRIPTION_USER_ALREADY_LOGGED = 'You appear to be already logged.';
 
 	/* Helper */
 	const HELPER_NO_HELP = 'Sorry, this page does not contain any help for the moment.';
 
 	/* Settings */
-	const SETTINGS_NOT_AUTHORIZE_TO_REMOVE = 'Your are not authorized to remove this account user.';
+	const SETTINGS_NOT_AUTHORIZE_TO_REMOVE = 'You are not authorized to remove this account user.';
 	const SETTINGS_PASSWORD_INCORRECT = 'The password entered is incorrect.';
-	const SETTINGS_ACCOUNT_REMOVED = 'Your account has been removed. See you soon!';
+	const SETTINGS_ACCOUNT_REMOVED = 'Your account has been removed. Hope to see you again soon!';
 	const SETTINGS_WALLPAPER_CHANGED = 'The wallpaper has been edited.';
 	const SETTINGS_DEFAULT_WALLPAPER = 'The default wallpaper has been restored.';
 	const SETTINGS_DEFAULT_WALLPAPER_ALREADY_RESTORED = 'The default wallpaper is already restored.';
