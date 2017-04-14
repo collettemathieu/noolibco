@@ -27,6 +27,7 @@ application.factory('dataService', function(){
 					
 				}
 			});
+	  		//console.log(drop);
 	    	donneeUtilisateur.appendTo(drop);
 	  		donneeUtilisateur.css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX+'px');
 
@@ -49,15 +50,16 @@ application.factory('dataService', function(){
 		        }
 		    });
 	 		donneeUtilisateur.draggable({
-							revert: false,
-							containment: '#noospace',
-							snap: '.dataBox',
-							start: function(){
-										$(this).children('img').addClass('noClick');
-								},
-							drag: function(event, ui){
-										$(this).popover('hide');
-								}
+				revert: false,
+				containment: '#noospace',
+				snap: '.dataBox',
+				start: function(){
+						$(this).children('img').addClass('noClick');
+						$(this).addClass('draggableElemnt');
+					},
+				drag: function(event, ui){
+						$(this).popover('hide');
+					}
 	      	});		
 	  },
 	  // Pour initialiser la mule

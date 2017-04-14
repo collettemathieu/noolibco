@@ -3,7 +3,7 @@
 
 		<div class="container-fluid" hello>
 			<div class="row-fluid">
-				<div id="noospace" droppable class="col-sm-11 text-center centering noospace fadeIn" data-drop="true">
+				<div id="noospace" droppable class="col-sm-11 text-center centering noospace fadeIn">
 				<?php if(isset($applicationNooSpace) && isset($version)){
 				// On récupère la liste des tâches
 				$taches = $version->getTaches();
@@ -149,7 +149,7 @@
 		</div>
 	</div>
 
-	<div id="overlayGestionnaireDonnees">
+	<div id="overlayGestionnaireDonnees" >
 		<div id="sectionGestionnaireDonnees">
 			<div class="headerGestionnaireDonnees">
 				<div class="inHeaderGestionnaireDonnees">

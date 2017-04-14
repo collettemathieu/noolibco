@@ -16,24 +16,28 @@
 application.factory('applicationService',['dataService','muleService', function(dataService,muleService){
 	return{
 		deployApplication: function(app, element, nouvellePositionElementX, nouvellePositionElementY){
-			if(app.className == 'runIt'){
-      			app.classList.remove('runIt');
+			
+			var cloneApplication = app.cloneNode(true);
+			if(cloneApplication.classList == 'appInDock runIt'){
+      			cloneApplication.classList.remove('runIt');
+      			app.parentNode.removeChild(app);
       		}
+
       		if(typeof nouvellePositionElementX == 'undefined' || typeof nouvellePositionElementY == 'undefined'){
       			var largeurNooSpace = parseInt($('#noospace').width()),
       				hauteurNooSpace = parseInt($('#noospace').height());
-      			nouvellePositionElementX = parseInt(largeurNooSpace/2);
-      			nouvellePositionElementY = parseInt(hauteurNooSpace/3);
+      				nouvellePositionElementX = parseInt(largeurNooSpace/2);
+      				nouvellePositionElementY = parseInt(hauteurNooSpace/3);
       		}
 
-      		var cloneApplication = app.cloneNode(true); //var cloneApplication = app.clone();
+      		
       		element.appendChild(cloneApplication);  //cloneApplication.appendTo(element);
 
-      		//cloneApplication.css('width','240px').css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX-93+'px'); // 93 pour contrer l'ajout de width:240px
-      		cloneApplication.setAttribute('ng-draggable','dragOptions');
+      		//cloneApplication.setAttribute('ng-draggable','dragOptions');
+      		cloneApplication.style.width= "240px";
       		cloneApplication.style.position="absolute";
       		cloneApplication.style.top=  nouvellePositionElementY+'px';
-      		cloneApplication.style.left=  nouvellePositionElementX-93+'px';
+      		cloneApplication.style.left=  nouvellePositionElementX-93+'px'; // 93 pour contrer l'ajout de width:240px
 
 	      	//************A modifier
 	      	$(cloneApplication).draggable({
@@ -45,23 +49,33 @@ application.factory('applicationService',['dataService','muleService', function(
 	      	});
 
 	      	// On réajuste la taille de l'image de l'application
-	      	console.log(cloneApplication.getElementsByClassName('imageApplication')[0]); // a voir
-	      	cloneApplication.getElementsByClassName('imageApplication')[0].animate([{
+	      	//console.log(cloneApplication.getElementsByClassName('imageApplication')[0]); // a voir
+	      	/*cloneApplication.getElementsByClassName('imageApplication')[0].animate([{
 	      		'width':64,
 	      		'height': 64
-	      	}], 1500);
+	      	}], 1500);*/
+				$(cloneApplication).find('.imageApplication').animate({
+					      		'width':64,
+					      		'height': 64
+					      	}, 1500);
 
 	      	// On affiche les boîtes de dialogue supplémentaires autour de l'application
 	      	//cloneApplication.querySelector('hr').show().css('display', 'inline-block');
 	      	
 	      	var hrElements = cloneApplication.getElementsByTagName('hr');
-	      	for(var i=0; i< hrElements.length; i++)
+	      	for(var i=0; i< hrElements.length; i++){
 	      		hrElements[i].style.display ='inline-block';
+	      	}
+
+	      	var dataBox= cloneApplication.querySelector('.dataBox'),
+	      		resultBox=cloneApplication.querySelector('.resultBox') ;
+	      		dataBox.setAttribute('ng-show','animateShow');
+
 			setTimeout(function(){
-				cloneApplication.querySelector('.dataBox').style.display ='inline-block'; //.show('slice').css('display', 'inline-block');
+					dataBox.style.display ='inline-block'; //.show('slice').css('display', 'inline-block');
   				//$(cloneApplication).children('.dataBox').show('slice').css('display', 'inline-block');
   				setTimeout(function(){
-  					cloneApplication.querySelector('.resultBox').style.display ='inline-block';//
+  					resultBox.style.display ='inline-block';//
   					//$(cloneApplication).children('.resultBox').show('slice').css('display', 'inline-block');
   				}, 500);
   			}, 200);
@@ -76,11 +90,16 @@ application.factory('applicationService',['dataService','muleService', function(
 	      			if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
 
 	      				dataService.initDonneeUtilisateur(ui.draggable.clone(), $(this), 2, 2);
+	      				
 
 	      			}else{
+	      				//console.log($(this));
+	      				console.log('dropped');
+	      				//console.log(ui.draggable);
 	      				$(this).append(ui.draggable);
 			      		ui.draggable.css('position','absolute').css('top', 2+'px').css('left', 2+'px');
 	      			}
+
 	      		}
 	      	});
 
@@ -318,10 +337,11 @@ application.factory('applicationService',['dataService','muleService', function(
 		        }
 		    });/**************************/
 		},
+
 		verifApplication: function(){
 			if($('#noospace .runIt').length !=0){
 			var widthNoospace = parseInt($('#noospace').css('width'))
-			alert("hello");
+			
 			$('#noospace').css('width', widthNoospace-50+'px'); // Bidouille pour éviter un agrandissement de la noospace
 			
 			
@@ -329,9 +349,15 @@ application.factory('applicationService',['dataService','muleService', function(
 			var appRunIt = noospace.getElementsByClassName('runIt');
 			for(var i=0;i<appRunIt.length;i++){
 			this.deployApplication(appRunIt[i], noospace);
-			 $(appRunIt[i]).remove();
+			$(appRunIt[i]).remove();
+			 
 		   }
 		}
 		}
+		/*function fadeIn(el,display){
+			el.style.opacity=0;
+			el.style.display=  'inline-block';
+			(function fade(){})
+		}*/
 }
 }]);
