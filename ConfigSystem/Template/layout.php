@@ -137,12 +137,12 @@ Go to https://www.noolib.com/Hire/ .
 		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.easing.1.3.min.js"></script>
 		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.jBreadCrumb.1.1.min.js"></script>
 		
-		<!-- Design -->
+		<!-- Boostrap -->
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/JavaScript/Frameworks/bootstrap-filestyle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
-		<!-- Critical scripts -->
+		<!-- Initialisation -->
 		<script type="text/javascript" src="/JavaScript/init.js"></script>
 
 		<!-- Chargement des librairies JS -->
