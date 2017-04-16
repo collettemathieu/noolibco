@@ -32,8 +32,7 @@ application.controller('newTaskController', ['$scope', '$uibModalInstance', '$ht
 	$scope.formValidNewTask = function(e){
 		if($scope.formNewTask.$valid){
 			$scope.displayButtonForm = true;
-			treeHasChanged = true;
-
+			
 			var formData = new FormData(e.target);
 
 			$http({
@@ -50,6 +49,8 @@ application.controller('newTaskController', ['$scope', '$uibModalInstance', '$ht
 				$scope.displayButtonForm = false;
 				// Fermer la fenêtre modale
 				$uibModalInstance.dismiss('cancel');
+				// Evènement de l'arbre des applications
+				$scope.$emit('treeHasChanged', false);
 			})
 			.error(function(error){
 				var response = {

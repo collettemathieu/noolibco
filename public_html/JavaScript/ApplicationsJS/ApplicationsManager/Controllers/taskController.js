@@ -50,8 +50,7 @@ application.controller('taskController', ['$scope', '$uibModalInstance', '$http'
 	$scope.formValidTask = function(e){
 		if($scope.formTask.$valid){
 			$scope.displayButtonForm = true;
-			treeHasChanged = true;
-
+			
 			var formData = new FormData(e.target);
 
 			$http({
@@ -67,6 +66,8 @@ application.controller('taskController', ['$scope', '$uibModalInstance', '$http'
 				$scope.displayButtonForm = false;
 				// Fermer la fenêtre modale
 				$uibModalInstance.dismiss('cancel');
+				// Evènement de l'arbre des applications
+				$scope.$emit('treeHasChanged', false);
 			})
 			.error(function(error){
 				var response = {
@@ -85,7 +86,6 @@ application.controller('taskController', ['$scope', '$uibModalInstance', '$http'
 	// Pour supprimer la tâche
 	$scope.formValidDeleteTask = function(e){
 		$scope.displayButtonDelete = true;
-		treeHasChanged = true;
 		var formData = new FormData(e.target);
 		
 		$http({
@@ -102,6 +102,8 @@ application.controller('taskController', ['$scope', '$uibModalInstance', '$http'
 			$scope.displayButtonDelete = false;
 			// Fermer la fenêtre modale
 			$uibModalInstance.dismiss('cancel');
+			// Evènement de l'arbre des applications
+			$scope.$emit('treeHasChanged', false);
 		})
 		.error(function(error){
 			var response = {

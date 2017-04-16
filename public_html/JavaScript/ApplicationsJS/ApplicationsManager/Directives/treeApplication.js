@@ -144,7 +144,7 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 		                        events:{
 		                            click: function (event) {
 		                            	var idTache = this.id;
-		                            	var modal = $uibModal.open({
+		                            	$uibModal.open({
 											animation: true,
 											templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/taskTemplate.html',
 											controller: 'taskController',
@@ -176,30 +176,6 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 												}
 											}
 									    });
-
-									    // On met à jour l'arbre de l'application et l'application lorsque la fenêtre se ferme
-									    modal.result.then(function(e){
-									    }, function(){
-											if(treeHasChanged){
-												treeHasChanged = false;
-												applicationService.getApplication(scope.application.id).then(function(response){ // <- c'est une promise
-													if(response['erreurs']){
-														displayInformationsClient(response);
-													}else{
-														// Initialisation des variables
-														scope.application = response;
-														applicationService.getTree(scope.idVersion, scope.application.id).then(function(newValue){
-															scope.tree = newValue;
-														});
-													}
-												}, function(error){
-													var response = {
-														'erreurs': '<p>A system error has occurred: '+error+'</p>'
-													};
-													displayInformationsClient(response);
-												});
-											}
-									    });
 		                            }
 		                        }
 		                    } 
@@ -224,7 +200,7 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 
 		                                	var idTache = this.tacheId,
 		                                		idFunction = this.id;
-			                            	var modal = $uibModal.open({
+			                            	$uibModal.open({
 												animation: true,
 												templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/functionTemplate.html',
 												controller: 'functionController',
@@ -273,7 +249,7 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 										    });
 		                                }else{
 		                                	var idTache = this.tacheId;
-			                            	var modal = $uibModal.open({
+			                            	$uibModal.open({
 												animation: true,
 												templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/newFunctionTemplate.html',
 												controller: 'newFunctionController',
@@ -286,30 +262,6 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 												}
 										    });
 		                                }
-
-		                                // On met à jour l'arbre de l'application et l'application lorsque la fenêtre se ferme
-									    modal.result.then(function(e){
-									    }, function(){
-											if(treeHasChanged){
-												treeHasChanged = false;
-												applicationService.getApplication(scope.application.id).then(function(response){ // <- c'est une promise
-													if(response['erreurs']){
-														displayInformationsClient(response);
-													}else{
-														// Initialisation des variables
-														scope.application = response;
-														applicationService.getTree(scope.idVersion, scope.application.id).then(function(newValue){
-															scope.tree = newValue;
-														});
-													}
-												}, function(error){
-													var response = {
-														'erreurs': '<p>A system error has occurred: '+error+'</p>'
-													};
-													displayInformationsClient(response);
-												});
-											}
-									    });
 		                            }
 		                        }
 		                    } 
@@ -402,6 +354,21 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 		                                        }
 		                                    });
 		                                }else{
+
+		                                	var idTache = this.tacheId,
+		                                		idFunction = this.fonctionId;
+			                            	$uibModal.open({
+												animation: true,
+												templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/newParameterTemplate.html',
+												controller: 'newParameterController',
+												scope: scope,
+												size: 'lg',
+												resolve: {
+													idTache: function(){
+														return idTache;
+													}
+												}
+										    });
 		                                    
 		                                    // Envoi de la requête HTTP en mode asynchrone
 		                                    $.ajax({

@@ -27,9 +27,11 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 	$scope.textFunction = textFunction;
 
 	// On s'abonne à l'évènement de la dropZone
-	$scope.$on('uploadEnded', function(evt, value){
+	$scope.$on('dropEnded', function(evt, value){
 		if(value){
-			treeHasChanged = true;
+			// Evènement de l'arbre des applications
+			$scope.$emit('treeHasChanged', false);
+			// On ferme la fenêtre modale
 			$uibModalInstance.dismiss('cancel');
 		}
 	});
@@ -37,7 +39,6 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 	// Pour supprimer la fonction
 	$scope.formValidDeleteFunction = function(e){
 		$scope.displayButtonDelete = true;
-		treeHasChanged = true;
 		var formData = new FormData(e.target);
 		
 		$http({
@@ -54,6 +55,8 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 			$scope.displayButtonDelete = false;
 			// Fermer la fenêtre modale
 			$uibModalInstance.dismiss('cancel');
+			// Evènement de l'arbre des applications
+			$scope.$emit('treeHasChanged', false);
 		})
 		.error(function(error){
 			var response = {

@@ -20,7 +20,7 @@ application.directive('selectVersion', ['applicationService', function(applicati
 		scope: false,
 		replace: true,
 		priority: 1,
-		template: '<ul ng-repeat="version in application.versions"><li class="text-center" ng-click="changeVersion(version)"><a href="">{{version.numero}}</a></li></ul>',
+		templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/selectVersionTemplate.html',
 		link: function(scope, element, attrs){
 			// Pour mettre à jour les variables et l'arbre de l'application
 			scope.changeVersion = function(version){

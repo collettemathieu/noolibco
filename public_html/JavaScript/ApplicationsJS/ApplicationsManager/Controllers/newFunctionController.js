@@ -26,9 +26,11 @@ application.controller('newFunctionController', ['$scope', '$uibModalInstance', 
 	$scope.urlDropZone = '/HandleApplication/ValidFormFonction';
 
 	// On s'abonne à l'évènement de la dropZone
-	$scope.$on('uploadEnded', function(evt, value){
+	$scope.$on('dropEnded', function(evt, value){
 		if(value){
-			treeHasChanged = true;
+			// Evènement de l'arbre des applications
+			$scope.$emit('treeHasChanged', false);
+			// On ferme la fenêtre modale
 			$uibModalInstance.dismiss('cancel');
 		}
 	});

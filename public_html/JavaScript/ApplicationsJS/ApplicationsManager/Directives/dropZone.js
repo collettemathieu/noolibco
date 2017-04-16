@@ -103,13 +103,16 @@ application.directive('dropZone', function(){
 		            // Récupération de la réponse
 					response = JSON.parse(response);
 
-					// On envoie l'évènement terminé
-					scope.$emit('uploadEnded', true);
+					// La dropZone a terminé la tâche
+					scope.$emit('dropEnded', true);
 		                            
 		            if(response['reussites']){
 		                
 		                displayInformationsClient(response);
 		                uploadFinally(false);
+
+		                // Evènement de l'arbre des applications
+						scope.$emit('treeHasChanged', false);
 
 		            }else if(response['erreurs']){
 		                displayInformationsClient(response);

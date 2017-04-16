@@ -28,7 +28,6 @@ application.controller('versionController', ['$scope', '$uibModalInstance', '$ht
 	$scope.validFormVersion = function(e){
 		if($scope.formNewVersion.$valid){
 			$scope.displayButtonForm = true;
-			treeHasChanged = true;
 
 			var formData = new FormData(e.target);
 			
@@ -40,15 +39,15 @@ application.controller('versionController', ['$scope', '$uibModalInstance', '$ht
 			})
 			.success(function(response){
 				if(response['versions']){
-					$scope.application.versions = response['versions'];	
+					$scope.application.versions = response['versions'];
+					// Evènement de l'arbre des applications
+					$scope.$emit('treeHasChanged', true);		
 				}
 				displayInformationsClient(response);
 				// Position par defaut du bouton envoyer
 				$scope.displayButtonForm = false;
 				// Fermer la fenêtre modale
 				$uibModalInstance.dismiss('cancel');
-
-
 			})
 			.error(function(error){
 				var response = {

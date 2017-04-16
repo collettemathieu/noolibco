@@ -17,12 +17,11 @@
 application.controller('mainController', ['$scope', '$http', '$window', '$uibModal', 'applicationService', function($scope, $http, $window, $uibModal, applicationService){
 	
 	// Récupération des éléments de l'application
-	var applicationElement = document.querySelector('#application'),
+	var applicationElement = document.getElementById('application'),
 		idApplication = parseInt(applicationElement.getAttribute('idApplication'));
-	treeHasChanged = false; // variable globale pour éviter de mettre à jour l'arbre inutilement
-
-	applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
 	
+	// Initialisation de l'arbre de l'application et des variables
+	applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
 		if(response['erreurs']){
 			displayInformationsClient(response);
 		}else{
@@ -42,6 +41,32 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		displayInformationsClient(response);
 	});
 
+	// On s'abonne à l'évènement d'un changement dans l'arbre de l'application
+	$scope.$on('treeHasChanged', function(evt, lastNumberVersion){
+		applicationService.getApplication($scope.application.id).then(function(response){ // <- c'est une promise
+			if(response['erreurs']){
+				displayInformationsClient(response);
+			}else{
+				// Initialisation des variables
+				$scope.application = response;
+				if(lastNumberVersion){
+					$scope.idVersion = $scope.application.versions[$scope.application.versions.length-1].id;
+					$scope.numVersion = $scope.application.versions[$scope.application.versions.length-1].numero;
+					$scope.noteVersion = $scope.application.versions[$scope.application.versions.length-1].note;
+				}
+				applicationService.getTree($scope.idVersion, $scope.application.id).then(function(newValue){
+					$scope.tree = newValue;
+				});
+			}
+		}, function(error){
+			var response = {
+				'erreurs': '<p>A system error has occurred: '+error+'</p>'
+			};
+			displayInformationsClient(response);
+		});
+		
+	});
+
 	// Pour créer une nouvelle version
 	$scope.createVersionModal = function(){
 		var modal = $uibModal.open({
@@ -50,38 +75,11 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	      controller: 'versionController',
 	      scope: $scope
 	    });
-
-		// On met à jour les variables lorsque la fenêtre se ferme
-	    modal.result.then(function(e){
-	    }, function(){
-			if(treeHasChanged){
-	    		treeHasChanged = false;
-				applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
-					if(response['erreurs']){
-						displayInformationsClient(response);
-					}else{
-						// Initialisation des variables
-						$scope.application = response;
-						$scope.idVersion = $scope.application.versions[$scope.application.versions.length-1].id;
-						$scope.numVersion = $scope.application.versions[$scope.application.versions.length-1].numero;
-						$scope.noteVersion = $scope.application.versions[$scope.application.versions.length-1].note;
-						applicationService.getTree($scope.idVersion, $scope.application.id).then(function(newValue){
-							$scope.tree = newValue;
-						});
-					}
-				}, function(error){
-					var response = {
-						'erreurs': '<p>A system error has occurred: '+error+'</p>'
-					};
-					displayInformationsClient(response);
-				});
-			}
-	    });
 	}
 
 	// Pour créer une nouvelle tâche
 	$scope.createTaskModal = function(){
-		var modal = $uibModal.open({
+		$uibModal.open({
 	      animation: true,
 	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/newTaskTemplate.html',
 	      controller: 'newTaskController',
@@ -108,30 +106,6 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 				return deferred.promise;
 			}
 	      ]}
-	    });
-
-		// On met à jour l'arbre de l'application et l'application lorsque la fenêtre se ferme
-	    modal.result.then(function(e){
-	    }, function(){
-	    	if(treeHasChanged){
-	    		treeHasChanged = false;
-				applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
-					if(response['erreurs']){
-						displayInformationsClient(response);
-					}else{
-						// Initialisation des variables
-						$scope.application = response;
-						applicationService.getTree($scope.idVersion, $scope.application.id).then(function(newValue){
-							$scope.tree = newValue;
-						});
-					}
-				}, function(error){
-					var response = {
-						'erreurs': '<p>A system error has occurred: '+error+'</p>'
-					};
-					displayInformationsClient(response);
-				});
-			}
 	    });
 	}
 
