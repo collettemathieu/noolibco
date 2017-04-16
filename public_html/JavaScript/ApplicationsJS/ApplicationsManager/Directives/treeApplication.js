@@ -191,7 +191,7 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 		                        },
 		                        color: 'white',
 		                        distance: -60,
-		                        y: 30
+		                        y: 10
 		                    },
 		                    point:{
 		                        events:{
@@ -280,130 +280,82 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 		                        events:{
 		                            click: function (event) {
 		                                if(this.id != -1){
-		                                    // Envoi de la requête HTTP en mode asynchrone
-		                                    $.ajax({
-		                                        url: '/HandleApplication/ModifParametre',
-		                                        type: 'POST',
-		                                        data:{
-		                                            idVersion:parseInt(idVersion),
-		                                            idApp:parseInt(idApplication),
-		                                            idParametre:this.id
-		                                        },
-		                                        async: true,
-		                                        cache: true,
-		                                        success: function(response) {
-		                                            $('#contenuForm').html(response);
-		                                            $('#formulaireApplication').modal();
-		                                            
-		                                            // Pour modifier le paramètre
-		                                            $('#formulaireApplication form:first').on('submit', function(e){
-		                                            
-		                                                e.preventDefault();
-		                                                var formData = new FormData(e.target),
-		                                                    btn = $(this).find('button');
-		                                                btn.button('loading');
-		                                                validerFormulaireApplicationByAjax(formData, '/HandleApplication/ValidModifParametre');
-		                                                
-		                                            });
+		                                	var idParameter = this.id;
 
-		                                            // Pour supprimer le paramètre
-		                                            $('#formulaireApplication form:last').on('submit', function(e){
-		                                                e.preventDefault();
-		                                                var formData = new FormData(e.target),
-		                                                    btn = $(this).find('button');
-		                                                btn.button('loading');
-		                                                formData.append('idApp', parseInt(idApplication));
-		                                                formData.append('idVersion', parseInt(idVersion));
-		                                                
-		                                                // Envoi de la requête HTTP en mode asynchrone
-		                                                $.ajax({
-		                                                    url: '/HandleApplication/DeleteParametre',
-		                                                    type: 'POST',
-		                                                    data: formData,
-		                                                    cache: false,
-		                                                    contentType: false,
-		                                                    processData: false,
-		                                                    success: function(response) {
-		                                                        btn.button('reset');
-		                                                        var response = JSON.parse(response);
-		                                                        
-		                                                        if(response['reussites']){
-		                                                            setTimeout(function(){
-		                                                                    location.reload();
-		                                                            }, 1000);
-		                                                        }
-
-		                                                        displayInformationsClient(response);
-		                                                    },
-		                                                    error: function(){
-		                                                        btn.button('reset');
-		                                                        var response = {
-		                                                            'erreurs': '<p>A system error has occurred.</p>'
-		                                                        };
-		                                                        displayInformationsClient(response);
-		                                                    }
-		                                                });
-		                                            });
-
-		                                        },
-		                                        error: function(){
-		                                            var response = {
-		                                                'erreurs': '<p>A system error has occurred.</p>'
-		                                            };
-		                                            displayInformationsClient(response);
-		                                        }
-		                                    });
-		                                }else{
-
-		                                	var idTache = this.tacheId,
-		                                		idFunction = this.fonctionId;
-			                            	$uibModal.open({
+		                                	$uibModal.open({
 												animation: true,
-												templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/newParameterTemplate.html',
-												controller: 'newParameterController',
+												templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/parameterTemplate.html',
+												controller: 'parameterController',
 												scope: scope,
 												size: 'lg',
 												resolve: {
-													idTache: function(){
-														return idTache;
+													// On récupère les types des paramètres pour le select
+													typesParameter: ['$http', '$q', function($http, $q){
+
+														var deferred = $q.defer(); // -> promise
+														$http({
+															method: 'POST',
+															url: '/HandleApplication/GetTypeParameter'
+														})
+														.success(function(response){
+															deferred.resolve(response);
+														})
+														.error(function(error){
+															var response = {
+																'erreurs': '<p>A system error has occurred: '+error+'</p>'
+															};
+															displayInformationsClient(response);
+														});
+
+														return deferred.promise;
+													}],
+													idParameter: function(){
+														return idParameter;
 													}
 												}
 										    });
-		                                    
-		                                    // Envoi de la requête HTTP en mode asynchrone
-		                                    $.ajax({
-		                                        url: '/HandleApplication/FormParametre',
-		                                        type: 'POST',
-		                                        data:{
-		                                            idVersion:parseInt(idVersion),
-		                                            idApp:parseInt(idApplication),
-		                                            idFonction:this.fonctionId
-		                                        },
-		                                        async: true,
-		                                        cache: true,
-		                                        success: function(response) {
-		                                            
-		                                            $('#contenuForm').html(response);
-		                                            $('#formulaireApplication').modal();
+		                                }else{
+		                                	var idFunction = this.fonctionId;
 
-		                                            $('#formulaireApplication form').on('submit', function(e){
-		                                            
-		                                                e.preventDefault();
-		                                                var formData = new FormData(e.target),
-		                                                    btn = $(this).find('button');
-		                                                btn.button('loading');
-		                                                validerFormulaireApplicationByAjax(formData, '/HandleApplication/ValidFormParametre');
-		                                                
-		                                            });
-		                                            
-		                                        },
-		                                        error: function(){
-		                                            var response = {
-		                                                'erreurs': '<p>A system error has occurred.</p>'
-		                                            };
-		                                            displayInformationsClient(response);
-		                                        }
-		                                    });
+		                                	if(idFunction != -1){
+				                            	$uibModal.open({
+													animation: true,
+													templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/newParameterTemplate.html',
+													controller: 'newParameterController',
+													scope: scope,
+													size: 'lg',
+													resolve: {
+														// On récupère les types des paramètres pour le select
+														typesParameter: ['$http', '$q', function($http, $q){
+
+															var deferred = $q.defer(); // -> promise
+															$http({
+																method: 'POST',
+																url: '/HandleApplication/GetTypeParameter'
+															})
+															.success(function(response){
+																deferred.resolve(response);
+															})
+															.error(function(error){
+																var response = {
+																	'erreurs': '<p>A system error has occurred: '+error+'</p>'
+																};
+																displayInformationsClient(response);
+															});
+
+															return deferred.promise;
+														}],
+														idFonction: function(){
+															return idFunction;
+														}
+													}
+											    });
+				                            }else{
+				                            	var response = {
+	                                                'erreurs': '<p>You must first add a function before adding a parameter.</p>'
+	                                            };
+	                                            displayInformationsClient(response);
+				                            }
 		                                }
 		                            }
 		                        }

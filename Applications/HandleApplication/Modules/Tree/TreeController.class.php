@@ -157,12 +157,34 @@ class TreeController extends \Library\BackController
 									'idType'=> $idType,
 									'idUnite' => $idUnite
 									));
-							}						
+							}
+							$fonctions = array();
+							foreach($tache->getFonctions() as $fonction){
+								
+								$parameters = array();
+								foreach ($fonction->getParametres() as $parameter) {
+									array_push($parameters, array(
+										'id' => $parameter->getIdParametre(),
+										'nom' => $parameter->getNomParametre(),
+										'description' => $parameter->getDescriptionParametre(),
+										'valeurDefaut' => $parameter->getValeurDefautParametre(),
+										'valeurMin' => $parameter->getValeurMinParametre(),
+										'valeurMax' => $parameter->getValeurMaxParametre(),
+										'valeurPas' => $parameter->getValeurPasParametre(),
+										));
+								}
+
+								array_push($fonctions, array(
+									'id' => $fonction->getIdFonction(),
+									'parameters' => $parameters
+								));
+							}					
 							array_push($taches, array(
 								'id' => $tache->getIdTache(),
 								'nom' => $tache->getNomTache(),
 								'description' => $tache->getDescriptionTache(),
-								'types' => $types
+								'types' => $types,
+								'fonctions' => $fonctions
 								));
 						}
 						array_push($versions, array(
@@ -203,6 +225,104 @@ class TreeController extends \Library\BackController
 			// On ajoute le résultat à la page
 			$typeAAfficher = $this->getTypePublications();
 			$this->page->addVar('typeAAfficher', $typeAAfficher);
+		}else{
+			// On procède à la redirection
+			$response = $this->app->getHTTPResponse();
+			$response->redirect('/');
+		}
+	}
+
+
+	/**
+	* Méthode pour récupérer les types de données des tâches
+	*/
+	public function executeGetTypeData($request)
+	{
+		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
+		if ($request->isAjaxRequest()) {
+			// On récupère l'utilisateur système
+			$user = $this->app->getUser();
+
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
+
+			// On récupère la liste des types de parametre des tâches
+			// On appelle le manager des types de parametre
+			$managerTypeDonneeUtilisateur = $this->getManagers()->getManagerOf('TypeDonneeUtilisateur');
+			$typesDonneeUtilisateur = $managerTypeDonneeUtilisateur->getAllTypeDonneeUtilisateurs();
+
+			// On créé le tableau des types de données
+			$typeAAfficher = array();
+			foreach($typesDonneeUtilisateur as $id=>$type){
+				array_push($typeAAfficher, 
+					array(
+					'name' => $type->getNomTypeDonneeUtilisateur(),
+					'id' => $id
+					)
+				);
+			}
+
+			// On ajoute la variable typesDonneeUtilisateur à la page
+			$this->page->addVar('typesDonneeUtilisateur', $typeAAfficher);
+
+			// On récupère la liste des unités de parametre
+			// On appelle le manager des unité de parametre
+			$managerUniteDonneeUtilisateur = $this->getManagers()->getManagerOf('UniteDonneeUtilisateur');
+			$uniteDonneeUtilisateurs = $managerUniteDonneeUtilisateur->getAllUniteDonneeUtilisateurs();
+			
+			// On créé le tableau des types de données
+			$typeAAfficher = array();
+			foreach($uniteDonneeUtilisateurs as $id=>$type){		
+				array_push($typeAAfficher, 
+					array(
+					'name' => $type->getNomUniteDonneeUtilisateur(),
+					'id' => $id
+					)
+				);
+			}
+
+			// On ajoute la variable uniteDonneeUtilisateurs à la page
+			$this->page->addVar('uniteDonneeUtilisateurs', $typeAAfficher);
+			
+		}else{
+			// On procède à la redirection
+			$response = $this->app->getHTTPResponse();
+			$response->redirect('/');
+		}
+	}
+
+
+	/**
+	* Méthode pour récupérer les types de paramètres
+	*/
+	public function executeGetTypeParameter($request){	
+		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
+		if ($request->isAjaxRequest()) {
+			// On récupère l'utilisateur système
+			$user = $this->app->getUser();
+
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
+
+			// On récupère la liste des types d'afficahge des parametres des fonctions
+			// On appelle le manager des types d'affichage des paramètres
+			$managerTypeAffichageParametre = $this->getManagers()->getManagerOf('TypeAffichageParametre');
+			$typesAffichageParametre = $managerTypeAffichageParametre->getAllTypeAffichageParametres();
+			
+			// On créé le tableau des types de données
+			$typeAAfficher = array();
+			foreach($typesAffichageParametre as $id=>$type){
+				array_push($typeAAfficher, 
+					array(
+					'name' => $type->getNomTypeAffichageParametre(),
+					'id' => $id
+					)
+				);
+			}
+
+			// On l'envoie à la page
+			$this->page->addVar('typesParameter', $typeAAfficher);
+
 		}else{
 			// On procède à la redirection
 			$response = $this->app->getHTTPResponse();
@@ -1248,276 +1368,6 @@ class TreeController extends \Library\BackController
 			$response->redirect('/');
 		}
 	}
-
-
-
-	/**
-	* Méthode pour récupérer les types de données des tâches
-	*/
-	public function executeGetTypeData($request)
-	{
-		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
-		if ($request->isAjaxRequest()) {
-			// On récupère l'utilisateur système
-			$user = $this->app->getUser();
-
-			// On informe que c'est un chargement Ajax
-			$user->setAjax(true);
-
-			// On récupère la liste des types de parametre des tâches
-			// On appelle le manager des types de parametre
-			$managerTypeDonneeUtilisateur = $this->getManagers()->getManagerOf('TypeDonneeUtilisateur');
-			$typesDonneeUtilisateur = $managerTypeDonneeUtilisateur->getAllTypeDonneeUtilisateurs();
-
-			// On créé le tableau des types de données
-			$typeAAfficher = array();
-			foreach($typesDonneeUtilisateur as $id=>$type){
-				array_push($typeAAfficher, 
-					array(
-					'name' => $type->getNomTypeDonneeUtilisateur(),
-					'id' => $id
-					)
-				);
-			}
-
-			// On ajoute la variable typesDonneeUtilisateur à la page
-			$this->page->addVar('typesDonneeUtilisateur', $typeAAfficher);
-
-			// On récupère la liste des unités de parametre
-			// On appelle le manager des unité de parametre
-			$managerUniteDonneeUtilisateur = $this->getManagers()->getManagerOf('UniteDonneeUtilisateur');
-			$uniteDonneeUtilisateurs = $managerUniteDonneeUtilisateur->getAllUniteDonneeUtilisateurs();
-			
-			// On créé le tableau des types de données
-			$typeAAfficher = array();
-			foreach($uniteDonneeUtilisateurs as $id=>$type){		
-				array_push($typeAAfficher, 
-					array(
-					'name' => $type->getNomUniteDonneeUtilisateur(),
-					'id' => $id
-					)
-				);
-			}
-
-			// On ajoute la variable uniteDonneeUtilisateurs à la page
-			$this->page->addVar('uniteDonneeUtilisateurs', $typeAAfficher);
-			
-		}else{
-			// On procède à la redirection
-			$response = $this->app->getHTTPResponse();
-			$response->redirect('/');
-		}
-	}
-
-
-
-	/**
-	* Méthode pour afficher le formulaire d'ajout d'une fonction à une tâche
-	*/
-	public function executeShowFormFonction($request)
-	{
-		
-		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
-		if ($request->isAjaxRequest()) {
-			// On récupère l'utilisateur système
-			$user = $this->app->getUser();
-
-			// On informe que c'est un chargement Ajax
-			$user->setAjax(true);
-
-			// On récupère l'utilisateur de session
-			$userSession = unserialize($user->getAttribute('userSession'));
-
-			// On récupère l'ID de l'application à mettre en cache
-			$idApp = (int) $request->getPostData('idApp');
-
-			// On récupère le manager des applications
-			$managerApplication = $this->getManagers()->getManagerOf('Application');
-
-			// On récupère l'application via son ID
-			$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
-
-			// On oriente l'utilisateur selon le statut de dépôt de l'application.
-			if($application && ($application->getStatut()->getNomStatut()==='Inactive' || $application->getStatut()->getNomStatut()==='Validated' || $application->getStatut()->getNomStatut()==='Not validated')){
-				
-				// On charge les utilisateurs autorisés 
-				$idAuteursAutorises = array();
-				// On récupère le manager des Utilisateurs
-				$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
-				// On ajoute le créateur comme ID autorisé
-				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
-				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
-					if($utilisateur){
-						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
-					}
-				}
-
-				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
-					
-					// On vérifie que la tâche appartient bien à l'application et à la bonne version
-					$idTache = (int) $request->getPostData('idTache');
-					// On récupère la version de l'application demandée 
-					$idVersion = (int) $request->getPostData('idVersion');
-					if($idVersion != 0){
-						foreach($application->getVersions() as $item){
-							if($item->getIdVersion() === $idVersion){
-								$version = $item;
-								break;
-							}
-						}
-						if(isset($version)){
-							$tabIdTache = array();
-							foreach($version->getTaches() as $tache){
-								array_push($tabIdTache, $tache->getIdTache());
-							}
-
-							if(in_array($idTache, $tabIdTache)){
-								// On récupère l'id de la tâche et on l'envoie à la page
-								$this->page->addVar('idTache', $idTache);
-
-								// On ajoute la variable application à la page
-								$this->page->addVar('app', $application);
-							}else{
-								// On ajoute la variable d'erreurs
-								$user->getMessageClient()->addErreur(self::DENY_HANDLE_TASK);
-							}
-						}else{
-							// On ajoute la variable d'erreurs
-							$user->getMessageClient()->addErreur(self::TREE_VERSION_NOT_FOUND);
-						}
-					}else{
-						// On ajoute la variable d'erreurs
-						$user->getMessageClient()->addErreur(self::TREE_VERSION_NOT_FOUND);
-					}
-				}else{
-					// On ajoute la variable d'erreurs
-					$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
-				}
-			}else{
-				// On ajoute la variable d'erreurs
-				$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
-			}
-		}else{
-			// On procède à la redirection
-			$response = $this->app->getHTTPResponse();
-			$response->redirect('/');
-		}
-	}
-
-
-	/**
-	* Méthode pour afficher le formulaire d'ajout d'un paramètre à une fonction
-	*/
-	public function executeShowFormParametre($request)
-	{
-		
-		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
-		if ($request->isAjaxRequest()) {
-			// On récupère l'utilisateur système
-			$user = $this->app->getUser();
-
-			// On informe que c'est un chargement Ajax
-			$user->setAjax(true);
-
-			// On récupère l'utilisateur de session
-			$userSession = unserialize($user->getAttribute('userSession'));
-
-			// On récupère l'ID de l'application à mettre en cache
-			$idApp = (int) $request->getPostData('idApp');
-
-			// On récupère le manager des applications
-			$managerApplication = $this->getManagers()->getManagerOf('Application');
-
-			// On récupère l'application via son ID
-			$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
-
-			// On oriente l'utilisateur selon le statut de dépôt de l'application.
-			if($application && ($application->getStatut()->getNomStatut()==='Inactive' || $application->getStatut()->getNomStatut()==='Validated' || $application->getStatut()->getNomStatut()==='Not validated')){
-				
-				// On charge les utilisateurs autorisés 
-				$idAuteursAutorises = array();
-				// On récupère le manager des Utilisateurs
-				$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
-				// On ajoute le créateur comme ID autorisé
-				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
-				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
-					if($utilisateur){
-						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
-					}
-				}
-
-				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
-					
-					// On vérifie que la fonction appartient bien à l'application et à la bonne version
-					$idFonction = $request->getPostData('idFonction');
-					// On récupère la version de l'application demandée 
-					$idVersion = (int) $request->getPostData('idVersion');
-					if($idVersion != 0){
-						foreach($application->getVersions() as $item){
-							if($item->getIdVersion() === $idVersion){
-								$version = $item;
-								break;
-							}
-						}
-						if(isset($version)){
-							$tabIdFonction = array();
-							foreach($version->getTaches() as $tache){
-								foreach($tache->getFonctions() as $fonction){
-									array_push($tabIdFonction, $fonction->getIdFonction());
-								}
-							}
-
-							if(in_array($idFonction, $tabIdFonction)){
-
-								// On récupère la liste des types d'afficahge des parametres des fonctions
-								// On appelle le manager des types d'affichage des paramètres
-								$managerTypeAffichageParametre = $this->getManagers()->getManagerOf('TypeAffichageParametre');
-								$typesAffichageParametre = $managerTypeAffichageParametre->getAllTypeAffichageParametres();
-								// On créé la variable d'affichage à insérer dans la page.
-								$lesTypeAffichageParametre = '';
-								foreach($typesAffichageParametre as $type){
-									$lesTypeAffichageParametre.='<option value="'.$type->getNomTypeAffichageParametre().'">'.$type->getNomTypeAffichageParametre().'</option>';
-								}
-
-								// On l'envoie à la page
-								$this->page->addVar('lesTypeAffichageParametre', $lesTypeAffichageParametre);
-
-								// On récupère l'id de la tâche et on l'envoie à la page
-								$this->page->addVar('idFonction', $idFonction);
-
-								// On ajoute la variable application à la page
-								$this->page->addVar('app', $application);
-
-							}else{
-								// On ajoute la variable d'erreurs
-								$user->getMessageClient()->addErreur(self::DENY_HANDLE_FUNCTION);
-							}
-						}else{
-							// On ajoute la variable d'erreurs
-							$user->getMessageClient()->addErreur(self::TREE_VERSION_NOT_FOUND);
-						}
-					}else{
-						// On ajoute la variable d'erreurs
-						$user->getMessageClient()->addErreur(self::TREE_VERSION_NOT_FOUND);
-					}
-				}else{
-					// On ajoute la variable d'erreurs
-					$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
-				}
-			}else{
-				// On ajoute la variable d'erreurs
-				$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
-			}
-		}else{
-			// On procède à la redirection
-			$response = $this->app->getHTTPResponse();
-			$response->redirect('/');
-		}
-	}
-
-
 
 	/**
 	* Méthode pour valider le formulaire d'ajout de nouvelle tâche à l'application
@@ -2691,125 +2541,6 @@ class TreeController extends \Library\BackController
 		}
 	}
 
-	
-	/**
-	* Méthode pour modifier une tâche de l'application
-	*/
-	public function executeModifTache($request)
-	{
-		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
-		if ($request->isAjaxRequest()) {
-			// On récupère l'utilisateur système
-			$user = $this->app->getUser();
-
-			// On informe que c'est un chargement Ajax
-			$user->setAjax(true);
-
-			if($request->isExistPOST('idTache')){
-
-				// On récupère l'utilisateur de session
-				$userSession = unserialize($user->getAttribute('userSession'));
-
-				// On récupère l'ID de l'application à mettre en cache
-				$idApp = (int) $request->getPostData('idApp');
-
-				// On récupère le manager des applications
-				$managerApplication = $this->getManagers()->getManagerOf('Application');
-
-				// On récupère l'application via son ID
-				$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
-				
-				// On oriente l'utilisateur selon le statut de dépôt de l'application.
-				if($application && ($application->getStatut()->getNomStatut()==='Inactive' || $application->getStatut()->getNomStatut()==='Validated' || $application->getStatut()->getNomStatut()==='Not validated')){
-						
-					// On charge les utilisateurs autorisés 
-					$idAuteursAutorises = array();
-					// On récupère le manager des Utilisateurs
-					$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
-					// On ajoute le créateur comme ID autorisé
-					array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
-					foreach($application->getAuteurs() as $auteur){
-						$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
-						if($utilisateur){
-							array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
-						}
-					}
-					if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
-						
-						// On vérifie que la tâche appartient bien à l'application et à la bonne version
-						$idTache = $request->getPostData('idTache');
-						// On récupère la version de l'application demandée 
-						$idVersion = (int) $request->getPostData('idVersion');
-						if($idVersion != 0){
-							foreach($application->getVersions() as $item){
-								if($item->getIdVersion() === $idVersion){
-									$version = $item;
-									break;
-								}
-							}
-							if(isset($version)){
-								$tabIdTache = array();
-								foreach($version->getTaches() as $tache){
-									array_push($tabIdTache, $tache->getIdTache());
-								}
-
-								if(in_array($idTache, $tabIdTache)){
-
-									$managerTache = $this->getManagers()->getManagerOf('Tache');
-									$tacheAModifier = $managerTache->getTacheById($idTache);
-
-									/* Pour la création des variables liste de formulaires */
-
-									// On récupère la liste des types de parametre des tâches
-									// On appelle le manager des types de parametre
-									$managerTypeDonneeUtilisateur = $this->getManagers()->getManagerOf('TypeDonneeUtilisateur');
-									$typesDonneeUtilisateur = $managerTypeDonneeUtilisateur->getAllTypeDonneeUtilisateurs();
-
-									// On récupère la liste des unités de parametre
-									// On appelle le manager des unité de parametre
-									$managerUniteDonneeUtilisateur = $this->getManagers()->getManagerOf('UniteDonneeUtilisateur');
-									$uniteDonneeUtilisateurs = $managerUniteDonneeUtilisateur->getAllUniteDonneeUtilisateurs();
-
-									// On ajoute la variable uniteDonneeUtilisateurs à la page
-									$this->page->addVar('uniteDonneeUtilisateurs', $uniteDonneeUtilisateurs);
-									
-									// On ajoute les variables à la page
-									$this->page->addVar('tacheAModifier', $tacheAModifier);
-									$this->page->addVar('app', $application);
-									$this->page->addVar('typesDonneeUtilisateur', $typesDonneeUtilisateur);
-								}else{
-									// On ajoute la variable d'erreurs
-									$user->getMessageClient()->addErreur(self::DENY_HANDLE_TASK);	
-								}
-							}else{
-								// On ajoute la variable d'erreurs
-								$user->getMessageClient()->addErreur(self::TREE_VERSION_NOT_FOUND);
-							}
-						}else{
-							// On ajoute la variable d'erreurs
-							$user->getMessageClient()->addErreur(self::TREE_VERSION_NOT_FOUND);
-						}
-					}else{
-						// On ajoute la variable d'erreurs
-						$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
-					}	
-				}else{
-					// On ajoute la variable d'erreurs
-					$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
-				}
-			
-			}else{
-				$user->getMessageClient()->addErreur(self::ERROR_REQUEST_NOT_VALID);
-			}
-				
-		}else{
-			// On procède à la redirection
-			$response = $this->app->getHTTPResponse();
-			$response->redirect('/');
-		}
-	}
-
-
 
 	/**
 	* Méthode pour récupérer le texte (programme) d'une fonction
@@ -2927,118 +2658,6 @@ class TreeController extends \Library\BackController
 		}
 	}
 
-
-	/**
-	* Méthode pour modifier un paramètre d'une fonction
-	*/
-	public function executeModifParametre($request)
-	{
-		
-		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
-		if ($request->isAjaxRequest()) {
-			// On récupère l'utilisateur système
-			$user = $this->app->getUser();
-
-			// On informe que c'est un chargement Ajax
-			$user->setAjax(true);
-
-			// On récupère l'utilisateur de session
-			$userSession = unserialize($user->getAttribute('userSession'));
-
-			// On récupère l'ID de l'application à mettre en cache
-			$idApp = (int) $request->getPostData('idApp');
-
-			// On récupère le manager des applications
-			$managerApplication = $this->getManagers()->getManagerOf('Application');
-
-			// On récupère l'application via son ID
-			$application = $managerApplication->getApplicationByIdWithAllParameters($idApp);
-
-
-			// On oriente l'utilisateur selon le statut de dépôt de l'application.
-			if($application && ($application->getStatut()->getNomStatut()==='Inactive' || $application->getStatut()->getNomStatut()==='Validated' || $application->getStatut()->getNomStatut()==='Not validated')){
-				
-				// On charge les utilisateurs autorisés 
-				$idAuteursAutorises = array();
-				// On récupère le manager des Utilisateurs
-				$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
-				// On ajoute le créateur comme ID autorisé
-				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
-				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
-					if($utilisateur){
-						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
-					}
-				}
-
-				if(in_array($userSession->getIdUtilisateur(), $idAuteursAutorises) || $user->getAttribute('isAdmin')){
-					
-					// On vérifie que la fonction appartient bien à l'application et à la bonne version
-					$idParametre = $request->getPostData('idParametre');
-					// On récupère la version de l'application demandée 
-					$idVersion = (int) $request->getPostData('idVersion');
-					if($idVersion != 0){
-						foreach($application->getVersions() as $item){
-							if($item->getIdVersion() === $idVersion){
-								$version = $item;
-								break;
-							}
-						}
-						if(isset($version)){
-							$tabIdParametre = array();
-							foreach($version->getTaches() as $tache){
-								foreach($tache->getFonctions() as $fonction){
-									foreach($fonction->getParametres() as $parametre){
-										array_push($tabIdParametre, $parametre->getIdParametre());
-									}
-								}
-							}
-
-							if(in_array($idParametre, $tabIdParametre)){
-							
-								$idParametre = $request->getPostData('idParametre');
-								$managerParametre = $this->getManagers()->getManagerOf('Parametre');
-								$parametreAModifier = $managerParametre->getParametreById($idParametre);
-							
-								// On récupère l'id de la tâche et on l'envoie à la page
-								$this->page->addVar('parametreAModifier', $parametreAModifier);
-
-								// On ajoute la variable application à la page
-								$this->page->addVar('app', $application);
-
-								// On récupère la liste des types d'affichage du parametre
-								$managerTypeAffichageParametre = $this->getManagers()->getManagerOf('TypeAffichageParametre');
-								$listeTypeAffichageParametre = $managerTypeAffichageParametre->getAllTypeAffichageParametres();
-								// On ajoute la variable listeTypeAffichageParametre à la page
-								$this->page->addVar('listeTypeAffichageParametre', $listeTypeAffichageParametre);
-							}else{
-								$user->getMessageClient()->addErreur(self::DENY_HANDLE_PARAMETER);
-							}
-						}else{
-							// On ajoute la variable d'erreurs
-							$user->getMessageClient()->addErreur(self::TREE_VERSION_NOT_FOUND);
-						}
-					}else{
-						// On ajoute la variable d'erreurs
-						$user->getMessageClient()->addErreur(self::TREE_VERSION_NOT_FOUND);
-					}
-				}else{
-					// On ajoute la variable d'erreurs
-					$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
-				}
-			}else{
-				// On ajoute la variable d'erreurs
-				$user->getMessageClient()->addErreur(self::DENY_HANDLE_APPLICATION);
-			}
-		}else{
-			// On procède à la redirection
-			$response = $this->app->getHTTPResponse();
-			$response->redirect('/');
-		}
-	}
-	
-	
-	
 
 	/**
 	* Méthode pour valider le formulaire d'ajout de nouvelle tâche à l'application
