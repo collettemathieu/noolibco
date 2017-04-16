@@ -62,6 +62,16 @@ Go to https://www.noolib.com/Hire/ .
 		?>
 	">
 
+		<!-- LOADER -->
+		<div class="overlay">
+			<div class="globalLoader"></div>
+		</div>
+		<script>
+		window.onload=function(){
+			$('.overlay').fadeOut();
+		};
+		</script>
+
 		<!-- HEADER -->
 		<?php
 			include_once('../public_html/header.php');
@@ -103,8 +113,6 @@ Go to https://www.noolib.com/Hire/ .
 		</div>
 
 		<!-- Chargement des librairies JS -->
-		<?php echo $librairiesJS; ?>
-
-		
+		<?php echo $librairiesJS; ?>	
 	</body>
 </html>

@@ -24,7 +24,6 @@
 <!-- Files JS -->
 <script type="text/javascript" src="/JavaScript/arbreApplication.js"></script>
 <script type="text/javascript" src="/JavaScript/fonctionsForApplication.js"></script>
-<script type="text/javascript" src="/JavaScript/displayInformationsClient.js"></script>
 <script type="text/javascript" src="/JavaScript/init.js"></script>
 
 <!-- Application AngularJS ProfileUser-->

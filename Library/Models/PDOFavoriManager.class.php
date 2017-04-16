@@ -30,7 +30,7 @@ class PDOFavoriManager extends \Library\Models\FavoriManager
 		 if($favori instanceof Favori){
 		
 			//préparation de la requete
-			$requete = $this->dao->prepare("INSERT INTO favori VALUES (:idUtilisateur, :idApplication)");
+			$requete = $this->dao->prepare("INSERT IGNORE INTO favori VALUES (:idUtilisateur, :idApplication)");
 
 			//bind des valeurs
 			$requete->bindValue(':idUtilisateur', $favori->getUtilisateur()->getIdUtilisateur(), \PDO::PARAM_INT);

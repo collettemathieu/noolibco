@@ -145,13 +145,7 @@ Go to https://www.noolib.com/Hire/ .
 		<!-- Critical scripts -->
 		<script type="text/javascript" src="/JavaScript/init.js"></script>
 
-		<!-- Files JS -->
-		<script type="text/javascript" src="/JavaScript/dockApplication.js"></script>
-
-
 		<!-- Chargement des librairies JS -->
-		<?php echo $librairiesJS; ?>
-		
-		
+		<?php echo $librairiesJS; ?>		
 	</body>
 </html>
