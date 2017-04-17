@@ -6,10 +6,12 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="col-lg-10 centering">
-				<form id="formLogoApp" ng-submit="validFormLogo()" name="formLogoApp" class="well well-lg">
+				<form ng-submit="validFormLogo($event)" name="formLogoApp">
 					<div class="form-group has-feedback">
-						<label for="fileLogoApp">Select an icon for your application (PNG, JPEG, 128px*128px, < 12ko) <a href="https://www.iconfinder.com" target="_blank">IconFinder</a></label>
-						<input type="file" name="logoApp" ng-model="logoApp" class="form-control" logo-application-validator file-design-directive size="40"/>
+						<div class="input-group">
+							<div class="input-group-addon">Select a new icon (PNG, JPEG, 128px*128px, < 12ko) <a href="https://www.iconfinder.com" target="_blank">IconFinder</a></div>
+							<input type="file" name="logoApp" ng-model="logoApp" class="form-control" logo-application-validator file-design-directive size="40"/>
+						</div>
 						<div id="affichageMiniatureLogo"></div>
 					</div>
 					<input type="hidden" name="idApp" value="{{application.id}}"/>

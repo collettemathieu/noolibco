@@ -1,13 +1,10 @@
 <?php 
-if(isset($versions)){
-	$texte = '';
-	foreach($user->getMessageClient()->getReussites() as $reussite){
-		$texte .= '<p>'.$reussite.'</p>';
-	}
+if(isset($typesDonneeUtilisateur) && isset($uniteDonneeUtilisateurs)){
 	$reponse = array(
-			'versions' => $versions,
-			'reussites' => $texte
+			'dataTypes' => $typesDonneeUtilisateur,
+			'dataUnits' => $uniteDonneeUtilisateurs
 		);
+	
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';
 	foreach($user->getMessageClient()->getErreurs() as $erreur){
@@ -23,7 +20,6 @@ if(isset($versions)){
 }
 
 // On envoie la réponse au format JSON
-
 echo json_encode($reponse);
 
 ?>

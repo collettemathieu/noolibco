@@ -25,12 +25,12 @@ application.controller('logoController', ['$scope', '$uibModalInstance', '$http'
 	};
 
 	// Pour soumettre le formulaire
-	$scope.validFormLogo = function(){
+	$scope.validFormLogo = function(e){
 		if($scope.formLogoApp.$valid){
 			$scope.displayButtonForm = true;
 
-			var form = document.querySelector('#formLogoApp'),
-				formData = new FormData(form);
+			var formData = new FormData(e.target);
+			
 			$http({
 				method: 'POST',
 				url: '/HandleApplication/ChangePictureApplication',

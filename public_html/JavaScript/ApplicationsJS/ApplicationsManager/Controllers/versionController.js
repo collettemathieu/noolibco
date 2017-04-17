@@ -3,18 +3,18 @@
 // +----------------------------------------------------------------------+
 // | Copyright (c) 2017 NooLib			         				          |
 // +----------------------------------------------------------------------+
-// | Controleur pour la fenêtre modale Logo								  |
+// | Controleur pour la fenêtre modale Version							  |
 // +----------------------------------------------------------------------+
 // | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>    			  |
 // +----------------------------------------------------------------------+
 
 /**
- * @name:  logoController
+ * @name:  versionController
  * @access: public
  * @version: 1
  */
 
-application.controller('descriptionController', ['$scope', '$uibModalInstance', '$http', 'tableOfCategories', function($scope, $uibModalInstance, $http, tableOfCategories){
+application.controller('versionController', ['$scope', '$uibModalInstance', '$http', 'applicationService', function($scope, $uibModalInstance, $http, applicationService){
 	
 	// Position par defaut du bouton envoyer
 	$scope.displayButtonForm = false;
@@ -24,44 +24,25 @@ application.controller('descriptionController', ['$scope', '$uibModalInstance', 
 		 $uibModalInstance.dismiss('cancel');
 	};
 
-	// Pour initialiser le formulaire
-	$scope.idApp = $scope.application.id;
-	$scope.descriptionApp = $scope.application.description;
-	//******Naoures
-	$scope.lienApp = $scope.application.lien;
-	//******
-	$scope.motsClesApp = $scope.application.motCles;
-	$scope.tableOfCategories = tableOfCategories;
-
-	// Pour soumettre le formulaire
-	$scope.validFormDescription = function(e){
-		if($scope.formDescriptionApp.$valid){
+	// Pour créer une nouvelle version de l'application
+	$scope.validFormVersion = function(e){
+		if($scope.formNewVersion.$valid){
 			$scope.displayButtonForm = true;
 
 			var formData = new FormData(e.target);
-			formData.append('idApp', $scope.application.id);
 			
 			$http({
 				method: 'POST',
-				url: '/HandleApplication/ChangeDescriptionApplication',
+				url: '/HandleApplication/CreateNewVersionApplication',
 				headers: {'Content-Type': undefined},
-                transformRequest: angular.identity,
-                data: formData
+				data: formData
 			})
 			.success(function(response){
-				if(response['description'] && response['motCles'] && response['categorie']){
-					$scope.application.description = response['description'];
-					
-					if(response['lien']){
-						$scope.application.lien = response['lien']; //added by Naoures
-					}else{
-						$scope.application.lien = '';
-					}
-					
-					$scope.application.motCles = response['motCles'];
-					$scope.application.categorie = response['categorie'];
+				if(response['versions']){
+					$scope.application.versions = response['versions'];
+					// Evènement de l'arbre des applications
+					$scope.$emit('treeHasChanged', true);		
 				}
-
 				displayInformationsClient(response);
 				// Position par defaut du bouton envoyer
 				$scope.displayButtonForm = false;

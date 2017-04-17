@@ -3,65 +3,56 @@
 // +----------------------------------------------------------------------+
 // | Copyright (c) 2017 NooLib			         				          |
 // +----------------------------------------------------------------------+
-// | Controleur pour la fenêtre modale Logo								  |
+// | Controleur pour la fenêtre modale New Function						  |
 // +----------------------------------------------------------------------+
 // | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>    			  |
 // +----------------------------------------------------------------------+
 
 /**
- * @name:  logoController
+ * @name:  newFunctionController
  * @access: public
  * @version: 1
  */
 
-application.controller('descriptionController', ['$scope', '$uibModalInstance', '$http', 'tableOfCategories', function($scope, $uibModalInstance, $http, tableOfCategories){
+application.controller('newFunctionController', ['$scope', '$uibModalInstance', '$http', 'idTache', function($scope, $uibModalInstance, $http, idTache){
 	
-	// Position par defaut du bouton envoyer
-	$scope.displayButtonForm = false;
-
 	// Pour fermer la fenêtre modale
 	$scope.close = function(){
 		 $uibModalInstance.dismiss('cancel');
 	};
 
-	// Pour initialiser le formulaire
-	$scope.idApp = $scope.application.id;
-	$scope.descriptionApp = $scope.application.description;
-	//******Naoures
-	$scope.lienApp = $scope.application.lien;
-	//******
-	$scope.motsClesApp = $scope.application.motCles;
-	$scope.tableOfCategories = tableOfCategories;
+	// Initialisation des variables
+	$scope.idTache = idTache;
+	$scope.urlDropZone = '/HandleApplication/ValidFormFonction';
+
+	// On s'abonne à l'évènement de la dropZone
+	$scope.$on('dropEnded', function(evt, value){
+		if(value){
+			// Evènement de l'arbre des applications
+			$scope.$emit('treeHasChanged', false);
+			// On ferme la fenêtre modale
+			$uibModalInstance.dismiss('cancel');
+		}
+	});
 
 	// Pour soumettre le formulaire
-	$scope.validFormDescription = function(e){
-		if($scope.formDescriptionApp.$valid){
+	/*
+	$scope.formValidNewTask = function(e){
+		if($scope.formNewTask.$valid){
 			$scope.displayButtonForm = true;
+			treeHasChanged = true;
 
 			var formData = new FormData(e.target);
-			formData.append('idApp', $scope.application.id);
-			
+
 			$http({
-				method: 'POST',
-				url: '/HandleApplication/ChangeDescriptionApplication',
-				headers: {'Content-Type': undefined},
+                url: '/HandleApplication/ValidFormTache',
+                method: 'POST',
+                headers: {'Content-Type': undefined},
                 transformRequest: angular.identity,
                 data: formData
-			})
+            })
 			.success(function(response){
-				if(response['description'] && response['motCles'] && response['categorie']){
-					$scope.application.description = response['description'];
-					
-					if(response['lien']){
-						$scope.application.lien = response['lien']; //added by Naoures
-					}else{
-						$scope.application.lien = '';
-					}
-					
-					$scope.application.motCles = response['motCles'];
-					$scope.application.categorie = response['categorie'];
-				}
-
+				
 				displayInformationsClient(response);
 				// Position par defaut du bouton envoyer
 				$scope.displayButtonForm = false;
@@ -79,6 +70,6 @@ application.controller('descriptionController', ['$scope', '$uibModalInstance', 
 				$uibModalInstance.dismiss('cancel');
 			});
 		}
-	}
+	}*/
 }]);
 

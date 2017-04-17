@@ -17,15 +17,22 @@
 application.controller('mainController', ['$scope', '$http', '$window', '$uibModal', 'applicationService', function($scope, $http, $window, $uibModal, applicationService){
 	
 	// Récupération des éléments de l'application
-	var applicationElement = document.querySelector('#application'),
+	var applicationElement = document.getElementById('application'),
 		idApplication = parseInt(applicationElement.getAttribute('idApplication'));
 	
+	// Initialisation de l'arbre de l'application et des variables
 	applicationService.getApplication(idApplication).then(function(response){ // <- c'est une promise
-	
 		if(response['erreurs']){
 			displayInformationsClient(response);
 		}else{
+			// Initialisation des variables
 			$scope.application = response;
+			$scope.idVersion = response.versions[response.versions.length-1].id;
+			$scope.numVersion = response.versions[response.versions.length-1].numero;
+			$scope.noteVersion = response.versions[response.versions.length-1].note;
+			applicationService.getTree($scope.idVersion, response.id).then(function(newValue){
+				$scope.tree = newValue;
+			});
 		}
 	}, function(error){
 		var response = {
@@ -33,6 +40,74 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 		};
 		displayInformationsClient(response);
 	});
+
+	// On s'abonne à l'évènement d'un changement dans l'arbre de l'application
+	$scope.$on('treeHasChanged', function(evt, lastNumberVersion){
+		applicationService.getApplication($scope.application.id).then(function(response){ // <- c'est une promise
+			if(response['erreurs']){
+				displayInformationsClient(response);
+			}else{
+				// Initialisation des variables
+				$scope.application = response;
+				if(lastNumberVersion){
+					$scope.idVersion = $scope.application.versions[$scope.application.versions.length-1].id;
+					$scope.numVersion = $scope.application.versions[$scope.application.versions.length-1].numero;
+					$scope.noteVersion = $scope.application.versions[$scope.application.versions.length-1].note;
+				}
+				applicationService.getTree($scope.idVersion, $scope.application.id).then(function(newValue){
+					$scope.tree = newValue;
+				});
+			}
+		}, function(error){
+			var response = {
+				'erreurs': '<p>A system error has occurred: '+error+'</p>'
+			};
+			displayInformationsClient(response);
+		});
+		
+	});
+
+	// Pour créer une nouvelle version
+	$scope.createVersionModal = function(){
+		var modal = $uibModal.open({
+	      animation: true,
+	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/versionTemplate.html',
+	      controller: 'versionController',
+	      scope: $scope
+	    });
+	}
+
+	// Pour créer une nouvelle tâche
+	$scope.createTaskModal = function(){
+		$uibModal.open({
+	      animation: true,
+	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/newTaskTemplate.html',
+	      controller: 'newTaskController',
+	      scope: $scope,
+	      size: 'lg',
+	      resolve: {
+	        // On récupère les types des données pour le select
+			typeData: ['$http', '$q', function($http, $q){
+				var deferred = $q.defer(); // -> promise
+				$http({
+					method: 'POST',
+					url: '/HandleApplication/GetTypeData'
+				})
+				.success(function(response){
+					deferred.resolve(response);
+				})
+				.error(function(error){
+					var response = {
+						'erreurs': '<p>A system error has occurred: '+error+'</p>'
+					};
+					displayInformationsClient(response);
+				});
+
+				return deferred.promise;
+			}
+	      ]}
+	    });
+	}
 
 	// Pour supprimer définitivement l'application
 	$scope.deleteApplicationModal = function(){
@@ -81,7 +156,8 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	      animation: true,
 	      templateUrl: '/JavaScript/ApplicationsJS/ApplicationsManager/Directives/Templates/logoTemplate.html',
 	      controller: 'logoController',
-	      scope: $scope
+	      scope: $scope,
+	      size: 'lg'
 	    });
 	}
 
@@ -138,6 +214,5 @@ application.controller('mainController', ['$scope', '$http', '$window', '$uibMod
 	      size: 'lg'
 	    });
 	}
-
 }]);
 

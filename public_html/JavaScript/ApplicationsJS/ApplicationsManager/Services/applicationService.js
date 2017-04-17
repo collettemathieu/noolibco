@@ -44,6 +44,35 @@ application.factory('applicationService', ['$q', '$http', function($q, $http){
 
 			return deferred.promise;
 		},
+		getTree: function(idVersion, idApplication){
+			var deferred = $q.defer();
+			$http({
+				method: 'POST',
+				url: '/HandleApplication/DataApplication',
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				transformRequest: function(obj) {
+			        var str = [];
+			        for(var p in obj)
+			        	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			        return str.join("&");
+			    },
+				data: {
+					idApp:parseInt(idApplication),
+	                idVersion:parseInt(idVersion)
+				}
+			})
+			.success(function(response){
+				deferred.resolve(response);
+			})
+			.error(function(error){
+				var response = {
+					'erreurs': '<p>A system error has occurred: '+error+'</p>'
+				};
+				displayInformationsClient(response);
+			});
+
+			return deferred.promise;
+		},
 		getPublications: function(idApplication){
 			// On importe les publications déjà enregistrées de l'application
 			var deferred = $q.defer();

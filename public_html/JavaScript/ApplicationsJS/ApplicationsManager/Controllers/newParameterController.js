@@ -3,18 +3,18 @@
 // +----------------------------------------------------------------------+
 // | Copyright (c) 2017 NooLib			         				          |
 // +----------------------------------------------------------------------+
-// | Controleur pour la fenêtre modale Logo								  |
+// | Controleur pour la fenêtre modale New Parameter					  |
 // +----------------------------------------------------------------------+
 // | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>    			  |
 // +----------------------------------------------------------------------+
 
 /**
- * @name:  logoController
+ * @name:  newParameterController
  * @access: public
  * @version: 1
  */
 
-application.controller('descriptionController', ['$scope', '$uibModalInstance', '$http', 'tableOfCategories', function($scope, $uibModalInstance, $http, tableOfCategories){
+application.controller('newParameterController', ['$scope', '$uibModalInstance', '$http', 'idFonction', 'typesParameter', function($scope, $uibModalInstance, $http, idFonction, typesParameter){
 	
 	// Position par defaut du bouton envoyer
 	$scope.displayButtonForm = false;
@@ -24,49 +24,33 @@ application.controller('descriptionController', ['$scope', '$uibModalInstance', 
 		 $uibModalInstance.dismiss('cancel');
 	};
 
-	// Pour initialiser le formulaire
-	$scope.idApp = $scope.application.id;
-	$scope.descriptionApp = $scope.application.description;
-	//******Naoures
-	$scope.lienApp = $scope.application.lien;
-	//******
-	$scope.motsClesApp = $scope.application.motCles;
-	$scope.tableOfCategories = tableOfCategories;
+	// Initialisation des variables
+	$scope.idFonction = idFonction;
+	$scope.typesParameter = typesParameter;
 
 	// Pour soumettre le formulaire
-	$scope.validFormDescription = function(e){
-		if($scope.formDescriptionApp.$valid){
+	$scope.formValidNewParameter = function(e){
+		if($scope.formNewParameter.$valid){
 			$scope.displayButtonForm = true;
-
-			var formData = new FormData(e.target);
-			formData.append('idApp', $scope.application.id);
 			
+			var formData = new FormData(e.target);
+
 			$http({
-				method: 'POST',
-				url: '/HandleApplication/ChangeDescriptionApplication',
-				headers: {'Content-Type': undefined},
+                url: '/HandleApplication/ValidFormParametre',
+                method: 'POST',
+                headers: {'Content-Type': undefined},
                 transformRequest: angular.identity,
                 data: formData
-			})
+            })
 			.success(function(response){
-				if(response['description'] && response['motCles'] && response['categorie']){
-					$scope.application.description = response['description'];
-					
-					if(response['lien']){
-						$scope.application.lien = response['lien']; //added by Naoures
-					}else{
-						$scope.application.lien = '';
-					}
-					
-					$scope.application.motCles = response['motCles'];
-					$scope.application.categorie = response['categorie'];
-				}
-
+				
 				displayInformationsClient(response);
 				// Position par defaut du bouton envoyer
 				$scope.displayButtonForm = false;
 				// Fermer la fenêtre modale
 				$uibModalInstance.dismiss('cancel');
+				// Evènement de l'arbre des applications
+				$scope.$emit('treeHasChanged', false);
 			})
 			.error(function(error){
 				var response = {

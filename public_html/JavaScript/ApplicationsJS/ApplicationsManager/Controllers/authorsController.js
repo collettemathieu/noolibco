@@ -25,26 +25,19 @@ application.controller('authorsController', ['$scope', '$uibModalInstance', '$ht
 	};
 
 	// Pour soumettre le formulaire
-	$scope.validFormContributor = function(){
+	$scope.validFormContributor = function(e){
 		if($scope.formAddContributor.$valid){
 			$scope.displayButtonForm = true;
+
+			var formData = new FormData(e.target);
+			formData.append('idApplication', $scope.application.id);
 
 			$http({
 				method: 'POST',
 				url: '/HandleApplication/AddAuthor',
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: function(obj) {
-			        var str = [];
-			        for(var p in obj)
-			        	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-			        return str.join("&");
-			    },
-				data: {
-					idApplication: $scope.application.id,
-					mail: $scope.mail,
-					firstname: $scope.firstname,
-					lastname: $scope.lastname
-				}
+				headers: {'Content-Type': undefined},
+                transformRequest: angular.identity,
+                data: formData
 			})
 			.success(function(response){
 				if(response['contributeurs']){

@@ -6,11 +6,15 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="col-lg-10 centering">
-				<form id="formNameApp" ng-submit="validFormLogo()" name="formNameApp" class="well well-lg">
+				<form ng-submit="validFormName($event)" name="formNameApp">
 					<div class="form-group has-feedback" ng-class="{'has-error':formNameApp.nomApp.$invalid && formNameApp.nomApp.$dirty, 'has-success':formNameApp.nomApp.$valid}">
-						<input type="text" name="nomApp" ng-model="nomApp" ng-minlength="3" ng-maxlength="20" required class="form-control input-lg" maxlength="20" placeholder="Enter a name for your application (3-20 chars)." name-application-validator/>
+						<div class="input-group">
+							<div class="input-group-addon">Name</div>
+							<input type="text" name="nomApp" ng-model="nomApp" ng-minlength="3" ng-maxlength="20" required class="form-control" maxlength="20" placeholder="Enter a name for your application (3-20 chars)." name-application-validator/>
+						</div>
 						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formNameApp.nomApp.$invalid && formNameApp.nomApp.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formNameApp.nomApp.$valid}"></span>
 						<span ng-show="formNameApp.nomApp.$invalid && formNameApp.nomApp.$dirty" class="help-block" ng-bind="infoInvalidNameApplication"></span>
+						
 					</div>
 					<input type="hidden" name="idApp" value="{{application.id}}"/>
 					<button ng-disabled="formNameApp.$invalid" class="btn btn-primary" type="submit">

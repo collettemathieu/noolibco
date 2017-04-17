@@ -4,6 +4,7 @@
 
 	<route url="/HandleApplication/GetApplication" module="Tree" action="getApplication"/>
 	<route url="/HandleApplication/GetTypePublications" module="Tree" action="getTypePublications"/>
+	<route url="/HandleApplication/GetTypeParameter" module="Tree" action="getTypeParameter"/>
 	<route url="/HandleApplication/DataApplication" module="Tree" action="dataApplication"/>
 	<route url="/HandleApplication/ChangePictureApplication" module="Tree" action="changePictureApplication"/>
 	<route url="/HandleApplication/ChangeNameApplication" module="Tree" action="changeNameApplication"/>
@@ -16,21 +17,15 @@
 	<route url="/HandleApplication/RemoveAuthor" module="Tree" action="removeAuthor"/>
 
 
-	<route url="/HandleApplication/FormTache" module="Tree" action="showFormTache"/>
-	<route url="/HandleApplication/FormFonction" module="Tree" action="showFormFonction"/>
-	<route url="/HandleApplication/FormParametre" module="Tree" action="showFormParametre"/>
+	<route url="/HandleApplication/GetTypeData" module="Tree" action="getTypeData"/>
+	<route url="/HandleApplication/GetTextFunction" module="Tree" action="getTextFunction"/>
 	<route url="/HandleApplication/ValidFormTache" module="Tree" action="validFormTache"/>
 	<route url="/HandleApplication/ValidFormFonction" module="Tree" action="validFormFonction"/>
 	<route url="/HandleApplication/ValidFormParametre" module="Tree" action="validFormParametre"/>
 	<route url="/HandleApplication/DeleteTache" module="Tree" action="deleteTache"/>
 	<route url="/HandleApplication/DeleteFonction" module="Tree" action="deleteFonction"/>
 	<route url="/HandleApplication/DeleteParametre" module="Tree" action="deleteParametre"/>
-	<route url="/HandleApplication/Delete" module="Tree" action="delete"/>
-
-	<route url="/HandleApplication/ModifTache" module="Tree" action="modifTache"/>
-	<route url="/HandleApplication/ModifFonction" module="Tree" action="modifFonction"/>
-	<route url="/HandleApplication/ModifParametre" module="Tree" action="modifParametre"/>
-	
+	<route url="/HandleApplication/Delete" module="Tree" action="delete"/>	
 	<route url="/HandleApplication/ValidModifTache" module="Tree" action="validModifTache"/>
 	<route url="/HandleApplication/ValidModifFonction" module="Tree" action="validModifFonction"/>
 	<route url="/HandleApplication/ValidModifParametre" module="Tree" action="validModifParametre"/>

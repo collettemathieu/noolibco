@@ -12,19 +12,28 @@
 			</div>
 			<div class="col-lg-8 centering">
 				<legend>Add a new contributor</legend>
-				<form class="well well-lg" ng-submit="validFormContributor()" name="formAddContributor">
+				<form ng-submit="validFormContributor($event)" name="formAddContributor">
 					<div class="form-group has-feedback" ng-class="{'has-error':formAddContributor.firstname.$invalid && formAddContributor.firstname.$dirty, 'has-success':formAddContributor.firstname.$valid}">
-						<input type="text" required class="form-control input-lg" name="firstname" ng-minlength="2" ng-model="firstname" placeholder="His(her) first name"/>
+						<div class="input-group">
+							<div class="input-group-addon">First Name</div>
+							<input type="text" required class="form-control" name="firstname" ng-minlength="2" ng-model="firstname" placeholder="His(her) first name"/>
+						</div>
 						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formAddContributor.firstname.$invalid && formAddContributor.firstname.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formAddContributor.firstname.$valid}"></span>
 						<span ng-show="formAddContributor.firstname.$invalid && formAddContributor.firstname.$dirty" class="help-block">Enter a first name of at least two letters.</span>
 					</div>
 					<div class="form-group has-feedback" ng-class="{'has-error':formAddContributor.lastname.$invalid && formAddContributor.lastname.$dirty, 'has-success':formAddContributor.lastname.$valid}">
-						<input type="text" required class="form-control input-lg" name="lastname" ng-minlength="2" ng-model="lastname" placeholder="His(her) last name"/>
+						<div class="input-group">
+							<div class="input-group-addon">Last Name</div>
+							<input type="text" required class="form-control" name="lastname" ng-minlength="2" ng-model="lastname" placeholder="His(her) last name"/>
+						</div>
 						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formAddContributor.lastname.$invalid && formAddContributor.lastname.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formAddContributor.lastname.$valid}"></span>
 						<span ng-show="formAddContributor.lastname.$invalid && formAddContributor.lastname.$dirty" class="help-block">Enter a last name of at least two letters.</span>
 					</div>
 					<div class="form-group has-feedback" ng-class="{'has-error':formAddContributor.mail.$invalid && formAddContributor.mail.$dirty, 'has-success':formAddContributor.mail.$valid}">
-						<input type="email" required class="form-control input-lg" name="mail" ng-pattern="/^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/" ng-model="mail" placeholder= "His(her) email address"/>
+						<div class="input-group">
+							<div class="input-group-addon">Email</div>
+							<input type="email" required class="form-control" name="mail" ng-pattern="/^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/" ng-model="mail" placeholder= "His(her) email address"/>
+						</div>
 						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formAddContributor.mail.$invalid && formAddContributor.mail.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formAddContributor.mail.$valid}"></span>
 						<span ng-show="formAddContributor.mail.$invalid && formAddContributor.mail.$dirty" class="help-block">Enter a valid email address.</span>
 					</div>

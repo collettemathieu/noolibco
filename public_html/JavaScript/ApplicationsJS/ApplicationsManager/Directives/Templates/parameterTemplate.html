@@ -1,0 +1,102 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="close()">x</button>
+	<h2 class="modal-title">{{nomParametre}} parameter</h2>
+</div>
+<div class="modal-body">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="col-lg-10 centering">
+				<form name="formParameter" ng-submit="formValidParameter($event)">
+					<div class="form-group has-feedback" ng-class="{'has-error':formParameter.nomParametre.$invalid && formParameter.nomParametre.$dirty, 'has-success':formParameter.nomParametre.$valid}">
+						<div class="input-group">
+							<div class="input-group-addon">Name</div>
+							<input required type="text" class="form-control" ng-model="nomParametre" name="nomParametre" ng-maxlength="50" maxlength="50" ng-minlength="3" placeholder="Enter a name for the parameter (between 3 and 50 chars)" value=""/>
+						</div>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formParameter.nomParametre.$invalid && formParameter.nomParametre.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formParameter.nomParametre.$valid}"></span>
+						<span ng-show="formParameter.nomParametre.$invalid && formParameter.nomParametre.$dirty" class="help-block">Enter a name for the parameter (between 3 and 50 chars)</span>
+					</div>
+					<div class="form-group has-feedback" ng-class="{'has-error':formParameter.descriptionParametre.$invalid && formParameter.descriptionParametre.$dirty, 'has-success':formParameter.descriptionParametre.$valid}">
+						<div class="input-group">
+							<div class="input-group-addon">Description</div>
+							<textarea required class="form-control" ng-model="descriptionParametre" ng-maxlength="200" maxlength="200" ng-minlength="10" name="descriptionParametre" placeholder="Enter a short description of the parameter (between 10 and 200 chars)."></textarea>
+						</div>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formParameter.descriptionParametre.$invalid && formParameter.descriptionParametre.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formParameter.descriptionParametre.$valid}"></span>
+						<span ng-show="formParameter.descriptionParametre.$invalid && formParameter.descriptionParametre.$dirty" class="help-block">Enter a short description of the parameter (between 10 and 200 chars).</span>
+					</div>
+					<div class="form-group has-feedback" ng-class="{'has-error':formParameter.valeurMinParametre.$invalid && formParameter.valeurMinParametre.$dirty, 'has-success':formParameter.valeurMinParametre.$valid}">
+						<div class="input-group">
+							<div class="input-group-addon">Minimum value</div>
+							<input required type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="valeurMinParametre" name="valeurMinParametre" maxlength="10" placeholder="Enter a minimum value for the parameter" control-minimum-value-parameter/>
+						</div>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formParameter.valeurMinParametre.$invalid && formParameter.valeurMinParametre.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formParameter.valeurMinParametre.$valid}"></span>
+						<span ng-show="formParameter.valeurMinParametre.$invalid && formParameter.valeurMinParametre.$dirty" class="help-block">The minimum value must be an integer and inferior to the maximum value.</span>
+					</div>
+					<div class="form-group has-feedback" ng-class="{'has-error':formParameter.valeurMaxParametre.$invalid && formParameter.valeurMaxParametre.$dirty, 'has-success':formParameter.valeurMaxParametre.$valid}">
+						<div class="input-group">
+							<div class="input-group-addon">Maximum value</div>
+							<input required type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="valeurMaxParametre" name="valeurMaxParametre" maxlength="10" placeholder="Enter a maximum value for the parameter" control-maximum-value-parameter/>
+						</div>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formParameter.valeurMaxParametre.$invalid && formParameter.valeurMaxParametre.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formParameter.valeurMaxParametre.$valid}"></span>
+						<span ng-show="formParameter.valeurMaxParametre.$invalid && formParameter.valeurMaxParametre.$dirty" class="help-block">The maximum value must be an integer and superior to the minimum value.</span>
+					</div>
+					<div class="form-group has-feedback" ng-class="{'has-error':formParameter.valeurPasParametre.$invalid && formParameter.valeurPasParametre.$dirty, 'has-success':formParameter.valeurPasParametre.$valid}">
+						<div class="input-group">
+							<div class="input-group-addon">Step value</div>
+							<input required type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="valeurPasParametre" name="valeurPasParametre" maxlength="10" placeholder="Enter a step value for the parameter" control-step-value-parameter/>
+						</div>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formParameter.valeurPasParametre.$invalid && formParameter.valeurPasParametre.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formParameter.valeurPasParametre.$valid}"></span>
+						<span ng-show="formParameter.valeurPasParametre.$invalid && formParameter.valeurPasParametre.$dirty" class="help-block">The step value must be an integer, superior to 0 and inferior to the difference between the maximum and the minimum value.</span>
+					</div>
+					<div class="form-group has-feedback" ng-class="{'has-error':formParameter.valeurDefautParametre.$invalid && formParameter.valeurDefautParametre.$dirty, 'has-success':formParameter.valeurDefautParametre.$valid}">
+						<div class="input-group">
+							<div class="input-group-addon">Default value</div>
+							<input required type="text" class="form-control" ng-model="valeurDefautParametre" ng-pattern="/^[0-9]+$/" name="valeurDefautParametre" maxlength="10" placeholder="Enter a default value for the parameter" control-default-value-parameter/>
+						</div>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formParameter.valeurDefautParametre.$invalid && formParameter.valeurDefautParametre.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formParameter.valeurDefautParametre.$valid}"></span>
+						<span ng-show="formParameter.valeurDefautParametre.$invalid && formParameter.valeurDefautParametre.$dirty" class="help-block">The default value must be an integer, inferior to the maximum value and superior to the minimum value.</span>
+					</div>
+					<div class="form-group has-feedback" ng-class="{'has-error':formParameter.typeAffichageParametre.$invalid && formParameter.typeAffichageParametre.$dirty, 'has-success':formParameter.typeAffichageParametre.$valid}">
+						<div class="input-group">
+							<div class="input-group-addon">Display</div>
+							<select required name="typeAffichageParametre" ng-model="typeAffichageParametre" class="form-control input-sm" ng-options="type.name for type in typesParameter track by type.name" ng-init="typeAffichageParametre=typesParameter[indexType]">
+								<option value="">- Please Choose -</option>
+							</select>
+						</div>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formParameter.typeAffichageParametre.$invalid && formParameter.typeAffichageParametre.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formParameter.typeAffichageParametre.$valid}"></span>
+						<span ng-show="formParameter.typeAffichageParametre.$invalid && formParameter.typeAffichageParametre.$dirty" class="help-block">Enter a valid display for the parameter.</span>
+					</div>
+					<div class="form-group has-feedback" ng-class="{'has-error':formParameter.statutPublicParametre.$invalid && formParameter.statutPublicParametre.$dirty, 'has-success':formParameter.statutPublicParametre.$valid}">
+						<div class="input-group">
+							<div class="input-group-addon">Status</div>
+							<select required ng-model="statutPublicParametre" name="statutPublicParametre" class="form-control input-sm" ng-init="statutPublicParametre=status">
+								<option value="">- Please Choose -</option>
+								<option value="1">Public</option>
+								<option value="0">Private</option>
+							</select>
+						</div>
+						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formParameter.statutPublicParametre.$invalid && formParameter.statutPublicParametre.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formParameter.statutPublicParametre.$valid}"></span>
+						<span ng-show="formParameter.statutPublicParametre.$invalid && formParameter.statutPublicParametre.$dirty" class="help-block">Enter a valid status for the parameter.</span>
+					</div>
+					<input type="hidden" name="idApp" value="{{application.id}}"/>
+					<input type="hidden" name="idVersion" value="{{idVersion}}"/>
+					<input type="hidden" name="idParametre" value="{{idParameter}}"/>
+					<button ng-disabled="formParameter.$invalid" class="btn btn-primary" type="submit">
+						<div ng-hide="displayButtonForm">Update</div>
+						<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
+					</button>
+				</form><br>
+				<div class="modal-footer">
+					<form name="formDeleteParameter" ng-submit="formValidDeleteParameter($event)">
+						<input type="hidden" name="idParametre" value="{{idParameter}}"/>
+						<input type="hidden" name="idApp" value="{{application.id}}"/>
+						<input type="hidden" name="idVersion" value="{{idVersion}}"/>
+						<button class="btn btn-danger" type="submit">
+							<div ng-hide="displayButtonDelete">Delete this parameter</div>
+							<div ng-show="displayButtonDelete"><span class="glyphicon glyphicon-refresh spinning" ></span> Deleting...</div>
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

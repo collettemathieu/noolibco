@@ -111,6 +111,8 @@ abstract class BackController extends ApplicationComponent
 	const TREE_VERSION_NOT_ACTIVATED = 'Sorry, any version of this application is activated. Please, stay tuned!';
 	const TREE_VERSION_ALREADY_EXIST = 'Sorry, you cannot use the same version of the application twice.';
 	const TREE_VERSION_WRONG = 'Enter a valid version name (eg. 1.0.0).';
+	const TREE_VERSION_NOT_CORRECT = 'Sorry, the version number entered must be posterior to the previous.';
+	const TREE_VERSION_CREATED = 'A new version has been created successfully.';
 
 	/* Library */
 	const LIBRARY_NO_AUTHOR = 'This contributor does not exist anymore.';

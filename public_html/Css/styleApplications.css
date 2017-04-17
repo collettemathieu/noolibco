@@ -47,7 +47,12 @@ table {
 	box-shadow: 2px 2px 10px grey;
 }
 
-
 a{
 	cursor: pointer;
+}
+
+.textFormat{
+	display: block;
+	padding: 20px;
+	font-size: 1.5em;
 }

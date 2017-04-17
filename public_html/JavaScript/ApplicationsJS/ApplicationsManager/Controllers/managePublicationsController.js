@@ -46,11 +46,10 @@ application.controller('managePublicationsController', ['applicationService', '$
     $scope.loadingAddPublication = false;
 
 	// Pour faire une recherche à partir d'une DOI
-	$scope.validDOI = function(){
+	$scope.validDOI = function(e){
 		
         if($scope.formDOI.$valid){
-            var formDOI = document.getElementById('formDOI'),
-    			formData = new FormData(formDOI);
+            var formData = new FormData(e.target);
 
             $scope.loading = true;
     		// Envoi de la requête HTTP en mode asynchrone
@@ -89,10 +88,9 @@ application.controller('managePublicationsController', ['applicationService', '$
 	};
 
     // Pour ajouter une nouvelle publication
-    $scope.addPublication = function(){
+    $scope.addPublication = function(e){
         if($scope.formAddPublication.$valid){
-            var addPublicationForm = document.getElementById('addPublicationForm'),
-                formData = new FormData(addPublicationForm);
+            var formData = new FormData(e.target);
 
             // On rajoute le type de publication en paramètre
             formData.append('typePublication', $scope.selectedType.nameType);

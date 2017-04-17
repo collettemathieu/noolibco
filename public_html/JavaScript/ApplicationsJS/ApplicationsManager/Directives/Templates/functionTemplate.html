@@ -1,0 +1,23 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="close()">x</button>
+	<h2 class="modal-title">Edit this function</h2>
+</div>
+<div class="modal-body">
+	<drop-zone></drop-zone>
+	<div>--- Or ---</div>
+	<div class="alert alert-warning">{{textFunction}}</div>
+	<form class="well well-lg">
+		<button class="btn btn-primary">Send</button>
+	</form><br>
+	<div class="modal-footer">
+		<form name="formDeleteTask" ng-submit="formValidDeleteFunction($event)">
+			<input type="hidden" name="idApp" value="{{application.id}}"/>
+			<input type="hidden" name="idVersion" value="{{idVersion}}"/>
+			<input type="hidden" name="idFunction" value="{{idFunction}}"/>
+			<button class="btn btn-danger" type="submit">
+				<div ng-hide="displayButtonDelete">Delete this function</div>
+				<div ng-show="displayButtonDelete"><span class="glyphicon glyphicon-refresh spinning" ></span> Deleting...</div>
+			</button>
+		</form>
+	</div>
+</div>
