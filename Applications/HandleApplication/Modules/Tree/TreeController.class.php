@@ -171,6 +171,8 @@ class TreeController extends \Library\BackController
 										'valeurMin' => $parameter->getValeurMinParametre(),
 										'valeurMax' => $parameter->getValeurMaxParametre(),
 										'valeurPas' => $parameter->getValeurPasParametre(),
+										'typeAffichageParametre' => $parameter->getTypeAffichageParametre()->getNomTypeAffichageParametre(),
+										'statusParametre' => $parameter->getStatutPublicParametre()
 										));
 								}
 

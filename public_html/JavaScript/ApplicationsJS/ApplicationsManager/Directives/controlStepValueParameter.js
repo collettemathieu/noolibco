@@ -19,9 +19,12 @@ application.directive('controlStepValueParameter', function(){
 		restrict: 'A',
 		link: function(scope, element, attrs, ngModelCtrl){
 			ngModelCtrl.$validators.valeurMaxParametre = function(value){
+				var value = parseInt(value),
+					min = parseInt(scope.valeurMinParametre),
+					max = parseInt(scope.valeurMaxParametre);
 				if(value > 0){
 					if(typeof scope.valeurMinParametre != 'undefined' && scope.valeurMaxParametre != 'undefined'){	
-						if(value < (scope.valeurMaxParametre - scope.valeurMinParametre)){
+						if(value < (max - min)){
 							return true;
 						}else{
 							return false;

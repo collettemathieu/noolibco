@@ -18,6 +18,7 @@ application.controller('parameterController', ['$scope', '$uibModalInstance', '$
 	
 	// Position par defaut du bouton envoyer
 	$scope.displayButtonForm = false;
+	$scope.displayButtonDelete = false;
 
 	// Pour fermer la fenêtre modale
 	$scope.close = function(){
@@ -38,6 +39,12 @@ application.controller('parameterController', ['$scope', '$uibModalInstance', '$
 						$scope.valeurMaxParametre = parameter.valeurMax;
 						$scope.valeurDefautParametre = parameter.valeurDefaut;
 						$scope.valeurPasParametre = parameter.valeurPas;
+						typesParameter.forEach(function(type, index){
+							if(type.name === parameter.typeAffichageParametre){
+								$scope.indexType = index;
+							}
+						});
+						$scope.status = parameter.statusParametre ? '1' : '0';
 					}
 				});
 			});
@@ -79,6 +86,41 @@ application.controller('parameterController', ['$scope', '$uibModalInstance', '$
 				$uibModalInstance.dismiss('cancel');
 			});
 		}
+	}
+
+
+	// Pour supprimer le paramètre
+	$scope.formValidDeleteParameter = function(e){
+		$scope.displayButtonDelete = true;
+		var formData = new FormData(e.target);
+		
+		$http({
+            url: '/HandleApplication/DeleteParametre',
+            method: 'POST',
+            headers: {'Content-Type': undefined},
+            transformRequest: angular.identity,
+            data: formData
+        })
+		.success(function(response){
+			
+			displayInformationsClient(response);
+			// Position par defaut du bouton envoyer
+			$scope.displayButtonDelete = false;
+			// Fermer la fenêtre modale
+			$uibModalInstance.dismiss('cancel');
+			// Evènement de l'arbre des applications
+			$scope.$emit('treeHasChanged', false);
+		})
+		.error(function(error){
+			var response = {
+				'erreurs': '<p>A system error has occurred: '+error+'</p>'
+			};
+			displayInformationsClient(response);
+			// Position par defaut du bouton envoyer
+			$scope.displayButtonDelete = false;
+			// Fermer la fenêtre modale
+			$uibModalInstance.dismiss('cancel');
+		});
 	}
 }]);
 

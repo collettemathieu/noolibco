@@ -20,7 +20,10 @@ application.directive('controlDefaultValueParameter', function(){
 		link: function(scope, element, attrs, ngModelCtrl){
 			ngModelCtrl.$validators.valeurDefautParametre = function(value){
 				if(typeof scope.valeurMinParametre != 'undefined' && scope.valeurMaxParametre != 'undefined'){	
-					if(value >= scope.valeurMinParametre && value <= scope.valeurMaxParametre){
+					var value = parseInt(value),
+						min = parseInt(scope.valeurMinParametre),
+						max = parseInt(scope.valeurMaxParametre);
+					if(value >= min && value <= max){
 						return true;
 					}else{
 						return false;

@@ -20,7 +20,9 @@ application.directive('controlMinimumValueParameter', function(){
 		link: function(scope, element, attrs, ngModelCtrl){
 			ngModelCtrl.$validators.valeurMinParametre = function(value){	
 				if(typeof scope.valeurMaxParametre != 'undefined'){
-					if(value < scope.valeurMaxParametre){
+					var value = parseInt(value),
+						max = parseInt(scope.valeurMaxParametre);
+					if(value < max){
 						return true;
 					}else{
 						return false;

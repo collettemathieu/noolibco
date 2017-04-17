@@ -58,7 +58,7 @@
 					<div class="form-group has-feedback" ng-class="{'has-error':formParameter.typeAffichageParametre.$invalid && formParameter.typeAffichageParametre.$dirty, 'has-success':formParameter.typeAffichageParametre.$valid}">
 						<div class="input-group">
 							<div class="input-group-addon">Display</div>
-							<select required name="typeAffichageParametre" ng-model="typeAffichageParametre" class="form-control input-sm" ng-options="type.name for type in typesParameter track by type.name">
+							<select required name="typeAffichageParametre" ng-model="typeAffichageParametre" class="form-control input-sm" ng-options="type.name for type in typesParameter track by type.name" ng-init="typeAffichageParametre=typesParameter[indexType]">
 								<option value="">- Please Choose -</option>
 							</select>
 						</div>
@@ -68,7 +68,7 @@
 					<div class="form-group has-feedback" ng-class="{'has-error':formParameter.statutPublicParametre.$invalid && formParameter.statutPublicParametre.$dirty, 'has-success':formParameter.statutPublicParametre.$valid}">
 						<div class="input-group">
 							<div class="input-group-addon">Status</div>
-							<select required ng-model="statutPublicParametre" name="statutPublicParametre" class="form-control input-sm">
+							<select required ng-model="statutPublicParametre" name="statutPublicParametre" class="form-control input-sm" ng-init="statutPublicParametre=status">
 								<option value="">- Please Choose -</option>
 								<option value="1">Public</option>
 								<option value="0">Private</option>
@@ -81,10 +81,21 @@
 					<input type="hidden" name="idVersion" value="{{idVersion}}"/>
 					<input type="hidden" name="idParametre" value="{{idParameter}}"/>
 					<button ng-disabled="formParameter.$invalid" class="btn btn-primary" type="submit">
-						<div ng-hide="displayButtonForm">Add</div>
+						<div ng-hide="displayButtonForm">Update</div>
 						<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
 					</button>
-				</form>
+				</form><br>
+				<div class="modal-footer">
+					<form name="formDeleteParameter" ng-submit="formValidDeleteParameter($event)">
+						<input type="hidden" name="idParametre" value="{{idParameter}}"/>
+						<input type="hidden" name="idApp" value="{{application.id}}"/>
+						<input type="hidden" name="idVersion" value="{{idVersion}}"/>
+						<button class="btn btn-danger" type="submit">
+							<div ng-hide="displayButtonDelete">Delete this parameter</div>
+							<div ng-show="displayButtonDelete"><span class="glyphicon glyphicon-refresh spinning" ></span> Deleting...</div>
+						</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
