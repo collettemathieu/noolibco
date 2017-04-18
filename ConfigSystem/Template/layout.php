@@ -143,12 +143,11 @@ Go to https://www.noolib.com/Hire/ .
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
 		<!-- Critical scripts -->
-		<script type="text/javascript" src="/JavaScript/initBrowser.js"></script>
+		<script type="text/javascript" src="/JavaScript/init.js"></script>
 
 		<!-- Files JS -->
-		<script type="text/javascript" src="/JavaScript/displayInformationsClient.js"></script>
 		<script type="text/javascript" src="/JavaScript/dockApplication.js"></script>
-		<script type="text/javascript" src="/JavaScript/init.js"></script>
+
 
 		<!-- Chargement des librairies JS -->
 		<?php echo $librairiesJS; ?>
