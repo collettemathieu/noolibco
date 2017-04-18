@@ -1,4 +1,5 @@
 $(function(){
+	var currentTarget=null;
 	if($('#noospace').length !=0){
 
 		// Pour gérer l'affichage du gestionnaire de données
@@ -54,12 +55,17 @@ $(function(){
 
 			    	if(!isIn){
 			    		initDonneeUtilisateur(ui.draggable.clone(), $(this), positionSourisX - pos.left -34, positionSourisY - pos.top -34);
+			    		console.log($(this));
 			    	}
 					
 			    // Pour retirer une donnée d'une dataBox de l'application
 			    }else if(ui.draggable.parent().hasClass('dataBox ui-droppable')){
+			    	if($("#noospace .dataBox").length>1){
+			    	       $(ui.draggable).unwrap(); // pour enlever la data box
+			    		}
+			    	$(this).append(ui.draggable); 
 			    	
-			    	$(this).append(ui.draggable);
+			    	//console.log($(ui.draggable.parent()));
 					ui.draggable.css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX+'px');
 			    	
 			    // Pour ajouter une donnée locale à la noospace
@@ -113,21 +119,48 @@ $(function(){
   			
   			
 	      	// Pour receuillir les données dans la dataBox de l'application
-	      	cloneApplication.children('.dataBox').droppable({
+	      	//************************************************************** Naoures
+	      	 //cloneApplication.children('.dataBox').droppable({
+	      	 	console.log(cloneApplication.find('.dataBox'));
+	      	 	
+	      	 	cloneApplication.children('.dataBox').droppable({
 	      		drop: function(event, ui){
 	      			var positionSourisX = event.clientX,
-	      			largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
+	      				largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
 
+	      			//dans le cas ou il y a  de donnée dans la dataBox
+                    if($(this).children().length>0){
+                    		//console.log($(this));
+                    		//var newData = $("<div class='dataBox ui-droppable' style='display:inline-block'></div>");
+                    		newData = $("<div class='dataBox ui-droppable' style='display:inline-block'></div>");
+                    		newData.insertAfter($(this));
+                    		newData.droppable();
+		                    		if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
+			      				
+						      				initDonneeUtilisateur(ui.draggable.clone(), $(newData), 2, 2);
+						      			}else{
+						      				$(newData).append(ui.draggable);
+								      		ui.draggable.css('top', 2+'px').css('left', 2+'px'); //.css('position','absolute')
+								     
+						      			}
+
+                    }else{ 
 	      			if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
-
+	      				
 	      				initDonneeUtilisateur(ui.draggable.clone(), $(this), 2, 2);
-
 	      			}else{
 	      				$(this).append(ui.draggable);
-			      		ui.draggable.css('position','absolute').css('top', 2+'px').css('left', 2+'px');
+			      		ui.draggable.css('top', 2+'px').css('left', 2+'px'); //.css('position','absolute')
+			     
 	      			}
+	      			}
+	      		},
+	      		over: function(event,ui){
+	      			currentTarget= this.id;
 	      		}
 	      	});
+
+	      	//***********************************************************
 
 	      	
 			// Menu contextuel de l'application
@@ -378,7 +411,13 @@ $(function(){
 				}
 			});
 	    	donneeUtilisateur.appendTo(drop);
-	  		donneeUtilisateur.css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX+'px');
+	    	console.log(currentTarget);
+	    	if(drop.attr('id') =='noospace'){
+	    		donneeUtilisateur.css('position','absolute');
+	    	}else{
+	    		 donneeUtilisateur.css('position',' ');
+	    	}
+	  		donneeUtilisateur.css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX+'px'); // deleted by Naoures .css('position','absolute')
 
 			// On affiche les info-bulles
 			donneeUtilisateur.popover({placement:'bottom', trigger:'hover'});
@@ -387,7 +426,13 @@ $(function(){
 		    	selector: 'img',
 		        callback: function(key, options) {
 		            if(key === 'delete'){
+		            	if($("#noospace .dataBox").length>1 && $(this).parent().parent().attr('id')!= 'noospace'){ //la 2 eme condition pour un bug 
+		            		console.log($(this).parent());
+		            	$(this).parent().unwrap();
+		            	console.log("from remove key ");
+		            }
 		            	$(this).parent().remove();
+		            	
 		            }
 		        },
 		        autoHide: true,
@@ -916,5 +961,9 @@ $(function(){
 				document.addEventListener(screenfull.raw.fullscreenchange, screenChange);
 		    }
 		});
+          	 
+
+
 	}
+
 });
