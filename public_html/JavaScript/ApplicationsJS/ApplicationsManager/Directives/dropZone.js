@@ -32,7 +32,7 @@ application.directive('dropZone', function(){
 		        dictDefaultMessage: '',
 		        createImageThumbnails: false,
 		        previewsContainer: '#dropzone__hidden',
-		        acceptedFiles: '.js,.py,.php,.jar'
+		        acceptedFiles: '.js,.py,.php,.jar,.m'
 		    }
 
 		     // Small wrapper for ProgressBar

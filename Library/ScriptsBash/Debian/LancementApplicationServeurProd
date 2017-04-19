@@ -32,6 +32,9 @@ if [ -f $homenoolibco/Files/Sources/$1/$3/$4/$5 ]; then
 		else
 			echo "Python version $fichier not supported"
 		fi
+	elif [ $extension = "m" ]
+	then
+		fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app numgeom/matlab-desktop:R2016b /usr/local/bin/start_matlab -nodesktop -nojvm -r "$fichier;
 	elif [ $extension = "jar" ]
 	then
 		fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app openjdk:alpine java -jar "$fichier;
