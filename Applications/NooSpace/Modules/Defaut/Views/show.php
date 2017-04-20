@@ -1,6 +1,7 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div id="noospace" class="col-sm-11 text-center centering noospace fadeIn">
+
 				<?php if(isset($applicationNooSpace) && isset($version)){
 				// On récupère la liste des tâches
 				$taches = $version->getTaches();

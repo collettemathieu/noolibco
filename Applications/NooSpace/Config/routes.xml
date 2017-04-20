@@ -2,4 +2,5 @@
 <routes>
 	<route url="/NooSpace/" module="Defaut" action="show"/>
 	<route url="/NooSpace/a=([0-9]+)v=([0-9]{0,})" module="Defaut" action="show" vars="idApplication,idVersion"/>
+	<route url="/NooSpace/InfoApplication" module="InfoApplication" action="show"/>
 </routes>

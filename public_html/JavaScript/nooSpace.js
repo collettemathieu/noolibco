@@ -74,6 +74,7 @@ $(function(){
 
 		// Pour déployer une application dans la NooSpace
 		function deployApplication(app, element, nouvellePositionElementX, nouvellePositionElementY){
+			var variableNumber=2;
 			if(app.hasClass('runIt')){
       			app.removeClass('runIt');
       		}
@@ -110,8 +111,93 @@ $(function(){
   					cloneApplication.children('.resultBox').show('slice').css('display', 'inline-block');
   				}, 500);
   			}, 200);
-  			
-  			
+  			//******************************************************************************
+  			if(variableNumber>1){
+  				/*var enlarged=false;
+  				var databox=cloneApplication.children('.dataBox');
+  				databox.click(function(){
+  					$(this).stop(true,false).animate({
+  						width : enlarged? 73: 100,
+  						height : enlarged? 73: 100
+  					},200);
+  					enlarged = !enlarged; 
+  				
+  				});*/
+						var formData = new FormData();
+						formData.append('idApplication', cloneApplication.attr('id'));
+						
+			      		$.ajax({
+							url: '/NooSpace/InfoApplication',
+							type: 'POST',
+							async: true,
+							cache: false,
+							data: formData,
+							contentType: false,
+							processData: false,
+							success: function(response) {
+								try{
+									    response = JSON.parse(response);
+
+										var listTypeDonnee = response['listeTypeDonnee'],
+											nomTache=response['listeTypeDonnee'][1]['nomTache'],
+											appWidth=parseInt(cloneApplication.css('width'));
+
+										console.log(appWidth);
+
+										for(var i=0, c=listTypeDonnee.length; i<c ; ++i){
+											if(listTypeDonnee[i]['nomTache'] === nomTache){
+												if(listTypeDonnee[i]['ext'] != 'input.txt'){
+													var contenu = '<div class="dataBox" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';
+													$(contenu).droppable({
+												      		drop: function(event, ui){
+												      			var positionSourisX = event.clientX,
+												      			largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
+
+												      			if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
+
+												      				initDonneeUtilisateur(ui.draggable.clone(), $(this), 2, 2);
+
+												      			}else{
+												      				$(this).append(ui.draggable);
+														      		ui.draggable.css('position','absolute').css('top', 2+'px').css('left', 2+'px');
+												      			}
+												      		}
+												      	});
+												}else{
+													var contenu = '<input type="txt" name="data"'+'" class="donneeUser dashedBorder input-sm" value="" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"/>';
+												}
+												appWidth+=73;
+												cloneApplication.children(".ajaxLoaderApplication").after(contenu);
+										}
+									}
+									cloneApplication.css('width',appWidth+'px');
+									
+									
+								}
+								catch(e){
+									var response = {
+									  'erreurs': '<p>A system error has occurred.</p>'
+									};
+									displayInformationsClient(response);
+									
+							   
+								}
+							},
+							error: function(){
+								var response = {
+								  'erreurs': '<p>A system error has occurred aaaa.</p>'
+								};
+								displayInformationsClient(response);
+							}
+
+						});
+
+				
+
+  			}
+  			//*******************************************************************************
+  			else
+  			{
 	      	// Pour receuillir les données dans la dataBox de l'application
 	      	cloneApplication.children('.dataBox').droppable({
 	      		drop: function(event, ui){
@@ -128,9 +214,11 @@ $(function(){
 	      			}
 	      		}
 	      	});
+	      };
 
 	      	
 			// Menu contextuel de l'application
+			//****************************** A modifier
 			$.contextMenu.types.Tache = function(item, opt, root) {
 
 		        $(cloneApplication.children('.tachesApplication').html())
@@ -175,6 +263,7 @@ $(function(){
 		            
 		        
 		    };
+		    //************************************
 
 
 		   	// Pour définir le menu contextuel de l'application
@@ -318,8 +407,9 @@ $(function(){
 
 						// On copie les paramètres de l'application dans la fenêtre modale
 						var panelSettingsApplication = $('#panelSettingsApplication'),
-							contenuPanel = $(this).parent().find('.parametresApplication'),
 							modalBody = panelSettingsApplication.find('.modal-body'),
+							//a modifier by Naoures
+							contenuPanel = $(this).parent().find('.parametresApplication'),
 							cloneContenuPanel = contenuPanel.clone();
 
 						modalBody.html(cloneContenuPanel.html());
