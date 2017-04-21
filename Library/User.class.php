@@ -18,6 +18,9 @@ namespace Library;
  */
 
 /* Démarrage de la session */
+// Au moins 5 heures (3600 * 5 = 18000)
+ini_set("session.gc_maxlifetime", "18000");
+ini_set("session.cookie_lifetime", "0");
 session_start();
 
 class User extends ApplicationComponent
