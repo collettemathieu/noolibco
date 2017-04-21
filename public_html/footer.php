@@ -55,7 +55,28 @@
 							<button type="button" class="close" data-dismiss="modal">x</button>
 							<h2 class="modal-title">Settings</h2>
 						</div>
-						<div class="modal-body"></div>
+						<div class="modal-body">
+							   <div id="tacheSelect"> </div>
+								
+									<form id="paramExist" class="well col-lg-12 centering" enctype="multipart/form-data" method="post">
+											<ul>
+												<li class="parametresTache">
+													<div class="nomTacheParametreApplication"><!-- $nomTache --></div>
+													<ul>
+														<li>
+															<label class="labelVariable"> </label>
+												 			<input type="text" id="$parametre->getNomParametre(); " name="$parametre->getIdParametre();" class="inputVariable valeurDefautParametre" value="$parametre->getValeurDefautParametre()" readonly />
+												 			<input type="hidden" class="valeurMinParametre" value="$parametre->getValeurMinParametre();" />
+												 			<input type="hidden" class="valeurMaxParametre" value="$parametre->getValeurMaxParametre(); " />
+												 			<input type="hidden" class="valeurPasParametre" value="$parametre->getValeurPasParametre();" />
+												 			<div class="sliderParametreApplication"></div>
+											 			</li>
+													</ul>
+												</li>
+											</ul>
+										<button class="btn btn-default pull-right" type="submit">Save</button>
+									</form>
+						</div>
 					</div>	
 				</div>
 			</div>

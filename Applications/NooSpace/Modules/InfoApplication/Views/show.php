@@ -14,8 +14,8 @@ if($user->getMessageClient()->hasErreur()){
 	$reponse = array(
 				'listeTache' => '<span class="label label-primary">Select a new task</span>
 								<select name="tache0" class="listeTache form-control input-sm">'.$listeTacheAAfficher.'</select>',
-				'nomApplication' => $nomApplication,
-				'listeTypeDonnee' => $listeTypeDonnee
+				'listeTypeDonnee' => $listeTypeDonnee,
+				'listeParams' =>  $listeParams
 			);
 
 	$reponse = json_encode($reponse);

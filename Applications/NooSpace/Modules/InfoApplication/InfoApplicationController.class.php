@@ -81,10 +81,15 @@ class InfoApplicationController extends \Library\BackController
 						// On récupère les tâche de l'application
 						$taches = $version->getTaches();
 
+
 						if(count($taches) != 0){
 							$listeTacheAAfficher = '';
 							$listeTypeDonnee = array();
+							$tacheAvecParametre = array();
+							$tacheParametre=array();
+							$tabParametres = array();
 							foreach($taches as $tache){
+
 								$listeTacheAAfficher.='<option value="'.$tache->getNomTache().'">'.$tache->getNomTache().'</option>';
 								foreach($tache->getTacheTypeDonneeUtilisateurs() as $tacheData){
 									$typeDonneeUtilisateur = array(
@@ -95,12 +100,30 @@ class InfoApplicationController extends \Library\BackController
 										);
 									array_push($listeTypeDonnee, $typeDonneeUtilisateur);
 								}
+								
+										foreach($tache->getFonctions() as $fonction){
+											if(count($fonction->getParametres()) != 0){
+												foreach($fonction->getParametres() as $parametre){
+													if($parametre->getStatutPublicParametre()){
+														$parametres = array('nomTache' => $tache->getNomTache(),
+																'nomParams' => $parametre->getNomParametre(),
+																'defaultVal' => $parametre->getValeurDefautParametre(),
+																'minVal' => $parametre->getValeurMinParametre(),
+																'maxVal' => $parametre->getValeurMinParametre() );
+														array_push($tabParametres, $parametres);
+													}
+													
+												}
+											}
+
+										}
 							}
 							if(count($listeTypeDonnee) != 0){
 								// On ajoute les variables à la page
 								$this->page->addVar('listeTypeDonnee', $listeTypeDonnee);
 								$this->page->addVar('listeTacheAAfficher', $listeTacheAAfficher);
-								//$this->page->addVar('nomApplication', $application->getNomApplication());
+								$this->page->addVar('listeParams', $tabParametres);
+								
 							}else{
 								$user->getMessageClient()->addErreur(self::APPLICATION_HAS_NO_MULE);
 							}
