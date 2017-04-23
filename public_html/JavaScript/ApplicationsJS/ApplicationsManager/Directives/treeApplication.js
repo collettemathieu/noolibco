@@ -214,7 +214,7 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 														return idFunction;
 													},
 													// On récupère les types des données pour le select
-													textFunction: ['$http', '$q', function($http, $q){
+													dataFunction: ['$http', '$q', function($http, $q){
 														var deferred = $q.defer(); // -> promise
 														$http({
 															method: 'POST',

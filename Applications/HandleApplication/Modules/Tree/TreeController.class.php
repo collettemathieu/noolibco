@@ -2613,23 +2613,20 @@ class TreeController extends \Library\BackController
 								if(in_array($idFonction, $tabIdFonction)){
 
 									$managerFonction = $this->getManagers()->getManagerOf('Fonction');
-									$fonctionAModifier = $managerFonction->getFonctionById($idFonction);
+									$fonction = $managerFonction->getFonctionById($idFonction);
 
 									// On affiche les premières lignes du fichier source
-									if($fichierSource = fopen($fonctionAModifier->getUrlFonction(), 'r')){
+									if($fichierSource = fopen($fonction->getUrlFonction(), 'r')){
 										$texte = '';
-										$nbreLigne = 0;
-										while($nbreLigne < 10){
-											$line = fgets($fichierSource);
-											$texte .= $line.'<br>';
-											++$nbreLigne;
+										while($line = fgets($fichierSource)){
+											$texte .= $line;
 										}
-										$texte.='...';
 										// On ferme le fichier de données
 										fclose($fichierSource);
 									}
 
 									$this->page->addVar('texteSource', $texte);
+									$this->page->addVar('ext', $fonction->getExtensionFonction());
 								}else{
 									// On ajoute la variable d'erreurs
 									$user->getMessageClient()->addErreur(self::DENY_HANDLE_FUNCTION);

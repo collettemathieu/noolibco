@@ -1,6 +1,10 @@
 <?php 
 if(isset($texteSource)){
-	$reponse = $texteSource;
+	$reponse = array(
+		'text' => $texteSource,
+		'ext' => $ext
+		);
+
 	
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';
@@ -16,7 +20,7 @@ if(isset($texteSource)){
 	);
 }
 
-// On envoie la réponse au format JSON
+// On envoie la réponse au format text
 echo json_encode($reponse);
 
 ?>
