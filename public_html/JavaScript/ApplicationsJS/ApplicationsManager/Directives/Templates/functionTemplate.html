@@ -1,15 +1,19 @@
 <div class="modal-header">
 	<button type="button" class="close" ng-click="close()">x</button>
-	<h2 class="modal-title">Edit this function</h2>
+	<h2 class="modal-title">Edit your program</h2>
 </div>
 <div class="modal-body">
-	<div class="col-lg-6 centering text-center textFormat">---Download a new file---</div>
-	<drop-zone></drop-zone>
-	<div class="col-lg-6 centering text-center textFormat">---Or edit your program---</div>
-	<form>
-		<div class="editor" ace-editor></div><br>
-		<button class="btn btn-primary">Send</button>
-	</form><br>
+	<div class="row">
+	<div class="col-lg-12">
+		<div class="col-lg-10">
+			<form>
+				<div class="editor" ace-editor rows="10"></div><br>
+				<button class="btn btn-primary" ng-click="validTextFunction()">Save</button>
+			</form><br></div>
+		<div class="col-lg-2"><drop-zone></drop-zone></div>
+	</div>
+	</div>
+	
 	<div class="modal-footer">
 		<form name="formDeleteTask" ng-submit="formValidDeleteFunction($event)">
 			<input type="hidden" name="idApp" value="{{application.id}}"/>

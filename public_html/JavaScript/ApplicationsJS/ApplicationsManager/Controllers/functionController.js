@@ -72,14 +72,11 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 	}
 
 	// Pour soumettre le formulaire
-	/*
-	$scope.formValidNewTask = function(e){
-		if($scope.formNewTask.$valid){
+	$scope.validTextFunction = function(e){
+			console.log($scope.textEditor);
+			/*
 			$scope.displayButtonForm = true;
-			treeHasChanged = true;
-
-			var formData = new FormData(e.target);
-
+			
 			$http({
                 url: '/HandleApplication/ValidFormTache',
                 method: 'POST',
@@ -94,6 +91,8 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 				$scope.displayButtonForm = false;
 				// Fermer la fenêtre modale
 				$uibModalInstance.dismiss('cancel');
+				// Evènement de l'arbre des applications
+				$scope.$emit('treeHasChanged', false);
 			})
 			.error(function(error){
 				var response = {
@@ -104,8 +103,9 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 				$scope.displayButtonForm = false;
 				// Fermer la fenêtre modale
 				$uibModalInstance.dismiss('cancel');
-			});
-		}
-	}*/
+			})
+			
+		*/
+	}
 }]);
 

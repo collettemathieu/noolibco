@@ -58,5 +58,7 @@ a{
 }
 
 .editor{
+	display: block;
 	height: 500px;
+	border-radius: 10px;
 }

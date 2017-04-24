@@ -17,11 +17,40 @@ application.directive('aceEditor', ['$compile', function($compile){
 	return{
 		restrict: 'A',
 		link: function(scope, element, attrs){
-			//console.log(element);
+			
 			var editor = ace.edit(element[0]);
-			editor.setValue(scope.textFunction);
-			editor.setTheme('ace/theme/twilight');
-
+			editor.$blockScrolling = Infinity; // Remove warning
+			editor.setHighlightActiveLine(false);
+			editor.setValue(scope.textFunction, 1);
+			scope.textEditor = editor.getValue();
+			editor.setTheme('ace/theme/monokai'); // Edit the theme
+			editor.getSession().on('change', function(e) {
+			    scope.textEditor = editor.getValue();
+			});
+			// Edit the mode
+			switch(scope.extFunction){
+				case 'py':
+					editor.getSession().setMode('ace/mode/python');
+					break;
+				case 'jar':
+					editor.getSession().setMode('ace/mode/java');
+					break;
+				case 'java':
+					editor.getSession().setMode('ace/mode/java');
+					break;
+				case 'm':
+					editor.getSession().setMode('ace/mode/matlab');
+					break;
+				case 'js':
+					editor.getSession().setMode('ace/mode/javascript');
+					break;
+				case 'php':
+					editor.getSession().setMode('ace/mode/php');
+					break;
+				default:
+					editor.getSession().setMode('ace/mode/javascript');
+			}
+			
 		}
 	};
 }]);

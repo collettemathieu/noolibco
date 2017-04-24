@@ -1,7 +1,7 @@
 <!-- FrameWorks and Libraries JS -->
 <script type="text/javascript" src="/JavaScript/Frameworks/Highstock.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/HighchartsExportingModule.js"></script>
-<script type="text/javascript" src="/JavaScript/Frameworks/aceEditor.js"></script>
+<script type="text/javascript" src="/JavaScript/Frameworks/Ace/ace.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/loDash.min.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/dropzone.min.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/progressBar.min.js"></script>
