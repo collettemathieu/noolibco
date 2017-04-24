@@ -72,7 +72,7 @@ $(function(){
 
 		// Pour déployer une application dans la NooSpace
 		function deployApplication(app, element, nouvellePositionElementX, nouvellePositionElementY){
-			var listeParams, listeTache;
+			var listeParams, listeTache,listTypeDonnee;
 			if(app.hasClass('runIt')){
       			app.removeClass('runIt');
       		}
@@ -125,53 +125,18 @@ $(function(){
 							success: function(response) {
 								try{
 									    response = JSON.parse(response);
-
-										var listTypeDonnee = response['listeTypeDonnee'],
-											nomTache=response['listeTypeDonnee'][2]['nomTache'],
-											appWidth=parseInt(cloneApplication.css('width'));
-											console.log(response['listeParams']);
-										
-
-										for(var i=0, c=listTypeDonnee.length; i<c ; ++i){
-											if(listTypeDonnee[i]['nomTache'] === nomTache){
-												if(listTypeDonnee[i]['ext'] != 'input.txt'){
-													var contenu = '<div class="dataBox donneeDataBox" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';
-													
-												}else{
-													var contenu = '<input type="txt" name="data"'+'" class="dataBox input-sm" value="" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"/>';
-												}
-												appWidth+=73;
-												cloneApplication.children(".ajaxLoaderApplication").after(contenu);
-										}
-									}
-									cloneApplication.css('width',appWidth+'px');
-									cloneApplication.find('.donneeDataBox').droppable({
-												      		drop: function(event, ui){
-												      			var positionSourisX = event.clientX,
-												      			largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
-												      			
-												      			if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
-
-												      				initDonneeUtilisateur(ui.draggable.clone(), $(this), 2, 2);
-
-												      			}else{
-												      				$(this).append(ui.draggable);
-												      				ui.draggable.css('position',''); //pour que la donnée se met au bon endroit du drag
-														      		ui.draggable.css('top', 2+'px').css('left', 2+'px'); //.css('position','absolute')
-												      			}
-												      		}
-												      	});
+										listTypeDonnee = response['listeTypeDonnee'];
+										var nomTache=response['listeTypeDonnee'][0]['nomTache'];
+									cloneApplication.find('.tachesApplication').append(nomTache);
+									initDataBox(cloneApplication,listTypeDonnee,nomTache);
 									listeTache=response['listeTache'];
 									listeParams=response['listeParams'];
-
 								}
 								catch(e){
 									var response = {
 									  'erreurs': '<p>A system error has occurred.</p>'
 									};
 									displayInformationsClient(response);
-									
-							   
 								}
 							},
 							error: function(){
@@ -180,17 +145,14 @@ $(function(){
 								};
 								displayInformationsClient(response);
 							}
-
 						});
   
 	      //*********************************************************************
 			// Menu contextuel de l'application
 			//****************************** A modifier
-			$.contextMenu.types.Tache = function(item, opt, root) {
+			/*$.contextMenu.types.Tache = function(item, opt, root) {
 
-		        $(cloneApplication.children('.tachesApplication').html())
-		            .appendTo(this)
-		            .on('click', 'li', function() {
+		       $(this).on('click', function() {
 		               	
 		            	try{
 			               	// On affiche le loader
@@ -229,7 +191,7 @@ $(function(){
 		            this.removeClass('context-menu-item').addClass('context-menu-tache');
 		            
 		        
-		    };
+		    };*/
 		    //************************************
 
 
@@ -372,45 +334,88 @@ $(function(){
 		            }
 					if(key === 'parametreApplication') {
 
-						// On copie les paramètres de l'application dans la fenêtre modale
 						var panelSettingsApplication = $('#panelSettingsApplication'),
 							modalBody = panelSettingsApplication.find('.modal-body'),
-							tacheSelect=panelSettingsApplication.find('#tacheSelect');
-							
-							//a modifier by Naoures
-							//contenuPanel = $(this).parent().find('.parametresApplication'),
-							//cloneContenuPanel = contenuPanel.clone();
-
+							tacheSelect=panelSettingsApplication.find('#tacheSelect'),
+							currentNomTache=cloneApplication.find('.tachesApplication').html();
+						
 						tacheSelect.html(listeTache);
-						var numeroTache = modalBody.find('#tacheSelect select').attr('name');
-						console.log(numeroTache);
-
-						//************************ ICI
-						initParams('blabla',listeParams);
+						tacheSelect.find('select').val(currentNomTache);
+						initParams(currentNomTache,listeParams);
 						panelSettingsApplication.modal('show');
-						sliderParametreApplication(modalBody);
 
-						// Pour la sauvegarde des paramètres dans l'application, on copie
+						
+						
 						// la fenêtre modale dans les paramètres de l'application
 						modalBody.find('button').click(function(e){
 							e.preventDefault();
-							contenuPanel.html(modalBody.html());
+								cloneApplication.find('.dataBox').each(function(){
+										var width= parseInt($(this).parent().css('width'));
+										width -= 73;
+										$(this).parent().css('width',width+"px");
+									$(this).remove();
+								});
+								initDataBox(cloneApplication,listTypeDonnee,tacheSelect.find('select').val());
+								setTimeout(function(){
+									cloneApplication.children('.dataBox').show('slice').css('display', 'inline-block');
+  								}, 200);
+  								
+							
+							
 							panelSettingsApplication.modal('hide');
 						});
+						//pour detecter le changement du select tache
+						tacheSelect.find('select').change(function(){
+						initParams($(this).val(), listeParams);
+						cloneApplication.find('.tachesApplication').html($(this).val());
+						sliderParametreApplication($('.modal-body'));
+						});
+						sliderParametreApplication($('.modal-body'));
+						
+						
+					}
+					if(key=="Run"){
+						try{
+			               	// On affiche le loader
+				      		cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
+				      		
+				      		// On ajoute les données et les paramètres pour le lancement de l'application
+				      		var form = paramForm = paramsList;
+				      			formData = new FormData();
+
+							formData.append('tache0data0', 'noolibData_'+cloneApplication.find('.donneeUser').attr('id'));
+							formData.append('idApplication', cloneApplication.attr('id'));
+							formData.append('idVersion', cloneApplication.attr('idVersion'));
+							formData.append('tache0', cloneApplication.find('.tachesApplication').html());
+							// On ajoute le formulaire des paramètres au formulaire général
+							for (var i=0; i<paramForm.length; i++)
+							    formData.append(paramForm[i].name, paramForm[i].value);
+							console.log(paramForm[i].name);
+
+							runTheMule(formData, cloneApplication);
+						}
+			      		catch(e){
+			      			var response = {
+							  'erreurs': '<p>A system error has occurred.</p>'
+							};
+							displayInformationsClient(response);
+							// On cache le loader
+							cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
+
+							// On cache les résultats précédents
+							cloneApplication.find('.resultBox img').hide(600);
+
+							// On efface le rapport précédent
+							cloneApplication.find('.applicationReports').html('');
+			      		}
 					}
 					
 		        },
 		        autoHide: true,
 		        items: {
-		            "fold1": {
-		                "name": "Tasks", 
-		                "items": {
-		                    Tache: {
-				            	type: "Tache", 
-				            	customName: "tache"
-				            },
-		                }
-		            },
+		        	"Run":{
+		        		name:"Run Application"
+		        	},
 		             "parametreApplication": {
 		            	name: "Set this application"
 		            },
@@ -534,7 +539,6 @@ $(function(){
 				processData: false,
 				success: function(response) {
 					
-					console.log(response);
 					// Pour réinitialiser le message d'attente du bouton
 					$('#formMule').find('button:last').button('reset');
 
@@ -892,8 +896,6 @@ $(function(){
 
 		// Pour initialiser la mule
       	function initMule(nomTache, listTypeDonnee, formGroup){
-      		
-      		
       		if(typeof formGroup === 'undefined'){
       			var formGroup = $('#formMule').find('.form-group:last');
       		}
@@ -955,20 +957,65 @@ $(function(){
                 }
             });
         }
+
+        
+        //*********************** Added by Naoures
+        // Pour initialiser les parametres dans le setApplication selon la tache
         function initParams(nomTache, listeParams){
         	var numberParams=0;
+        	$('.modal-body').find('#paramsList').html('');
+        	var contenu="";
         		for(i=0;i<listeParams.length;++i){
         			if(listeParams[i]['nomTache']==nomTache){
         				//Reecrire tout le html dans footer.php !!!!!! 
-        				$('.modal-body').append('');
+
+        				contenu +="<ul><li class='parametresTache'><div class='nomTacheParametreApplication'>"+ listeParams[i]['nomParams'] +"</div><ul><li><label for='"+ listeParams[i]['nomParams']+"' class='labelVariable'> </label><input type='text' id='"+listeParams[i]['nomParams']+"' name='"+ listeParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+listeParams[i]['defaultVal']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+listeParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+listeParams[i]['maxVal'] +"' /><input type='hidden' class='valeurPasParametre' value='" +listeParams[i]['pasVal']+ "' /><div class='sliderParametreApplication'></div></li></ul></li></ul>";
+										
         				numberParams++;
         			}
         		}
         		//S il y a aucun parametre
         		if(numberParams==0){
-        			$('.modal-body').append('<div id="paramsNoExist" class="alert alert-warning">Sorry, this application cannot be set.</div>');
-        		}
+        			$('.modal-body').find("#paramsList").append('<div class="alert alert-warning">Sorry, this application cannot be set.</div>');
+        		} 
+        		$('.modal-body').find('#paramsList').append(contenu);
+        } 
+
+       function initDataBox(cloneApplication,listTypeDonnee,nomTache){
+ 				var appWidth=parseInt(cloneApplication.css('width'));
+        	for(var i=0, c=listTypeDonnee.length; i<c ; ++i){
+				if(listTypeDonnee[i]['nomTache'] === nomTache){
+					if(listTypeDonnee[i]['ext'] != 'input.txt'){
+						var contenu = '<div class="dataBox donneeDataBox" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';
+											
+					}else{
+						var contenu = '<input type="txt" name="data"'+'" class="dataBox input-sm" value="" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"/>';
+						}
+						appWidth+=73;
+						cloneApplication.children(".ajaxLoaderApplication").after(contenu);
+				}
+			}
+			cloneApplication.css('width',appWidth+'px');
+			cloneApplication.find('.donneeDataBox').droppable({
+				drop: function(event, ui){
+					var positionSourisX = event.clientX,
+					largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
+												      			
+					if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
+
+						initDonneeUtilisateur(ui.draggable.clone(), $(this), 2, 2);
+
+					}else{
+						$(this).append(ui.draggable);
+						ui.draggable.css('position',''); //pour que la donnée se met au bon endroit du drag
+						ui.draggable.css('top', 2+'px').css('left', 2+'px'); //.css('position','absolute')
+						}
+					}
+				});
         }
+
+        //*****************************************
+
 
         // Pour activer la fonction plein écran
 		$('#boutonFullScreen').click(function(){

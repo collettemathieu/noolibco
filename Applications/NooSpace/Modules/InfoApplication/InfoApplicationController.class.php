@@ -106,10 +106,12 @@ class InfoApplicationController extends \Library\BackController
 												foreach($fonction->getParametres() as $parametre){
 													if($parametre->getStatutPublicParametre()){
 														$parametres = array('nomTache' => $tache->getNomTache(),
+																'idParams' => $parametre->getIdParametre(),
 																'nomParams' => $parametre->getNomParametre(),
 																'defaultVal' => $parametre->getValeurDefautParametre(),
 																'minVal' => $parametre->getValeurMinParametre(),
-																'maxVal' => $parametre->getValeurMinParametre() );
+																'maxVal' => $parametre->getValeurMinParametre(),
+																'pasVal' => $parametre->getValeurPasParametre() );
 														array_push($tabParametres, $parametres);
 													}
 													

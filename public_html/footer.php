@@ -39,6 +39,8 @@
 										<img src="/Images/results.png"/>
 										<div class="applicationReports hidden"></div>
 									</div>
+									<div class="tachesApplication">
+									</div>
 							</div>
 						<?php }?>
 					</div>
@@ -56,26 +58,12 @@
 							<h2 class="modal-title">Settings</h2>
 						</div>
 						<div class="modal-body">
+						<form  class='well col-lg-12 centering' enctype='multipart/form-data' method='post'>
 							   <div id="tacheSelect"> </div>
+							   <div id="paramsList"></div>
+							<button class='btn btn-default pull-right' type='submit'>Save</button>
+						</form>
 								
-									<form id="paramExist" class="well col-lg-12 centering" enctype="multipart/form-data" method="post">
-											<ul>
-												<li class="parametresTache">
-													<div class="nomTacheParametreApplication"><!-- $nomTache --></div>
-													<ul>
-														<li>
-															<label class="labelVariable"> </label>
-												 			<input type="text" id="$parametre->getNomParametre(); " name="$parametre->getIdParametre();" class="inputVariable valeurDefautParametre" value="$parametre->getValeurDefautParametre()" readonly />
-												 			<input type="hidden" class="valeurMinParametre" value="$parametre->getValeurMinParametre();" />
-												 			<input type="hidden" class="valeurMaxParametre" value="$parametre->getValeurMaxParametre(); " />
-												 			<input type="hidden" class="valeurPasParametre" value="$parametre->getValeurPasParametre();" />
-												 			<div class="sliderParametreApplication"></div>
-											 			</li>
-													</ul>
-												</li>
-											</ul>
-										<button class="btn btn-default pull-right" type="submit">Save</button>
-									</form>
 						</div>
 					</div>	
 				</div>

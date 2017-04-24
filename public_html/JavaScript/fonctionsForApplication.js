@@ -210,7 +210,6 @@ function base64toBlob(base64Data, contentType){
 function sliderParametreApplication(cloneContenuPanel){
 
     cloneContenuPanel.find('.sliderParametreApplication').each(function(){
-       
         var valeurDefautParametre = parseInt($(this).parent().find('.valeurDefautParametre').attr('value')),
             valeurMinParametre = parseInt($(this).parent().find('.valeurMinParametre').attr('value')),
             valeurMaxParametre = parseInt($(this).parent().find('.valeurMaxParametre').attr('value')),
