@@ -52,13 +52,21 @@ a{
 }
 
 .textFormat{
-	display: block;
 	padding: 20px;
 	font-size: 1.5em;
 }
 
 .editor{
-	display: block;
 	height: 500px;
 	border-radius: 10px;
+}
+
+.options{
+	display: block;
+	width: 300px;
+}
+
+.option{
+	display: inline-block;
+	vertical-align: middle;
 }

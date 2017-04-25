@@ -2932,94 +2932,146 @@ class TreeController extends \Library\BackController
 
 							if(in_array($idFonction, $tabIdFonction)){
 
-								$tagName = array( 'categorie' => 'application', 'sousCategorie' => 'source');
-								// On charge l'objet File avec la configuration du fichier source de l'application
-								$file = $this->getApp()->getFileUpload('urlFonction', $tagName);
-
-								if(count($file->getErreurs()) == 0){
+								/* Ace Editor */
+								if($request->isExistPost('textFunction')){
 									
-									// En paramètre on renseigne l'utilisateur, le sous-dossier de l'application et le sous-sous-dossier du numéro de version
-									$file->validFileUpload($application->getCreateur(), $application->getVariableFixeApplication(), $version->getNumVersion());
+									// On récupère la fonction
+									$managerFonction = $this->getManagers()->getManagerOf('Fonction');	
+									$fonctionAModifier = $managerFonction->getFonctionById($idFonction);
 
+									// On ouvre le fichier
+									if(!$fp = fopen($fonctionAModifier->getUrlFonction(), 'w')){
+
+										// Envoi d'une erreur
+										$user->getMessageClient()->addErreur('Le fichier pas ouvert.');
+
+									}else{
+										// On modifie le fichier
+										fputs($fp, htmlspecialchars_decode($request->getPostData('textFunction')));
+										// On ferme le fichier
+										fclose($fp);
+
+										// On rend la version inactive et si aucune autre version, on rend l'application inactive
+										// On appelle le manager des versions
+										$managerVersion = $this->getManagers()->getManagerOf('Version');
+
+										$version->hydrate(array(
+											'activeVersion' => false
+											));
+										$managerVersion->saveVersion($version);
+
+										$otherActiveVersion = false;
+										foreach($application->getVersions() as $versionApp){
+											if($versionApp->getIdVersion() != $version->getIdVersion()){
+												if($versionApp->getActiveVersion()){
+													$otherActiveVersion = true;
+												}
+											}
+										}
+
+										if(!$otherActiveVersion){
+											// On appelle le manager des statuts
+											$managerStatut = $this->getManagers()->getManagerOf('StatutApplication');
+											// On met à jour le statut de l'application
+											$application->hydrate(array(
+												'statut' => $managerStatut->getStatutByNom('Inactive')
+											));
+											// On met à jour le statut de l'application
+											$managerApplication->saveStatutApplication($application);
+										}
+
+										// On envoie un message
+										$user->getMessageClient()->addReussite(self::TREE_FUNCTION_EDITED);
+									}
+								}else{
+								/* DropZone */
+
+									$tagName = array( 'categorie' => 'application', 'sousCategorie' => 'source');
+									// On charge l'objet File avec la configuration du fichier source de l'application
+									$file = $this->getApp()->getFileUpload('urlFonction', $tagName);
 
 									if(count($file->getErreurs()) == 0){
+										
+										// En paramètre on renseigne l'utilisateur, le sous-dossier de l'application et le sous-sous-dossier du numéro de version
+										$file->validFileUpload($application->getCreateur(), $application->getVariableFixeApplication(), $version->getNumVersion());
 
-										$managerFonction = $this->getManagers()->getManagerOf('Fonction');	
-										$fonctionAModifier = $managerFonction->getFonctionById($idFonction);
-										
-										// On appel l'objet pour supprimer les données	
-										$delete = $this->getApp()->getFileDelete();
-										
-										// On supprime le fichier source précédent de la fonction
-										$delete->deleteFile($fonctionAModifier->getUrlFonction());
-								
-										$fonctionAModifier->hydrate(array(
-											'urlFonction' => $file->getFilePath(),
-											'extensionFonction' => $file->getFileExtension()
-											));
+
+										if(count($file->getErreurs()) == 0){
+
+											$managerFonction = $this->getManagers()->getManagerOf('Fonction');	
+											$fonctionAModifier = $managerFonction->getFonctionById($idFonction);
 											
-										if(sizeof($fonctionAModifier->getErreurs()) == 0){
-										
-											// S'il n'y a pas d'erreur, on enregistre le fichier source sur le serveur
-											if($file->depositFileUpload()){
+											// On appel l'objet pour supprimer les données	
+											$delete = $this->getApp()->getFileDelete();
 											
-												$managerFonction->saveFonction($fonctionAModifier);			
-															
-												// On met à jour l'application en session
-												$managerApplication = $this->getManagers()->getManagerOf('Application');
-												$applicationUpdated = $managerApplication->getApplicationByIdWithAllParameters($application->getIdApplication());
+											// On supprime le fichier source précédent de la fonction
+											$delete->deleteFile($fonctionAModifier->getUrlFonction());
+									
+											$fonctionAModifier->hydrate(array(
+												'urlFonction' => $file->getFilePath(),
+												'extensionFonction' => $file->getFileExtension()
+												));
 												
-												// On rend la version inactive et si aucune autre version, on rend l'application inactive
-												// On appelle le manager des versions
-												$managerVersion = $this->getManagers()->getManagerOf('Version');
+											if(sizeof($fonctionAModifier->getErreurs()) == 0){
+											
+												// S'il n'y a pas d'erreur, on enregistre le fichier source sur le serveur
+												if($file->depositFileUpload()){
+												
+													$managerFonction->saveFonction($fonctionAModifier);			
+																
+													// On met à jour l'application en session
+													$managerApplication = $this->getManagers()->getManagerOf('Application');
+													$applicationUpdated = $managerApplication->getApplicationByIdWithAllParameters($application->getIdApplication());
+													
+													// On rend la version inactive et si aucune autre version, on rend l'application inactive
+													// On appelle le manager des versions
+													$managerVersion = $this->getManagers()->getManagerOf('Version');
 
-												$version->hydrate(array(
-													'activeVersion' => false
-													));
-												$managerVersion->saveVersion($version);
+													$version->hydrate(array(
+														'activeVersion' => false
+														));
+													$managerVersion->saveVersion($version);
 
-												$otherActiveVersion = false;
-												foreach($application->getVersions() as $versionApp){
-													if($versionApp->getIdVersion() != $version->getIdVersion()){
-														if($versionApp->getActiveVersion()){
-															$otherActiveVersion = true;
+													$otherActiveVersion = false;
+													foreach($application->getVersions() as $versionApp){
+														if($versionApp->getIdVersion() != $version->getIdVersion()){
+															if($versionApp->getActiveVersion()){
+																$otherActiveVersion = true;
+															}
 														}
 													}
-												}
 
-												if(!$otherActiveVersion){
-													// On appelle le manager des statuts
-													$managerStatut = $this->getManagers()->getManagerOf('StatutApplication');
-													// On met à jour le statut de l'application
-													$applicationUpdated->hydrate(array(
-														'statut' => $managerStatut->getStatutByNom('Inactive')
-													));
-													// On met à jour le statut de l'application
-													$managerApplication->saveStatutApplication($applicationUpdated);
-												}
+													if(!$otherActiveVersion){
+														// On appelle le manager des statuts
+														$managerStatut = $this->getManagers()->getManagerOf('StatutApplication');
+														// On met à jour le statut de l'application
+														$applicationUpdated->hydrate(array(
+															'statut' => $managerStatut->getStatutByNom('Inactive')
+														));
+														// On met à jour le statut de l'application
+														$managerApplication->saveStatutApplication($applicationUpdated);
+													}
 
-												// On met à jour le dock des applications
-												$this->updateDockApplication($applicationUpdated);
-												
-												$user->getMessageClient()->addReussite(self::TREE_FUNCTION_EDITED);	
+													$user->getMessageClient()->addReussite(self::TREE_FUNCTION_EDITED);	
+													
+												}else{
+													// On ajoute la variable d'erreurs à la page
+													$user->getMessageClient()->addErreur($file->getErreurs());
+												}
 												
 											}else{
 												// On ajoute la variable d'erreurs à la page
-												$user->getMessageClient()->addErreur($file->getErreurs());
-											}
-											
+												$user->getMessageClient()->addErreur($nouvelleFonction->getErreurs());
+											}	
+															
 										}else{
 											// On ajoute la variable d'erreurs à la page
-											$user->getMessageClient()->addErreur($nouvelleFonction->getErreurs());
-										}	
-														
+											$user->getMessageClient()->addErreur($file->getErreurs());
+										}
 									}else{
 										// On ajoute la variable d'erreurs à la page
 										$user->getMessageClient()->addErreur($file->getErreurs());
 									}
-								}else{
-									// On ajoute la variable d'erreurs à la page
-									$user->getMessageClient()->addErreur($file->getErreurs());
 								}
 							}else{
 								// On ajoute la variable d'erreurs

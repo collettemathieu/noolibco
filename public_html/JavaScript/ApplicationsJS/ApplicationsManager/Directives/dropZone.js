@@ -111,9 +111,6 @@ application.directive('dropZone', function(){
 		                displayInformationsClient(response);
 		                uploadFinally(false);
 
-		                // Evènement de l'arbre des applications
-						scope.$emit('treeHasChanged', false);
-
 		            }else if(response['erreurs']){
 		                displayInformationsClient(response);
 

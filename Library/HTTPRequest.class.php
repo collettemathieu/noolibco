@@ -82,14 +82,11 @@ class HTTPRequest extends \Library\ApplicationComponent
 		}
 	}
 	
-	public function setPostData(array $donnees)
-	{
-		if(isset($donnees) && !empty($donnees))
-		{
-			
+	public function setPostData(array $donnees){
+		if(isset($donnees) && !empty($donnees)){
 			foreach ($donnees as $key => $value)
 			{
-				if(json_decode($value, true) === null){
+				if(json_decode($value, true) === null && $this->getApp()->getNomApplication() != 'HandleApplication'){
 					// On supprime les caractères spéciaux
 					$value = preg_replace($this->tabSpecialChars, '', $value);
 				}

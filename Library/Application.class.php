@@ -41,9 +41,9 @@ abstract class Application{
 	/**
 	* Contructeur de la classe application.
 	*/
-	public function __construct()
+	public function __construct($name = '')
 	{	
-		$this->nomApplication = '';
+		$this->nomApplication = $name;
 		$this->user = new User($this);
 		$this->config = new Config($this);
 		$this->HTTPResponse = new HTTPResponse($this);

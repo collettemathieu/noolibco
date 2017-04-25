@@ -32,8 +32,6 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 		if(value){
 			// Evènement de l'arbre des applications
 			$scope.$emit('treeHasChanged', false);
-			// On ferme la fenêtre modale
-			$uibModalInstance.dismiss('cancel');
 		}
 	});
 
@@ -73,39 +71,42 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 
 	// Pour soumettre le formulaire
 	$scope.validTextFunction = function(e){
-			console.log($scope.textEditor);
-			/*
-			$scope.displayButtonForm = true;
 			
-			$http({
-                url: '/HandleApplication/ValidFormTache',
-                method: 'POST',
-                headers: {'Content-Type': undefined},
-                transformRequest: angular.identity,
-                data: formData
-            })
-			.success(function(response){
-				
-				displayInformationsClient(response);
-				// Position par defaut du bouton envoyer
-				$scope.displayButtonForm = false;
-				// Fermer la fenêtre modale
-				$uibModalInstance.dismiss('cancel');
-				// Evènement de l'arbre des applications
-				$scope.$emit('treeHasChanged', false);
-			})
-			.error(function(error){
-				var response = {
-					'erreurs': '<p>A system error has occurred: '+error+'</p>'
-				};
-				displayInformationsClient(response);
-				// Position par defaut du bouton envoyer
-				$scope.displayButtonForm = false;
-				// Fermer la fenêtre modale
-				$uibModalInstance.dismiss('cancel');
-			})
+		$scope.displayButtonForm = true;
+		
+		$http({
+           url: '/HandleApplication/ValidModifFonction',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+		        var str = [];
+		        for(var p in obj)
+		        	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		        return str.join("&");
+		    },
+			data: {
+				idApp: $scope.application.id,
+				textFunction: $scope.textEditor,
+				idFunction: $scope.idFunction,
+				idVersion: $scope.idVersion
+			}
+        })
+		.success(function(response){
 			
-		*/
+			displayInformationsClient(response);
+			// Position par defaut du bouton envoyer
+			$scope.displayButtonForm = false;
+			// Evènement de l'arbre des applications
+			$scope.$emit('treeHasChanged', false);
+		})
+		.error(function(error){
+			var response = {
+				'erreurs': '<p>A system error has occurred: '+error+'</p>'
+			};
+			displayInformationsClient(response);
+			// Position par defaut du bouton envoyer
+			$scope.displayButtonForm = false;
+		})
 	}
 }]);
 

@@ -21,10 +21,8 @@ class HandleApplicationApplication extends \Library\Application
 {
 	
 	/* Appel du constructeur parent */
-	public function __construct()
-	{
-		parent::__construct();
-		$this->nomApplication = 'HandleApplication';
+	public function __construct(){
+		parent::__construct('HandleApplication');
 	}
 
 	/**
