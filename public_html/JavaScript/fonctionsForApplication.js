@@ -214,7 +214,6 @@ function sliderParametreApplication(cloneContenuPanel){
             valeurMinParametre = parseInt($(this).parent().find('.valeurMinParametre').attr('value')),
             valeurMaxParametre = parseInt($(this).parent().find('.valeurMaxParametre').attr('value')),
             valeurPasParametre = parseInt($(this).parent().find('.valeurPasParametre').attr('value'));
-        
         $(this).slider({
             range: 'min',
             min: valeurMinParametre,

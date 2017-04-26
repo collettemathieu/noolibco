@@ -127,8 +127,10 @@ $(function(){
 								try{
 									    response = JSON.parse(response);
 										listTypeDonnee = response['listeTypeDonnee'];
-										var nomTache=response['listeTypeDonnee'][0]['nomTache'];
-										cloneApplication.find('.tachesApplication').append(nomTache);
+										var nomTache=response['listeTypeDonnee'][0]['nomTache'],
+										    tacheApplication=cloneApplication.find('.tachesApplication');
+										    
+									tacheApplication.append(nomTache);	
 									initDataBox(cloneApplication,listTypeDonnee,nomTache);
 									listeTache=response['listeTache'];
 									listeParams=response['listeParams'];
@@ -147,6 +149,7 @@ $(function(){
 								displayInformationsClient(response);
 							}
 						});
+console.log(ArrayTacheDonnee(listTypeDonnee));
   
 	      //*********************************************************************
 			// Menu contextuel de l'application
@@ -337,7 +340,9 @@ $(function(){
 						var panelSettingsApplication = $('#panelSettingsApplication'),
 							modalBody = panelSettingsApplication.find('.modal-body'),
 							tacheSelect=panelSettingsApplication.find('#tacheSelect'),
-							currentNomTache=cloneApplication.find('.tachesApplication').html().trim();
+							currentTache=cloneApplication.find('.tachesApplication'),
+							currentNomTache=currentTache.html().trim();
+							
 					
 						tacheSelect.html(listeTache);
 						tacheSelect.find('select').val(currentNomTache);
@@ -969,17 +974,17 @@ $(function(){
 
        function initDataBox(cloneApplication,listTypeDonnee,nomTache){
  				var appWidth=parseInt(cloneApplication.css('width')),
- 				numeroDonnee = 0,
-      			numeroTache = $('#panelSettingsApplication').find('.modal-body').find('select').attr('name');
+ 				numeroDonnee = 0;
 
         	for(var i=0, c=listTypeDonnee.length; i<c ; ++i){
 				if(listTypeDonnee[i]['nomTache'] === nomTache){
 					if(listTypeDonnee[i]['ext'] != 'input.txt'){
-						var contenu = '<div class="dataBox donneeDataBox" name="'+numeroTache+'data'+numeroDonnee+'" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';				
+						var contenu = '<div class="dataBox donneeDataBox" name="tache0data'+numeroDonnee+'" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';				
 					}else{
-						var contenu = '<input type="txt" name="'+numeroTache+'data'+numeroDonnee+'" class="dataBox input-sm" value="" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"/>';
+						var contenu = '<input type="txt" name="tache0data'+numeroDonnee+'" class="dataBox input-sm" value="" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"/>';
 						}
 						appWidth+=73;
+						++numeroDonnee;
 						cloneApplication.children(".ajaxLoaderApplication").after(contenu);
 				}
 			}
@@ -1008,7 +1013,6 @@ $(function(){
 									var width= parseInt($(this).parent().css('width'));
 										width -= 73;
 										$(this).parent().css('width',width+"px");
-										//console.log($(this).parent().parent().attr('id'));
 									    $(this).remove();
 								});
 								
@@ -1016,10 +1020,25 @@ $(function(){
 								setTimeout(function(){
 									cloneApplication.children('.dataBox').show('slice').css('display', 'inline-block');
   								}, 200);
-					    		 //console.log((options.$trigger.parent()));
-					    		console.log('here');
 								$('#panelSettingsApplication').modal('hide');
 							});
+        }
+        function ArrayTacheDonnee(listTypeDonnee){
+        	var tache={};
+
+        	for(var i=0;i<listTypeDonnee.length;++i){
+        		var nomTache=listTypeDonnee[i]['nomTache'];
+        		if(nomTache in tache == false){
+        			tache[nomTache]={};
+        		}
+        		for(var j=0;j<listTypeDonnee.length;++j){
+        			if(listTypeDonnee[j]['nomTache']=== nomTache){
+        				var donnee=listTypeDonnee[j]['ext'];
+        					tache[nomTache][donnee]={};
+        			}
+        		}
+        	}
+        	return tache;
         }
 
         //*****************************************

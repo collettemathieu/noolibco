@@ -110,7 +110,7 @@ class InfoApplicationController extends \Library\BackController
 																'nomParams' => $parametre->getNomParametre(),
 																'defaultVal' => $parametre->getValeurDefautParametre(),
 																'minVal' => $parametre->getValeurMinParametre(),
-																'maxVal' => $parametre->getValeurMinParametre(),
+																'maxVal' => $parametre->getValeurMaxParametre(),
 																'pasVal' => $parametre->getValeurPasParametre() );
 														array_push($tabParametres, $parametres);
 													}
