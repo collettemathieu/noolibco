@@ -6,8 +6,7 @@ foreach($userSession->getFavoris() as $application){?>
 		<div class="dataBox"></div><hr><!--
 		-->
 		<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/><!--
-		--><hr><div class="resultBox"></div>
-		
+		--><hr><div class="resultBox"></div>	
 	</div>
 <?php }
 

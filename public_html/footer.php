@@ -57,11 +57,10 @@
 							<button type="button" class="close" data-dismiss="modal">x</button>
 							<h2 class="modal-title">Settings</h2>
 						</div>
-						<div class="modal-body">
+						<div class="modal-body" >
 						<form  class='well col-lg-12 centering' enctype='multipart/form-data' method='post'>
 							   <div id="tacheSelect"> </div>
 							   <div id="paramsList"></div>
-							<button class='btn btn-default pull-right' type='submit'>Save</button>
 						</form>
 								
 						</div>
