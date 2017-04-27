@@ -20,7 +20,7 @@ application.directive('aceEditor', ['$compile', '$http', function($compile, $htt
 			
 			var editor = ace.edit(element[0]);
 			editor.$blockScrolling = Infinity; // Remove warning
-			editor.setHighlightActiveLine(false);
+			editor.setHighlightActiveLine(true); // Underline
 			if(typeof scope.textFunction != 'undefined'){
 				editor.setValue(scope.textFunction, 1);
 			}
