@@ -85,9 +85,7 @@ $(function(){
       		}
       		var cloneApplication = app.clone();
       		cloneApplication.appendTo(element);
-
       		cloneApplication.css('width','240px').css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX-93+'px'); // 93 pour contrer l'ajout de width:240px
-
 	      	cloneApplication.draggable({
 				revert: false,
 				containment: '#noospace',
@@ -95,43 +93,31 @@ $(function(){
 					$(this).children('img').addClass('noClick');
 				}
 	      	});
-
 	      	// On réajuste la taille de l'image de l'application
 	      	cloneApplication.find('.imageApplication').animate({
 	      		'width':64,
 	      		'height': 64
 	      	}, 1500);
-
 	      	// On affiche les boîtes de dialogue supplémentaires autour de l'application
 	      	cloneApplication.children('hr').show().css('display', 'inline-block');
-			setTimeout(function(){
-				cloneApplication.children('.dataBox').show('slice').css('display', 'inline-block');
   				setTimeout(function(){
   					cloneApplication.children('.resultBox').show('slice').css('display', 'inline-block');
   				}, 500);
-  			}, 200);
   			//******************************************************************************
-  			
 						var formData = new FormData();
 						formData.append('idApplication', cloneApplication.attr('id'));
-						
 			      		$.ajax({
 							url: '/NooSpace/InfoApplication',
 							type: 'POST',
-							async: false,
+							async: true,
 							cache: false,
 							data: formData,
 							contentType: false,
 							processData: false,
 							success: function(response) {
 								try{
-									    response = JSON.parse(response);
-										listTypeDonnee = response['listeTypeDonnee'];
-										var nomTache=response['listeTypeDonnee'][0]['nomTache'],
-										    tacheApplication=cloneApplication.find('.tachesApplication');
-										    
-									tacheApplication.append(nomTache);	
-									initDataBox(cloneApplication,listTypeDonnee,nomTache);
+									 response = JSON.parse(response);
+									listTypeDonnee = response['listeTypeDonnee'];
 									listeTache=response['listeTache'];
 									listeParams=response['listeParams'];
 								}
@@ -149,56 +135,26 @@ $(function(){
 								displayInformationsClient(response);
 							}
 						});
-console.log(ArrayTacheDonnee(listTypeDonnee));
+						setTimeout(function(){
+					  	var nomTache=listTypeDonnee[0]['nomTache'],
+						    tacheApplication=cloneApplication.find('.tachesApplication');
+						    parametres=[];
+										    
+									tacheApplication.attr('name',nomTache);	
+									initDataBox(cloneApplication,listTypeDonnee,nomTache);
+									parametres=ArrayTacheParam(listeParams);
+									 tacheApplication.append('<form></form>');
+									if(typeof parametres[nomTache] != "undefined"){
+										//console.log('avant boucle');
+										for(var i=0;i<parametres[nomTache].length;++i){
+											//console.log("here");
+											tacheApplication.find('form').append("<input type='text' id='"+parametres[nomTache][i]['nomParams']+"' name='"+parametres[nomTache][i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ parametres[nomTache][i]['defaultVal']+"' readonly />");
+										}
+									}
+						}, 800);
   
-	      //*********************************************************************
-			// Menu contextuel de l'application
-			//****************************** A modifier
-			/*$.contextMenu.types.Tache = function(item, opt, root) {
-
-		       $(this).on('click', function() {
-		               	
-		            	try{
-			               	// On affiche le loader
-				      		cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
-				      		
-				      		// On ajoute les données et les paramètres pour le lancement de l'application
-				      		var form = paramForm = cloneApplication.find('.parametresApplication form').serializeArray(),
-				      			formData = new FormData();
-
-							formData.append('tache0data0', 'noolibData_'+cloneApplication.find('.donneeUser').attr('id'));
-							formData.append('idApplication', cloneApplication.attr('id'));
-							formData.append('idVersion', cloneApplication.attr('idVersion'));
-							formData.append('tache0', $(this).attr('id'));
-							// On ajoute le formulaire des paramètres au formulaire général
-							for (var i=0; i<paramForm.length; i++)
-							    formData.append(paramForm[i].name, paramForm[i].value);
-
-							runTheMule(formData, cloneApplication);
-						}
-			      		catch(e){
-			      			var response = {
-							  'erreurs': '<p>A system error has occurred.</p>'
-							};
-							displayInformationsClient(response);
-							// On cache le loader
-							cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
-
-							// On cache les résultats précédents
-							cloneApplication.find('.resultBox img').hide(600);
-
-							// On efface le rapport précédent
-							cloneApplication.find('.applicationReports').html('');
-			      		}
-		            });
-
-		            this.removeClass('context-menu-item').addClass('context-menu-tache');
-		            
-		        
-		    };*/
-		    //************************************
-
-
+	      //********************************************************************
+			//************* Menu contextuel de l'application********************
 		   	// Pour définir le menu contextuel de l'application
 		    cloneApplication.contextMenu({
 		    	selector: '.imageApplication',
@@ -280,7 +236,6 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 										$('<button type="submit" data-loading-text="<span class=\'glyphicon glyphicon-refresh spinning\'></span> Running..." class="btn btn-default pull-right">Go forward</button>').insertAfter('.task:last');
 										$('<button class="btn btn-default pull-left" disabled>&ndash;</button>').insertAfter('.task:last');
 										$('<button class="btn btn-default pull-left">+</button>').insertAfter('.task:last');
-
 										// Pour contrôler le changement des select
 										$('#formMule').find('.listeTache').change(function(){
 											initMule($(this).val(), listTypeDonnee, $(this).parent().next());
@@ -288,8 +243,6 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 
 								      	// Pour gérer les formulaires de la mule
 							      		manageTaskMule(nomFirstTache, listTypeDonnee);
-
-
 								      	$('#formMule').find('button:last').click(function(e){
 								      		e.preventDefault();
 								      		// Pour afficher un message d'attente
@@ -302,11 +255,9 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 								      		// On ajoute le formulaire des paramètres au formulaire général
 											for (var i=0; i<paramForm.length; i++)
 											    formData.append(paramForm[i].name, paramForm[i].value);
-
 											formData.append('idApplication', cloneApplication.attr('id'));
 											formData.append('idVersion', cloneApplication.attr('idVersion'));
 								      		runTheMule(formData, cloneApplication);
-
 								      	});
 									    
 									}
@@ -341,20 +292,17 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 							modalBody = panelSettingsApplication.find('.modal-body'),
 							tacheSelect=panelSettingsApplication.find('#tacheSelect'),
 							currentTache=cloneApplication.find('.tachesApplication'),
-							currentNomTache=currentTache.html().trim();
-							
-					
+							currentNomTache=currentTache.attr('name');
 						tacheSelect.html(listeTache);
 						tacheSelect.find('select').val(currentNomTache);
 						initParams(currentNomTache,listeParams);
 						panelSettingsApplication.modal('show');
-
 						// la fenêtre modale dans les paramètres de l'application
 							tacheSelect.find('select').change(function(){
 								//initialiser les parametres de l'application en changant la tache
 								initParams($(this).val(), listeParams);
 								//pour récuperer la tache actuelle de l'application
-								cloneApplication.find('.tachesApplication').html($(this).val());
+								currentTache.attr('name',$(this).val());
 								saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect);
 									sliderParametreApplication(modalBody);
 							});
@@ -367,19 +315,31 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 				      		cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
 				      		
 				      		// On ajoute les données et les paramètres pour le lancement de l'application
-				      		var form = paramForm = paramsList;
-				      			formData = new FormData();
+				      		var form = paramForm = cloneApplication.find('.parametresApplication').serializeArray(),
+				      			nomTache=cloneApplication.find('.tachesApplication').attr('name'),
+				      			donnees=ArrayTacheDonnee(listTypeDonnee),
+				      			formData = new FormData(),
+				      			nbrDonnee=donnees[nomTache].length;
 
-							formData.append('tache0data0', 'noolibData_'+cloneApplication.find('.donneeUser').attr('id'));
+							for(var i=0;i<nbrDonnee;++i){
+								if(donnees[nomTache][i]['ext']!='input.txt'){
+									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.find('.dataBox:eq('+(i)+') .donneeUser').attr('id'));
+									console.log('i= '+i);
+									console.log(cloneApplication.find('.dataBox:eq('+(i)+') .donneeUser').attr('id'));
+								}else{
+									formData.append('tache0data'+(i), cloneApplication.find('.dataBox:eq('+(i)+')').val());
+									console.log('i= '+i);
+									console.log(cloneApplication.find('.dataBox:eq('+(i)+')').val());
+								}
+							}
+							
 							formData.append('idApplication', cloneApplication.attr('id'));
 							formData.append('idVersion', cloneApplication.attr('idVersion'));
-							formData.append('tache0', cloneApplication.find('.tachesApplication').html());
+							formData.append('tache0', nomTache );
 							// On ajoute le formulaire des paramètres au formulaire général
 							for (var i=0; i<paramForm.length; i++)
 							    formData.append(paramForm[i].name, paramForm[i].value);
-							console.log(paramForm[i].name);
-
-							runTheMule(formData, cloneApplication);
+								runTheMule(formData, cloneApplication);
 						}
 			      		catch(e){
 			      			var response = {
@@ -401,7 +361,7 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 		        autoHide: true,
 		        items: {
 		        	"Run":{
-		        		name:"Run Application"+ cloneApplication.attr('id')
+		        		name:"Run Application"
 		        	},
 		             "parametreApplication": {
 		            	name: "Set this application"
@@ -783,12 +743,9 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 							              var response = {
 							                'erreurs': '<p>A system error has occurred: '+e+'</p>'
 							              };
-
 							              displayInformationsClient(response);
 							            }
-
 							            if(response['reussites']){
-							               
 							                displayInformationsClient(response);
 							                // On actualise les données
 							                $('#inListeDonneesUser').html(response['listeDonneeUtilisateur']);
@@ -798,13 +755,10 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 							                    'tailleMaxDonneesUtilisateur': response['tailleMaxDonneesUtilisateur'],
 							                    'progressionPourcent': response['progressionPourcent']
 							                };
-
 							                showData(parametres);
-
 							            }else if(response['erreurs']){
 							                displayInformationsClient(response);
 							            }
-
 							            // On ferme l'indicateur de progression
 										$('#image-result-waiter').hide();
 										// On permet d'uploader la donnée
@@ -816,7 +770,6 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 							                'erreurs': '<p>The size of data exceeds the limit authorized.</p><p>Please try again with another data.</p>'
 							            };
 							            displayInformationsClient(response);
-
 							            // On ferme l'indicateur de progression
 										$('#image-result-waiter').hide();
 										// On permet d'uploader la donnée
@@ -825,11 +778,9 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 							          }
 							      });
 							    }else{
-
 							      var response = {
 							          'erreurs': '<p>The size of data exceeds the limit authorized.</p><p>Please try again with an another data/image or a smaller interval.</p>'
 							      };
-
 							      displayInformationsClient(response);
 							    }
 							}
@@ -838,12 +789,9 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 						      var response = {
 						          'erreurs': '<p>A system error has occurred: '+e+'</p>'
 						      };
-
 						      displayInformationsClient(response);
-
 						  }
 						});
-						
 					}else{
 						if(response['erreurs']){
 							displayInformationsClient(response);
@@ -854,29 +802,21 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 							displayInformationsClient(response);
 						}
 					}	
-				
 				},
 				error: function(){
-					
 					// Pour réinitialiser le message d'attente
 					$('#formMule').find('button:last').button('reset');
-					
 					// On affiche un message d'erreur
 					var response = {
 					  'erreurs': '<p>A system error has occurred. Please drag and drop a valid data into the data box of the application.</p>'
 					};
 					displayInformationsClient(response);
-
 					// On cache le loader
 					cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
-
 					// On cache les résultats précédents
 					cloneApplication.find('.resultBox img').hide(600);
-
 					// On efface le rapport précédent
-					cloneApplication.find('.applicationReports').html('');
-
-					
+					cloneApplication.find('.applicationReports').html('');	
 				}
 			});
 		}
@@ -924,14 +864,12 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
                 if(num_data == 1){
                 	$('#formMule').find('button:odd').removeAttr('disabled');
                 }
-                
                 initMule(nomFirstTache, listTypeDonnee);
                 // Pour contrôler le changement des select
 				$('#formMule').find('.listeTache').change(function(){
 					initMule($(this).val(), listTypeDonnee, $(this).parent().next());
 				});
             });
-
             // Pour supprimer un type de paramètre à la tâche - le dernier n'est pas supprimé
             $('#formMule').find('button:odd').click(function(e){
                 e.preventDefault();
@@ -952,11 +890,10 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
         	var numberParams=0;
         	var contenuParams="";
         	$('.modal-body').find('#paramsList').children().remove();
-        		
         		for(i=0;i<listeParams.length;++i){
         			if(listeParams[i]['nomTache']==nomTache){
         				//Reecrire tout le html dans footer.php !!!!!! 
-						contenuParams+="<li><label for='"+listeParams[i]['nomParams']+"' class='labelVariable'>"+ listeParams[i]['nomParams']+":</label><input type='text' id='"+listeParams[i]['nomParams']+"' name='"+listeParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ listeParams[i]['defaultVal']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+listeParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+listeParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+listeParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";		
+						contenuParams+="<li><label for='"+listeParams[i]['nomParams']+"' class='labelVariable'>"+ listeParams[i]['nomParams']+" :</label><input type='text' id='"+listeParams[i]['nomParams']+"' name='"+listeParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ listeParams[i]['defaultVal']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+listeParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+listeParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+listeParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";		
         				numberParams++;
         			}
         		}
@@ -968,15 +905,12 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
         			contenu+=contenuParams+"</ul></li></ul><button class='btn btn-default pull-right' type='submit'>Save</button>";
         			$('.modal-body').find('#paramsList').append(contenu);
         		}
-        		
-        		
         } 
 
        function initDataBox(cloneApplication,listTypeDonnee,nomTache){
  				var appWidth=parseInt(cloneApplication.css('width')),
- 				numeroDonnee = 0;
-
-        	for(var i=0, c=listTypeDonnee.length; i<c ; ++i){
+ 				numeroDonnee = (listTypeDonnee.length)-1;
+        	 for(var i=(listTypeDonnee.length)-1, c=0; i>=c ; --i){
 				if(listTypeDonnee[i]['nomTache'] === nomTache){
 					if(listTypeDonnee[i]['ext'] != 'input.txt'){
 						var contenu = '<div class="dataBox donneeDataBox" name="tache0data'+numeroDonnee+'" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';				
@@ -984,57 +918,91 @@ console.log(ArrayTacheDonnee(listTypeDonnee));
 						var contenu = '<input type="txt" name="tache0data'+numeroDonnee+'" class="dataBox input-sm" value="" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"/>';
 						}
 						appWidth+=73;
-						++numeroDonnee;
+						--numeroDonnee;
 						cloneApplication.children(".ajaxLoaderApplication").after(contenu);
 				}
 			}
 			cloneApplication.css('width',appWidth+'px');
-			cloneApplication.find('.donneeDataBox').droppable({
+				cloneApplication.find('.donneeDataBox').droppable({
 				drop: function(event, ui){
+					if($(this).children().length==0){ //pour n'accepter qu'une seule donnée dans la dataBox
 					var positionSourisX = event.clientX,
 					largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
-												      			
 					if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
-
 						initDonneeUtilisateur(ui.draggable.clone(), $(this), 2, 2);
-
 					}else{
 						$(this).append(ui.draggable);
 						ui.draggable.css('position',''); //pour que la donnée se met au bon endroit du drag
 						ui.draggable.css('top', 2+'px').css('left', 2+'px'); //.css('position','absolute')
 						}
+						}
 					}
 				});
-        }
+						setTimeout(function(){
+									cloneApplication.children('.dataBox').show('slice').css('display', 'inline-block');
+  								}, 500);
+      	  }
         function saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect){
-        	$('#panelSettingsApplication').find('.modal-body').find('button').click(function(e){
+        	var modalBody=$('#panelSettingsApplication').find('.modal-body');
+	        	modalBody.find('button').click(function(e){
 					     	e.preventDefault();
+					     	cloneApplication.find('.tachesApplication form').children().remove();
+					     	//pour sauvgarder les valeurs des parametres
+					     	modalBody.find('.parametresTache ul').find('li').each(function(){
+					     		cloneApplication.find('.tachesApplication form').append($(this).find('input').first());
+					     	});
+					     	//pour supprimer les anciennes dataBox 
 								cloneApplication.find(".dataBox").each(function(){		
 									var width= parseInt($(this).parent().css('width'));
 										width -= 73;
 										$(this).parent().css('width',width+"px");
 									    $(this).remove();
 								});
-								
+								//itialiser les nouvelles dataBox avec l'animation
 								initDataBox(cloneApplication,listTypeDonnee,tacheSelect.find('select').val());
-								setTimeout(function(){
-									cloneApplication.children('.dataBox').show('slice').css('display', 'inline-block');
-  								}, 200);
+  								//fermer la fenetre
 								$('#panelSettingsApplication').modal('hide');
 							});
         }
         function ArrayTacheDonnee(listTypeDonnee){
-        	var tache={};
+        	var tache=[];
 
         	for(var i=0;i<listTypeDonnee.length;++i){
         		var nomTache=listTypeDonnee[i]['nomTache'];
         		if(nomTache in tache == false){
-        			tache[nomTache]={};
+        			tache[nomTache]=[];
         		}
+        		var k=0;
         		for(var j=0;j<listTypeDonnee.length;++j){
         			if(listTypeDonnee[j]['nomTache']=== nomTache){
-        				var donnee=listTypeDonnee[j]['ext'];
-        					tache[nomTache][donnee]={};
+        				tache[nomTache][k]=[];
+        					tache[nomTache][k]['ext']=listTypeDonnee[j]['ext'];
+        					tache[nomTache][k]['description']=listTypeDonnee[j]['description'];
+        					tache[nomTache][k]['nomTypeDonnee']=listTypeDonnee[j]['nomTypeDonnee'];
+        					k++;
+        			}
+        		}
+        	}
+        	return tache;
+        }
+           function ArrayTacheParam(listeParams){
+        	var tache=[];
+        	for(var i=0;i<listeParams.length;++i){
+        		var nomTache=listeParams[i]['nomTache'];
+        		if(nomTache in tache == false){
+        			tache[nomTache]=[];
+        		}
+        		var k=0;
+        		for(var j=0;j<listeParams.length;++j){
+        			if(listeParams[j]['nomTache']=== nomTache){
+        				tache[nomTache][k]=[];
+        					tache[nomTache][k]['idParams']=listeParams[j]['idParams'];
+        					tache[nomTache][k]['nomParams']=listeParams[j]['nomParams'];
+        					tache[nomTache][k]['defaultVal']=listeParams[j]['defaultVal'];
+        					tache[nomTache][k]['minVal']=listeParams[j]['minVal'];
+        					tache[nomTache][k]['maxVal']=listeParams[j]['maxVal'];
+        					tache[nomTache][k]['pasVal']=listeParams[j]['pasVal'];
+        					k++;
         			}
         		}
         	}
