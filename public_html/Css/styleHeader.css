@@ -64,7 +64,7 @@ header .modal-body li{
 /* background-position: (colonne)px (ligne)px; */
 /* Léna */
 .teamPicture:nth-child(1) span{
-	background-position: -120px -240px;
+	background-position: -360px 0px;
 }
 /* Corentin */
 .teamPicture:nth-child(2) span{
