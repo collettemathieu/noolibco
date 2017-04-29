@@ -68,19 +68,19 @@ header .modal-body li{
 }
 /* Corentin */
 .teamPicture:nth-child(2) span{
-	background-position: 0px -120px;
+	background-position: -120px -240px;
 }
 /* Guénaël */
 .teamPicture:nth-child(3) span{
-	background-position: -120px -120px;
+	background-position: -240px 0px;
 }
 /* Steve */
 .teamPicture:nth-child(4) span{
-	background-position: -360px -120px;
+	background-position: -360px 0px;
 }
 /* Rémi */
 .teamPicture:nth-child(5) span{
-	background-position: -360px 0px;
+	background-position: -240px -360px;
 }
 /* Antoine */
 .teamPicture:nth-child(6) span{
@@ -88,31 +88,31 @@ header .modal-body li{
 }
 /* Kevin */
 .teamPicture:nth-child(7) span{
-	background-position: 0px -240px;
+	background-position: -240px -240px;
 }
 /* Baptiste Houssais */
 .teamPicture:nth-child(8) span{
-	background-position: 0px -360px;
+	background-position: -240px 0px;
 }
 /* Brian */
 .teamPicture:nth-child(9) span{
-	background-position: -120px 0px;
+	background-position: 0px -120px;
 }
 /* Jean */
 .teamPicture:nth-child(10) span{
-	background-position: -240px -120px;
+	background-position: -120px -240px;
 }
 /* Baptiste Maudet */
 .teamPicture:nth-child(11) span{
-	background-position: 0px -360px;
+	background-position: -120px 0px;
 }
 /* Yohann */
 .teamPicture:nth-child(12) span{
-	background-position: -360px -240px;
+	background-position: -120px -360px;
 }
 /* Clément */
 .teamPicture:nth-child(13) span{
-	background-position: -240px 0px;
+	background-position: -120px -120px;
 }
 /* Mathieu */
 .founder{
@@ -120,5 +120,5 @@ header .modal-body li{
 	width: 120px;
 	height: 120px;
 	background: url("/Images/NooLibTeam/spritesheet.jpg") no-repeat;
-	background-position: -240px -240px;
+	background-position: -360px -120px;
 }
