@@ -68,19 +68,19 @@ header .modal-body li{
 }
 /* Corentin */
 .teamPicture:nth-child(2) span{
-	background-position: -120px -240px;
+	background-position: -240px -120px;
 }
 /* Guénaël */
 .teamPicture:nth-child(3) span{
-	background-position: -240px 0px;
+	background-position: 0px -240px;
 }
 /* Steve */
 .teamPicture:nth-child(4) span{
-	background-position: -360px 0px;
+	background-position: 0px -360px;
 }
 /* Rémi */
 .teamPicture:nth-child(5) span{
-	background-position: -240px -360px;
+	background-position: -360px -240px;
 }
 /* Antoine */
 .teamPicture:nth-child(6) span{
