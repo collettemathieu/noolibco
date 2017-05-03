@@ -25,7 +25,6 @@
 						<?php 
 						// On récupère l'utilisateur en session
 						$userSession = unserialize($user->getAttribute('userSession'));
-						
 						foreach($userSession->getFavoris() as $application){
 							$version = $application->getVersions()[count($application->getVersions()) - 1];
 							// On récupère la liste des tâches
@@ -33,6 +32,7 @@
 							?>
 							<div class="appInDock" draggable="true" id="<?php echo $application->getIdApplication();?>">
 								<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div>
+								<!--div class="runApplication"><img src="/Images/play.ico"/></div-->
 								<!-- <div class="dataBox"></div>--><hr><!--
 								--><img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/><!--
 								--><hr><div class="resultBox">
@@ -46,8 +46,6 @@
 					</div>
 				</div>
 			</div>
-
-
 			<?php if(count($userSession->getFavoris()) !=0){?>
 			<div id="panelSettingsApplication" class="modal fade" role="dialog">
 				<div class="modal-dialog">

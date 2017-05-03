@@ -21,7 +21,6 @@ $(function(){
 			deployApplication(appRunIt, $('#noospace'));
 			appRunIt.remove();
 		}
-
 		// Sinon pour toutes les applications déplacées sur la noospace
 		$('#noospace').droppable({
 		    drop: function(event, ui){
@@ -51,7 +50,6 @@ $(function(){
 							isIn = true;
 						}
 					});
-
 			    	if(!isIn){
 			    		initDonneeUtilisateur(ui.draggable.clone(), $(this), positionSourisX - pos.left -34, positionSourisY - pos.top -34);
 			    	}
@@ -70,7 +68,6 @@ $(function(){
 
 		    }
 		});
-
 		// Pour déployer une application dans la NooSpace
 		function deployApplication(app, element, nouvellePositionElementX, nouvellePositionElementY){
 			var listeParams, listeTache,listTypeDonnee;
@@ -163,7 +160,6 @@ $(function(){
 		            	$(this).parent().remove();
 		            }
 		            if(key === 'mule'){
-
 		            	// On récupère la mule de l'application
 		            	// On ajoute l'id de l'application
 			      		var formData = new FormData();
@@ -313,7 +309,6 @@ $(function(){
 						try{
 			               	// On affiche le loader
 				      		cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
-				      		
 				      		// On ajoute les données et les paramètres pour le lancement de l'application
 				      		var form = paramForm = cloneApplication.find('.parametresApplication').serializeArray(),
 				      			nomTache=cloneApplication.find('.tachesApplication').attr('name'),
@@ -324,15 +319,10 @@ $(function(){
 							for(var i=0;i<nbrDonnee;++i){
 								if(donnees[nomTache][i]['ext']!='input.txt'){
 									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.find('.dataBox:eq('+(i)+') .donneeUser').attr('id'));
-									console.log('i= '+i);
-									console.log(cloneApplication.find('.dataBox:eq('+(i)+') .donneeUser').attr('id'));
 								}else{
 									formData.append('tache0data'+(i), cloneApplication.find('.dataBox:eq('+(i)+')').val());
-									console.log('i= '+i);
-									console.log(cloneApplication.find('.dataBox:eq('+(i)+')').val());
 								}
 							}
-							
 							formData.append('idApplication', cloneApplication.attr('id'));
 							formData.append('idVersion', cloneApplication.attr('idVersion'));
 							formData.append('tache0', nomTache );
@@ -378,10 +368,8 @@ $(function(){
 		    });
 		}
 
-
 		// Pour initialiser les fonctionnalitées de la donnée utilisateur une fois ajouter à la NooSpace
 		function initDonneeUtilisateur(donneeUtilisateur, drop, nouvellePositionElementX, nouvellePositionElementY){
-
 			donneeUtilisateur.children('img').on({
 				click: function(){
 					// Pour éviter le click durant le drag
@@ -401,11 +389,8 @@ $(function(){
 	    	{
 	    		donneeUtilisateur.css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX+'px');
 	    	}
-	  		
-
 			// On affiche les info-bulles
 			donneeUtilisateur.popover({placement:'bottom', trigger:'hover'});
-
 	  		donneeUtilisateur.contextMenu({
 		    	selector: 'img',
 		        callback: function(key, options) {
@@ -421,7 +406,6 @@ $(function(){
 		            }
 		        }
 		    });
-	 
 	      	donneeUtilisateur.draggable({
 				revert: false,
 				containment: '#noospace',
@@ -434,10 +418,8 @@ $(function(){
 				}
 	      	});
 		}
-
 		// Pour gérer le dropable des données dans la mule
 		function initDragAndDropMule(){
-
 			$('#formMule').find('.dashedBorder').droppable({
 				drop: function(event, ui){
 					if($(this).is(':empty')){
@@ -564,7 +546,6 @@ $(function(){
 							}
 
 							if(tableauReponse['table']){
-
 								// Création de l'objet TxtReader à partir des données
 					            var txtReader = new TXTFile(),
 					            	num_points_display = 15000;
@@ -618,26 +599,19 @@ $(function(){
 							}else{
 								reportClone.find('.tableOfResults').html('No result generated.');
 							}
-
 							// On insert le nouveau rapport d'activité dans la box de résultats
             				reportClone.appendTo(cloneApplication.find('.applicationReports'));
             				
 						}
-
-            		
             			// On gère l'affichage par la fenêtre modale
             			cloneApplication.find('.resultBox img').click(function(){
-            				
             				// On affiche la fenêtre
             				$('#resultReportApplication').modal();
-            				
             				//On efface les rapports dans le carrousel des autres application s'il y a
             				$('#carouselApplicationReport').find('.item').remove();
             				$('#carouselApplicationReport').find('.carousel-indicators').empty();
-            				
         					// On insert les résultats de l'application
             				$('#carouselApplicationReport').find('.carousel-inner').prepend(cloneApplication.find('.applicationReports').html());
-            				
             				// On gère la numérotation des onglets
             				$('#carouselApplicationReport').find('.item').each(function(index){
             					$(this).find('.tab-pane').each(function(){
@@ -655,8 +629,6 @@ $(function(){
             					$('#carouselApplicationReport').find('.carousel-indicators').append(carouselIndicators);
 		
             				});
-
-
 							// On retarde légèrement le traitement des données afin de permettre à la fenêtre modale de s'ouvrir
             				setTimeout(function(){
             					// Traitement des données du caroussel
@@ -695,15 +667,11 @@ $(function(){
 						// On gère la sauvegarde des résultats
 						// Tous les résultats sont sauvegardés en une seule fois avec pls appels Ajax
 						$('#formSaveResult').on('submit', function(e) {
-
 							e.preventDefault();
 							// Variable d'autorisation d'upload
      	 					var uploadAllowed = true;
-
 						  try{
-						  	
 						  	for(var i=0, c=tabImage.length; i<c; ++i){
-							  	
 							  	var result = tabImage[i];
 
 							  	$('#extensionDataResult').attr('value', result.ext);
@@ -717,15 +685,11 @@ $(function(){
 							    if(uploadAllowed){
 							      var formData = new FormData(e.target);
 
-
 							       // On affiche l'indicateur de progression
 									  $('#image-result-waiter').show();
-
 									  // On empêche de charger ou d'uploader une nouvelle donnée
 									  $('#labelSubmitSaveResult').attr('for', '');
 									  $('#labelSubmitSaveResult img').css('opacity', '0.2').css('cursor', 'default').attr('data-content', '');
-							      
-
 							      // Envoi de la requête HTTP en mode asynchrone
 							      $.ajax({
 							          url: '/HandleData/AddLocalData',
@@ -848,7 +812,6 @@ $(function(){
 			// Pour gérer le dropable
 			initDragAndDropMule();
       	}
-
 		// Pour ajouter une nouvelle tâche ou la supprimer de la mule
         function manageTaskMule(nomFirstTache, listTypeDonnee){
             // Pour ajouter une nouvelle tâche
@@ -881,9 +844,7 @@ $(function(){
                     }
                 }
             });
-        }
-
-        
+        } 
         //*********************** Added by Naoures
         // Pour initialiser les parametres dans le setApplication selon la tache
         function initParams(nomTache, listeParams){
@@ -906,22 +867,30 @@ $(function(){
         			$('.modal-body').find('#paramsList').append(contenu);
         		}
         } 
-
        function initDataBox(cloneApplication,listTypeDonnee,nomTache){
  				var appWidth=parseInt(cloneApplication.css('width')),
- 				numeroDonnee = (listTypeDonnee.length)-1;
-        	 for(var i=(listTypeDonnee.length)-1, c=0; i>=c ; --i){
-				if(listTypeDonnee[i]['nomTache'] === nomTache){
-					if(listTypeDonnee[i]['ext'] != 'input.txt'){
-						var contenu = '<div class="dataBox donneeDataBox" name="tache0data'+numeroDonnee+'" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';				
+ 				arrayDonnee=ArrayTacheDonnee(listTypeDonnee),
+ 				widthDataBox=73/(arrayDonnee[nomTache].length),
+ 				numeroDonnee = (arrayDonnee[nomTache].length)-1,
+ 				pasAffichage=2;
+ 				contenu="<div class='allDataBox' style='display:inline;height:73px'>";
+ 				if(arrayDonnee[nomTache].length>pasAffichage){
+				contenu+="<button class='suivant'style='display:inline'> << </button>";
+				}
+        		 for(var i=(arrayDonnee[nomTache].length)-1, c=0; i>=c ; --i){
+					if(arrayDonnee[nomTache][i]['ext'] != 'input.txt'){
+						contenu += '<div class="dataBox donneeDataBox" name="tache0data'+numeroDonnee+'" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';				
 					}else{
-						var contenu = '<input type="txt" name="tache0data'+numeroDonnee+'" class="dataBox input-sm" value="" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"/>';
+						contenu += '<input type="txt" name="tache0data'+numeroDonnee+'" class="dataBox input-sm" value="" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"/>';
 						}
 						appWidth+=73;
 						--numeroDonnee;
-						cloneApplication.children(".ajaxLoaderApplication").after(contenu);
-				}
 			}
+				if(arrayDonnee[nomTache].length>pasAffichage){
+				contenu+="<button class='precedent'style='display:none'> >> </button>";
+				}
+			contenu+="</div>";
+			cloneApplication.children(".ajaxLoaderApplication").after(contenu);
 			cloneApplication.css('width',appWidth+'px');
 				cloneApplication.find('.donneeDataBox').droppable({
 				drop: function(event, ui){
@@ -935,13 +904,78 @@ $(function(){
 						ui.draggable.css('position',''); //pour que la donnée se met au bon endroit du drag
 						ui.draggable.css('top', 2+'px').css('left', 2+'px'); //.css('position','absolute')
 						}
-						}
 					}
+				}
 				});
+				//cloneApplication.find('.allDataBox').children('.dataBox').css('width', widthDataBox+'px');
+				//Pour agrandir la dataBox en hover
+				//**************** premiere methode ==> nulle
+						/*cloneApplication.find('.allDataBox .dataBox').hover(function(){
+				        	$(this).css("z-index",1);
+				        	$(this).animate({height:'73',width:'73'},"fast");
+				        },function(){
+				       		$(this).closest(".dataBox").css("z-index",0);
+				        	$(this).animate({height:'73',width:widthDataBox },"fast");
+				        });*/
+				//*****************2eme methode => nulle
+						/*cloneApplication.find('.allDataBox .dataBox').last().css("width","73px").addClass('active');
+						cloneApplication.find(".allDataBox .suivant").click(function(){
+							cloneApplication.find('.allDataBox .dataBox').each(function(){
+								if($(this).hasClass('active'))
+								target=$(this).index()-1;
+							});
+							console.log('before '+target);
+							target===0 ?  target=cloneApplication.find('.allDataBox .dataBox').length-1 : target =target-1;
+							console.log('after'+target);
+							cloneApplication.find('.allDataBox .dataBox').removeClass('active').css('width',widthDataBox+'px').eq(target).addClass('active').css('width','73px');
+						});*/
+
+
+					//Pour afficher la dataBox
+					var nbDataBox=cloneApplication.find('.allDataBox .dataBox').length;
 						setTimeout(function(){
-									cloneApplication.children('.dataBox').show('slice').css('display', 'inline-block');
+									cloneApplication.find('.allDataBox').children('.dataBox').slice(nbDataBox-pasAffichage,nbDataBox).show('slice').css('display', 'inline-block');
   								}, 500);
-      	  }
+						var dernierSlice=nbDataBox-pasAffichage;
+						//suivant
+						cloneApplication.find(".allDataBox .suivant").click(function(){
+							console.log('suivant');
+							if(dernierSlice >= pasAffichage) {
+								cloneApplication.find('.dataBox').slice(dernierSlice,dernierSlice+pasAffichage).css('display', 'none');
+								cloneApplication.find('.dataBox').slice(dernierSlice-pasAffichage,dernierSlice).css('display', 'inline-block');
+								dernierSlice=dernierSlice-pasAffichage;
+							}
+							else{
+								cloneApplication.find('.dataBox').slice(dernierSlice+1,dernierSlice+1+pasAffichage).css('display', 'none');
+								cloneApplication.find('.dataBox').slice(0,pasAffichage).css('display', 'inline-block');
+								dernierSlice=dernierSlice-1;
+							}
+							cloneApplication.find('.allDataBox .precedent').css('display','inline');
+							if(dernierSlice==0){
+								cloneApplication.find('.allDataBox .suivant').css('display','none');
+							}
+						});
+						//precedent
+						cloneApplication.find(".allDataBox .precedent").click(function(){
+							console.log('precedent');
+							dernierSlice=dernierSlice+pasAffichage;
+							if(dernierSlice+pasAffichage <= cloneApplication.find('.allDataBox .dataBox').length){
+								cloneApplication.find('.dataBox').slice(dernierSlice-pasAffichage,dernierSlice).css('display', 'none');
+								cloneApplication.find('.dataBox').slice(dernierSlice,dernierSlice+pasAffichage).css('display', 'inline-block');
+							}
+							else{
+								cloneApplication.find('.dataBox').slice(dernierSlice-pasAffichage,dernierSlice).css('display', 'none');
+								cloneApplication.find('.dataBox').slice(dernierSlice-pasAffichage+1,dernierSlice+pasAffichage-1).css('display', 'inline-block');
+								dernierSlice=dernierSlice-pasAffichage+1;
+							}
+							cloneApplication.find('.allDataBox .suivant').css('display','inline');
+							console.log(dernierSlice);
+							if(dernierSlice==nbDataBox-pasAffichage){
+								cloneApplication.find('.allDataBox .precedent').css('display','none');
+							}
+						});
+
+      	  				}
         function saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect){
         	var modalBody=$('#panelSettingsApplication').find('.modal-body');
 	        	modalBody.find('button').click(function(e){
@@ -952,7 +986,7 @@ $(function(){
 					     		cloneApplication.find('.tachesApplication form').append($(this).find('input').first());
 					     	});
 					     	//pour supprimer les anciennes dataBox 
-								cloneApplication.find(".dataBox").each(function(){		
+								cloneApplication.find(".allDataBox").each(function(){		
 									var width= parseInt($(this).parent().css('width'));
 										width -= 73;
 										$(this).parent().css('width',width+"px");
@@ -966,7 +1000,6 @@ $(function(){
         }
         function ArrayTacheDonnee(listTypeDonnee){
         	var tache=[];
-
         	for(var i=0;i<listTypeDonnee.length;++i){
         		var nomTache=listTypeDonnee[i]['nomTache'];
         		if(nomTache in tache == false){
@@ -985,7 +1018,7 @@ $(function(){
         	}
         	return tache;
         }
-           function ArrayTacheParam(listeParams){
+        function ArrayTacheParam(listeParams){
         	var tache=[];
         	for(var i=0;i<listeParams.length;++i){
         		var nomTache=listeParams[i]['nomTache'];
@@ -1008,15 +1041,11 @@ $(function(){
         	}
         	return tache;
         }
-
         //*****************************************
-        
-
         // Pour activer la fonction plein écran
 		$('#boutonFullScreen').click(function(){
 			var btn = $(this);
 		    if (screenfull.enabled) {
-
 		    	function screenChange(e){
 		    		// remove this event
 					e.target.removeEventListener(e.type, arguments.callee);
@@ -1028,7 +1057,6 @@ $(function(){
 						btn.attr('data-original-title','Full screen mode');
 					}
 			    }
-
 			    function screenError(e){
 			    	// remove this event
 					e.target.removeEventListener(e.type, arguments.callee);
@@ -1037,7 +1065,6 @@ $(function(){
 	                    };
 	                displayInformationsClient(response);
 			    }
-		    	
 		    	document.addEventListener(screenfull.raw.fullscreenerror, screenError);
 			    screenfull.toggle(); // Attention, cette fonction empêche l'apparition de message d'erreurs. Fonctionne avec screefull.request()
 				document.addEventListener(screenfull.raw.fullscreenchange, screenChange);

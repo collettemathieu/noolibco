@@ -63,7 +63,7 @@
 	width: 128px;
 	height: 128px;
 	top: -20px;
-	right: 57px;
+	right: 90px; /* ancienne valeur 57px modifié par naoures*/
 	z-index: 999;
 	cursor: progress;
 }
@@ -73,7 +73,22 @@
 	width: 64px;
 	height: 11px;
 }
-
+/*.runApplication{
+display: inline-block;
+	visibility: hidden;
+	position: absolute;
+	width: 128px;
+	height: 128px;
+	top: 50px;
+	right: 70px; 
+	z-index: 999;
+	cursor: progress;
+}
+.runApplication img{
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+}*/
 .appInDock hr{
 	display: none;
 	width: 15px;
@@ -81,8 +96,15 @@
 	background-color: grey;
 	vertical-align: middle;
 }
-
-.dataBox, .resultBox{
+.dataBox {
+	display: none;
+	width: 73px;
+	height: 73px;
+	border-radius: 15px;
+	vertical-align: top;
+	border: 1px grey solid;
+}
+.resultBox{
 	display: none;
 	height: 73px;
 	width: 73px;
