@@ -14,6 +14,9 @@
 !/public_html/*
 /public_html/.htaccess
 /public_html/Images/BackgroundUtilisateurs/*
+!/NodeJs
+!/NodeJs/*
+NodeJs/config/database.js
 *.DS_Store
 *.directory
 *routeur.txt
