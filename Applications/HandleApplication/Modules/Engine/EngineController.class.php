@@ -29,6 +29,7 @@ class EngineController extends \Library\BackController
 		if ($request->isAjaxRequest()) {
 
 			// On récupère l'utilisateur système
+			
 			$user = $this->app->getUser();
 
 			// On informe que c'est un chargement Ajax
