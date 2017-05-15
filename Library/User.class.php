@@ -16,7 +16,6 @@ namespace Library;
  * @access: public
  * @version: 1
  */
-
 /* Démarrage de la session */
 // Au moins 5 heures (3600 * 5 = 18000)
 ini_set("session.gc_maxlifetime", "18000");
@@ -34,7 +33,6 @@ class User extends ApplicationComponent
 	{
 		// On appel le constructeur parent.
 		parent::__construct($app);
-
 		$this->messageClient = new MessageClient();
 	}
 
