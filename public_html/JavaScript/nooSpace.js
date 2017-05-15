@@ -316,7 +316,7 @@ $(function(){
 				      			formData = new FormData(),
 				      			nbrDonnee=donnees[nomTache].length;
 
-							for(var i=0;i<nbrDonnee;++i){
+							for(var i=nbrDonnee-1;i>=0;--i){
 								if(donnees[nomTache][i]['ext']!='input.txt'){
 									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.find('.dataBox:eq('+(i)+') .donneeUser').attr('id'));
 								}else{
