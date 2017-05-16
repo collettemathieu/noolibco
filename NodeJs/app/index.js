@@ -19,14 +19,13 @@ var bodyParser = require("body-parser");
 })();
 module.exports = Engine;*/
 
-router.get('/test', function(req, res) {    
+router.post('/', function(req, res) {    
 			var obj={};
 			obj.title='test';
 			obj.data='hello';
 
-			console.log("req.query=  "+JSON.stringify(req.query.object));
-
-			res.send(req.query.callback+'('+JSON.stringify(obj)+');');
+  console.log("hello");
+			res.send(obj);
 			
 			res.end();
 		});

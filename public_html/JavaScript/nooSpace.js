@@ -454,11 +454,12 @@ $(function(){
 		function runTheMule(formData, cloneApplication){
 			// On lance la requête ajax
       		$.ajax({
-				url: 'http://'+window.location.hostname+':3000/runTheMule/test?callback=?',
-				dataType: "json",
-				data: formData,
-				processData: false,
-				jsonp: 'callback',
+				url: 'http://localhost:3000/runTheMule/',
+				type: 'POST',
+				async: true,
+				cache: false,
+				data: JSON.stringify(formData),
+				contentType: false,
 				success: function(response) {
 					console.log("from node js");
 					console.log(JSON.stringify(formData));
