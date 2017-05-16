@@ -305,7 +305,7 @@ $(function(){
 						sliderParametreApplication(modalBody);
 						saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect);
 					}
-					if(key=="Run"){
+					if(key === "Run"){
 						try{
 			               	// On affiche le loader
 				      		cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
@@ -316,11 +316,11 @@ $(function(){
 				      			formData = new FormData(),
 				      			nbrDonnee=donnees[nomTache].length;
 
-							for(var i=nbrDonnee-1;i>=0;--i){
+							for(var i=0;i<nbrDonnee;++i){
 								if(donnees[nomTache][i]['ext']!='input.txt'){
-									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.find('.dataBox:eq('+(i)+') .donneeUser').attr('id'));
+									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.find('.dataBox:eq('+(nbrDonnee-i-1)+')').find('.donneeUser').attr('id'));
 								}else{
-									formData.append('tache0data'+(i), cloneApplication.find('.dataBox:eq('+(i)+')').val());
+									formData.append('tache0data'+(i), cloneApplication.find('.dataBox:eq('+(nbrDonnee-i-1)+')').val());
 								}
 							}
 							formData.append('idApplication', cloneApplication.attr('id'));
@@ -939,7 +939,7 @@ $(function(){
 						var dernierSlice=nbDataBox-pasAffichage;
 						//suivant
 						cloneApplication.find(".allDataBox .suivant").click(function(){
-							console.log('suivant');
+						
 							if(dernierSlice >= pasAffichage) {
 								cloneApplication.find('.dataBox').slice(dernierSlice,dernierSlice+pasAffichage).css('display', 'none');
 								cloneApplication.find('.dataBox').slice(dernierSlice-pasAffichage,dernierSlice).css('display', 'inline-block');
@@ -957,7 +957,7 @@ $(function(){
 						});
 						//precedent
 						cloneApplication.find(".allDataBox .precedent").click(function(){
-							console.log('precedent');
+							
 							dernierSlice=dernierSlice+pasAffichage;
 							if(dernierSlice+pasAffichage <= cloneApplication.find('.allDataBox .dataBox').length){
 								cloneApplication.find('.dataBox').slice(dernierSlice-pasAffichage,dernierSlice).css('display', 'none');
@@ -969,7 +969,6 @@ $(function(){
 								dernierSlice=dernierSlice-pasAffichage+1;
 							}
 							cloneApplication.find('.allDataBox .suivant').css('display','inline');
-							console.log(dernierSlice);
 							if(dernierSlice==nbDataBox-pasAffichage){
 								cloneApplication.find('.allDataBox .precedent').css('display','none');
 							}
