@@ -14,7 +14,7 @@ router.get('/:id', function(req, res, next) {
 			console.log(rows[0]);
 			 res.render('index', { title: rows[0]['nom_application']});
 		}
-	});;
+	});
 });
 
 module.exports = router;

@@ -137,6 +137,7 @@ class User extends ApplicationComponent
 		}
 	}
 
+
 	/**
 	* Permet de gérer la validité du navigateur de l'utilisateur sur la plateforme
 	*/

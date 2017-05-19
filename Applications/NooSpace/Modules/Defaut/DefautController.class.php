@@ -91,4 +91,31 @@ class DefautController extends \Library\BackController
 		}
 
 	}
+
+	public function executeGetSession($request)
+	{
+		if ($request->isAjaxRequest()) {
+
+			// On vérifie que l'utilisateur est bien identifié
+			$user = $this->app->getUser();
+
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
+
+			$tableOfSession = array();
+				$session = array(
+					'id' => $user->getAttribute('id'),
+					'isAdmin' =>($user->getAttribute('isAdmin')) ? 'true' : 'false'				
+					);
+
+				array_push($tableOfSession, $session);
+			// On ajoute
+			$this->page->addVar('tableOfSession', $session);
+		}else{
+			// On procède à la redirection
+			$response = $this->app->getHTTPResponse();
+			$response->redirect('/');
+		}
+	}
+
 }

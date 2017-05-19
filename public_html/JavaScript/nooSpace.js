@@ -1,4 +1,27 @@
 $(function(){
+	//test **********************
+ 
+ 		$.ajax({
+				url: '/NooSpace/getSession',
+				type: 'POST',
+				async: true,
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function(response) {
+					response=JSON.parse(response);
+					sessionStorage.setItem("id",response['id']);
+					sessionStorage.setItem("isAdmin",response['isAdmin']);
+					//console.log(sessionStorage);
+				},
+				error: function(){
+					console.log('erreur4');
+					
+				}
+			});
+
+	
+	//***************************
 	if($('#noospace').length !=0){
 
 		// Pour gérer l'affichage du gestionnaire de données
@@ -452,29 +475,27 @@ $(function(){
 
 		// Pour lancer l'application et gérer les résultats de retour
 		function runTheMule(formData, cloneApplication){
+			
 			// On lance la requête ajax
+			formData.append('id',sessionStorage['id']);
+			formData.append('isAdmin',sessionStorage['isAdmin']);
       		$.ajax({
-				url: 'http://localhost:3000/runTheMule/',
+				url: 'http://'+window.location.hostname+':3000/runTheMule/',
 				type: 'POST',
 				async: true,
 				cache: false,
-				data: JSON.stringify(formData),
+				data: formData,
 				contentType: false,
+				processData: false,
 				success: function(response) {
-					console.log("from node js");
-					console.log(JSON.stringify(formData));
-					console.log(JSON.stringify(response));
+					
+					console.log(response);
+					cloneApplication.children('.ajaxLoaderApplication').css('visibility','hidden').css('display','none');
 				},
 				error: function(){
 					console.log('erreur');
 					
 				}
-
-				/*$.getJSON('http://'+window.location.hostname+':3000/runTheMule/test',{
-				id1:'99',
-				id2 : '1'},function(data){
-					console.log(data);
-				});*/
 			});
 		}
 

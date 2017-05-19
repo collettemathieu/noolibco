@@ -230,7 +230,6 @@ class LogInController extends \Library\BackController{
 					if(password_verify($request->getPostData('motDePasseFormulaireLogIn'), $userBase->getPasswordUtilisateur() ))
 					{
 						if(!$userBase->getUtilisateurActive()){
-		
 						$user->getMessageClient()->addErreur(self::LOGIN_ACCOUNT_NOT_ACTIVATED);
 						$response = $this->app->getHTTPResponse();
 						$response->redirect('/LogIn/');
@@ -256,13 +255,13 @@ class LogInController extends \Library\BackController{
 								$response->redirect('/LogIn/Banni');
 							}
 							else{	
-
 								// On authentifie l'utilisateur sur la plateforme
 								$user->setAuthenticated(true);
 								
 								// On suppose que JS est activé par défaut
 								$user->setJsIsActivated(true);
-
+								//****************Added by Naoures Pour récuperer l'id de l'utilisateur 
+								$user->setAttribute('id',$userBase->getIdUtilisateur());
 								// On met en session que la personne n'est pas un administrateur
 								$user->setAttribute('isAdmin', false);
 
@@ -272,7 +271,6 @@ class LogInController extends \Library\BackController{
 								// On sauvegarde en session
 								// On vérifie que l'utilisateur n'est pas déjà connecté
 								$this->app->getUser()->setAttribute('userSession', serialize($userBase));
-
 								// On met à jour la date de dernière connexion de l'utilisateur si date différente du jour
 								if(date('d/m/Y') != preg_replace('#(.+)-(.+)-(.+)#', '$3/$2/$1', $userBase->getDateDerniereConnexionUtilisateur())){
 									$managerUser->updateDateConnexionUtilisateur($userBase);
@@ -308,6 +306,8 @@ class LogInController extends \Library\BackController{
 							// On récupère la réponse
 							$response = $this->app->getHTTPResponse();
 							
+								//****************Added by Naoures Pour récuperer l'id de l'utilisateur 
+								$user->setAttribute('id',$userBase->getIdUtilisateur());
 							// On met en session que la personne est un administrateur
 							$user->setAttribute('isAdmin', true);
 
