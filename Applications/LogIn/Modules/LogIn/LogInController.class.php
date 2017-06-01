@@ -260,8 +260,6 @@ class LogInController extends \Library\BackController{
 								
 								// On suppose que JS est activé par défaut
 								$user->setJsIsActivated(true);
-								//****************Added by Naoures Pour récuperer l'id de l'utilisateur 
-								$user->setAttribute('id',$userBase->getIdUtilisateur());
 								// On met en session que la personne n'est pas un administrateur
 								$user->setAttribute('isAdmin', false);
 
@@ -306,8 +304,6 @@ class LogInController extends \Library\BackController{
 							// On récupère la réponse
 							$response = $this->app->getHTTPResponse();
 							
-								//****************Added by Naoures Pour récuperer l'id de l'utilisateur 
-								$user->setAttribute('id',$userBase->getIdUtilisateur());
 							// On met en session que la personne est un administrateur
 							$user->setAttribute('isAdmin', true);
 

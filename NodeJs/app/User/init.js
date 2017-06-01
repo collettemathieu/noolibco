@@ -2,47 +2,34 @@ var DB=require('../../config/database.js');
 
 function User(){
 }
-User.prototype.getUser=function(id){
+User.prototype.getMailUser=function(id){
 	return new Promise((resolve,reject)=>{
-		DB.query("select * from utilisateur where id_utilisateur = ?",id,function(rows,err){
+		DB.query("select mail_utilisateur from utilisateur where id_utilisateur = ?",[id],function(rows,err){
 			if(err) return reject(err);
 			if(rows.length !=0){
-				var obj={};
-				if(rows[0]['password_admin_utilisateur']!=undefined){
-					obj.isAdmin=true;
-				}
-				else{
-					obj.isAdmin=false;
-				}
-				return resolve(obj);
+				return resolve(rows[0]['mail_utilisateur']);
 			}
 			else{
-				return resolve("pas d'utilisateur");
+				return resolve({"erreurs": "<p>A system error has occurred.</p>"});
 			}
 		});
 	});
+}
+User.prototype.getUtilisateurByMail= function(mail){
+	return new Promise((resolve,reject)=>{
+		DB.query("SELECT * FROM utilisateur WHERE mail_utilisateur = ?",[mail],function(rows,err){
+			if(err) return err;
+			if(rows.length != 0){
+				return resolve(rows[0]);
+			}
+			else{
+				return resolve({"erreurs": "<p>A system error has occurred.</p>"});
+			}
+
+		});
+	});	
 }
 
 
 module.exports= User;
 
-/*var query=DB.query("select * from utilisateur where id_utilisateur = ?",id,function(rows,err){
-		if(!err){
-			if(rows.length !=0){
-				var obj={};
-				if(rows[0]['password_admin_utilisateur']!=undefined){
-					obj.isAdmin=true;
-				}
-				else{
-					obj.isAdmin=false;
-				}
-				callback(obj,null);
-			}
-			else{
-				callback("pas d'utilisateur");
-			}
-		}
-		else{
-			callback(null,err);
-		}
-	});*/

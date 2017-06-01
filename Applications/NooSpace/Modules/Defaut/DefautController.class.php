@@ -98,13 +98,13 @@ class DefautController extends \Library\BackController
 
 			// On vérifie que l'utilisateur est bien identifié
 			$user = $this->app->getUser();
-
+			$utilisateur = unserialize($user->getAttribute('userSession'));
 			// On informe que c'est un chargement Ajax
 			$user->setAjax(true);
 
 			$tableOfSession = array();
 				$session = array(
-					'id' => $user->getAttribute('id'),
+					'id' => $utilisateur->getIdUtilisateur(),
 					'isAdmin' =>($user->getAttribute('isAdmin')) ? 'true' : 'false'				
 					);
 
