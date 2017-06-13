@@ -490,6 +490,7 @@ $(function(){
 				success: function(response) {
 					
 					console.log(response);
+					$('#formMule').find('button:last').button('reset');
 					cloneApplication.children('.ajaxLoaderApplication').css('visibility','hidden').css('display','none');
 				},
 				error: function(){

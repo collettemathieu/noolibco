@@ -4,177 +4,228 @@ var router = express.Router();
 var bodyParser = require("body-parser");
 var multiparty = require('multiparty');
 var util = require('util');
-var async= require("async");
+var async=require('asyncawait/async');
+var await=require('asyncawait/await');
 //donnée de l'application
-var DonneeUtilisateur= require('./DonneeUtilisateur').init;
-var donneeUtilisateur= new DonneeUtilisateur();
-var TypeDonneeUtilisateur= require('./TypeDonneeUtilisateur').init;
-var typeDonneeUtilisateur= new TypeDonneeUtilisateur();
-var Application= require('./Application').init;
+var DonneeUtilisateur= require('../models/DonneeUtilisateur');
+var PDODonneeUtilisateur= new DonneeUtilisateur();
+var TypeDonneeUtilisateur= require('../models/TypeDonneeUtilisateur');
+var PDOTypeDonneeUtilisateur= new TypeDonneeUtilisateur();
+var Application= require('../models/Application');
 var application= new Application();
-var User= require('./User').init;
+var User= require('../models/User');
 var user= new User();
+var Version=require('../models/Version');
+var PDOVersion=new Version();
+var Tache= require('../models/Tache');
+var tache= new Tache();
+var UtilisateurDonneeUtilisateur= require('../models/UtilisateurDonneeUtilisateur');
+var InputDonneeUtilisateur= require('./InputDonneeUtilisateur');
 
 //variable de stockage
 var abonnement_user=true;
-router.post('/', function(req, res) { 
-	res.header("Access-Control-Allow-Origin","http://172.16.72.47");
-	function getFormData(){
-		return new Promise(function(resolve,reject){
+
+
+//***************************
+async function getFormData(req){
+		var promise= await new Promise(function(resolve,reject){
 		var form = new multiparty.Form();
 		form.parse(req,function(err,fields){
 	 		if(err) {
 	 			console.log(err);
-	 			return reject(err);
+	 			return err;
 	 		}
-	 		return resolve(fields);
+
+	 		resolve(fields);
 	 	});
 	 	});
+	 	return promise;
 	}
-	function getData(fields){
-		 var tache_data=[];
 
-		return new Promise(function(resolve,reject){
-			var i=0,j=0,test={};
-		 	while(fields["tache"+i+"data"+j] != undefined){
-		 		var j=0; test.tache=fields["tache"+i][0];test.donnees=[];
-		 		while(fields["tache"+i+"data"+j] != undefined){
-		 			if(fields["tache"+i+"data"+j][0].indexOf('noolibData_')!= -1){
-		 				var idData= fields["tache"+i+"data"+j][0].replace("noolibData_","");
-		 				test.donnees.push(donneeUtilisateur.getUtilisateurDonneeUtilisateurById(j,fields['id'][0],idData).then(function(resultat){
-		 					return resultat;
-		 				}));
-		 			}
-		 			else{
-		 				var idDataInput = fields["tache"+i+"data"+j][0];
-		 				test.donnees.push(typeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension(j,idDataInput,'input.txt'));
-		 			}
-		 			j++;
-		 		}
-		 	(function(){
-		 		var k=i;
-		 		tache_data.push(Promise.all(test.donnees).then(function(resultat){
-		 			 return {'tache':fields["tache"+k][0],'donnee':resultat};
-		 		}));
-		 	})();
-		 	i++;
-		 	}
-		 	return resolve(Promise.all(tache_data).then(function(resultat){
-		 		return resultat;
-		 	}));			
-	 	});
-	}
-					
- function getInformation(fields){
-	 	return new Promise(function(resolve,reject){
-	 		var allPromise=Promise.all([application.getApplication(fields['idApplication'][0]),application.isAuteur(fields['id'][0],fields['idApplication'][0])]);
-	 		allPromise.then(function(resultat){
-	 			var obj={};
-	 			if(resultat[0]['id_createur']===fields['id'][0]){
-	 				obj.isCreateur="true";
-	 			}
-	 			else{
-	 				obj.isCreateur="false";
-	 			}
-	 			obj.isAdmin= fields['isAdmin'][0];
-	 			obj.id_statut=resultat[0]['id_statut'];
-	 			obj.isAuteur=resultat[1];
-	 			return resolve(obj);
-	 		});
-	 	});
-	 }
-
-function getVersion(fields, isCreateur, isAuteur){
-	var idVersion=fields['idVersion'][0];
-	return new Promise(function(resolve,reject){
-	if(idVersion != 'undefined'){
-		application.getVersions(fields['idApplication'][0]).then(function(rows){
-			rows.forEach(function(row){
-				if(row['id_version']==idVersion){
-					return resolve(row['id_version']);
-				}
-			});
-			return resolve(false);
-		});
-	} else{
-		application.getVersions(fields['idApplication'][0]).then(function(rows){
-			rows.forEach(function(row){
-				if(row['active_version']){
-					return resolve(row['id_version']);
-				}
-			});
-			return resolve(false);
-		});
-	}
-});
-}	 
-
-
- getFormData().then(function(fields){
- 	getInformation(fields).then(function(resultat){
- 		//on recupere les champs de résultat
- 		var isAuteur=resultat['isAuteur'],
- 			isCreateur=resultat['isCreateur'],
- 			statutApplication=resultat['id_statut'],
- 			isAdmin=resultat['isAdmin'];
- 		var tabUrlDestinationDonneeUtilisateur=[];
- 		var	tabDonneeUtilisateur= getData(fields);
-
- 		if(abonnement_user || isAdmin){
- 			if(isCreateur || isAuteur || isAdmin || statutApplication>4){
- 				tabDonneeUtilisateur.then(function(donnees){
- 					donnees.forEach(function(item){
- 						item["donnee"].forEach(function(item){
- 								if(item['donneeUtilisateur']!= undefined){
- 									tabUrlDestinationDonneeUtilisateur.push(item['donneeUtilisateur']['urlDonneeUtilisateur']);
- 								}
- 								else{
- 									tabUrlDestinationDonneeUtilisateur.push(false);
- 								}
- 						});
- 					});
- 				});
- 				//**********************************************************************
- 				getVersion(fields,isCreateur,isAuteur).then(function(resultat){
- 					if(resultat != false){
- 						var i=0;
- 						var tacheDemandee;
- 						var taches= application.getTaches(resultat);
- 						taches.then(function(taches){
- 							while(fields['tache'+i]!= undefined){
- 								var nomTacheApplication = fields["tache"+i][0];
- 								taches.forEach(function(tache){
- 									application.getNomTache(tache['id_tache']).then(function(nomTache){
- 										if(nomTache==nomTacheApplication){
- 											tacheDemandee=nomTacheApplication;
- 											console.log(tacheDemandee);
-
- 										}
- 									});
- 								});
- 								
- 								setTimeout(function(){
- 									console.log(tacheDemandee);
- 								},50); 
- 								
- 								++i;
- 							}
- 						});
- 					}
- 				});
- 				//************************************************************************
-
- 			}
- 		}
- 		res.send(resultat);
- 	},function(){
- 		res.send('erreur');
- 	});
- 	});
-
- 	
 	
-   					
+//****************************************
+async function executeRun(request, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths){
+	
+		var createur = applicationRunning.getCreateur();
+		if(tacheDemandee instanceof Tache){
+			var tacheDatas = await(tacheDemandee.getTacheTypeDonneeUtilisateurs());
+			
+			if(tacheDatas.length === tabDonneeUtilisateur.length){
+				var i=0;
+				tacheDatas.forEach(function(tacheData){
+					var donnee = tabDonneeUtilisateur[i];
+					var typeDonnee = donnee.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
+					var typeAttendu = tacheData.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
+					if(typeAttendu != 'all.image'){
+						//config 
+						if(typeAttendu != 'all.image.without.dicom'){
+							if(typeDonnee != typeAttendu){
+								//error
+								return false;
+							}
+						}else{
+
+
+						}
+					}
+					++i;
+				});
+			} else{
+				//error
+				return false;
+			}
+			var fonctions = await(tacheDemandee.getFonctions());
+			if(fonctions != false){
+				fonctions.forEach(function(fonction){
+					var args=[];
+					var params = [];
+					var i=0;
+
+					filesPaths.forEach(function(file){
+						if(file != undefined){
+							args.push(tabDonneeUtilisateur[i]);
+							console.log(tabDonneeUtilisateur[i]); // I m here
+						}
+					});
+
+				});
+			}
+			
+		}
+}
+//********Request
+
+router.post('/', function(req, res) { 
+	res.header("Access-Control-Allow-Origin","http://**.**.**.**");
+	async (function(){
+		var fields = await(getFormData(req));
+		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
+		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication'][0]));
+		if(currentApplication != false){
+
+			var idAuteurs = [];
+			var auteurs=currentApplication.getAuteurs();
+
+			if(auteurs != false){
+				auteurs.forEach(function(itemAuteur){
+				var mailAuteur= itemAuteur.getMailAuteur();
+				if(mailAuteur != false){
+					var utilisateurAuteur=await(user.getUtilisateurByMail(mailAuteur));
+
+					if(utilisateurAuteur != false){
+						idAuteurs.push(utilisateurAuteur.getIdUtilisateur());
+					}
+				
+				}
+			});
+			}
+			
+			var abonnenementUser = true;
+			if(abonnenementUser || fields['isAdmin'][0] ){
+				//console.log(idAuteurs);
+				if(currentApplication.getIdStatut() > 4 || fields['isAdmin'][0] || idAuteurs.indexOf(fields['id'][0]) ){
+					var i=0, j=0, tabDonneeUtilisateur=[], noError= true;
+
+					while(fields["tache"+i+"data"+j] != undefined){
+		 				j=0;
+		 				while(fields["tache"+i+"data"+j] != undefined){
+					 			if(fields["tache"+i+"data"+j][0].indexOf('noolibData_')!= -1 ){
+					 				var idData = fields["tache"+i+"data"+j][0].replace("noolibData_","");
+					 				var donneeUtilisateur = await(PDODonneeUtilisateur.getDonneeUtilisateurById(idData));
+					 				
+					 				if(donneeUtilisateur != false){
+					 					var managerUtilisateurDonneeUtilisateur = new UtilisateurDonneeUtilisateur();
+					 					var utilisateurDonneeUtilisateur = await(managerUtilisateurDonneeUtilisateur.getUtilisateurDonneeUtilisateurById(fields['id'][0],donneeUtilisateur.getIdDonneeUtilisateur()));
+		 								
+					 					if(utilisateurDonneeUtilisateur != false){
+					 						tabDonneeUtilisateur.push(donneeUtilisateur);
+					 					}else{
+					 						noError = false;
+					 					}
+					 				}else{
+					 					noError = false;
+					 				}
+			 					}
+					 			else{
+					 			
+					 				var idDataInput = fields["tache"+i+"data"+j][0];
+					 				var typeDonneeUtilisateur=await(PDOTypeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension('input.txt'));
+					 				var inputDonneeUtilisateur=new InputDonneeUtilisateur( idDataInput, typeDonneeUtilisateur);
+					 				tabDonneeUtilisateur.push(inputDonneeUtilisateur);
+					 				
+					 			}
+		 					
+		 				
+		 					j++;
+		 			}
+		 	
+		 		i++;j=0;
+		 	}
+
+		 	if(noError){
+
+		 		var tabUrlDestinationDonneeUtilisateur = [];
+		 		tabDonneeUtilisateur.forEach(function(donneeUtilisateur){
+		 			if(donneeUtilisateur instanceof DonneeUtilisateur && !(donneeUtilisateur instanceof InputDonneeUtilisateur)){
+		 				tabUrlDestinationDonneeUtilisateur.push(donneeUtilisateur.getUrlDonneeUtilisateur());
+		 			} else {
+		 				tabUrlDestinationDonneeUtilisateur.push(false);
+		 			}
+		 		});
+		 		// On récupère la version demandée si admin/auteurs ou la dernière version active de l'application
+		 		var idVersion=fields['idVersion'][0];
+		 		var version;
+		 		var versions = currentApplication.getVersions();
+
+		 		if(idVersion != 'undefined' && idAuteurs.indexOf(fields['id'][0]) ){
+		 			for(var i=0; i<versions.length ; ++i){
+		 				if(versions[i].getIdVersion() == idVersion){
+		 					version = versions[i];
+		 					break;
+		 				}
+		 			}
+		 			
+		 			
+
+		 		} else{
+		 			for(var i=0; i<versions.length ; ++i){
+		 				if(versions[i].getActiveVersion()){
+		 					version = versions[i];
+		 					break;
+		 				}
+		 			}
+		 		}
+		 		if(version != 'undefined' && version != null){
+		 			var i=0, tabTaches= [], noError=true , offset= 0, tacheDemandee;
+		 			var taches= await(version.getTaches());
+		 			while(fields['tache'+i] != undefined){
+		 				var nomTacheApplication = fields['tache'+i][0];
+		 				
+		 				for(var j=0; j<taches.length;++j){
+		 					if(taches[j].getNomTache() == nomTacheApplication){
+		 						tacheDemandee = taches[j];
+		 						break;
+		 					}
+		 				}
+		 				if(tacheDemandee != 'undefined' && tacheDemandee != null){
+		 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
+		 					var outputData = executeRun(fields, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, nombreDeDonnee));
+		 					offset = offset + nombreDeDonnee;
+		 				}
+		 				++i;
+		 			}
+
+		 			
+		 		}
+		 	}
+		 	
+		 	res.send(tabDonneeUtilisateur);
+					
+				}
+			}
+			
+		}
+	})();
 });
 
 
