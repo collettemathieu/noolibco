@@ -1,14 +1,20 @@
 var DB=require('../config/database.js');
 var Parametre= require('./Parametre');
-var Tache = require('./Tache');
+var PDOTache = require('./PDOTache');
+var async=require('asyncawait/async');
+var await=require('asyncawait/await');
 
 function Fonction(){
 	var idFonction, nomFonction, urlFonction, extensionFonction, parametres = [], taches = [];
 
 }
+
+Fonction.prototype.getParametres = function(){
+	return this.parametres;
+}
 Fonction.prototype.getFonctionById = function(id){
 	return new Promise((resolve,reject)=>{
-	 	DB.query("SELECT * FROM fonction WHERE id_fonction = ?",[id],function(rows,err){
+	 	DB.query("SELECT * FROM fonction WHERE id_fonction = ?",[id],async function(rows,err){
 	 		if(err)
 	 			return err;
 		 	if(rows.length!=0){
@@ -17,7 +23,7 @@ Fonction.prototype.getFonctionById = function(id){
 				fonction.nomFonction = rows[0]['nom_fonction'];
 				fonction.urlFonction = rows[0]['url_fonction'];
 				fonction.extensionFonction = rows[0]['extension_fonction'];
-				fonction.parametres= putParametresInFonction(fonction);
+				fonction.parametres=await(putParametresInFonction(fonction));
 				//fonction.taches = putTachesInFonction(fonction);
 		 		return resolve(fonction);
 		 	}
@@ -54,10 +60,10 @@ putTachesInFonction = function(fonction){
 	 		if(err)
 	 			return err;
 		 	if(rows.length!=0){
-		 		//var tache = new Tache();
+		 		var tache = new PDOTache();
 		 		var array = [];
 		 		rows.forEach(function(row){
-		 			array.push('test');//tache.getTacheByIdLimited(row['id_tache']));
+		 			array.push(tache.getTacheByIdLimited(row['id_tache']));
 		 		});
 		 		return resolve(array);
 		 	}

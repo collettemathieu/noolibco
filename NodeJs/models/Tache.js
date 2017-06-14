@@ -5,6 +5,7 @@ var async=require('asyncawait/async');
 var await=require('asyncawait/await');
 
 
+
 function Tache(){
 	var idTache, nomTache, tacheTypeDonneeUtilisateurs = [], versions = [], fonctions = [];
 }
@@ -28,7 +29,7 @@ Tache.prototype.getTacheById = function(id_tache){
 				tache.nomTache = rows [0]['nom_tache'];
 				tache.descriptionTache = rows [0]['description_tache'];
 				tache.fonctions = putFonctionsInTache(rows [0]['id_tache']);
-				tache.tacheTypeDonneeUtilisateurs = putTacheTypeDonneeUtilisateursInTache(rows [0]['id_tache']);
+				tache.tacheTypeDonneeUtilisateurs =putTacheTypeDonneeUtilisateursInTache(rows [0]['id_tache']);
 				return resolve(tache);
 
 		 	}
@@ -59,16 +60,16 @@ Tache.prototype.getTacheByIdLimited = function(id_tache){
 }
 putFonctionsInTache = function(idTache){
 	return new Promise((resolve,reject)=>{
-	 	DB.query("SELECT id_fonction FROM tache_fonction WHERE id_tache = ? ORDER BY id_ordre",[idTache],function(rows,err){
+	 	DB.query("SELECT id_fonction FROM tache_fonction WHERE id_tache = ? ORDER BY id_ordre",[idTache], function(rows,err){
 	 		if(err)
 	 			return err;
 		 	if(rows.length!=0){
 		 		var fonction = new Fonction();
 		 		var array = [];
 		 		rows.forEach(async function(row){
-
 		 			array.push(await(fonction.getFonctionById(row['id_fonction'])));
 		 		});
+
 		 		return resolve(array);
 		 	}
 		 	else{

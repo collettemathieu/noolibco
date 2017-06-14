@@ -2,6 +2,7 @@ var DB=require('../config/database.js');
 var Tache = require('./Tache');
 var async=require('asyncawait/async');
 var await=require('asyncawait/await');
+var pdoTache= new Tache();
 
 function Version(){
 	var idVersion, activeVersion, numVersion, datePublicationVersion, noteMajVersion, application, taches = [];
@@ -21,7 +22,7 @@ Version.prototype.getNumVersion = function(){
 }
 Version.prototype.getVersionById = function(id_version){
 	return new Promise((resolve,reject)=>{
-	 	DB.query("SELECT * FROM version WHERE id_version = ?",[id_version],function(rows,err){
+	 	DB.query("SELECT * FROM version WHERE id_version = ?",[id_version],async function(rows,err){
 	 		if(err)
 	 			return err;
 		 	if(rows.length!=0){
@@ -33,8 +34,9 @@ Version.prototype.getVersionById = function(id_version){
 				version.numVersion = rows [0]['num_version'];
 				version.datePublicationVersion = rows [0]['date_publication_version'];
 				version.noteMajVersion = rows [0]['note_maj_version'];
-				version.taches = putTachesInVersion(version);
-				version.Application = application.getApplicationById(rows [0]['id_application']);
+				version.taches =putTachesInVersion(version);
+				version.Application = await(application.getApplicationById(rows [0]['id_application']));
+
 				return resolve(version);
 		 	}
 		 	else{
@@ -45,16 +47,19 @@ Version.prototype.getVersionById = function(id_version){
 }
 putTachesInVersion = function(version){
    return new Promise(function (resolve,reject){
-	 	DB.query("SELECT id_tache FROM version_tache WHERE id_version =?",[version.getIdVersion()], function(rows,err){
+	 	DB.query("SELECT id_tache FROM version_tache WHERE id_version =?",[version.idVersion],function(rows,err){
 	 		if(err)
 	 			return err;
 		 	if(rows.length!=0){
+		 		
 		 		var array = [];
-		 		rows.forEach(async function(row){
-		 			var tache = new Tache();
-		 			array.push(await(tache.getTacheById(row['id_tache'])));
-		 		});
-		 		return resolve(array);
+		 		rows.forEach(function(row){
+			 		array.push(pdoTache.getTacheById(row['id_tache']));
+			 	});
+		 		
+		 			return resolve(array);
+		 		
+		 		
 		 	}
 		 	else{
 		 		return  resolve(false);

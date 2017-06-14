@@ -42,53 +42,115 @@ async function getFormData(req){
 	 	return promise;
 	}
 
-	
+function strrchr(haystack, needle){
+	var pos = 0;
+	if(typeof needle !== 'string')
+		needle = String.fromCharCode(parseInt(needle,10));
+
+	needle = needle.charAt(0);
+	pos = haystack.lastIndexOf(needle);
+
+	if(pos === -1)
+		return false;
+	return haystack.substr(pos);
+}
+function escapeShell(cmd){
+	cmd.replace(/\s+/g, " ");
+	cmd.replace(/^\s+|\s+$/g, " ");
+	return "'"+ cmd.replace(/(['\\])/g, '\\$1')+"'";
+}
 //****************************************
-async function executeRun(request, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths){
+function executeRun(fields, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths){
 	
 		var createur = applicationRunning.getCreateur();
 		if(tacheDemandee instanceof Tache){
-			var tacheDatas = await(tacheDemandee.getTacheTypeDonneeUtilisateurs());
 			
-			if(tacheDatas.length === tabDonneeUtilisateur.length){
-				var i=0;
+			var tacheDatas = tacheDemandee.getTacheTypeDonneeUtilisateurs().then(function(tacheDatas){
+				//console.log(tacheDatas.length);
+				//console.log(tabDonneeUtilisateur);
+				if(tacheDatas.length === tabDonneeUtilisateur.length){
+			
+				var i=-1;
+				
 				tacheDatas.forEach(function(tacheData){
+					i++;
 					var donnee = tabDonneeUtilisateur[i];
 					var typeDonnee = donnee.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
 					var typeAttendu = tacheData.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
-					if(typeAttendu != 'all.image'){
-						//config 
-						if(typeAttendu != 'all.image.without.dicom'){
-							if(typeDonnee != typeAttendu){
-								//error
-								return false;
+					
+					if(typeAttendu != 'all'){
+						//config //typeImageAutorises //extensionsImageAutorisees
+						if(typeAttendu != 'all.image'){
+							if(typeAttendu != 'all.image.without.dicom'){
+								if(typeDonnee != typeAttendu){
+									console.log("return 1 false");
+									//error
+									return false;
+								}
+								}else{
+									// On retire l'élément 'dcm' du tableau des extensions
+
+								}
+							}else {
+								// all.image
 							}
-						}else{
-
-
-						}
+						
 					}
-					++i;
+					
 				});
 			} else{
 				//error
+				
+				console.log("return 2 false");
 				return false;
 			}
+			});
+			
+			
+
 			var fonctions = await(tacheDemandee.getFonctions());
-			if(fonctions != false){
+			
+			if(fonctions.length != 0){
 				fonctions.forEach(function(fonction){
 					var args=[];
 					var params = [];
-					var i=0;
+					var j=0;
 
 					filesPaths.forEach(function(file){
-						if(file != undefined){
-							args.push(tabDonneeUtilisateur[i]);
-							console.log(tabDonneeUtilisateur[i]); // I m here
+						if(file == false){
+							args.push(tabDonneeUtilisateur[j].getValeurInputDonneeUtilisateur());
+						} else{
+							args.push(strrchr(file, '/').substr(1));
 						}
-					});
+						++j;
+					});		
+						
+						/*if(outputData != false || outputData = null){
+							outputData = 'undefined';
+						}
+						else{
+							outputData= escapeShell(outputData);
+							console.log(outputData);
+						}*/
 
+					var parametres = await(fonction.getParametres());
+					if(parametres!= false){
+						parametres.forEach(function(parametre){
+							if(fields[parametre.getIdParametre()] != undefined || parametre.getStatutPublicParametre()){
+								var valueParam = fields[parametre.getIdParametre()][0];
+								if(valueParam <= parametre.getValeurMaxParametre() && valueParam >= parametre.getValeurMinParametre()){
+									params[parametre.getNomParametre()] = valueParam;
+								}else{
+									params[parametre.getNomParametre()]= parametre.getValeurDefautParametre;
+								}
+							} else{
+								params[parametre.getNomParametre()]= parametre.getValeurDefautParametre();
+							}
+						});
+				}
+					//Execution du script bash
 				});
+
 			}
 			
 		}
@@ -96,7 +158,7 @@ async function executeRun(request, applicationRunning,numVersionRunning,tacheDem
 //********Request
 
 router.post('/', function(req, res) { 
-	res.header("Access-Control-Allow-Origin","http://**.**.**.**");
+	res.header("Access-Control-Allow-Origin","http://172.16.72.47");
 	async (function(){
 		var fields = await(getFormData(req));
 		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
@@ -104,8 +166,8 @@ router.post('/', function(req, res) {
 		if(currentApplication != false){
 
 			var idAuteurs = [];
-			var auteurs=currentApplication.getAuteurs();
-
+			var auteurs=await(currentApplication.getAuteurs());
+			
 			if(auteurs != false){
 				auteurs.forEach(function(itemAuteur){
 				var mailAuteur= itemAuteur.getMailAuteur();
@@ -122,7 +184,7 @@ router.post('/', function(req, res) {
 			
 			var abonnenementUser = true;
 			if(abonnenementUser || fields['isAdmin'][0] ){
-				//console.log(idAuteurs);
+				
 				if(currentApplication.getIdStatut() > 4 || fields['isAdmin'][0] || idAuteurs.indexOf(fields['id'][0]) ){
 					var i=0, j=0, tabDonneeUtilisateur=[], noError= true;
 
@@ -150,7 +212,7 @@ router.post('/', function(req, res) {
 					 			
 					 				var idDataInput = fields["tache"+i+"data"+j][0];
 					 				var typeDonneeUtilisateur=await(PDOTypeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension('input.txt'));
-					 				var inputDonneeUtilisateur=new InputDonneeUtilisateur( idDataInput, typeDonneeUtilisateur);
+					 				var inputDonneeUtilisateur=new InputDonneeUtilisateur( {'valeurInputDonneUtilisateur':idDataInput, 'typeDonneUtilisateur':typeDonneeUtilisateur});
 					 				tabDonneeUtilisateur.push(inputDonneeUtilisateur);
 					 				
 					 			}
@@ -175,7 +237,7 @@ router.post('/', function(req, res) {
 		 		// On récupère la version demandée si admin/auteurs ou la dernière version active de l'application
 		 		var idVersion=fields['idVersion'][0];
 		 		var version;
-		 		var versions = currentApplication.getVersions();
+		 		var versions = await(currentApplication.getVersions());
 
 		 		if(idVersion != 'undefined' && idAuteurs.indexOf(fields['id'][0]) ){
 		 			for(var i=0; i<versions.length ; ++i){
@@ -195,23 +257,29 @@ router.post('/', function(req, res) {
 		 				}
 		 			}
 		 		}
+		 		
 		 		if(version != 'undefined' && version != null){
+		 			
 		 			var i=0, tabTaches= [], noError=true , offset= 0, tacheDemandee;
 		 			var taches= await(version.getTaches());
 		 			while(fields['tache'+i] != undefined){
 		 				var nomTacheApplication = fields['tache'+i][0];
 		 				
 		 				for(var j=0; j<taches.length;++j){
-		 					if(taches[j].getNomTache() == nomTacheApplication){
-		 						tacheDemandee = taches[j];
+		 					var task = await(taches[j]);
+		 					if(task.getNomTache() == nomTacheApplication){
+		 						tacheDemandee = task;
 		 						break;
 		 					}
 		 				}
-		 				if(tacheDemandee != 'undefined' && tacheDemandee != null){
+		 
+		 				if(tacheDemandee != 'undefined' && tacheDemandee != false){
 		 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
-		 					var outputData = executeRun(fields, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, nombreDeDonnee));
+		 					
+		 					var outputData = executeRun(fields, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee));
 		 					offset = offset + nombreDeDonnee;
 		 				}
+		 				tacheDemandee = false;
 		 				++i;
 		 			}
 
@@ -223,9 +291,9 @@ router.post('/', function(req, res) {
 					
 				}
 			}
-			
 		}
 	})();
+
 });
 
 

@@ -1,6 +1,5 @@
 var async=require('asyncawait/async');
 var await=require('asyncawait/await');
-
 var DB=require('../config/database.js');
 var User= require('./User');
 var Version= require('./Version');
@@ -15,9 +14,9 @@ putVersionsInApplication= function (application){
 			if(err) return reject(err);
 			if(rows.length !=0){
 				var array=[];
-				rows.forEach(async function(row){
+				rows.forEach( function(row){
 					var version = new Version();
-					array.push(await (version.getVersionById(row['id_version'])));
+					array.push(version.getVersionById(row['id_version']));
 				});
 				return resolve(array);
 			}
@@ -28,14 +27,14 @@ putVersionsInApplication= function (application){
 	});
 }
 putAuteursInApplication=function(application){
-	return new Promise(async function(resolve,reject){
+	return new Promise(function(resolve,reject){
 		DB.query('SELECT id_auteur FROM application_auteur WHERE id_application = ?',[application.idApplication],function(rows,err){
 			if(err) return reject(err);
 			if(rows.length !=0){
 				var array=[];
-				rows.forEach(async function(row){
+				rows.forEach(function(row){
 					var auteur = new Auteur();
-					array.push (await(auteur.getAuteurById(row['id_auteur'])));
+					array.push (auteur.getAuteurById(row['id_auteur']));
 				});
 				return resolve(array);
 			}
@@ -77,7 +76,7 @@ Application.prototype.getApplicationById = function(id_application){
 	});
 }
 
-Application.prototype.getApplication=function(id){
+/*Application.prototype.getApplication=function(id){
 	return new Promise((resolve,reject)=>{
 		var obj={}; 
 		DB.query("select * from application where id_application = ?",[id],function(rows,err){
@@ -92,7 +91,7 @@ Application.prototype.getApplication=function(id){
 			}
 		}); 
 	});
-}
+}*/
 Application.prototype.getApplicationByIdWithAllParameters = function(id_application){
 	return new Promise(function(resolve,reject){
 		DB.query("SELECT * FROM application WHERE id_application = ?",[id_application],async function(rows,err){

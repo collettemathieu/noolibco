@@ -494,6 +494,8 @@ $(function(){
 					cloneApplication.children('.ajaxLoaderApplication').css('visibility','hidden').css('display','none');
 				},
 				error: function(){
+					$('#formMule').find('button:last').button('reset');
+					cloneApplication.children('.ajaxLoaderApplication').css('visibility','hidden').css('display','none');
 					console.log('erreur');
 					
 				}
