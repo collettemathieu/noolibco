@@ -12,6 +12,9 @@ function Fonction(){
 Fonction.prototype.getParametres = function(){
 	return this.parametres;
 }
+Fonction.prototype.getUrlFonction = function(){
+	return this.urlFonction;
+}
 Fonction.prototype.getFonctionById = function(id){
 	return new Promise((resolve,reject)=>{
 	 	DB.query("SELECT * FROM fonction WHERE id_fonction = ?",[id],async function(rows,err){

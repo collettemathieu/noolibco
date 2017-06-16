@@ -4,6 +4,7 @@ var router = express.Router();
 var bodyParser = require("body-parser");
 var multiparty = require('multiparty');
 var util = require('util');
+var exec = require('child_process').execSync;
 var async=require('asyncawait/async');
 var await=require('asyncawait/await');
 //donnée de l'application
@@ -18,13 +19,14 @@ var user= new User();
 var Version=require('../models/Version');
 var PDOVersion=new Version();
 var Tache= require('../models/Tache');
-var tache= new Tache();
 var UtilisateurDonneeUtilisateur= require('../models/UtilisateurDonneeUtilisateur');
 var InputDonneeUtilisateur= require('./InputDonneeUtilisateur');
-
+var Fonction=require('../models/Fonction');
+var MessageClient = require('../models/MessageClient');
+var messageClient = new MessageClient();
 //variable de stockage
 var abonnement_user=true;
-
+var outputData;
 
 //***************************
 async function getFormData(req){
@@ -41,7 +43,21 @@ async function getFormData(req){
 	 	});
 	 	return promise;
 	}
-
+function utf8Encode(unicodeString){
+	const utf8String = unicodeString.replace(
+		/[\u0080-\u07ff]/g, 
+		function(c){
+			var cc = c.charCodeAt(0);
+			return String.fromCharCode(0xc0 | cc>>6, 0x80 | cc&0x3f);
+		}).replace(
+		/[\u0800-\uffff]/g,
+		function(c){
+			var cc = c.charCodeAt(0);
+			return String.fromCharCode(0xe0 | cc>>12, 0x80 | cc>>6&0x3F, 0x80 | cc&0x3f);
+			} 
+		);
+		return utf8String;
+}
 function strrchr(haystack, needle){
 	var pos = 0;
 	if(typeof needle !== 'string')
@@ -55,21 +71,20 @@ function strrchr(haystack, needle){
 	return haystack.substr(pos);
 }
 function escapeShell(cmd){
+	cmd=cmd.toString();
 	cmd.replace(/\s+/g, " ");
 	cmd.replace(/^\s+|\s+$/g, " ");
 	return "'"+ cmd.replace(/(['\\])/g, '\\$1')+"'";
 }
 //****************************************
-function executeRun(fields, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths){
+function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths){
 	
 		var createur = applicationRunning.getCreateur();
+		
 		if(tacheDemandee instanceof Tache){
 			
 			var tacheDatas = tacheDemandee.getTacheTypeDonneeUtilisateurs().then(function(tacheDatas){
-				//console.log(tacheDatas.length);
-				//console.log(tabDonneeUtilisateur);
 				if(tacheDatas.length === tabDonneeUtilisateur.length){
-			
 				var i=-1;
 				
 				tacheDatas.forEach(function(tacheData){
@@ -94,20 +109,15 @@ function executeRun(fields, applicationRunning,numVersionRunning,tacheDemandee,t
 							}else {
 								// all.image
 							}
-						
 					}
-					
 				});
 			} else{
 				//error
-				
 				console.log("return 2 false");
 				return false;
 			}
 			});
 			
-			
-
 			var fonctions = await(tacheDemandee.getFonctions());
 			
 			if(fonctions.length != 0){
@@ -125,14 +135,12 @@ function executeRun(fields, applicationRunning,numVersionRunning,tacheDemandee,t
 						++j;
 					});		
 						
-						/*if(outputData != false || outputData = null){
-							outputData = 'undefined';
-						}
-						else{
+						if(outputData != undefined ) {
 							outputData= escapeShell(outputData);
-							console.log(outputData);
-						}*/
+						}
+						
 
+					// On récupère les paramètres de la fonction modifiés (ou non) par l'utilisateur
 					var parametres = await(fonction.getParametres());
 					if(parametres!= false){
 						parametres.forEach(function(parametre){
@@ -148,21 +156,80 @@ function executeRun(fields, applicationRunning,numVersionRunning,tacheDemandee,t
 							}
 						});
 				}
-					//Execution du script bash
+					// On transforme le tableau d'arguments en chaine de caratères
+					args = args.join('§');
+					params = params.join('§');
+			        if(params != ''){
+			        	args = args +'§'+ params + '§' + outputData;
+			        }else{
+			        	args= args+ '§'+ outputData;
+			        }
+			        // Execution du script Bash pour executer une fonction de l'application
+			        outputData=execFct(createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args);
+			        	
+			       
+			        var result = outputData.toString().trim();
+			        result= result.split('<br>').join('').split('<br />').join('').split("\n").join('').split("\r" ).join('');
+			       	result=unescape(encodeURIComponent(result));
+			       	try{
+			       		result= JSON.parse(result);	
+			       		 if(outputData != undefined && outputData != ""){
+			         	     	outputData = outputData;
+				         }else{
+				         	outputData=false;
+				         }
+			       	}catch (e){
+			       		outputData = '{"erreurs": "'+outputData+'"}';
+			      
+			       	}
+			       	
+			        
+
+			        
+
 				});
 
 			}
+			return outputData;
 			
 		}
 }
-//********Request
 
+
+execFct = function(createur, utilisateur, application, numVersion,fonction, args){
+		if(createur instanceof User && utilisateur instanceof User && application instanceof Application && fonction instanceof Fonction){
+			
+			var nomUtilisateur = utilisateur.getVariableFixeUtilisateur();
+			var nomCreateur = createur.getVariableFixeUtilisateur();
+			var nomApplication = application.getVariableFixeApplication();
+			var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
+
+			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+args;
+			 return exec(instructions);
+			
+		}else{
+			console.log("erreur execute Shell")
+		}
+	}
+
+delFolderInProd = function (utilisateur){
+		if(utilisateur instanceof User){
+			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur();
+			exec(instructions);
+		}else{
+			console.log("error delFolderInProd");
+		}
+}
+//********Request********
 router.post('/', function(req, res) { 
 	res.header("Access-Control-Allow-Origin","http://172.16.72.47");
 	async (function(){
+
 		var fields = await(getFormData(req));
 		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
-		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication'][0]));
+	var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication'][0]));
+
+	
 		if(currentApplication != false){
 
 			var idAuteurs = [];
@@ -259,10 +326,10 @@ router.post('/', function(req, res) {
 		 		}
 		 		
 		 		if(version != 'undefined' && version != null){
-		 			
 		 			var i=0, tabTaches= [], noError=true , offset= 0, tacheDemandee;
 		 			var taches= await(version.getTaches());
 		 			while(fields['tache'+i] != undefined){
+		 				
 		 				var nomTacheApplication = fields['tache'+i][0];
 		 				
 		 				for(var j=0; j<taches.length;++j){
@@ -272,22 +339,30 @@ router.post('/', function(req, res) {
 		 						break;
 		 					}
 		 				}
-		 
-		 				if(tacheDemandee != 'undefined' && tacheDemandee != false){
+		 				
+		 				if(tacheDemandee != undefined && tacheDemandee != false){
+
 		 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
 		 					
-		 					var outputData = executeRun(fields, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee));
+		 					
+		 					outputData = executeRun(fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee));
 		 					offset = offset + nombreDeDonnee;
+		 					if(outputData != false){
+		 						messageClient.addReussite(outputData);
+		 					}else {
+		 						//error
+		 					}
+		 				}else{
+		 					//error
 		 				}
 		 				tacheDemandee = false;
 		 				++i;
 		 			}
-
-		 			
+		 			delFolderInProd(currentUtilisateur);
 		 		}
 		 	}
 		 	
-		 	res.send(tabDonneeUtilisateur);
+		 	res.send(outputData);
 					
 				}
 			}

@@ -1,10 +1,13 @@
 var DB=require('../config/database.js');
 
 function User(){
-	var idUtilisateur, nomUtilisateur, prenomUtilisateur, mailUtilisateur, passwordUtilisateur, UtilisateurActive;
+	var idUtilisateur, variableFixeUtilisateur, nomUtilisateur, prenomUtilisateur, mailUtilisateur, passwordUtilisateur, UtilisateurActive;
 }
 User.prototype.getIdUtilisateur = function(){
 	return this.idUtilisateur;
+}
+User.prototype.getVariableFixeUtilisateur = function(){
+	return this.variableFixeUtilisateur;
 }
 User.prototype.getMailUser=function(id){
 	return new Promise((resolve,reject)=>{
@@ -27,6 +30,7 @@ User.prototype.getUtilisateurByMail= function(mail){
 			if(rows.length != 0){
 				var user=new User();
 				user.idUtilisateur = rows [0]['id_utilisateur'];
+				user.variableFixeUtilisateur= rows [0]['variable_fixe_utilisateur'];
 				user.nomUtilisateur  = rows [0]['nom_utilisateur'];
 				user.prenomUtilisateur = rows [0]['prenom_utilisateur'];
 				user.mailUtilisateur  = rows [0]['mail_utilisateur'];
@@ -48,6 +52,7 @@ User.prototype.getUtilisateurById=function(id_user){
 			if(rows.length != 0){
 				var user=new User();
 				user.idUtilisateur = rows [0]['id_utilisateur'];
+				user.variableFixeUtilisateur= rows [0]['variable_fixe_utilisateur'];
 				user.nomUtilisateur  = rows [0]['nom_utilisateur'];
 				user.prenomUtilisateur = rows [0]['prenom_utilisateur'];
 				user.mailUtilisateur  = rows [0]['mail_utilisateur'];

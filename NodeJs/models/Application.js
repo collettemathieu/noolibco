@@ -6,7 +6,10 @@ var Version= require('./Version');
 var Auteur= require('./Auteur');
 
 function Application(){
-	var idApplication, createur, auteurs = [], idStatut, nomApplication, utilisateurs = [], versions = [];
+	var idApplication,variableFixeApplication, createur, auteurs = [], idStatut, nomApplication, utilisateurs = [], versions = [];
+}
+Application.prototype.getVariableFixeApplication = function(){
+	return this.variableFixeApplication;
 }
 putVersionsInApplication= function (application){
 	return new Promise(async function(resolve,reject){
@@ -76,22 +79,7 @@ Application.prototype.getApplicationById = function(id_application){
 	});
 }
 
-/*Application.prototype.getApplication=function(id){
-	return new Promise((resolve,reject)=>{
-		var obj={}; 
-		DB.query("select * from application where id_application = ?",[id],function(rows,err){
-			if(err) return reject(err);
-			if(rows.length !=0){
-				obj.id_createur=rows[0]['id_utilisateur'];
-				obj.id_statut=rows[0]['id_statut'];
-				return resolve(obj);
-			}
-			else{
-				return resolve("Cette application n'existe pas");
-			}
-		}); 
-	});
-}*/
+
 Application.prototype.getApplicationByIdWithAllParameters = function(id_application){
 	return new Promise(function(resolve,reject){
 		DB.query("SELECT * FROM application WHERE id_application = ?",[id_application],async function(rows,err){
@@ -101,6 +89,7 @@ Application.prototype.getApplicationByIdWithAllParameters = function(id_applicat
 				var user = new User();
 				var application = new Application();
 				application.idApplication = rows [0]['id_application'];
+				application.variableFixeApplication= rows[0]['variable_fixe_application'];
 				application.nomApplication = rows [0]['nom_application'];
 				application.idStatut = rows[0]['id_statut'];
 				application.versions=await(putVersionsInApplication(application));
@@ -113,46 +102,5 @@ Application.prototype.getApplicationByIdWithAllParameters = function(id_applicat
 		})
 	});
 }
-function getAuteur(id_app){
-   return new Promise((resolve,reject)=>{
-	 	var listeAuteurs=[];
- 		DB.query("select * from application_auteur where id_application = ?",[id_app],function(rows,err){
- 			if(err)
- 				return err;
- 			if(rows.length!=0){
- 				rows.forEach(function(item){
- 					listeAuteurs.push(item['id_auteur']);
- 				});
- 				return resolve(listeAuteurs);
-  			}
- 			else{
- 				return resolve(false);
- 			}
- 			
- 		});
-	 });
-}
-//Pour chercher les auteurs
-Application.prototype.isAuteur=function(id_user,id_app){
-	 var User= require('./User');
-	 var user= new User();
-	 return new Promise((resolve,reject)=>{
-	 	var listeAuteurs=[];
-	 	var userMail= user.getMailUser(id_user);
-	 	getAuteur(id_app).then(function(resultat){
-	 		if(resultat == false){ return resolve(false);}
-	 		resultat.forEach(function(item){
 
-	 			DB.query("select * from auteur where id_auteur = ?",[item],function(rows,err){
-	 				if(rows.length != 0){
-	 					if(rows[0]['mail_auteur']==userMail){
-	 						return resolve(true);
-	 					}
-	 				}
-	 				return resolve(false);
-	 			});
-	 		});
-	 	});
-});
-}
 module.exports= Application;
