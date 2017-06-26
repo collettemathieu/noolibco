@@ -20,7 +20,7 @@ Tache.prototype.getFonctions = function (){
 }
 Tache.prototype.getTacheById = function(id_tache){
 	return new Promise((resolve,reject)=>{
-	 	DB.query("SELECT * FROM tache WHERE id_tache = ?",[id_tache],function(rows,err){
+	 	DB.query("SELECT * FROM tache WHERE id_tache = ?",[id_tache],async function(rows,err){
 	 		if(err)
 	 			return err;
 		 	if(rows.length!=0){
@@ -28,8 +28,8 @@ Tache.prototype.getTacheById = function(id_tache){
 		 		tache.idTache = rows [0]['id_tache'];
 				tache.nomTache = rows [0]['nom_tache'];
 				tache.descriptionTache = rows [0]['description_tache'];
-				tache.fonctions = putFonctionsInTache(rows [0]['id_tache']);
-				tache.tacheTypeDonneeUtilisateurs =putTacheTypeDonneeUtilisateursInTache(rows [0]['id_tache']);
+				tache.fonctions = await(putFonctionsInTache(rows [0]['id_tache']));
+				tache.tacheTypeDonneeUtilisateurs =await(putTacheTypeDonneeUtilisateursInTache(rows [0]['id_tache']));
 				return resolve(tache);
 
 		 	}
@@ -60,16 +60,16 @@ Tache.prototype.getTacheByIdLimited = function(id_tache){
 }
 putFonctionsInTache = function(idTache){
 	return new Promise((resolve,reject)=>{
-	 	DB.query("SELECT id_fonction FROM tache_fonction WHERE id_tache = ? ORDER BY id_ordre",[idTache], function(rows,err){
+	 	DB.query("SELECT id_fonction FROM tache_fonction WHERE id_tache = ? ORDER BY id_ordre",[idTache],function(rows,err){
 	 		if(err)
 	 			return err;
 		 	if(rows.length!=0){
 		 		var fonction = new Fonction();
 		 		var array = [];
-		 		rows.forEach(async function(row){
-		 			array.push(await(fonction.getFonctionById(row['id_fonction'])));
+		 		rows.forEach(function(row){
+		 			array.push(fonction.getFonctionById(row['id_fonction']));
 		 		});
-
+		 		
 		 		return resolve(array);
 		 	}
 		 	else{
@@ -87,8 +87,8 @@ putTacheTypeDonneeUtilisateursInTache = function(idTache){
 		 	if(rows.length!=0){
 		 		var tacheTypeDonneeUtilisateur = new TacheTypeDonneeUtilisateur();
 		 		var array = [];
-		 		rows.forEach(async function(row){
-		 			array.push(await(tacheTypeDonneeUtilisateur.getTacheTypeDonneeUtilisateurById(idTache, row['id_type_donnee_utilisateur'], row['id_ordre'])));
+		 		rows.forEach(function(row){
+		 			array.push(tacheTypeDonneeUtilisateur.getTacheTypeDonneeUtilisateurById(idTache, row['id_type_donnee_utilisateur'], row['id_ordre']));
 		 		});
 		 		return resolve(array);
 		 	}

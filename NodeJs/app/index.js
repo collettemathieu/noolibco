@@ -81,10 +81,10 @@ function escapeShell(cmd){
 function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths){
 	
 		var createur = applicationRunning.getCreateur();
-		
+
 		if(tacheDemandee instanceof Tache){
 			
-			var tacheDatas = tacheDemandee.getTacheTypeDonneeUtilisateurs().then(function(tacheDatas){
+			var tacheDatas = await(tacheDemandee.getTacheTypeDonneeUtilisateurs());
 				if(tacheDatas.length === tabDonneeUtilisateur.length){
 				var i=-1;
 				
@@ -130,17 +130,19 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 				messageClient.addErreur(tacheDemandee + 'no match data');
 				return false;
 			}
-			});
+			
 			
 			var fonctions = await(tacheDemandee.getFonctions());
 			
 			if(fonctions.length != 0){
+			
 				fonctions.forEach(function(fonction){
 					var args=[];
 					var params = [];
 					var j=0;
 
 					filesPaths.forEach(function(file){
+
 						if(file == false){
 							args.push(tabDonneeUtilisateur[j].getValeurInputDonneeUtilisateur());
 						} else{
@@ -149,6 +151,7 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 						++j;
 					});		
 						
+
 						if(outputData != undefined ) {
 							outputData= escapeShell(outputData);
 						}
@@ -179,13 +182,14 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 			        }else{
 			        	args= args+ '§'+ outputData;
 			        }
+			      
 			        // Execution du script Bash pour executer une fonction de l'application
 			        outputData=execFct(createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args);	
-			      	console.log("output "+outputData);
+			      	
 			      	var result = outputData.toString().trim();
 			        result= result.split('<br>').join('').split('<br />').join('').split("\n").join('').split("\r" ).join('');
 			       	result=unescape(encodeURIComponent(result));
-			       	console.log(result);
+			       
 			       	try{
 			       		result= JSON.parse(result);	
 			       		 if(outputData != undefined && outputData != ""){
@@ -216,10 +220,11 @@ execFct = function(createur, utilisateur, application, numVersion,fonction, args
 			var nomApplication = application.getVariableFixeApplication();
 			var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
 			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+args;
+	
 			try{
-				var test= exec(instructions+' 2>&1');
 				console.log(instructions);
-				return test;		
+				return exec(instructions);
+					
 			}catch(e){
 				console.log("stat "+e.status);
 				console.log("msg "+e.message);
@@ -235,7 +240,7 @@ execFct = function(createur, utilisateur, application, numVersion,fonction, args
 delFolderInProd = function (utilisateur){
 	
 	 	if(utilisateur instanceof User){
-			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur();
+			var instructions = 'ls ';//'/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur();
 			return exec(instructions);
 		}else{
 			return "error delFolderInProd";
@@ -346,6 +351,7 @@ router.post('/', function(req, res) {
 		 		}
 		 		
 		 		if(version != 'undefined' && version != null){
+		 		
 		 			var i=0, tabTaches= [], noError=true , offset= 0, tacheDemandee;
 		 			var taches= await(version.getTaches());
 		 			while(fields['tache'+i] != undefined){
@@ -363,9 +369,9 @@ router.post('/', function(req, res) {
 		 				if(tacheDemandee != undefined && tacheDemandee != false){
 
 		 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
-		 					
-		 					
+		 				
 		 					outputData = executeRun(fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee));
+
 		 					offset = offset + nombreDeDonnee;
 		 					if(outputData != false){
 		 						messageClient.addReussite(outputData);
@@ -388,7 +394,7 @@ router.post('/', function(req, res) {
 				messageClient.getErreurs().foreach(function(erreur){
 					texte += '<p>'+erreur+'</p>';
 				});
-				console.log("here");
+				
 				reponse['erreurs'] = texte;
 			}
 
@@ -416,7 +422,7 @@ router.post('/', function(req, res) {
 		
 			response = JSON.stringify(response);
 			response = JSON.parse(response);
-			console.log(response);
+			//console.log(response);
 		 	res.send(response);	
 		 	
 		 	
