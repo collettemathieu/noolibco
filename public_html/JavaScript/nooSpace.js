@@ -478,7 +478,7 @@ $(function(){
 			formData.append('id',sessionStorage['id']);
 			formData.append('isAdmin',sessionStorage['isAdmin']);
       		$.ajax({
-				url:  '/HandleApplication/RunTheMule',//'http://'+window.location.hostname+':3000/runTheMule/',
+				url:  'http://'+window.location.hostname+':3000/runTheMule/',
 				type: 'POST',
 				async: true,
 				cache: false,
@@ -502,7 +502,7 @@ $(function(){
 
 					try{
 						console.log("parse response");
-					    JSON.parse(response);
+					    response = JSON.parse(response);
 					}
 					catch(e){
 						console.log('erreur de parse');

@@ -428,15 +428,18 @@ router.post('/', function(req, res) {
 					 resultat = resultat.split('/(\/home\/noolibco\/.+)/').join('');
 					// Pour les failles de type scripts
 					resultat = escapeHtml(resultat);
+					if(resultat.indexOf('[')== 0 && resultat.lastIndexOf(']')==resultat.length-1){
+							resultat = resultat.substr(1);
+							resultat = resultat.substr(0,resultat.length-1);
+					}
 					resultatsApplication.push(resultat);
 				});
 				
-				response.resultat =resultatsApplication;
+				response['resultat'] = resultatsApplication;
 			}
-			//console.log(response);
-			//response = JSON.stringify(response);
-			//response = JSON.parse(response);
-			console.log(response['resultat'][0]['table']);
+			console.log(response);
+		
+			response = JSON.stringify(response);
 		 	res.send(response);	
 		 	
 		 	
