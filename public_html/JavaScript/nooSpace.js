@@ -160,7 +160,7 @@ $(function(){
 		            .appendTo(this)
 		            .on('click', 'li', function() {
 		               	
-		            	//try{
+		            	try{
 			               	// On affiche le loader
 				      		cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
 				      		
@@ -177,8 +177,8 @@ $(function(){
 							    formData.append(paramForm[i].name, paramForm[i].value);
 
 							runTheMule(formData, cloneApplication);
-						//}
-			      	/*	catch(e){
+						}
+			      		catch(e){
 			      			var response = {
 							  'erreurs': '<p>A system error has occurred.</p>'
 							};
@@ -191,12 +191,10 @@ $(function(){
 
 							// On efface le rapport précédent
 							cloneApplication.find('.applicationReports').html('');
-			      		}*/
+			      		}
 		            });
 
-		            this.removeClass('context-menu-item').addClass('context-menu-tache');
-		            
-		        
+		            this.removeClass('context-menu-item').addClass('context-menu-tache');     
 		    };
 
 
@@ -338,7 +336,7 @@ $(function(){
 
 		            }
 					if(key === 'parametreApplication') {
-
+						console.log("from key parametre Application");
 						// On copie les paramètres de l'application dans la fenêtre modale
 						var panelSettingsApplication = $('#panelSettingsApplication'),
 							contenuPanel = $(this).parent().find('.parametresApplication'),
@@ -480,7 +478,7 @@ $(function(){
 			formData.append('id',sessionStorage['id']);
 			formData.append('isAdmin',sessionStorage['isAdmin']);
       		$.ajax({
-				url: 'http://'+window.location.hostname+':3000/runTheMule/',
+				url:  '/HandleApplication/RunTheMule',//'http://'+window.location.hostname+':3000/runTheMule/',
 				type: 'POST',
 				async: true,
 				cache: false,
@@ -503,18 +501,22 @@ $(function(){
 					cloneApplication.find('.applicationReports').empty();
 
 					try{
-						console.log(response);
-					  JSON.parse(response['resultat']);
+						console.log("parse response");
+					    JSON.parse(response);
 					}
 					catch(e){
+						console.log('erreur de parse');
 						var response = {
 						  'erreurs': '<p>A system error has occurred while running the application.</p>'
 						};
 						displayInformationsClient(response);
 					}
+					//**************
+					console.log("response['resultat']");
 					console.log(response['resultat']);
+					//**********
 					if(response['resultat']){
-						console.log("here");
+						
 						var reponse = {
 							reussites:'<p>A new application report has been released.</p>',
 							erreurs: response['erreurs']
@@ -532,12 +534,14 @@ $(function(){
 							tabTableOfResults = [];
 
 						for(var i=0,c=response['resultat'].length; i<c ; ++i){
-
+							var tableauReponse = response['resultat'][i];
 							try{
 								var tableauReponse = JSON.parse(response['resultat'][i]);
+								console.log(tableauReponse);
+								
 							}
 							catch(e){
-								console.log('here 3');
+								console.log("erreur parse tableau response");
 								var response = {
 								  'erreurs': '<p>Fatal system error: '+response['resultat'][i]+'.</p>'
 								};
@@ -550,7 +554,6 @@ $(function(){
 							if(i==0){reportClone.addClass('active');}
 							
 							if(tableauReponse['image']){
-
 								var image = new Image(),
 								imageResult = reportClone.find('.imageResult');
 								image.src = 'data:image/jpeg;base64,'+tableauReponse['image'];
@@ -569,10 +572,12 @@ $(function(){
 							}else{
 								reportClone.find('.imageResult').html('No picture generated.');
 							}
-
+								//**************
+								console.log("tableauReponse['table']");
+								console.log(tableauReponse['table']);
+								//**********	
 							if(tableauReponse['table']){
-
-								// Création de l'objet TxtReader à partir des données
+								
 					            var txtReader = new TXTFile(),
 					            	num_points_display = 15000;
 					            if(typeof(tableauReponse['table']['legend']) !== 'undefined' && typeof(tableauReponse['table']['data']) !== 'undefined' && typeof(tableauReponse['table']['sampleRate']) !== 'undefined'){
@@ -600,11 +605,13 @@ $(function(){
 						        }
 
 							}else{
+								
 								reportClone.find('.tableResult').html('No table generated.');
 								reportClone.find('.graphResult').html('No graph generated.');
 							}
 
 							if(tableauReponse['comments']){
+								
 								reportClone.find('.commentairesResult').html(tableauReponse['comments']);
 							}else{
 								reportClone.find('.commentairesResult').html('No comment generated.');

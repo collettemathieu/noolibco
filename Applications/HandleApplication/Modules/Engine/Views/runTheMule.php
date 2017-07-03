@@ -34,7 +34,6 @@ if($user->getMessageClient()->hasReussite()){
 	$reponse['resultat'] = $resultatsApplication;
 }
 $reponse = json_encode($reponse);
-
 // On envoie la réponse au format JSON
 // On se protège des failles XSS par htmlspecialchars
 print_r($reponse);

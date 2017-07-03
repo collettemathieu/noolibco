@@ -27,7 +27,7 @@ var messageClient = new MessageClient();
 var Config=require('../models/Config');
 //variable de stockage
 var abonnement_user=true;
-var outputData;
+var outputData = 'undefined';
 
 //***************************
 async function getFormData(req){
@@ -107,7 +107,7 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 							
 								if(typeDonnee != typeAttendu){
 									//error
-									messageClient.addErreur(tacheDemandee + 'erreur from ! all.image.without.dicom');
+									messageClient.addErreur(tacheDemandee.getNomTache() + 'erreur from ! all.image.without.dicom');
 									return false;								
 								}
 							}else{
@@ -115,12 +115,13 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 									extensionsImageAutorisees.splice(extensionsImageAutorisees.indexOf('dcm'),1);
 									extensionsImageAutorisees.splice(extensionsImageAutorisees.indexOf('dcm'),1);
 									if(extensionsImageAutorisees.indexOf(typeDonnee)<0){
+										console.log('dans errreur');
 										messageClient.addErreur(tacheDemandee + 'erreur from all image without dicom')
 									}														
 							}
 						}else {
 								if(extensionsImageAutorisees.indexOf(typeDonnee)<0){
-									messageClient.addErreur(tacheDemandee + 'erreur from all image');
+									messageClient.addErreur(tacheDemandee.getNomTache() + 'erreur from all image');
 									return false;
 								}
 						}
@@ -155,28 +156,33 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 						if(outputData != undefined ) {
 							outputData= escapeShell(outputData);
 						}
-						
 
 					// On récupère les paramètres de la fonction modifiés (ou non) par l'utilisateur
+					
+				
 					var parametres = await(fonction.getParametres());
+					
 					if(parametres!= false){
 						parametres.forEach(function(parametre){
-
+							
 							if(fields[parametre.getIdParametre()] != undefined && parametre.getStatutPublicParametre()){
 								var valueParam = fields[parametre.getIdParametre()][0];
 								if(valueParam <= parametre.getValeurMaxParametre() && valueParam >= parametre.getValeurMinParametre()){
-									params[parametre.getNomParametre()] = valueParam;
+									//params[parametre.getNomParametre()] = valueParam;
+									params.push(valueParam);
+
 								}else{
-									params[parametre.getNomParametre()]= parametre.getValeurDefautParametre;
+									params.push(parametre.getValeurDefautParametre);
 								}
 							} else{
-								params[parametre.getNomParametre()]= parametre.getValeurDefautParametre();
+								params.push(parametre.getValeurDefautParametre());
 							}
 						});
 					}
 					// On transforme le tableau d'arguments en chaine de caratères
 					args = args.join('§');
 					params = params.join('§');
+
 			        if(params != ''){
 			        	args = args +'§'+ params + '§' + outputData;
 			        }else{
@@ -185,7 +191,7 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 			      
 			        // Execution du script Bash pour executer une fonction de l'application
 			        outputData=execFct(createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args);	
-			      	
+
 			      	var result = outputData.toString().trim();
 			        result= result.split('<br>').join('').split('<br />').join('').split("\n").join('').split("\r" ).join('');
 			       	result=unescape(encodeURIComponent(result));
@@ -198,7 +204,7 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 				         	outputData=false;
 				         }
 			       	}catch (e){
-			       		console.log(e);
+			       		//console.log(e);
 			       		outputData = '{"erreurs": "'+outputData+'"}';
 			      
 			       	}  
@@ -248,9 +254,9 @@ delFolderInProd = function (utilisateur){
 }
 //********Request********
 router.post('/', function(req, res) { 
-	res.header("Access-Control-Allow-Origin","http://172.16.64.3");
+	res.header("Access-Control-Allow-Origin","http://172.16.72.47");
 	async (function(){
-
+		outputData = undefined;
 		var fields = await(getFormData(req));
 		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
 		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication'][0]));
@@ -376,10 +382,10 @@ router.post('/', function(req, res) {
 		 					if(outputData != false){
 		 						messageClient.addReussite(outputData);
 		 					}else {
-		 						//error
+		 						messageClient.addErreur("erreur 1");
 		 					}
 		 				}else{
-		 					//error
+		 					messageClient.addErreur("erreur 2");
 		 				}
 		 				tacheDemandee = false;
 		 				++i;
@@ -391,11 +397,13 @@ router.post('/', function(req, res) {
 		 	var response = {};
 			if(messageClient.hasErreur()){
 				var texte = '';
-				messageClient.getErreurs().foreach(function(erreur){
+				console.log('from erreur');
+				console.log(messageClient);
+					messageClient.getErreurs().forEach(function(erreur){
 					texte += '<p>'+erreur+'</p>';
 				});
 				
-				reponse['erreurs'] = texte;
+				response['erreurs'] = texte;
 			}
 
 			if(messageClient.hasReussite()){
@@ -404,25 +412,31 @@ router.post('/', function(req, res) {
 				var i=0;
 				messageClient.getReussites().forEach(function(resultat){
 					// Pour supprimer les espaces en début/fin de chaîne ainsi que les retours chariots
+			
 					resultat = resultat.toString().trim();
 					
-					resultat = resultat.split('<br>').join('').split('<br />').join('').split("\n").join('').split("\r" ).join('');
+					resultat = resultat.split('<br>').join('');
+					resultat=resultat.split('<br />').join('');
+				    resultat= resultat.split("\n").join('');
+				    resultat= resultat.split("\r" ).join('');
 					// Pour supprimer tout ce qu'il y a avant et après les {} du résultat // Eviter les headers par exemple de php
 					resultat = resultat.split('/^(.*?){/').join('{'); // Avant
 					resultat = resultat.split('/(.*)}.*$/').join('$1}'); // Après
-					// Pour un encodage en UTF8
-				    resultat = unescape(encodeURIComponent(resultat));
-					resultat = resultat.split('/(\/home\/noolibco\/.+)/').join(''); // Retire les noms des chemin du serveur NooLib
+					//resultat=resultat.split('[').join('{').split(']').join('}');					
+				    resultat = unescape(encodeURIComponent(resultat));// Pour un encodage en UTF8
+					 // Retire les noms des chemin du serveur NooLib
+					 resultat = resultat.split('/(\/home\/noolibco\/.+)/').join('');
 					// Pour les failles de type scripts
 					resultat = escapeHtml(resultat);
 					resultatsApplication.push(resultat);
 				});
-				response.resultat = resultatsApplication;
+				
+				response.resultat =resultatsApplication;
 			}
-		
-			response = JSON.stringify(response);
-			response = JSON.parse(response);
 			//console.log(response);
+			//response = JSON.stringify(response);
+			//response = JSON.parse(response);
+			console.log(response['resultat'][0]['table']);
 		 	res.send(response);	
 		 	
 		 	
