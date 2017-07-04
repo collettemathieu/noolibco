@@ -4,7 +4,7 @@ var router = express.Router();
 var bodyParser = require("body-parser");
 var multiparty = require('multiparty');
 var util = require('util');
-var exec = require('child_process').execSync;
+var exec = require('child_process').exec;//Sync;
 var async=require('asyncawait/async');
 var await=require('asyncawait/await');
 //donnée de l'application
@@ -22,20 +22,31 @@ var Tache= require('../models/Tache');
 var UtilisateurDonneeUtilisateur= require('../models/UtilisateurDonneeUtilisateur');
 var InputDonneeUtilisateur= require('./InputDonneeUtilisateur');
 var Fonction=require('../models/Fonction');
+var Config=require('../models/Config');
 var MessageClient = require('../models/MessageClient');
 var messageClient = new MessageClient();
-var Config=require('../models/Config');
 //variable de stockage
 var abonnement_user=true;
 var outputData = 'undefined';
-
+//***Const
+const ENGINE_NO_MATCH_DATA = 'Data entered does not match with the task called. Please verify data loaded on the mule.';
+const TREE_VERSION_NOT_ACTIVATED = 'Sorry, any version of this application is activated. Please, stay tuned!';
+const FORMAT_TACHE = "The parameter passed to the function is not in /Library/Entities/Tache format.";
+const APPLICATION_NOT_ACTIVATED = 'This application is not activated. Please stay tuned!';
+const ENGINE_NO_DATA_MULE = 'Please, load all data on the mule before running a task.';
+const ENGINE_NO_DATA = 'No data has been found in the data box of the application.';
+const DENY_USE_APPLICATION = 'You are not authorized to use this application.';
+const ENGINE_NO_ACTION_FOR_TASK = 'No action is associated to this task.';
+const DENY_HANDLE_DATA = 'You are not authorized to edit this data.';
+const NO_APPLICATION = 'The application asked does not exist.';
+const NO_TASK = 'The task asked does not exist.';
 //***************************
 async function getFormData(req){
 		var promise= await new Promise(function(resolve,reject){
 		var form = new multiparty.Form();
 		form.parse(req,function(err,fields){
 	 		if(err) {
-	 			console.log(err);
+	 			//console.log(err);
 	 			return err;
 	 		}
 
@@ -85,7 +96,8 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 		if(tacheDemandee instanceof Tache){
 			
 			var tacheDatas = await(tacheDemandee.getTacheTypeDonneeUtilisateurs());
-				if(tacheDatas.length === tabDonneeUtilisateur.length){
+
+			if(tacheDatas.length === tabDonneeUtilisateur.length){
 				var i=-1;
 				
 				tacheDatas.forEach( async function(tacheData){
@@ -104,37 +116,30 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 						if(typeAttendu != 'all.image'){
 							
 							if(typeAttendu != 'all.image.without.dicom'){
-							
 								if(typeDonnee != typeAttendu){
-									//error
-									messageClient.addErreur(tacheDemandee.getNomTache() + 'erreur from ! all.image.without.dicom');
+									messageClient.addErreur(tacheDemandee.getNomTache() +': '+ ENGINE_NO_MATCH_DATA);
 									return false;								
 								}
 							}else{
-									
-									extensionsImageAutorisees.splice(extensionsImageAutorisees.indexOf('dcm'),1);
-									extensionsImageAutorisees.splice(extensionsImageAutorisees.indexOf('dcm'),1);
+								extensionsImageAutorisees.splice(extensionsImageAutorisees.indexOf('dcm'),1);
+								extensionsImageAutorisees.splice(extensionsImageAutorisees.indexOf('dcm'),1);
 									if(extensionsImageAutorisees.indexOf(typeDonnee)<0){
-										console.log('dans errreur');
-										messageClient.addErreur(tacheDemandee + 'erreur from all image without dicom')
+										messageClient.addErreur(tacheDemandee.getNomTache() + ': '+ENGINE_NO_MATCH_DATA);
 									}														
 							}
 						}else {
-								if(extensionsImageAutorisees.indexOf(typeDonnee)<0){
-									messageClient.addErreur(tacheDemandee.getNomTache() + 'erreur from all image');
-									return false;
-								}
+							if(extensionsImageAutorisees.indexOf(typeDonnee)<0){
+								messageClient.addErreur(tacheDemandee.getNomTache() + ': '+ENGINE_NO_MATCH_DATA);
+								return false;
+							}
 						}
 					}
 				});
 			} else{
-				messageClient.addErreur(tacheDemandee + 'no match data');
+				messageClient.addErreur(tacheDemandee.getNomTache()+ ': '+ENGINE_NO_MATCH_DATA);
 				return false;
 			}
-			
-			
 			var fonctions = await(tacheDemandee.getFonctions());
-			
 			if(fonctions.length != 0){
 			
 				fonctions.forEach(function(fonction){
@@ -158,10 +163,7 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 						}
 
 					// On récupère les paramètres de la fonction modifiés (ou non) par l'utilisateur
-					
-				
 					var parametres = await(fonction.getParametres());
-					
 					if(parametres!= false){
 						parametres.forEach(function(parametre){
 							
@@ -190,13 +192,13 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 			        }
 			      
 			        // Execution du script Bash pour executer une fonction de l'application
-			        outputData=execFct(createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args);	
+			        outputData=await(execFct(createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args));	
 
 			      	var result = outputData.toString().trim();
 			        result= result.split('<br>').join('').split('<br />').join('').split("\n").join('').split("\r" ).join('');
 			       	result=unescape(encodeURIComponent(result));
-			       
-			       	try{
+			       	
+			    	try{
 			       		result= JSON.parse(result);	
 			       		 if(outputData != undefined && outputData != ""){
 			         	     	outputData = outputData;
@@ -204,85 +206,101 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 				         	outputData=false;
 				         }
 			       	}catch (e){
-			       		//console.log(e);
 			       		outputData = '{"erreurs": "'+outputData+'"}';
-			      
 			       	}  
 
 				});
-
+			}
+			else{
+				messageClient.addErreur(ENGINE_NO_ACTION_FOR_TASK);
 			}
 			return outputData;
-			
+		}else{
+			messageClient.addErreur(FORMAT_TACHE);
 		}
+			
+			
+		
 }
 
 
 execFct = function(createur, utilisateur, application, numVersion,fonction, args){
-		
-		if(createur instanceof User && utilisateur instanceof User && application instanceof Application && fonction instanceof Fonction){
-			var nomUtilisateur = utilisateur.getVariableFixeUtilisateur();
-			var nomCreateur = createur.getVariableFixeUtilisateur();
-			var nomApplication = application.getVariableFixeApplication();
-			var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
-			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+args;
+		return new Promise(function(resolve,reject){
+			if(createur instanceof User && utilisateur instanceof User && application instanceof Application && fonction instanceof Fonction){
+				var nomUtilisateur = utilisateur.getVariableFixeUtilisateur();
+				var nomCreateur = createur.getVariableFixeUtilisateur();
+				var nomApplication = application.getVariableFixeApplication();
+				var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
+				var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+args;
 	
-			try{
-				console.log(instructions);
-				return exec(instructions);
+				//try{
 					
-			}catch(e){
-				console.log("stat "+e.status);
-				console.log("msg "+e.message);
-				console.log("sterr "+e.stderr);
+					var resultat=exec(instructions + '2>&1',function(err,stdout,stderr){
+						if(err)  return reject(err);
+						if(stderr){
+							return resolve(stderr);
+						}
+						if(stdout){
+							return resolve(stdout);
+						}
+						
+					});
+					
+					
+				/*}catch(e){
+					messageClient.addErreur(e.message);
+					return resolve(e.message);
+				}	*/
+			}else{
+				return reject("erreur exec fct");
 			}
-				
-		}else{
-			return "erreur exec fct";
-		}
-			
+		});	
 }	
 
 delFolderInProd = function (utilisateur){
-	
+	return new Promise(function(resolve,reject){
 	 	if(utilisateur instanceof User){
-			var instructions = 'ls ';//'/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur();
-			return exec(instructions);
+			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur();
+			//try{
+				exec(instructions,function(err){
+					if(err) return reject(err);
+					return resolve("done");
+					
+				});
+			/*}catch(e){
+				console.log(e.message);
+			}*/
+			
 		}else{
-			return "error delFolderInProd";
+			return reject("error delFolderInProd");
 		}
+	});
 }
 //********Request********
 router.post('/', function(req, res) { 
 	res.header("Access-Control-Allow-Origin","http://172.16.72.47");
 	async (function(){
+
 		outputData = undefined;
 		var fields = await(getFormData(req));
 		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
 		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication'][0]));
-	
 		if(currentApplication != false){
-
 			var idAuteurs = [];
 			var auteurs=await(currentApplication.getAuteurs());
-			
-			if(auteurs != false){
-				auteurs.forEach(function(itemAuteur){
-				var mailAuteur= itemAuteur.getMailAuteur();
-				if(mailAuteur != false){
-					var utilisateurAuteur=await(user.getUtilisateurByMail(mailAuteur));
-
-					if(utilisateurAuteur != false){
-						idAuteurs.push(utilisateurAuteur.getIdUtilisateur());
+				if(auteurs != false){
+					auteurs.forEach(function(itemAuteur){
+					var mailAuteur= itemAuteur.getMailAuteur();
+					if(mailAuteur != false){
+						var utilisateurAuteur=await(user.getUtilisateurByMail(mailAuteur));
+						if(utilisateurAuteur != false){
+							idAuteurs.push(utilisateurAuteur.getIdUtilisateur());
+						}
 					}
-				
+				});
 				}
-			});
-			}
-			
 			var abonnenementUser = true;
 			if(abonnenementUser || fields['isAdmin'][0] ){
-				
 				if(currentApplication.getIdStatut() > 4 || fields['isAdmin'][0] || idAuteurs.indexOf(fields['id'][0]) ){
 					var i=0, j=0, tabDonneeUtilisateur=[], noError= true;
 
@@ -299,113 +317,119 @@ router.post('/', function(req, res) {
 		 								
 					 					if(utilisateurDonneeUtilisateur != false){
 					 						tabDonneeUtilisateur.push(donneeUtilisateur);
+					 						
 					 					}else{
 					 						noError = false;
+					 						messageClient.addErreur(DENY_HANDLE_DATA);
 					 					}
 					 				}else{
 					 					noError = false;
+					 					messageClient.addErreur(ENGINE_NO_DATA);
 					 				}
 			 					}
 					 			else{
-					 			
 					 				var idDataInput = fields["tache"+i+"data"+j][0];
 					 				var typeDonneeUtilisateur=await(PDOTypeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension('input.txt'));
 					 				var inputDonneeUtilisateur=new InputDonneeUtilisateur( {'valeurInputDonneUtilisateur':idDataInput, 'typeDonneUtilisateur':typeDonneeUtilisateur});
 					 				tabDonneeUtilisateur.push(inputDonneeUtilisateur);
-					 				
 					 			}
-		 					
-		 				
 		 					j++;
 		 			}
+			 		i++;j=0;
+			 	    }
+				 	if(noError){
+				 		var tabUrlDestinationDonneeUtilisateur = [];
+				 		tabDonneeUtilisateur.forEach(function(donneeUtilisateur){
+				 			if(donneeUtilisateur instanceof DonneeUtilisateur && !(donneeUtilisateur instanceof InputDonneeUtilisateur)){
+				 				tabUrlDestinationDonneeUtilisateur.push(donneeUtilisateur.getUrlDonneeUtilisateur());
+				 			} else {
+				 				tabUrlDestinationDonneeUtilisateur.push(false);
+				 			}
+				 		});
+				 		// On récupère la version demandée si admin/auteurs ou la dernière version active de l'application
+				 		var idVersion=fields['idVersion'][0];
+				 		var version;
+				 		var versions = await(currentApplication.getVersions());
+
+				 		if(idVersion != 'undefined' && idAuteurs.indexOf(fields['id'][0]) ){
+				 			for(var i=0; i<versions.length ; ++i){
+				 				if(versions[i].getIdVersion() == idVersion){
+				 					version = versions[i];
+				 					break;
+				 				}
+				 			}
+				 		} else{
+				 			for(var i=0; i<versions.length ; ++i){
+				 				if(versions[i].getActiveVersion()){
+				 					version = versions[i];
+				 					break;
+				 				}
+				 			}
+				 		}
+
+				 		if(version != 'undefined' && version != null){
+				 		
+				 			var i=0, tabTaches= [], noError=true , offset= 0, tacheDemandee;
+				 			var taches= await(version.getTaches());
+				 			while(fields['tache'+i] != undefined){
+				 				
+				 				var nomTacheApplication = fields['tache'+i][0];
+				 				
+				 				for(var j=0; j<taches.length;++j){
+				 					var task = await(taches[j]);
+				 					if(task.getNomTache() == nomTacheApplication){
+				 						tacheDemandee = task;
+				 						break;
+				 					}
+				 				}
+				 				
+				 				if(tacheDemandee != undefined && tacheDemandee != false){
+
+				 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
+				 				
+				 					outputData = executeRun(fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee));
+				 					offset = offset + nombreDeDonnee;
+				 					if(outputData != false){
+				 						messageClient.addReussite(outputData);
+				 					}else {
+				 						messageClient.addErreur("erreur 1"); //A voir ???
+				 					}
+				 					tacheDemandee = false;
+				 				}else{
+				 					messageClient.addErreur(NO_TASK);
+				 				}
+				 				++i;
+				 			}
+				 					// Execution du script Bash pour vider le dossier User linux
+									// On execute l'objet Exec
+									console.log("here");
+				 					var delForlder= await(delFolderInProd(currentUtilisateur));
+				 					console.log(delForlder);
+				 		}else{
+							messageClient.addErreur(TREE_VERSION_NOT_ACTIVATED);
+						}
+					}else{
+						messageClient.addErreur(ENGINE_NO_DATA_MULE);
+					}
+				}else{
+						messageClient.addErreur(APPLICATION_NOT_ACTIVATED);
+					}
+			}else{
+				messageClient.addErreur(DENY_USE_APPLICATION);
+			}	
+		}else{
+			messageClient.addErreur(NO_APPLICATION);
+		}
+
 		 	
-		 		i++;j=0;
-		 	}
-
-		 	if(noError){
-
-		 		var tabUrlDestinationDonneeUtilisateur = [];
-		 		tabDonneeUtilisateur.forEach(function(donneeUtilisateur){
-		 			if(donneeUtilisateur instanceof DonneeUtilisateur && !(donneeUtilisateur instanceof InputDonneeUtilisateur)){
-		 				tabUrlDestinationDonneeUtilisateur.push(donneeUtilisateur.getUrlDonneeUtilisateur());
-		 			} else {
-		 				tabUrlDestinationDonneeUtilisateur.push(false);
-		 			}
-		 		});
-		 		// On récupère la version demandée si admin/auteurs ou la dernière version active de l'application
-		 		var idVersion=fields['idVersion'][0];
-		 		var version;
-		 		var versions = await(currentApplication.getVersions());
-
-		 		if(idVersion != 'undefined' && idAuteurs.indexOf(fields['id'][0]) ){
-		 			for(var i=0; i<versions.length ; ++i){
-		 				if(versions[i].getIdVersion() == idVersion){
-		 					version = versions[i];
-		 					break;
-		 				}
-		 			}
-		 			
-		 			
-
-		 		} else{
-		 			for(var i=0; i<versions.length ; ++i){
-		 				if(versions[i].getActiveVersion()){
-		 					version = versions[i];
-		 					break;
-		 				}
-		 			}
-		 		}
-		 		
-		 		if(version != 'undefined' && version != null){
-		 		
-		 			var i=0, tabTaches= [], noError=true , offset= 0, tacheDemandee;
-		 			var taches= await(version.getTaches());
-		 			while(fields['tache'+i] != undefined){
-		 				
-		 				var nomTacheApplication = fields['tache'+i][0];
-		 				
-		 				for(var j=0; j<taches.length;++j){
-		 					var task = await(taches[j]);
-		 					if(task.getNomTache() == nomTacheApplication){
-		 						tacheDemandee = task;
-		 						break;
-		 					}
-		 				}
-		 				
-		 				if(tacheDemandee != undefined && tacheDemandee != false){
-
-		 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
-		 				
-		 					outputData = executeRun(fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee));
-
-		 					offset = offset + nombreDeDonnee;
-		 					if(outputData != false){
-		 						messageClient.addReussite(outputData);
-		 					}else {
-		 						messageClient.addErreur("erreur 1");
-		 					}
-		 				}else{
-		 					messageClient.addErreur("erreur 2");
-		 				}
-		 				tacheDemandee = false;
-		 				++i;
-		 			}
-		 					delFolderInProd(currentUtilisateur);
-		 		}
-		 	}
-
 		 	var response = {};
 			if(messageClient.hasErreur()){
 				var texte = '';
-				console.log('from erreur');
-				console.log(messageClient);
 					messageClient.getErreurs().forEach(function(erreur){
 					texte += '<p>'+erreur+'</p>';
 				});
-				
 				response['erreurs'] = texte;
 			}
-
 			if(messageClient.hasReussite()){
 				
 				var resultatsApplication = [];
@@ -437,16 +461,8 @@ router.post('/', function(req, res) {
 				
 				response['resultat'] = resultatsApplication;
 			}
-			console.log(response);
-		
 			response = JSON.stringify(response);
 		 	res.send(response);	
-		 	
-		 	
-					
-				}
-			}
-		}
 	})();
 
 });

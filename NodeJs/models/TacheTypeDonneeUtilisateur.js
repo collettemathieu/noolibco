@@ -1,5 +1,5 @@
 var DB=require('../config/database.js');
-var Tache1 = require('./Tache1');
+var Tache1 = require('./Tache');
 var TypeDonneeUtilisateur = require('./TypeDonneeUtilisateur');
 var async=require('asyncawait/async');
 var await=require('asyncawait/await');
@@ -17,7 +17,7 @@ TacheTypeDonneeUtilisateur.prototype.getTacheTypeDonneeUtilisateurById = functio
 	 			return err;
 		 	if(rows.length!=0){
 		 		var tacheTypeDonneeUtilisateur = new TacheTypeDonneeUtilisateur();
-		 		var pdoTache = new Tache1();
+		 		var pdoTache = new (require('./Tache'))();
 		 		var pdoTypeDonneeUtilisateur = new TypeDonneeUtilisateur();
 		 		
 

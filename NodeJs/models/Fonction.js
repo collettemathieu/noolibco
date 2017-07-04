@@ -6,6 +6,7 @@ var await=require('asyncawait/await');
 
 function Fonction(){
 	var idFonction, nomFonction, urlFonction, extensionFonction, parametres = [], taches = [];
+	return this;
 
 }
 

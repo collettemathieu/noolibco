@@ -8,6 +8,7 @@ var await=require('asyncawait/await');
 
 function Tache(){
 	var idTache, nomTache, tacheTypeDonneeUtilisateurs = [], versions = [], fonctions = [];
+	//return this;
 }
 Tache.prototype.getNomTache = function(){
 	return this.nomTache;

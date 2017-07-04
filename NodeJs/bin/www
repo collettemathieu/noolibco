@@ -19,11 +19,11 @@ app.set('port', port);
  * Create HTTP server.
  */
 app.disable('x-powred-by'); //pour sécuriser
-var server = http.createServer({
+var server = http.createServer(app);
+/*{
   key: fs.readFileSync('/etc/letsencrypt/live/noolib.com/privkey.pem'),
   cert: fs.readFileSync('/etc/letsencrypt/live/noolib.com/cert.pem')
-},app);
-
+},*/
 /**
  * Listen on provided port, on all network interfaces.
  */
