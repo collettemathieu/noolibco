@@ -50,7 +50,7 @@ class AddDataController extends \Library\BackController
 				ini_set('memory_limit','512M');
 
 				// On contrôle les données présentes
-				$extensionFichier = $request->getPostData('ext');
+				$extensionFichier = strtolower($request->getPostData('ext'));
 				$nomFichier = substr($request->getPostData('nomFichier'), 0, -4);
 				$dataSent = $request->getPostData('donneeUtilisateur');
 				$sampleRateDonneeUtilisateur = (int) $request->getPostData('sampleRateDonneeUtilisateur');
@@ -124,17 +124,20 @@ class AddDataController extends \Library\BackController
 											if(count($utilisateurDonneeUtilisateur->getErreurs()) == 0){
 
 												// On crée une miniature de l'image pour l'affichage dans le data manager
-												if($extensionFichier === 'jpg' || $extensionFichier === 'png' || $extensionFichier === 'tif'){
-													if($extensionFichier === 'png'){
-														$ImageInitiale = imagecreatefrompng($file->getFilePath());
-													}else{
+												if($extensionFichier === 'jpg' || 
+													$extensionFichier === 'jpeg' ||
+													$extensionFichier === 'png' || $extensionFichier === 'tif'){
+													
+													$ImageInitiale = imagecreatefrompng($file->getFilePath());
+													// Si la conversion PNG ne fonctionne pas on utilise le JPEG
+													if(!$ImageInitiale){
 														$ImageInitiale = imagecreatefromjpeg($file->getFilePath());
 													}
 													
 													$largeur_source = imagesx($ImageInitiale);
 													$Hauteur_source = imagesy($ImageInitiale);
 													
-													// On calcule de facteur de redimentionnement de 64 px
+													// On calcule le facteur de redimentionnement de 64 px
 													$rate = min(64/$largeur_source, 64/$Hauteur_source);
 													$largeur_destination = $largeur_source*$rate;
 													$Hauteur_Destination = $Hauteur_source*$rate;

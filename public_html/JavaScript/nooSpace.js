@@ -33,7 +33,8 @@ $(function(){
 			      	positionSourisInAppY = positionSourisY - positionElement.top,
 			      	nouvellePositionElementX = positionSourisX - pos.left - positionSourisInAppX,
 			      	nouvellePositionElementY = positionSourisY - pos.top - positionSourisInAppY,
-			      	largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
+			      	largeurGestionnaireDonnee = parseInt(overlayGestionnaireDonnees.css('width')),
+			      	hauteurGestionnaireDonnee = overlayGestionnaireDonnees.offset().top+parseInt(overlayGestionnaireDonnees.css('height'));
 
 		      	// Pour insérer une application dans la noospace
 		      	if(ui.draggable.parent().attr('id') === 'applicationsInDock' || ui.draggable.hasClass('runIt')){
@@ -41,7 +42,7 @@ $(function(){
 		      		deployApplication(ui.draggable, $(this), nouvellePositionElementX, nouvellePositionElementY);
 
 				// Pour insérer une nouvelle donnée dans la noospace
-			    }else if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
+			    }else if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && (positionSourisX > largeurGestionnaireDonnee || positionSourisY > hauteurGestionnaireDonnee)){
 
 			    	// Pour n'insérer que les nouvelles données qui ne sont pas positionées dans une dataBox, car c'est le droppable de l'application qui s'en charge
 			    	var isIn = false;
@@ -117,14 +118,13 @@ $(function(){
 	      		drop: function(event, ui){
 	      			var positionSourisX = event.clientX,
 	      			largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
-
-	      			if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
+	      			
+	      			if(positionSourisX > largeurGestionnaireDonnee){
 
 	      				initDonneeUtilisateur(ui.draggable.clone(), $(this), 2, 2);
-
-	      			}else{
-	      				$(this).append(ui.draggable);
-			      		ui.draggable.css('position','absolute').css('top', 2+'px').css('left', 2+'px');
+	      				if(ui.draggable.parent().attr('id') != 'inListeDonneesUser'){
+	      					ui.draggable.remove();//On supprime l'originale s'il la donnée n'appartient pas au gestionnaire des données
+	      				}
 	      			}
 	      		}
 	      	});
@@ -149,6 +149,7 @@ $(function(){
 							formData.append('idApplication', cloneApplication.attr('id'));
 							formData.append('idVersion', cloneApplication.attr('idVersion'));
 							formData.append('tache0', $(this).attr('id'));
+
 							// On ajoute le formulaire des paramètres au formulaire général
 							for (var i=0; i<paramForm.length; i++)
 							    formData.append(paramForm[i].name, paramForm[i].value);
@@ -497,8 +498,9 @@ $(function(){
 						cloneApplication.find('.resultBox img').show(600);
 
 						// On récupère le template de rapports et on créé les tableaux de résultats
+						// Variables globales
 						var templateItemReportApplication = $('#templateItemReportApplication'),
-							tabImage = [],
+							tabImage = [], 
 							tabTable = [],
 							tabComments = [],
 							tabTableOfResults = [];
@@ -524,15 +526,16 @@ $(function(){
 
 								var image = new Image(),
 								imageResult = reportClone.find('.imageResult');
-								image.src = 'data:image/jpeg;base64,'+tableauReponse['image'];
+								image.src = 'data:image/png;base64,'+tableauReponse['image'];
 								imageResult.append(image);
 
 								// On enregistre la donnée image
 								tabImage.push({
-									ext: 'jpeg',
-									name: 'image_noolib',
+									ext: 'png',
+									name: 'no name',
 									rawData: tableauReponse['image'],
-									data: 'data:image/jpeg;base64,'+tableauReponse['image'],
+									dataJson: 'data:image/png;base64,'+tableauReponse['image'],
+									data: 'data:image/png;base64,'+tableauReponse['image'],
 									sample: 1,
 									min: 1,
 									size: 1
@@ -555,14 +558,16 @@ $(function(){
 						            // On enregistre la donnée table
 						            tabTable.push({
 										ext: 'csv',
-										name: 'table_noolib',
+										name: 'no name',
 										rawData: tableauReponse['table']['data'],
-										legend: tableauReponse['table']['legend'],
+										legend: txtReader.get_legend(),
 										data: txtReader,
-										sample: tableauReponse['table']['sampleRate'],
+										sample: txtReader.get_sample_rate(),
 										min: 1,
-										size: 1
+										lengthData: txtReader.get_size_signals(),
+										size: txtReader.get_number_of_signals()
 									});
+
 						        }else{
 						        	var reponse = {
 										erreurs: '<p>Legend, array of data or sample rate is missing for displaying the data.</p>'
@@ -638,6 +643,7 @@ $(function(){
 							// On retarde légèrement le traitement des données afin de permettre à la fenêtre modale de s'ouvrir
             				setTimeout(function(){
             					// Traitement des données du caroussel
+	            				// Pour sauvegarder l'image sur ordinateur
 	            				if(tabImage.length != 0){
 		            				$('#carouselApplicationReport').find('.imageResult').each(function(index, e){
 			            				$(e).click(function(){
@@ -649,12 +655,14 @@ $(function(){
 			            				});
 			            			});
 	            				}
+	            				
 		            			if(tabTable.length != 0){
 		            				$('#carouselApplicationReport').find('.tableResult').each(function(index, e){
 		            					
 										// Création du graphe
 								        graphLocalData(tabTable[index]['data'], 15000, $(e).parent());
 
+								        // Pour sauvegarder la table sur ordinateur au format csv
 		            					$(e).click(function(){
 
 			            					var stringCSV = tableToCSV(tabTable[index]['legend'], tabTable[index]['rawData']),
@@ -670,107 +678,57 @@ $(function(){
 							
             			});
 
+
+
 						// On gère la sauvegarde des résultats
 						// Tous les résultats sont sauvegardés en une seule fois avec pls appels Ajax
 						$('#formSaveResult').on('submit', function(e) {
 
 							e.preventDefault();
-							// Variable d'autorisation d'upload
-     	 					var uploadAllowed = true;
-
+							
 						  try{
-						  	
+						  	// On sauvegarde l'ensemble des images
 						  	for(var i=0, c=tabImage.length; i<c; ++i){
-							  	
-							  	var result = tabImage[i];
-
-							  	$('#extensionDataResult').attr('value', result.ext);
-							  	$('#nomDataResult').attr('value', result.name);
-							  	$('#dataResult').attr('value', result.data);
-								$('#sampleRateDataResult').attr('value',result.sample);
-								$('#tailleDataResult').attr('value', result.size);
-								$('#tempsMinimumDataResult').attr('value', result.min);
-								
-							  	
-							    if(uploadAllowed){
-							      var formData = new FormData(e.target);
-
-
-							       // On affiche l'indicateur de progression
-									  $('#image-result-waiter').show();
-
-									  // On empêche de charger ou d'uploader une nouvelle donnée
-									  $('#labelSubmitSaveResult').attr('for', '');
-									  $('#labelSubmitSaveResult img').css('opacity', '0.2').css('cursor', 'default').attr('data-content', '');
-							      
-
-							      // Envoi de la requête HTTP en mode asynchrone
-							      $.ajax({
-							          url: '/HandleData/AddLocalData',
-							          type: 'POST',
-							          data: formData,
-							          async: true,
-							          cache: false,
-							          contentType: false,
-							          processData: false,
-							          success: function(response) {
-							            try{
-							              var response = JSON.parse(response);
-							            }
-							            catch(e){
-							              var response = {
-							                'erreurs': '<p>A system error has occurred: '+e+'</p>'
-							              };
-
-							              displayInformationsClient(response);
-							            }
-
-							            if(response['reussites']){
-							               
-							                displayInformationsClient(response);
-							                // On actualise les données
-							                $('#inListeDonneesUser').html(response['listeDonneeUtilisateur']);
-							                // On met à jour l'affichage du gestionnaire de données
-							                var parametres = {
-							                    'tailleMoDonneesUtilisateur': response['tailleMoDonneesUtilisateur'],
-							                    'tailleMaxDonneesUtilisateur': response['tailleMaxDonneesUtilisateur'],
-							                    'progressionPourcent': response['progressionPourcent']
-							                };
-
-							                showData(parametres);
-
-							            }else if(response['erreurs']){
-							                displayInformationsClient(response);
-							            }
-
-							            // On ferme l'indicateur de progression
-										$('#image-result-waiter').hide();
-										// On permet d'uploader la donnée
-										$('#labelSubmitSaveResult').attr('for', 'submitSaveResult');
-										$('#labelSubmitSaveResult img').css('opacity', '1').css('cursor', 'pointer').attr('data-content', 'Load all results in your data manager');
-							          },
-							          error: function(xhr, ajaxOptions, thrownError){
-							            var response = {
-							                'erreurs': '<p>The size of data exceeds the limit authorized.</p><p>Please try again with another data.</p>'
-							            };
-							            displayInformationsClient(response);
-
-							            // On ferme l'indicateur de progression
-										$('#image-result-waiter').hide();
-										// On permet d'uploader la donnée
-										$('#labelSubmitSaveResult').attr('for', 'submitSaveResult');
-										$('#labelSubmitSaveResult img').css('opacity', '1').css('cursor', 'pointer').attr('data-content', 'Load all results in your data manager');
-							          }
-							      });
-							    }else{
-
-							      var response = {
-							          'erreurs': '<p>The size of data exceeds the limit authorized.</p><p>Please try again with an another data/image or a smaller interval.</p>'
-							      };
-
-							      displayInformationsClient(response);
-							    }
+							  	saveResult(tabImage[i]);
 							}
+
+							// On sauvegarde l'ensemble des tables
+							for(var i=0, s=tabTable.length; i<s; ++i){
+
+							  	 // On restructure les données pour avoir la forme
+					              // Time | Signal 1 | Signal 2 | ...
+					              // 0.23 | 343.34   | 4343.34  | ...
+					              var data = [],
+              							M = [];
+
+							  	// On extrait les item sélectionnés par l'utilisateur
+					              M[0] = 'Time'; // On ajoute la colonne des temps
+					              for(var k=0, c=tabTable[i].legend.length; k<c ; ++k){
+					                  M[k+1] = tabTable[i].legend[k];
+					              }
+
+					              data.push(M);
+
+					              // On restructure les données pour avoir la forme
+					              // Time | Signal 1 | Signal 2 | ...
+					              // 0.23 | 343.34   | 4343.34  | ...
+					              for(var j=1 ; j<tabTable[i].lengthData ; ++j){
+					                  M=[];
+					                  M[0] = j; // On récupère la colonne des temps
+					                  for(var k=0, len=tabTable[i].size; k<len ; ++k){
+					                      M[k+1] = tabTable[i].rawData[k][j];
+					                  }
+
+					                  data.push(M);
+					              }
+
+					              var dataJSON = JSON.stringify(data);
+					              dataJSON = dataJSON.replace('\\r', '');// Bizarement il y a un retour chariot \r qui s'insère à la fin de la légende avec le JSON.stringify. On le retire.
+					              tabTable[i].dataJson = dataJSON;
+							  	saveResult(tabTable[i]);
+							}
+
+
 						  }
 						  catch(e){
 						      var response = {
@@ -781,7 +739,7 @@ $(function(){
 
 						  }
 						});
-						
+						// Fin de la sauvegarde des résultats
 					}else{
 						if(response['erreurs']){
 							displayInformationsClient(response);
@@ -817,6 +775,84 @@ $(function(){
 					
 				}
 			});
+		}
+
+		// Pour sauvegarder un résultat dans le gestionnaire de données
+		function saveResult(result){
+			var form = new FormData();
+		    form.append('ext', result.ext);
+		    form.append('nomFichier', result.name);
+		    form.append('donneeUtilisateur', result.dataJson);
+		    form.append('sampleRateDonneeUtilisateur', result.sample);
+		    form.append('tailleDonneeUtilisateur', result.size);
+		    form.append('tempsMinimumDonneeUtilisateur', result.min);
+
+	      // On affiche l'indicateur de progression
+		  $('#image-result-waiter').show();
+
+		  // On empêche de charger ou d'uploader une nouvelle donnée
+		  $('#labelSubmitSaveResult').attr('for', '');
+		  $('#labelSubmitSaveResult img').css('opacity', '0.2').css('cursor', 'default').attr('data-content', '');
+	      
+
+	      // Envoi de la requête HTTP en mode asynchrone
+	      $.ajax({
+	          url: '/HandleData/AddLocalData',
+	          type: 'POST',
+	          data: form,
+	          async: true,
+	          cache: false,
+	          contentType: false,
+	          processData: false,
+	          success: function(response) {
+	            try{
+	              var response = JSON.parse(response);
+	            }
+	            catch(e){
+	              var response = {
+	                'erreurs': '<p>A system error has occurred: '+e+'</p>'
+	              };
+
+	              displayInformationsClient(response);
+	            }
+
+	            if(response['reussites']){
+	               
+	                displayInformationsClient(response);
+	                // On actualise les données
+	                $('#inListeDonneesUser').html(response['listeDonneeUtilisateur']);
+	                // On met à jour l'affichage du gestionnaire de données
+	                var parametres = {
+	                    'tailleMoDonneesUtilisateur': response['tailleMoDonneesUtilisateur'],
+	                    'tailleMaxDonneesUtilisateur': response['tailleMaxDonneesUtilisateur'],
+	                    'progressionPourcent': response['progressionPourcent']
+	                };
+
+	                showData(parametres);
+
+	            }else if(response['erreurs']){
+	                displayInformationsClient(response);
+	            }
+
+	            // On ferme l'indicateur de progression
+				$('#image-result-waiter').hide();
+				// On permet d'uploader la donnée
+				$('#labelSubmitSaveResult').attr('for', 'submitSaveResult');
+				$('#labelSubmitSaveResult img').css('opacity', '1').css('cursor', 'pointer').attr('data-content', 'Load all results in your data manager');
+	          },
+	          error: function(xhr, ajaxOptions, thrownError){
+	            var response = {
+	                'erreurs': '<p>The size of data exceeds the limit authorized.</p><p>Please try again with another data.</p>'
+	            };
+	            displayInformationsClient(response);
+
+	            // On ferme l'indicateur de progression
+				$('#image-result-waiter').hide();
+				// On permet d'uploader la donnée
+				$('#labelSubmitSaveResult').attr('for', 'submitSaveResult');
+				$('#labelSubmitSaveResult img').css('opacity', '1').css('cursor', 'pointer').attr('data-content', 'Load all results in your data manager');
+	          }
+	      });
 		}
 
 		// Pour initialiser la mule

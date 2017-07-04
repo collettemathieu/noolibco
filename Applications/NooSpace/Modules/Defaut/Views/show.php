@@ -91,12 +91,6 @@
 						    </label>
 							<form method="POST" enctype="multipart/form-data" id="formSaveResult">
 							    <input type="submit" name="submit" id="submitSaveResult"/>
-							    <input type="hidden" value="" name="ext" id="extensionDataResult"/>
-							    <input type="hidden" value="" name="nomFichier" id="nomDataResult"/>
-							    <input type="hidden" value="" name="donneeUtilisateur" id="dataResult"/>
-							    <input type="hidden" value="" name="sampleRateDonneeUtilisateur" id="sampleRateDataResult"/>
-							    <input type="hidden" value="" name="tailleDonneeUtilisateur" id="tailleDataResult"/>
-							    <input type="hidden" value="" name="tempsMinimumDonneeUtilisateur" id="tempsMinimumDataResult"/>
 							</form>
 						</div>
 						<div class="image-waiter" id="image-result-waiter"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading data...</div>
