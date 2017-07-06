@@ -28,6 +28,7 @@ var Config=require('../models/Config');
 //variable de stockage
 var abonnement_user=true;
 var outputData = 'undefined';
+var numRequest=0;
 //***Const
 const ENGINE_NO_MATCH_DATA = 'Data entered does not match with the task called. Please verify data loaded on the mule.';
 const TREE_VERSION_NOT_ACTIVATED = 'Sorry, any version of this application is activated. Please, stay tuned!';
@@ -89,7 +90,7 @@ function escapeShell(cmd){
 	return "'"+ cmd.replace(/(['\\])/g, '\\$1')+"'";
 }
 //****************************************
-function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths){
+function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths){
 	
 		var createur = applicationRunning.getCreateur();
 
@@ -193,8 +194,7 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 			        }
 			      
 			        // Execution du script Bash pour executer une fonction de l'application
-			        outputData=await(execFct(createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args));	
-
+			        outputData=await(execFct(nbReq,createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args));	
 			      	var result = outputData.toString().trim();
 			        result= result.split('<br>').join('').split('<br />').join('').split("\n").join('').split("\r" ).join('');
 			       	result=unescape(encodeURIComponent(result));
@@ -211,6 +211,7 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 			       	}  
 
 				});
+			 await(delFolderInProd(currentUtilisateur,nbReq));
 			}
 			else{
 				messageClient.addErreur(ENGINE_NO_ACTION_FOR_TASK);
@@ -225,17 +226,17 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 }
 
 
-execFct = function(createur, utilisateur, application, numVersion,fonction, args){
+execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction, args){
 		return new Promise(function(resolve,reject){
 			if(createur instanceof User && utilisateur instanceof User && application instanceof Application && fonction instanceof Fonction){
 				var nomUtilisateur = utilisateur.getVariableFixeUtilisateur();
 				var nomCreateur = createur.getVariableFixeUtilisateur();
 				var nomApplication = application.getVariableFixeApplication();
 				var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
-				var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+args;
-				
+				var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+args;
+				console.log(instructions);
 
-					var resultat=exec(instructions + '2>&1',function(err,stdout,stderr){
+					var resultat=exec(instructions + '2>&1',async function(err,stdout,stderr){
 						if(err)  return resolve(err);
 						if(stderr){
 							return resolve(stderr);
@@ -251,10 +252,10 @@ execFct = function(createur, utilisateur, application, numVersion,fonction, args
 		});	
 }	
 
-delFolderInProd = function (utilisateur){
+delFolderInProd = function (utilisateur,nbReq){
 	return new Promise(function(resolve,reject){
 	 	if(utilisateur instanceof User){
-	 			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur();
+	 			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur()+' '+nbReq;
 	 			console.log(instructions);
 				exec(instructions,function(err){
 					if(err) return resolve(err);
@@ -273,7 +274,7 @@ router.post('/', function(req, res) {
 	res.header("Access-Control-Allow-Origin","http://172.16.64.3");
 	var messageClient = new(require('../models/MessageClient'));
 	async (function(){
-	
+		numRequest +=1;
 		outputData = undefined;
 		var fields = await(getFormData(req));
 		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
@@ -380,7 +381,7 @@ router.post('/', function(req, res) {
 
 				 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
 				 				
-				 					outputData = executeRun(fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee));
+				 					outputData = executeRun(numRequest,fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee));
 				 					offset = offset + nombreDeDonnee;
 				 					if(outputData != false){
 				 						messageClient.addReussite(outputData);
@@ -396,9 +397,9 @@ router.post('/', function(req, res) {
 				 					// Execution du script Bash pour vider le dossier User linux
 									// On execute l'objet Exec
 									//console.log("here");
-									setTimeout(async function(){
+									/*setTimeout(async function(){
 										await(delFolderInProd(currentUtilisateur));
-									},20000);
+									},20000);*/
 				 					
 				 					//console.log(delForlder);
 				 		}else{
