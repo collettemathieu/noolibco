@@ -54,7 +54,7 @@ if [ -f $homenoolibco/Files/Sources/$1/$3/$4/$5 ]; then
 		do
 		    if [ -f $homenoolibco"/Files/Data/"$2"/"$param ];
 		        then
-		                cp $homenoolibco"/Files/Data/"$2"/"$param $homenoolibco/SafeWorkSpace/Utilisateurs/$2/;
+		                cp $homenoolibco"/Files/Data/"$2"/"$param $homenoolibco/SafeWorkSpace/Utilisateurs/$2;
 			fi
 			paramsModifier=$paramsModifier" "$param;
 		done

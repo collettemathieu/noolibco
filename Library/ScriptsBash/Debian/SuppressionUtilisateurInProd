@@ -3,3 +3,6 @@
 ##./fin_application_lxcprod.sh username 
 homenoolibco="/home/noolibco"
 rm $homenoolibco/SafeWorkSpace/Utilisateurs/$1/*;
+
+
+

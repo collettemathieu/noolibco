@@ -23,8 +23,8 @@ var UtilisateurDonneeUtilisateur= require('../models/UtilisateurDonneeUtilisateu
 var InputDonneeUtilisateur= require('./InputDonneeUtilisateur');
 var Fonction=require('../models/Fonction');
 var Config=require('../models/Config');
-var MessageClient = require('../models/MessageClient');
-var messageClient = new MessageClient();
+
+
 //variable de stockage
 var abonnement_user=true;
 var outputData = 'undefined';
@@ -141,11 +141,12 @@ function executeRun(fields,currentUtilisateur, applicationRunning,numVersionRunn
 			}
 			var fonctions = await(tacheDemandee.getFonctions());
 			if(fonctions.length != 0){
-			
+			 var nbrFunction=0;
 				fonctions.forEach(function(fonction){
 					var args=[];
 					var params = [];
 					var j=0;
+					nbrFunction +=1;
 
 					filesPaths.forEach(function(file){
 
@@ -232,11 +233,10 @@ execFct = function(createur, utilisateur, application, numVersion,fonction, args
 				var nomApplication = application.getVariableFixeApplication();
 				var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
 				var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+args;
-	
-				//try{
-					
+				
+
 					var resultat=exec(instructions + '2>&1',function(err,stdout,stderr){
-						if(err)  return reject(err);
+						if(err)  return resolve(err);
 						if(stderr){
 							return resolve(stderr);
 						}
@@ -245,12 +245,6 @@ execFct = function(createur, utilisateur, application, numVersion,fonction, args
 						}
 						
 					});
-					
-					
-				/*}catch(e){
-					messageClient.addErreur(e.message);
-					return resolve(e.message);
-				}	*/
 			}else{
 				return reject("erreur exec fct");
 			}
@@ -260,16 +254,14 @@ execFct = function(createur, utilisateur, application, numVersion,fonction, args
 delFolderInProd = function (utilisateur){
 	return new Promise(function(resolve,reject){
 	 	if(utilisateur instanceof User){
-			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur();
-			//try{
+	 			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur();
+	 			console.log(instructions);
 				exec(instructions,function(err){
-					if(err) return reject(err);
+					if(err) return resolve(err);
 					return resolve("done");
 					
 				});
-			/*}catch(e){
-				console.log(e.message);
-			}*/
+			
 			
 		}else{
 			return reject("error delFolderInProd");
@@ -278,9 +270,10 @@ delFolderInProd = function (utilisateur){
 }
 //********Request********
 router.post('/', function(req, res) { 
-	res.header("Access-Control-Allow-Origin","http://172.16.72.47");
+	res.header("Access-Control-Allow-Origin","http://172.16.64.3");
+	var messageClient = new(require('../models/MessageClient'));
 	async (function(){
-
+	
 		outputData = undefined;
 		var fields = await(getFormData(req));
 		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
@@ -402,9 +395,12 @@ router.post('/', function(req, res) {
 				 			}
 				 					// Execution du script Bash pour vider le dossier User linux
 									// On execute l'objet Exec
-									console.log("here");
-				 					var delForlder= await(delFolderInProd(currentUtilisateur));
-				 					console.log(delForlder);
+									//console.log("here");
+									setTimeout(async function(){
+										await(delFolderInProd(currentUtilisateur));
+									},20000);
+				 					
+				 					//console.log(delForlder);
 				 		}else{
 							messageClient.addErreur(TREE_VERSION_NOT_ACTIVATED);
 						}
