@@ -31,14 +31,19 @@
 							$taches = $version->getTaches();
 							?>
 							<div class="appInDock" draggable="true" id="<?php echo $application->getIdApplication();?>">
-								<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div>
+								
 								<!--div class="runApplication"><img src="/Images/play.ico"/></div-->
-								<!-- <div class="dataBox"></div>--><hr><!--
-								--><img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/><!--
-								--><hr><div class="resultBox">
-										<img src="/Images/results.png"/>
-										<div class="applicationReports hidden"></div>
-									</div>
+								<!-- <div class="dataBox"></div>-->
+								<div class="containerApplication" style="display:inline-flex;">
+									<hr><!--
+									-->
+									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div>
+									<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/><!--
+									--><hr><div class="resultBox">
+											<img src="/Images/results.png"/>
+											<div class="applicationReports hidden"></div>
+										</div>
+								</div>
 									<div class="tachesApplication">
 									</div>
 							</div>

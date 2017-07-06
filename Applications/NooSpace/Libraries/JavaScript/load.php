@@ -26,7 +26,6 @@
 <script type="text/javascript" src="/JavaScript/edfReader.js"></script>
 <script type="text/javascript" src="/JavaScript/txtReader.js"></script>
 
-<!-- Added by Naoures for zoom -->
-<script type="text/javascript" src="/JavaScript/Frameworks/jquery.zoomooz.min.js"></script>
+
 
 
