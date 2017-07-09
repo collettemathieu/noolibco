@@ -709,12 +709,10 @@ $(function(){
 
 					              data.push(M);
 
-					              // On restructure les données pour avoir la forme
-					              // Time | Signal 1 | Signal 2 | ...
-					              // 0.23 | 343.34   | 4343.34  | ...
-					              for(var j=1 ; j<tabTable[i].lengthData ; ++j){
+					              // On extrait les données de la table
+					              for(var j=0 ; j<tabTable[i].lengthData ; ++j){
 					                  M=[];
-					                  M[0] = j; // On récupère la colonne des temps
+					                  M[0] = j/(tabTable[i].sample); // On récupère la colonne des temps
 					                  for(var k=0, len=tabTable[i].size; k<len ; ++k){
 					                      M[k+1] = tabTable[i].rawData[k][j];
 					                  }
@@ -868,11 +866,16 @@ $(function(){
       		formGroup.html('');
 			for(var i=0, c=listTypeDonnee.length; i<c ; ++i){
 				if(listTypeDonnee[i]['nomTache'] === nomTache){
-					if(listTypeDonnee[i]['ext'] != 'input.txt'){
-						var contenu = '<div class="donneeUser dashedBorder" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';
-						contenu += '<input type="hidden" class="inputData" name="'+numeroTache+'data'+numeroDonnee+'" value=""/>';
-					}else{
+					if(listTypeDonnee[i]['ext'] === 'input.txt'){
 						var contenu = '<input type="txt" name="'+numeroTache+'data'+numeroDonnee+'" class="donneeUser dashedBorder input-sm" value="" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"/>';
+					}else if(listTypeDonnee[i]['ext'] === 'input.bool'){
+						var contenu = '<div class="checkbox_wrapper donneeUser" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'">'
+						contenu += '<input type="hidden" name="'+numeroTache+'data'+numeroDonnee+'" value="0"/>';
+						contenu += '<input type="checkbox" name="'+numeroTache+'data'+numeroDonnee+'" value="1"/>';
+						contenu += '<label></label></div>';
+					}else{
+						var contenu = '<div class="donneeUser dashedBorder" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';
+						contenu += '<input type="hidden" class="inputData" name="'+numeroTache+'data'+numeroDonnee+'" value=""/>';	
 					}
 					formGroup.append(contenu);
 					++numeroDonnee;

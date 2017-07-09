@@ -120,6 +120,45 @@
 	height: 68px;
 }
 
+
+.checkbox_wrapper{
+    position: relative;
+    height: 64px;
+    width: 64px;
+}
+
+input[type="checkbox"] {
+    opacity:0;
+    height: 64px;
+    width: 64px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+input[type="checkbox"] + label{
+    background:url('../Images/unchecked.png') no-repeat;
+    height: 64px;
+    width: 64px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+input[type="checkbox"]:checked + label{
+    background:url('../Images/checked.png') no-repeat;
+    height: 64px;
+    width: 64px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+}
+
+
 #boiteAOutils{
 	display: inline-block;
 	width: 80px;
