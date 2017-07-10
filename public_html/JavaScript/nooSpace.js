@@ -879,11 +879,12 @@ $(function(){
  				numeroDonnee = 0,
  				nombreDonnee=arrayDonnee[nomTache].length,
  				contenu="<div class='allDataBox' style='width:90px;float:none;height:"+(nombreDonnee*73+25)+"px'>";
- 				/*if(nombreDonnee>1){
-				  contenu+="<button class='reduce' style='display:inline'> - </button>";
-				}*/
+ 				if(nombreDonnee>1){
+				  contenu+="<button class='reduce' style='display:inline'value='+'/>";
+				}
         	   
-				  cloneApplication.find('.containerApplication').css('padding-top',(nombreDonnee-1)*73/2+'px');
+				  cloneApplication.find('.containerApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
+				  cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
 				
 				for(var c=nombreDonnee, i=0; i<c ; ++i){
 					contenu+= '<div class="dataBoxContainer" style="display:inline-flex">';
@@ -911,8 +912,9 @@ $(function(){
 						appHeight+=73;
 						++numeroDonnee;
 				}
-				
-				//contenu+="</div>";
+				if(nombreDonnee>1){
+					contenu+="</div>";
+				}
 				cloneApplication.children(".containerApplication").before(contenu);
 				cloneApplication.find('.donneeDataBox').droppable({
 				drop: function(event, ui){
@@ -935,15 +937,16 @@ $(function(){
 							cloneApplication.find('.dataBoxContainer hr').css('display', 'inline-block');
 									cloneApplication.find('.dataBoxContainer').children('.dataBox').css('display', 'inline-block');;//.slice(nbDataBox-pasAffichage,nbDataBox).show('slice').css('display', 'inline-block');
   								}, 500);
+
+				//Pour réduire les dataBox
 				cloneApplication.find(".allDataBox .reduce").click(function(){
+					cloneApplication.find(".allDataBox ").addClass('dataBox');
 					cloneApplication.find('.allDataBox').css('height',73+'px');
-					$(this).attr('value','+');
+					$(this).attr('value','-');
 					$(this).removeClass('reduce').addClass('resize');
 				});
 
-
-       	}
-
+}
         function saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect){
         	var modalBody=$('#panelSettingsApplication').find('.modal-body');
 	        	modalBody.find('button').click(function(e){
