@@ -134,6 +134,7 @@ $(function(){
 								displayInformationsClient(response);
 							}
 						});
+						//Pour afficher les parametres
 						setTimeout(function(){
 					  	var nomTache=listTypeDonnee[0]['nomTache'],
 						    tacheApplication=cloneApplication.find('.tachesApplication');
@@ -158,7 +159,9 @@ $(function(){
 		    	selector: '.imageApplication',
 		        callback: function(key, options) {
 		            if(key === 'delete'){
-		            	$(this).parent().remove();
+		            	//console.log('here');
+		            	//console.log($(this).parent().parent());
+		            	$(this).parent().parent().remove(); // edited by Naoures
 		            }
 		            if(key === 'mule'){
 		            	// On récupère la mule de l'application
@@ -309,7 +312,7 @@ $(function(){
 					if(key === "Run"){
 						try{
 			               	// On affiche le loader
-				      		cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
+				      		cloneApplication.find('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
 				      		// On ajoute les données et les paramètres pour le lancement de l'application
 				      		var form = paramForm = cloneApplication.find('.parametresApplication').serializeArray(),
 				      			nomTache=cloneApplication.find('.tachesApplication').attr('name'),
@@ -319,9 +322,11 @@ $(function(){
 
 							for(var i=0;i<nbrDonnee;++i){
 								if(donnees[nomTache][i]['ext']!='input.txt'){
-									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.find('.dataBox:eq('+(nbrDonnee-i-1)+')').find('.donneeUser').attr('id'));
+									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
+									console.log(cloneApplication.find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
 								}else{
-									formData.append('tache0data'+(i), cloneApplication.find('.dataBox:eq('+(nbrDonnee-i-1)+')').val());
+									formData.append('tache0data'+(i), cloneApplication.find('.dataBox:eq('+(i)+')').val());
+									console.log(cloneApplication.find('.dataBox:eq('+(i)+')').val())
 								}
 							}
 							formData.append('idApplication', cloneApplication.attr('id'));
@@ -473,7 +478,7 @@ $(function(){
 					$('#formMule').find('button:last').button('reset');
 
 					// On cache le loader
-					cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
+					cloneApplication.find('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
 
 					// On cache les résultats précédents
 					cloneApplication.find('.resultBox img').hide(600);
@@ -777,7 +782,7 @@ $(function(){
 					};
 					displayInformationsClient(response);
 					// On cache le loader
-					cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
+					cloneApplication.find('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
 					// On cache les résultats précédents
 					cloneApplication.find('.resultBox img').hide(600);
 					// On efface le rapport précédent
@@ -871,25 +876,42 @@ $(function(){
        function initDataBox(cloneApplication,listTypeDonnee,nomTache){
  				var appHeight=parseInt(cloneApplication.css('height')),
  				arrayDonnee=ArrayTacheDonnee(listTypeDonnee),
- 				numeroDonnee = (arrayDonnee[nomTache].length)-1,
- 				contenu="<div class='allDataBox' style='width:73px;float:none;overflow:hidden;'>";
- 				/*if(arrayDonnee[nomTache].length>pasAffichage){
-				contenu+="<button class='suivant'style='display:inline'> << </button>";
+ 				numeroDonnee = 0,
+ 				nombreDonnee=arrayDonnee[nomTache].length,
+ 				contenu="<div class='allDataBox' style='width:90px;float:none;height:"+(nombreDonnee*73+25)+"px'>";
+ 				/*if(nombreDonnee>1){
+				  contenu+="<button class='reduce' style='display:inline'> - </button>";
 				}*/
-        		 for(var i=(arrayDonnee[nomTache].length)-1, c=0; i>=c ; --i){
+        	   
+				  cloneApplication.find('.containerApplication').css('padding-top',(nombreDonnee-1)*73/2+'px');
+				
+				for(var c=nombreDonnee, i=0; i<c ; ++i){
+					contenu+= '<div class="dataBoxContainer" style="display:inline-flex">';
 					if(arrayDonnee[nomTache][i]['ext'] != 'input.txt'){
 						contenu += '<div class="dataBox donneeDataBox" name="tache0data'+numeroDonnee+'" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';				
 					}else{
 						contenu += '<input type="txt" name="tache0data'+numeroDonnee+'" class="dataBox input-sm" value="" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"/>';
-						}
-						appHeight+=73;
-						--numeroDonnee;
-				  }
+					}
 
+					//Pour l'inclinaison de hr
+					if(nombreDonnee%2 != 0){
+							contenu +='<hr style="-webkit-transform:rotate('+(Math.trunc(nombreDonnee/2)-i)*30+'deg)""></div>'
+						
+					}else{
+						if(i<nombreDonnee/2){
+							contenu +='<hr style="-webkit-transform:rotate('+(nombreDonnee/2-i)*20+'deg)""></div>'
+						}else{
+							contenu +='<hr style="-webkit-transform:rotate('+(nombreDonnee/2-1-i)*20+'deg)""></div>'
+						}
+						
+					}
+						
+						appHeight+=73;
+						++numeroDonnee;
+				}
 				
-				contenu+="</div>";
-				cloneApplication.children(".containerApplication").after(contenu);
-				cloneApplication.css('width',appHeight+'px');
+				//contenu+="</div>";
+				cloneApplication.children(".containerApplication").before(contenu);
 				cloneApplication.find('.donneeDataBox').droppable({
 				drop: function(event, ui){
 					if($(this).children().length==0){ //pour n'accepter qu'une seule donnée dans la dataBox
@@ -906,11 +928,17 @@ $(function(){
 				}
 				});
 					//Pour afficher la dataBox
-					var nbDataBox=cloneApplication.find('.allDataBox .dataBox').length;
+					var nbDataBox=cloneApplication.find('.allDataBox  .dataBoxContainer .dataBox').length;
 						setTimeout(function(){
-									cloneApplication.find('.allDataBox').children('.dataBox').css('display', 'inline-block');;//.slice(nbDataBox-pasAffichage,nbDataBox).show('slice').css('display', 'inline-block');
+							cloneApplication.find('.dataBoxContainer hr').css('display', 'inline-block');
+									cloneApplication.find('.dataBoxContainer').children('.dataBox').css('display', 'inline-block');;//.slice(nbDataBox-pasAffichage,nbDataBox).show('slice').css('display', 'inline-block');
   								}, 500);
-						
+				cloneApplication.find(".allDataBox .reduce").click(function(){
+					cloneApplication.find('.allDataBox').css('height',73+'px');
+					$(this).attr('value','+');
+					$(this).removeClass('reduce').addClass('resize');
+				});
+
 
        	}
 

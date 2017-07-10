@@ -42,9 +42,11 @@
 }
 
 .appInDock{
-	display: inline-block;
+	/*display: inline-block;*/
+	display: inline-flex;
 	margin-right: 5px; 
-	height: 64px;
+	/*height: 64px;*/
+
 }
 
 .appInDock img{
