@@ -7,13 +7,18 @@
 				$taches = $version->getTaches();
 				?>
 					<div class="appInDock runIt" id="<?php echo $applicationNooSpace->getIdApplication();?>" idVersion="<?php echo $version->getIdVersion();?>">
-						<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div>
-						<!--<div class="dataBox"></div>--><hr><!--
-						--><img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($applicationNooSpace->getUrlLogoApplication())); ?>"/><!--
-						--><hr><div class="resultBox">
-								<img src="/Images/results.png"/>
-								<div class="applicationReports hidden"></div>
-							</div>
+						<div class="containerApplication" style="display:inline-flex;">
+									<!--hr--><!--
+									-->
+									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div>
+									<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($applicationNooSpace->getUrlLogoApplication())); ?>"/>
+									<hr><div class="resultBox">
+											<img src="/Images/results.png"/>
+											<div class="applicationReports hidden"></div>
+										</div>
+								</div>
+									<div class="tachesApplication">
+									</div>
 					</div>
 				<?php }?>
 				</div>

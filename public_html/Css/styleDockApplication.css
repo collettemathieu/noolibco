@@ -65,7 +65,7 @@
 	width: 128px;
 	height: 128px;
 	top: -20px;
-	right: 90px; /* ancienne valeur 57px modifié par naoures*/
+	right: 57px; /* ancienne valeur 57px modifié par naoures*/
 	z-index: 999;
 	cursor: progress;
 }

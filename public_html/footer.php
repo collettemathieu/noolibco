@@ -37,8 +37,9 @@
 								<div class="containerApplication" style="display:inline-flex;">
 									<!--hr--><!--
 									-->
-									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div>
-									<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/><!--
+									
+									<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/>
+									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div><!--
 									--><hr><div class="resultBox">
 											<img src="/Images/results.png"/>
 											<div class="applicationReports hidden"></div>

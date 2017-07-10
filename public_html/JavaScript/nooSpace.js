@@ -895,13 +895,15 @@ $(function(){
 
 					//Pour l'inclinaison de hr
 					if(nombreDonnee%2 != 0){
-							contenu +='<hr style="-webkit-transform:rotate('+(Math.trunc(nombreDonnee/2)-i)*30+'deg)""></div>'
+							contenu +='<hr style="transform-origin:left;transform:rotate('+(Math.trunc(nombreDonnee/2)-i)*30+'deg)""></div>';
 						
 					}else{
 						if(i<nombreDonnee/2){
-							contenu +='<hr style="-webkit-transform:rotate('+(nombreDonnee/2-i)*20+'deg)""></div>'
+							contenu +='<hr style="transform-origin:left;transform:rotate('+(nombreDonnee/2-i)*30+'deg)";"></div>';
+							console.log((nombreDonnee/2-i)*20);
 						}else{
-							contenu +='<hr style="-webkit-transform:rotate('+(nombreDonnee/2-1-i)*20+'deg)""></div>'
+							contenu +='<hr style="transform-origin:left;transform:rotate('+(nombreDonnee/2-1-i)*30+'deg)";"></div>';
+							console.log((nombreDonnee/2-1-i)*20);
 						}
 						
 					}
