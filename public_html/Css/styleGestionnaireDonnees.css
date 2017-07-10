@@ -312,6 +312,6 @@ input[type="checkbox"]:checked + label{
 }
 
 .editor{
-	height: 700px;
+	height: 300px;
 	border-radius: 10px;
 }

@@ -122,6 +122,6 @@
 				<div class="tab-pane graphResult centering" id="graphResult"></div>
 				<div class="tab-pane results tableOfResults" id="tableOfResults"></div>
 				<div class="tab-pane results commentairesResult" id="commentairesResult"></div>
-				<div class="tab-pane results fileResult" id="fileResult"></div>
+				<div class="tab-pane results fileResult editor" id="fileResult"></div>
 			</div>
 		</div>

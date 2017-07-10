@@ -588,16 +588,17 @@ $(function(){
 							}
 
 							if(tableauReponse['file']){
-								reportClone.find('.fileResult').html('<div id="editor" class="editor">'+tableauReponse['file']+'</div>');
-								setTimeout(function(){
-									var editor = ace.edit("editor");
+								//reportClone.find('.fileResult').html('<div id="editor" class="editor">'+tableauReponse['file']+'</div>');
+								
+									var editor = ace.edit('fileResult');
+
 									editor.$blockScrolling = Infinity; // Remove warning
 									editor.setHighlightActiveLine(true); // Underline
+									editor.setValue("essfsfdsf dsf sdf ", 1);
 									editor.setTheme('ace/theme/monokai'); // Edit the theme
-									editor.getSession().setMode('ace/mode/javascript'); // Edit the mode
-									console.log(editor.getValue());
-								}, 1000);
-								
+									editor.getSession().setMode('ace/mode/xml'); // Edit the mode
+									editor.resize();
+									
 							}else{
 								reportClone.find('.fileResult').html('No file generated.');
 							}
