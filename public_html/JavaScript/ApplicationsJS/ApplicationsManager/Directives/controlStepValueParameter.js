@@ -24,7 +24,7 @@ application.directive('controlStepValueParameter', function(){
 					max = parseInt(scope.valeurMaxParametre);
 				if(value > 0){
 					if(typeof scope.valeurMinParametre != 'undefined' && scope.valeurMaxParametre != 'undefined'){	
-						if(value < (max - min)){
+						if(value <= (max - min)){
 							return true;
 						}else{
 							return false;

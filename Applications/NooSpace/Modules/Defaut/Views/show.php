@@ -52,7 +52,7 @@
 										<?php foreach($tabParametres as $parametre){
 											if(count($fonction->getParametres()) != 0){?>
 										
-													<li>
+													<li title="<?php echo $parametre->getDescriptionParametre(); ?>">
 														<label for="<?php echo $parametre->getNomParametre(); ?>" class="labelVariable"><?php echo $parametre->getNomParametre(); ?> :</label>
 											 			<input type="text" id="<?php echo $parametre->getNomParametre(); ?>" name="<?php echo $parametre->getIdParametre(); ?>" class="inputVariable valeurDefautParametre" value="<?php echo $parametre->getValeurDefautParametre(); ?>" readonly />
 											 			<input type="hidden" class="valeurMinParametre" value="<?php echo $parametre->getValeurMinParametre(); ?>" />
@@ -112,6 +112,7 @@
 				<li><a href="#graphResult" data-toggle="tab">Graph</a></li>
 				<li><a href="#tableOfResults" data-toggle="tab">Table of results</a></li>
 				<li><a href="#commentairesResult" data-toggle="tab">Comments</a></li>
+				<li><a href="#fileResult" data-toggle="tab">File</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active results imageResult centering" id="imageResult"></div>
@@ -121,5 +122,6 @@
 				<div class="tab-pane graphResult centering" id="graphResult"></div>
 				<div class="tab-pane results tableOfResults" id="tableOfResults"></div>
 				<div class="tab-pane results commentairesResult" id="commentairesResult"></div>
+				<div class="tab-pane results fileResult" id="fileResult"></div>
 			</div>
 		</div>

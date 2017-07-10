@@ -1859,7 +1859,7 @@ class TreeController extends \Library\BackController
 								$valeurPasParametre = $request->getPostData('valeurPasParametre');
 											
 								if($valeurMinParametre<$valeurMaxParametre){
-									if($valeurPasParametre < ($valeurMaxParametre-$valeurMinParametre)){
+									if($valeurPasParametre <= ($valeurMaxParametre-$valeurMinParametre)){
 										if($valeurDefautParametre<=$valeurMaxParametre && $valeurDefautParametre>=$valeurMinParametre){
 										
 											// On appelle le manager des typeAffichageParametre
@@ -3179,7 +3179,7 @@ class TreeController extends \Library\BackController
 								$valeurPasParametre = floatval($request->getPostData('valeurPasParametre'));
 																										
 								if($valeurMinParametre<$valeurMaxParametre){
-									if($valeurPasParametre < ($valeurMaxParametre-$valeurMinParametre)){
+									if($valeurPasParametre <= ($valeurMaxParametre-$valeurMinParametre)){
 										if($valeurDefautParametre<=$valeurMaxParametre && $valeurDefautParametre>=$valeurMinParametre){
 											
 											// On appelle le manager des typeAffichageParametre

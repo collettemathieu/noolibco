@@ -77,8 +77,8 @@
 														<ul>
 
 												<?php foreach($tabParametres as $parametre){ ?>
-															<li>
-																<label for="<?php echo $parametre->getNomParametre(); ?>" class="labelVariable"><?php echo $parametre->getNomParametre(); ?> :</label>
+															<li title="<?php echo $parametre->getDescriptionParametre(); ?>">
+																<label for="<?php echo $parametre->getNomParametre(); ?>" class="labelVariable" ><?php echo $parametre->getNomParametre(); ?> :</label>
 													 			<input type="text" id="<?php echo $parametre->getNomParametre(); ?>" name="<?php echo $parametre->getIdParametre(); ?>" class="inputVariable valeurDefautParametre" value="<?php echo $parametre->getValeurDefautParametre(); ?>" readonly />
 													 			<input type="hidden" class="valeurMinParametre" value="<?php echo $parametre->getValeurMinParametre(); ?>" />
 													 			<input type="hidden" class="valeurMaxParametre" value="<?php echo $parametre->getValeurMaxParametre(); ?>" />

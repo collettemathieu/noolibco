@@ -310,3 +310,8 @@ input[type="checkbox"]:checked + label{
 	overflow-y: auto;
 	overflow-x: hidden;
 }
+
+.editor{
+	height: 700px;
+	border-radius: 10px;
+}

@@ -3,6 +3,7 @@
 <script type="text/javascript" src="/JavaScript/Frameworks/HighchartsExportingModule.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/screenFull.min.js"></script>
 <script type="text/javascript" src="/JavaScript/Frameworks/FileSaver.min.js"></script>
+<script type="text/javascript" src="/JavaScript/Frameworks/Ace/ace.js"></script>
 
 <!-- Others libraries JS -->
 <script type="text/javascript" src="/JavaScript/nooSpace.js"></script>

@@ -503,7 +503,8 @@ $(function(){
 							tabImage = [], 
 							tabTable = [],
 							tabComments = [],
-							tabTableOfResults = [];
+							tabTableOfResults = [],
+							tabFileResults = [];
 
 						for(var i=0,c=response['resultat'].length; i<c ; ++i){
 
@@ -584,6 +585,21 @@ $(function(){
 								reportClone.find('.commentairesResult').html(tableauReponse['comments']);
 							}else{
 								reportClone.find('.commentairesResult').html('No comment generated.');
+							}
+
+							if(tableauReponse['file']){
+								reportClone.find('.fileResult').html('<div id="editor" class="editor">'+tableauReponse['file']+'</div>');
+								setTimeout(function(){
+									var editor = ace.edit("editor");
+									editor.$blockScrolling = Infinity; // Remove warning
+									editor.setHighlightActiveLine(true); // Underline
+									editor.setTheme('ace/theme/monokai'); // Edit the theme
+									editor.getSession().setMode('ace/mode/javascript'); // Edit the mode
+									console.log(editor.getValue());
+								}, 1000);
+								
+							}else{
+								reportClone.find('.fileResult').html('No file generated.');
 							}
 
 							if(tableauReponse['tableOfResults']){
