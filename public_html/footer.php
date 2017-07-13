@@ -34,7 +34,7 @@
 								
 								<!--div class="runApplication"><img src="/Images/play.ico"/></div-->
 								<!-- <div class="dataBox"></div>-->
-								<div class="containerApplication" style="display:inline-flex;">
+								<div class="containerApplication" style="display:inline;float:right;">
 									<!--hr--><!--
 									-->
 									

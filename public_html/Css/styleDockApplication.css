@@ -45,7 +45,7 @@
 	/*display: inline-block;*/
 	display: inline-flex;
 	margin-right: 5px; 
-	/*height: 64px;*/
+	height: 64px;
 
 }
 
@@ -105,6 +105,7 @@ display: inline-block;
 	border-radius: 15px;
 	vertical-align: top;
 	border: 1px grey solid;
+	overflow: hidden;
 }
 .resultBox{
 	display: none;
@@ -217,4 +218,19 @@ display: inline-block;
 	height: 25px;
 	background-color: grey;
 	cursor: default;
+}
+/*Style scrollbar*/
+::-webkit-scrollbar{
+	width:12px;
+}
+::-webkit-scrollbar-track{
+	display:none;
+}
+::-webkit-scrollbar-thumb{
+	display:none;
+}
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment{
+	display: block;
+	background-color: grey;
 }

@@ -82,7 +82,7 @@ $(function(){
       		}
       		var cloneApplication = app.clone();
       		cloneApplication.appendTo(element);
-      		cloneApplication.css('width','240px').css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX-93+'px'); // 93 pour contrer l'ajout de width:240px
+      		cloneApplication.css('width','300px').css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX-93+'px'); // 93 pour contrer l'ajout de width:240px
 	      	cloneApplication.draggable({
 				revert: false,
 				containment: '#noospace',
@@ -322,11 +322,13 @@ $(function(){
 
 							for(var i=0;i<nbrDonnee;++i){
 								if(donnees[nomTache][i]['ext']!='input.txt'){
-									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
-									console.log(cloneApplication.find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
+									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
+									console.log('here');
+									console.log(cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
 								}else{
-									formData.append('tache0data'+(i), cloneApplication.find('.dataBox:eq('+(i)+')').val());
-									console.log(cloneApplication.find('.dataBox:eq('+(i)+')').val())
+									formData.append('tache0data'+(i), cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').val());
+									console.log('here');
+									console.log(cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').val());
 								}
 							}
 							formData.append('idApplication', cloneApplication.attr('id'));
@@ -874,47 +876,58 @@ $(function(){
         		}
         } 
        function initDataBox(cloneApplication,listTypeDonnee,nomTache){
- 				var appHeight=parseInt(cloneApplication.css('height')),
- 				arrayDonnee=ArrayTacheDonnee(listTypeDonnee),
+ 				var arrayDonnee=ArrayTacheDonnee(listTypeDonnee),
  				numeroDonnee = 0,
  				nombreDonnee=arrayDonnee[nomTache].length,
- 				contenu="<div class='allDataBox' style='width:90px;float:none;height:"+(nombreDonnee*73+25)+"px'>";
+ 				pasAffichage=4;
+ 				if(nombreDonnee>pasAffichage){
+ 					contenu="<div class='allDataBox' style='width:120px;float:none;height:"+(pasAffichage*73+25)+"px;overflow-y:auto;overflow-x:hidden;direction:rtl'>";
+ 				}else{
+ 					contenu="<div class='allDataBox' style='width:90px;float:none;height:"+(nombreDonnee*73+25)+"px'>";
+ 				}
+ 				
  				if(nombreDonnee>1){
-				  contenu+="<button class='reduce' style='display:inline'value='+'/>";
+				  cloneApplication.append("<button class='reduce' style='display:inline;position:absolute;top:-30px'> - </button>");
+				  cloneApplication.append("<button class='resize' style='display:none;position:absolute;top:-30px'>+</button>");
+				 
 				}
-        	   
-				  cloneApplication.find('.containerApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
+        	   if(nombreDonnee>pasAffichage){
+        	   	  cloneApplication.find('.containerApplication').css('margin-top',(pasAffichage-1)*73/2+'px');
+				  cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(pasAffichage-1)*73/2+'px');
+        	   }else{
+        	   	  cloneApplication.find('.containerApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
 				  cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
+        	   }
+				
+				var angle= 160/nombreDonnee;
 				
 				for(var c=nombreDonnee, i=0; i<c ; ++i){
-					contenu+= '<div class="dataBoxContainer" style="display:inline-flex">';
+					contenu+= '<div class="dataBoxContainer" style="display:inline-flex;direction:ltr">';
 					if(arrayDonnee[nomTache][i]['ext'] != 'input.txt'){
 						contenu += '<div class="dataBox donneeDataBox" name="tache0data'+numeroDonnee+'" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';				
 					}else{
 						contenu += '<input type="txt" name="tache0data'+numeroDonnee+'" class="dataBox input-sm" value="" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"/>';
 					}
-
+					
 					//Pour l'inclinaison de hr
 					if(nombreDonnee%2 != 0){
-							contenu +='<hr style="transform-origin:left;transform:rotate('+(Math.trunc(nombreDonnee/2)-i)*30+'deg)""></div>';
+							contenu +='<hr style="transform-origin:left;transform:rotate('+(Math.trunc(nombreDonnee/2)-i)*angle+'deg)""></div>';
 						
 					}else{
 						if(i<nombreDonnee/2){
-							contenu +='<hr style="transform-origin:left;transform:rotate('+(nombreDonnee/2-i)*30+'deg)";"></div>';
-							console.log((nombreDonnee/2-i)*20);
+							contenu +='<hr style="transform-origin:left;transform:rotate('+(nombreDonnee/2-i)*angle+'deg)";"></div>';
+							
 						}else{
-							contenu +='<hr style="transform-origin:left;transform:rotate('+(nombreDonnee/2-1-i)*30+'deg)";"></div>';
-							console.log((nombreDonnee/2-1-i)*20);
+							contenu +='<hr style="transform-origin:left;transform:rotate('+(nombreDonnee/2-1-i)*angle+'deg)";"></div>';
+							
 						}
 						
 					}
-						
-						appHeight+=73;
 						++numeroDonnee;
 				}
-				if(nombreDonnee>1){
-					contenu+="</div>";
-				}
+				
+					contenu+="</div><hr>";
+				
 				cloneApplication.children(".containerApplication").before(contenu);
 				cloneApplication.find('.donneeDataBox').droppable({
 				drop: function(event, ui){
@@ -931,19 +944,81 @@ $(function(){
 					}
 				}
 				});
+
 					//Pour afficher la dataBox
 					var nbDataBox=cloneApplication.find('.allDataBox  .dataBoxContainer .dataBox').length;
 						setTimeout(function(){
-							cloneApplication.find('.dataBoxContainer hr').css('display', 'inline-block');
-									cloneApplication.find('.dataBoxContainer').children('.dataBox').css('display', 'inline-block');;//.slice(nbDataBox-pasAffichage,nbDataBox).show('slice').css('display', 'inline-block');
+								cloneApplication.find('.dataBoxContainer').children('.dataBox').show('slice').css('display', 'inline-block');
+								cloneApplication.find('.dataBoxContainer hr').css('display', 'inline-block');
   								}, 500);
+						var dernierSlice= 0;
+					
 
 				//Pour réduire les dataBox
-				cloneApplication.find(".allDataBox .reduce").click(function(){
-					cloneApplication.find(".allDataBox ").addClass('dataBox');
-					cloneApplication.find('.allDataBox').css('height',73+'px');
-					$(this).attr('value','-');
-					$(this).removeClass('reduce').addClass('resize');
+				cloneApplication.find(".reduce").click(function(){
+						var nbrLigne=1, nbrColumn=2,grid_tem_column='',grid_tem_ligne='';
+						cloneApplication.find(".allDataBox ").css('height',73+'px');
+						cloneApplication.find(".allDataBox ").css('width',73+'px');
+						cloneApplication.find('.dataBoxContainer hr').css('display','none');
+						cloneApplication.find(".allDataBox ").addClass('dataBox').css('display','grid');
+						cloneApplication.find('.containerApplication').css('margin-top','0px');
+						cloneApplication.find('.ajaxLoaderApplication').css('margin-top','0px');
+						cloneApplication.children('hr').css('display','inline');
+						cloneApplication.find('.allDataBox').css('overflow-y','hidden');
+						cloneApplication.find('.allDataBox').css('direction','ltr');
+						while(nombreDonnee> nbrColumn*nbrLigne){
+							if(nbrLigne<nbrColumn){
+								nbrLigne++;
+							}else{
+								nbrColumn++;
+							}
+						}
+						
+						for(var i=0; i<nbrColumn;++i){
+							grid_tem_column+= 73/nbrColumn+'px '; 
+						}
+						for(var i=0; i<nbrLigne;++i){
+							grid_tem_ligne+= 73/nbrLigne+'px '; 
+						}
+						cloneApplication.find(".allDataBox ").css('grid-template-columns',grid_tem_column);
+						cloneApplication.find(".allDataBox ").css('grid-template-rows',grid_tem_ligne);
+						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height','auto');
+						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('width',cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height'));
+						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('border-radius',15/nbrColumn+'px');
+						
+						$(this).css('display','none');
+						cloneApplication.find('.resize').css('display','inline');
+					
+					
+					
+				});
+				//Poue étendre les datatBox
+				cloneApplication.find(".resize").click(function(){
+									
+						cloneApplication.find('.dataBoxContainer hr').css('display','inline-flex');
+						cloneApplication.find(".allDataBox ").removeClass('dataBox').css('display','initial');
+						cloneApplication.find(".allDataBox ").css('width',90+'px');
+						cloneApplication.children('hr').css('display','none');
+						cloneApplication.find('.allDataBox').css('overflow-y','auto');		
+						cloneApplication.find('.allDataBox').css('direction','rtl');
+
+						if(nombreDonnee>pasAffichage){
+							cloneApplication.find('.allDataBox').css('height',(pasAffichage*73+25)+'px');
+							cloneApplication.find('.allDataBox').css('width','120px');
+							cloneApplication.find('.containerApplication').css('margin-top',(pasAffichage-1)*73/2+'px');
+						cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(pasAffichage-1)*73/2+'px');
+		 				}else{
+		 					cloneApplication.find('.allDataBox').css('height',(nombreDonnee*73+25)+'px');
+							cloneApplication.find('.allDataBox ').css('width','90px');
+							cloneApplication.find('.containerApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
+						cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
+		 				}				
+						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('width','73px');
+						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height','73px');
+						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('border-radius','15px');
+										
+						$(this).css('display','none');
+						cloneApplication.find('.reduce').css('display','inline');
 				});
 
 }
@@ -958,9 +1033,7 @@ $(function(){
 					     	});
 					     	//pour supprimer les anciennes dataBox 
 								cloneApplication.find(".allDataBox").each(function(){		
-									var width= parseInt($(this).parent().css('width'));
-										width -= 73;
-										$(this).parent().css('width',width+"px");
+										cloneApplication.children('hr').remove();
 									    $(this).remove();
 								});
 								//itialiser les nouvelles dataBox avec l'animation
