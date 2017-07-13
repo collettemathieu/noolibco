@@ -590,7 +590,7 @@ $(function(){
 							if(tableauReponse['file']){
 								//reportClone.find('.fileResult').html('<div id="editor" class="editor">'+tableauReponse['file']+'</div>');
 								
-									var editor = ace.edit('fileResult');
+									/*var editor = ace.edit('fileResult');
 
 									editor.$blockScrolling = Infinity; // Remove warning
 									editor.setHighlightActiveLine(true); // Underline
@@ -598,6 +598,28 @@ $(function(){
 									editor.setTheme('ace/theme/monokai'); // Edit the theme
 									editor.getSession().setMode('ace/mode/xml'); // Edit the mode
 									editor.resize();
+									*/
+
+
+									var codeEditor = ace.edit('fileResult');
+								    editor.setTheme('ace/theme/monokai'); // Edit the theme
+								    codeEditor.setOptions({
+								        autoScrollEditorIntoView: true,
+								        selectionStyle: "text"
+								    });
+								    //codeEditor.setStyle(style);
+								    codeEditor.getSession().setUseWorker(false);
+								    codeEditor.getSession().setMode("ace/mode/text");
+								    codeEditor.getSession().setTabSize(4);
+								    codeEditor.getSession().setUseSoftTabs(true);
+								    codeEditor.getSession().setUndoSelect(false);
+								    codeEditor.setReadOnly(true);
+								    codeEditor.$blockScrolling = Infinity;
+							        codeEditor.on("focus", function () {
+							            codeEditor.resize();
+							            codeEditor.clearSelection();
+							            codeEditor.setReadOnly(false);
+							        });
 									
 							}else{
 								reportClone.find('.fileResult').html('No file generated.');
