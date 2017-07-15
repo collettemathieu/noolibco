@@ -105,6 +105,10 @@ class DataManagerController extends \Library\BackController
 							$image = file_get_contents($donneeUtilisateur->getUrlDonneeUtilisateur());
 							$this->getPage()->addVar('image', $image);
 							$this->getPage()->addVar('typeDonnee', $typeDonnee);
+						}elseif($typeDonnee === 'xml'){
+							$dataFile = file_get_contents($donneeUtilisateur->getUrlDonneeUtilisateur());
+							$this->getPage()->addVar('dataFile', $dataFile);
+							$this->getPage()->addVar('ext', $typeDonnee);
 						}
 					}else{
 						$user->getMessageClient()->addErreur(self::DENY_HANDLE_DATA);

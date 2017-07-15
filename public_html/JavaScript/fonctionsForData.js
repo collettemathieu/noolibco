@@ -730,8 +730,11 @@ function forShowingData(element){
     // On efface la donnée précédente
     overlayAfficherDonnee.find('.tableResult table').empty();
     overlayAfficherDonnee.find('.graphResult').empty();
-    overlayAfficherDonnee.find('.row:last').empty();
+    overlayAfficherDonnee.find('.row last').empty();
+    overlayAfficherDonnee.find('.row first').empty();
+    overlayAfficherDonnee.find('.row:nth-child(2)').empty();
     overlayAfficherDonnee.find('.row:first').addClass('hidden');
+    overlayAfficherDonnee.find('.row:last').addClass('hidden');
 
     // On ouvre la fenêtre
     overlayAfficherDonnee.modal('show');
@@ -760,17 +763,19 @@ function forShowingData(element){
         }else{
             // On insère l'id de la donnée affichée
             overlayAfficherDonnee.find('#idDonneeUtilisateur').attr('value', response['idDonneeUtilisateur']);    
-        
+            
+            // Si c'est une image standard
             if(response['imageStandard']){
                 // On cache l'indicateur de chargement
                 $('#image-waiter').hide();
 
-                overlayAfficherDonnee.find('.row:last').html(response['imageStandard']);
-            }else if(response['imageDicom']){
+                overlayAfficherDonnee.find('.row:nth-child(2)').html(response['imageStandard']);
+           
+            }else if(response['imageDicom']){  // Si c'est une image DICOM
                 // On cache l'indicateur de chargement
                 $('#image-waiter').hide();
 
-                var element = overlayAfficherDonnee.find('.row:last').get(0),
+                var element = overlayAfficherDonnee.find('.row:nth-child(2)').get(0),
                     imageDicom = base64toBlob(response['imageDicom'], 'application/dicom');
                 try {
                       cornerstone.enable(element);
@@ -801,7 +806,25 @@ function forShowingData(element){
 
                     displayInformationsClient(response);
                  }
-            }else{
+            }else if(response['dataFile'] && response['ext']){// Si c'est un fichier xml
+                
+                // On cache l'indicateur de chargement
+                $('#image-waiter').hide();
+                overlayAfficherDonnee.find('.row:last').removeClass('hidden');
+                // On crée un éditor de texte
+                var element = overlayAfficherDonnee.find('.row:last'),
+                    editor = ace.edit(element[0]),
+                    fileExt = response['ext'].toLowerCase(),
+                    fileData = base64_decode(response['dataFile']);
+
+                editor.$blockScrolling = Infinity; // Remove warning
+                editor.setHighlightActiveLine(true); // Underline
+                editor.setValue(fileData, 1);
+                editor.setTheme('ace/theme/monokai'); // Edit the theme
+                editor.getSession().setMode('ace/mode/'+fileExt); // Edit the mode
+
+
+            }else{ // Si c'est une table ou un graphe
                 overlayAfficherDonnee.find('.row:first').removeClass('hidden');
                 graphData(response);
             }

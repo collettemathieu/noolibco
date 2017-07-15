@@ -51,7 +51,11 @@ class AddDataController extends \Library\BackController
 
 				// On contrôle les données présentes
 				$extensionFichier = strtolower($request->getPostData('ext'));
+				if(strlen($request->getPostData('nomFichier')) <= 4){
+					$nomFichier = $request->getPostData('nomFichier');
+				}else{
 				$nomFichier = substr($request->getPostData('nomFichier'), 0, -4);
+				}
 				$dataSent = $request->getPostData('donneeUtilisateur');
 				$sampleRateDonneeUtilisateur = (int) $request->getPostData('sampleRateDonneeUtilisateur');
 				$tailleDonneeUtilisateur = (int) $request->getPostData('tailleDonneeUtilisateur');
@@ -99,6 +103,10 @@ class AddDataController extends \Library\BackController
 											// On convertit les données JSON en tableau
 											$data = json_decode(html_entity_decode($dataSent));
 
+										break;
+
+										case 'xml':
+											$data = $dataSent;
 										break;
 										
 										default:
@@ -228,6 +236,13 @@ class AddDataController extends \Library\BackController
 					}else{
 						// On ajoute la variable d'erreurs à la page
 						$user->getMessageClient()->addErreur(self::ADD_DATA_NO_DATA_SENT);
+
+						$extensionFichier = strtolower($request->getPostData('ext'));
+				$nomFichier = substr($request->getPostData('nomFichier'), 0, -4);
+				$dataSent = $request->getPostData('donneeUtilisateur');
+				$sampleRateDonneeUtilisateur = (int) $request->getPostData('sampleRateDonneeUtilisateur');
+				$tailleDonneeUtilisateur = (int) $request->getPostData('tailleDonneeUtilisateur');
+				$tempsMinimumDonneeUtilisateur = (int) $request->getPostData('tempsMinimumDonneeUtilisateur');
 					}
 				}
 				catch(Exception $e){

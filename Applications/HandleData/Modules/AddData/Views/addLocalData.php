@@ -12,6 +12,8 @@ if($user->getMessageClient()->hasErreur()){
 	foreach($utilisateur->getDonneesUtilisateur() as $data) {
 		if($data->getTypeDonneeUtilisateur()->getExtensionTypeDonneeUtilisateur() === 'csv'){
 			$urlImage = '/Images/graph.png';
+		}elseif($data->getTypeDonneeUtilisateur()->getExtensionTypeDonneeUtilisateur() === 'xml'){
+			$urlImage = '/Images/xml.png';
 		}else{
 			if(!empty($data->getUrlMiniatureDonneeUtilisateur())){
 				$urlImage = 'data:image/png;charset=utf8;base64,'.base64_encode(file_get_contents($data->getUrlMiniatureDonneeUtilisateur()));

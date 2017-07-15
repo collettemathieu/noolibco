@@ -14,6 +14,9 @@
 					'imageDicom' => $image
 				);
 			}
+		}elseif(isset($dataFile) && isset($ext)){
+			$reponse['dataFile'] = $dataFile;
+			$reponse['ext'] = $ext;
 		}
 		$reponse['idDonneeUtilisateur'] = $idDonneeUtilisateur;
 

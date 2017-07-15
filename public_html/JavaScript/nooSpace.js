@@ -3,7 +3,13 @@ $(function(){
 
 		// Pour gérer l'affichage du gestionnaire de données
 		var overlayGestionnaireDonnees = $('#overlayGestionnaireDonnees'),
-			decalageInitiale = -parseInt(overlayGestionnaireDonnees.css('width'));
+			decalageInitiale = -parseInt(overlayGestionnaireDonnees.css('width')),
+			numberApp = 0; // Compteur du nombre d'application dans la noospace
+		tabImage = [];
+		tabTable = [];
+		tabComments = [];
+		tabTableOfResults = [];
+		tabFileResults = [];
 		dataManagerAlreadyOpened = false // Pour connaître le statut du gestionnaire de données
 		addDataAlreadyLoaded = false; // Pour éviter un envoi multiple des formulaires lors de l'ajout de données
 		overlayGestionnaireDonnees.css('display', 'inline-block').css('left', decalageInitiale+'px');
@@ -86,7 +92,7 @@ $(function(){
       		}
       		var cloneApplication = app.clone();
       		cloneApplication.appendTo(element);
-
+      		cloneApplication.attr('numApp',numberApp);numberApp+=1;// On ajoute un numéro à l'application
       		cloneApplication.css('width','240px').css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX-93+'px'); // 93 pour contrer l'ajout de width:240px
 
 	      	cloneApplication.draggable({
@@ -184,6 +190,7 @@ $(function(){
 		        callback: function(key, options) {
 		            if(key === 'delete'){
 		            	$(this).parent().remove();
+		            	numberApp -=1;
 		            }
 		            if(key === 'mule'){
 
@@ -450,6 +457,19 @@ $(function(){
 			});
 		}
 
+		// On gère lorsque la fenêtre modale se ferme - on retourne son contenu dans l'application
+		$('#resultReportApplication').on('hidden.bs.modal', function(){
+			var numberApp = parseInt($('#resultReportApplication').attr('numApp')),
+				elem;
+			$('.appInDock').each(function(){
+				if(parseInt($(this).attr('numApp')) == numberApp){
+					elem = $(this);
+				}
+			});
+			$('#resultReportApplication').find('.carousel-inner').children(':first').appendTo(elem.find('.applicationReports'));
+		});
+            			
+
 
 		// Pour lancer l'application et gérer les résultats de retour
 		function runTheMule(formData, cloneApplication){
@@ -499,12 +519,7 @@ $(function(){
 
 						// On récupère le template de rapports et on créé les tableaux de résultats
 						// Variables globales
-						var templateItemReportApplication = $('#templateItemReportApplication'),
-							tabImage = [], 
-							tabTable = [],
-							tabComments = [],
-							tabTableOfResults = [],
-							tabFileResults = [];
+						var templateItemReportApplication = $('#templateItemReportApplication');
 
 						for(var i=0,c=response['resultat'].length; i<c ; ++i){
 
@@ -588,39 +603,28 @@ $(function(){
 							}
 
 							if(tableauReponse['file']){
-								//reportClone.find('.fileResult').html('<div id="editor" class="editor">'+tableauReponse['file']+'</div>');
-								
-									/*var editor = ace.edit('fileResult');
 
-									editor.$blockScrolling = Infinity; // Remove warning
-									editor.setHighlightActiveLine(true); // Underline
-									editor.setValue("essfsfdsf dsf sdf ", 1);
-									editor.setTheme('ace/theme/monokai'); // Edit the theme
-									editor.getSession().setMode('ace/mode/xml'); // Edit the mode
-									editor.resize();
-									*/
+								var element = reportClone.find('.fileResult'),
+									editor = ace.edit(element[0]),
+									fileName = tableauReponse['file']['name'],
+									fileExt = tableauReponse['file']['ext'].toLowerCase(),
+									fileData = base64_decode(tableauReponse['file']['data']);
 
+								// On enregistre le fichiers sources
+								tabFileResults.push({
+									ext: 'xml',
+									name: fileName,
+									dataJson: tableauReponse['file']['data'],
+									sample: 1,
+									min: 1,
+									size: 1
+								});
 
-									var codeEditor = ace.edit('fileResult');
-								    editor.setTheme('ace/theme/monokai'); // Edit the theme
-								    codeEditor.setOptions({
-								        autoScrollEditorIntoView: true,
-								        selectionStyle: "text"
-								    });
-								    //codeEditor.setStyle(style);
-								    codeEditor.getSession().setUseWorker(false);
-								    codeEditor.getSession().setMode("ace/mode/text");
-								    codeEditor.getSession().setTabSize(4);
-								    codeEditor.getSession().setUseSoftTabs(true);
-								    codeEditor.getSession().setUndoSelect(false);
-								    codeEditor.setReadOnly(true);
-								    codeEditor.$blockScrolling = Infinity;
-							        codeEditor.on("focus", function () {
-							            codeEditor.resize();
-							            codeEditor.clearSelection();
-							            codeEditor.setReadOnly(false);
-							        });
-									
+								editor.$blockScrolling = Infinity; // Remove warning
+								editor.setHighlightActiveLine(true); // Underline
+								editor.setValue(fileData, 1);
+								editor.setTheme('ace/theme/monokai'); // Edit the theme
+								editor.getSession().setMode('ace/mode/'+fileExt); // Edit the mode
 							}else{
 								reportClone.find('.fileResult').html('No file generated.');
 							}
@@ -646,20 +650,19 @@ $(function(){
             				
 						}
 
-            		
             			// On gère l'affichage par la fenêtre modale
             			cloneApplication.find('.resultBox img').click(function(){
             				
             				// On affiche la fenêtre
             				$('#resultReportApplication').modal();
             				
-            				//On efface les rapports dans le carrousel des autres application s'il y a
-            				$('#carouselApplicationReport').find('.item').remove();
-            				$('#carouselApplicationReport').find('.carousel-indicators').empty();
+            				//On ajoute le numéro de l'application dont sont issues les résultats
+            				$('#resultReportApplication').attr('numApp', cloneApplication.attr('numApp'));
             				
         					// On insert les résultats de l'application
-            				$('#carouselApplicationReport').find('.carousel-inner').prepend(cloneApplication.find('.applicationReports').html());
-            				
+        					var elem = $('#carouselApplicationReport').find('.carousel-inner');
+
+            				cloneApplication.find('.applicationReports').children(':first').appendTo(elem);
             				// On gère la numérotation des onglets
             				$('#carouselApplicationReport').find('.item').each(function(index){
             					$(this).find('.tab-pane').each(function(){
@@ -681,6 +684,9 @@ $(function(){
 
 							// On retarde légèrement le traitement des données afin de permettre à la fenêtre modale de s'ouvrir
             				setTimeout(function(){
+
+        						
+								
             					// Traitement des données du caroussel
 	            				// Pour sauvegarder l'image sur ordinateur
 	            				if(tabImage.length != 0){
@@ -716,67 +722,6 @@ $(function(){
             				
 							
             			});
-
-
-
-						// On gère la sauvegarde des résultats
-						// Tous les résultats sont sauvegardés en une seule fois avec pls appels Ajax
-						$('#formSaveResult').on('submit', function(e) {
-
-							e.preventDefault();
-							
-						  try{
-						  	// On sauvegarde l'ensemble des images
-						  	for(var i=0, c=tabImage.length; i<c; ++i){
-							  	saveResult(tabImage[i]);
-							}
-
-							// On sauvegarde l'ensemble des tables
-							for(var i=0, s=tabTable.length; i<s; ++i){
-
-							  	 // On restructure les données pour avoir la forme
-					              // Time | Signal 1 | Signal 2 | ...
-					              // 0.23 | 343.34   | 4343.34  | ...
-					              var data = [],
-              							M = [];
-
-							  	// On extrait les item sélectionnés par l'utilisateur
-					              M[0] = 'Time'; // On ajoute la colonne des temps
-					              for(var k=0, c=tabTable[i].legend.length; k<c ; ++k){
-					                  M[k+1] = tabTable[i].legend[k];
-					              }
-
-					              data.push(M);
-
-					              // On extrait les données de la table
-					              for(var j=0 ; j<tabTable[i].lengthData ; ++j){
-					                  M=[];
-					                  M[0] = j/(tabTable[i].sample); // On récupère la colonne des temps
-					                  for(var k=0, len=tabTable[i].size; k<len ; ++k){
-					                      M[k+1] = tabTable[i].rawData[k][j];
-					                  }
-
-					                  data.push(M);
-					              }
-
-					              var dataJSON = JSON.stringify(data);
-					              dataJSON = dataJSON.replace('\\r', '');// Bizarement il y a un retour chariot \r qui s'insère à la fin de la légende avec le JSON.stringify. On le retire.
-					              tabTable[i].dataJson = dataJSON;
-							  	saveResult(tabTable[i]);
-							}
-
-
-						  }
-						  catch(e){
-						      var response = {
-						          'erreurs': '<p>A system error has occurred: '+e+'</p>'
-						      };
-
-						      displayInformationsClient(response);
-
-						  }
-						});
-						// Fin de la sauvegarde des résultats
 					}else{
 						if(response['erreurs']){
 							displayInformationsClient(response);
@@ -814,8 +759,73 @@ $(function(){
 			});
 		}
 
+		// On gère la sauvegarde des résultats
+		// Tous les résultats sont sauvegardés en une seule fois avec pls appels Ajax
+		$('#formSaveResult').on('submit', function(e) {
+
+			e.preventDefault();
+			
+		  try{
+		  	// On sauvegarde l'ensemble des images
+		  	for(var i=0, a=tabImage.length; i<a; ++i){
+			  	saveResult(tabImage[i]);
+			}
+
+			// On sauvegarde l'ensemble des fichiers
+		  	for(var i=0, b=tabFileResults.length; i<b; ++i){
+			  	saveResult(tabFileResults[i]);
+			}
+
+			// On sauvegarde l'ensemble des tables
+			for(var i=0, s=tabTable.length; i<s; ++i){
+
+			  	 // On restructure les données pour avoir la forme
+	              // Time | Signal 1 | Signal 2 | ...
+	              // 0.23 | 343.34   | 4343.34  | ...
+	              var data = [],
+							M = [];
+
+			  	// On extrait les item sélectionnés par l'utilisateur
+	              M[0] = 'Time'; // On ajoute la colonne des temps
+	              for(var k=0, c=tabTable[i].legend.length; k<c ; ++k){
+	                  M[k+1] = tabTable[i].legend[k];
+	              }
+
+	              data.push(M);
+
+	              // On extrait les données de la table
+	              for(var j=0 ; j<tabTable[i].lengthData ; ++j){
+	                  M=[];
+	                  M[0] = j/(tabTable[i].sample); // On récupère la colonne des temps
+	                  for(var k=0, len=tabTable[i].size; k<len ; ++k){
+	                      M[k+1] = tabTable[i].rawData[k][j];
+	                  }
+
+	                  data.push(M);
+	              }
+
+	              var dataJSON = JSON.stringify(data);
+	              dataJSON = dataJSON.replace('\\r', '');// Bizarement il y a un retour chariot \r qui s'insère à la fin de la légende avec le JSON.stringify. On le retire.
+	              tabTable[i].dataJson = dataJSON;
+			  	saveResult(tabTable[i]);
+			}
+
+
+		  }
+		  catch(e){
+		      var response = {
+		          'erreurs': '<p>A system error has occurred: '+e+'</p>'
+		      };
+
+		      displayInformationsClient(response);
+
+		  }
+		});
+		// Fin de la sauvegarde des résultats
+
 		// Pour sauvegarder un résultat dans le gestionnaire de données
 		function saveResult(result){
+			
 			var form = new FormData();
 		    form.append('ext', result.ext);
 		    form.append('nomFichier', result.name);
@@ -843,6 +853,7 @@ $(function(){
 	          processData: false,
 	          success: function(response) {
 	            try{
+	            	
 	              var response = JSON.parse(response);
 	            }
 	            catch(e){
@@ -996,3 +1007,76 @@ $(function(){
 		});
 	}
 });
+
+function base64_decode (encodedData) { // eslint-disable-line camelcase
+  //  discuss at: http://locutus.io/php/base64_decode/
+  // original by: Tyler Akins (http://rumkin.com)
+  // improved by: Thunder.m
+  // improved by: Kevin van Zonneveld (http://kvz.io)
+  // improved by: Kevin van Zonneveld (http://kvz.io)
+  //    input by: Aman Gupta
+  //    input by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
+  // bugfixed by: Pellentesque Malesuada
+  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
+  // improved by: Indigo744
+  //   example 1: base64_decode('S2V2aW4gdmFuIFpvbm5ldmVsZA==')
+  //   returns 1: 'Kevin van Zonneveld'
+  //   example 2: base64_decode('YQ==')
+  //   returns 2: 'a'
+  //   example 3: base64_decode('4pyTIMOgIGxhIG1vZGU=')
+  //   returns 3: '✓ à la mode'
+  // decodeUTF8string()
+  // Internal function to decode properly UTF8 string
+  // Adapted from Solution #1 at https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding
+  var decodeUTF8string = function (str) {
+    // Going backwards: from bytestream, to percent-encoding, to original string.
+    return decodeURIComponent(str.split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''))
+  }
+  if (typeof window !== 'undefined') {
+    if (typeof window.atob !== 'undefined') {
+      return decodeUTF8string(window.atob(encodedData));
+    }
+  } else {
+    return new Buffer(encodedData, 'base64').toString('utf-8');
+  }
+  var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+  var o1;
+  var o2;
+  var o3;
+  var h1;
+  var h2;
+  var h3;
+  var h4;
+  var bits;
+  var i = 0;
+  var ac = 0;
+  var dec = '';
+  var tmpArr = [];
+  if (!encodedData) {
+    return encodedData;
+  }
+  encodedData += '';
+  do {
+    // unpack four hexets into three octets using index points in b64
+    h1 = b64.indexOf(encodedData.charAt(i++));
+    h2 = b64.indexOf(encodedData.charAt(i++));
+    h3 = b64.indexOf(encodedData.charAt(i++));
+    h4 = b64.indexOf(encodedData.charAt(i++));
+    bits = h1 << 18 | h2 << 12 | h3 << 6 | h4;
+    o1 = bits >> 16 & 0xff;
+    o2 = bits >> 8 & 0xff;
+    o3 = bits & 0xff;
+    if (h3 === 64) {
+      tmpArr[ac++] = String.fromCharCode(o1);
+    } else if (h4 === 64) {
+      tmpArr[ac++] = String.fromCharCode(o1, o2);
+    } else {
+      tmpArr[ac++] = String.fromCharCode(o1, o2, o3);
+    }
+  } while (i < encodedData.length)
+  dec = tmpArr.join('');
+  return decodeUTF8string(dec.replace(/\0+$/, ''));
+}

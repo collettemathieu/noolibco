@@ -76,7 +76,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -368,7 +368,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -525,7 +525,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -673,7 +673,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -767,7 +767,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -912,7 +912,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -977,7 +977,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -1134,7 +1134,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -1407,7 +1407,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -1610,7 +1610,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -1823,7 +1823,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -2043,7 +2043,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -2212,7 +2212,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -2386,7 +2386,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -2583,7 +2583,7 @@ class TreeController extends \Library\BackController
 					// On ajoute le créateur comme ID autorisé
 					array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 					foreach($application->getAuteurs() as $auteur){
-						$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+						$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 						if($utilisateur){
 							array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 						}
@@ -2694,7 +2694,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -2904,7 +2904,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -3140,7 +3140,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}
@@ -3324,7 +3324,7 @@ class TreeController extends \Library\BackController
 				// On ajoute le créateur comme ID autorisé
 				array_push($idAuteursAutorises, $application->getCreateur()->getIdUtilisateur());
 				foreach($application->getAuteurs() as $auteur){
-					$utilisateur = $managerUtilisateur->getUtilisateurById($auteur->getIdAuteur());
+					$utilisateur = $managerUtilisateur->getUtilisateurByMail($auteur->getMailAuteur());
 					if($utilisateur){
 						array_push($idAuteursAutorises, $utilisateur->getIdUtilisateur());
 					}

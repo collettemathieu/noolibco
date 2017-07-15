@@ -256,6 +256,7 @@
 				</div>
 			</div>
 			<div class="row text-center"></div>
+			<div class="row editor"></div>
 	      </div>
 	    </div>
 	  </div>
