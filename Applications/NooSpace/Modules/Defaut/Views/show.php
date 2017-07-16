@@ -95,19 +95,14 @@
 						</div>
 						<div class="image-waiter" id="image-result-waiter"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading data...</div>
 					</div>
-					<div class="modal-body">
-						<div id="carouselApplicationReport" class="carousel slide">
-							<ol class="carousel-indicators"></ol>
-							<div class="carousel-inner"></div>
-						</div>
-					</div>
+					<div class="modal-body" id="carouselApplicationReport"></div>
 				</div>
 			</div>
 		</div>
 
 		<div class="hidden item" id="templateItemReportApplication">
 			<ul class="nav nav-pills">
-				<li class="active"><a href="#imageResult" data-toggle="tab">Image</a></li>
+				<li><a href="#imageResult" data-toggle="tab">Image</a></li>
 				<li><a href="#tableResult" data-toggle="tab">Table</a></li>
 				<li><a href="#graphResult" data-toggle="tab">Graph</a></li>
 				<li><a href="#tableOfResults" data-toggle="tab">Table of results</a></li>
@@ -115,7 +110,7 @@
 				<li><a href="#fileResult" data-toggle="tab">File</a></li>
 			</ul>
 			<div class="tab-content">
-				<div class="tab-pane active results imageResult centering" id="imageResult"></div>
+				<div class="tab-pane results imageResult centering" id="imageResult"></div>
 				<div class="tab-pane results tableResult" id="tableResult">
 					<table class="table table-bordered table-striped table-condensed"></table>
 				</div>

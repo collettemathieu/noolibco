@@ -4,19 +4,18 @@ $(function(){
 		// Pour gérer l'affichage du gestionnaire de données
 		var overlayGestionnaireDonnees = $('#overlayGestionnaireDonnees'),
 			decalageInitiale = -parseInt(overlayGestionnaireDonnees.css('width')),
-			numberApp = 0; // Compteur du nombre d'application dans la noospace
-		tabImage = [];
-		tabTable = [];
-		tabComments = [];
-		tabTableOfResults = [];
-		tabFileResults = [];
+			numberApp = 0, // Compteur du nombre d'application dans la noospace
+			tabImage = [],
+			tabTable = [],
+			tabComments = [],
+			tabTableOfResults = [],
+			tabFileResults = [];
 		dataManagerAlreadyOpened = false // Pour connaître le statut du gestionnaire de données
 		addDataAlreadyLoaded = false; // Pour éviter un envoi multiple des formulaires lors de l'ajout de données
 		overlayGestionnaireDonnees.css('display', 'inline-block').css('left', decalageInitiale+'px');
 		$('#boutonShowGestionnaireDonnees').on('click', openGestionnaireDonnees);
 		// Pour gérer l'affichage de la mule
 		$('#laMule').hide();
-
 
 		// On contrôle s'il y a une application déjà présente, dans ce cas on la déploie
 		if($('#noospace .runIt').length !=0){
@@ -121,6 +120,7 @@ $(function(){
   			
 	      	// Pour receuillir les données dans la dataBox de l'application
 	      	cloneApplication.children('.dataBox').droppable({
+	      		accept: '.donneeUser',
 	      		drop: function(event, ui){
 	      			var positionSourisX = event.clientX,
 	      			largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
@@ -189,8 +189,12 @@ $(function(){
 		    	selector: '.imageApplication',
 		        callback: function(key, options) {
 		            if(key === 'delete'){
+		            	var numeroApp = cloneApplication.attr('numApp');
 		            	$(this).parent().remove();
-		            	numberApp -=1;
+		            	tabImage[numeroApp] = [];
+						tabTable[numeroApp] = [];
+						tabFileResults[numeroApp] = [];
+						console.log(tabImage);
 		            }
 		            if(key === 'mule'){
 
@@ -459,14 +463,19 @@ $(function(){
 
 		// On gère lorsque la fenêtre modale se ferme - on retourne son contenu dans l'application
 		$('#resultReportApplication').on('hidden.bs.modal', function(){
-			var numberApp = parseInt($('#resultReportApplication').attr('numApp')),
+			var numApp = parseInt($('#resultReportApplication').attr('numApp')),
 				elem;
 			$('.appInDock').each(function(){
-				if(parseInt($(this).attr('numApp')) == numberApp){
+				if(parseInt($(this).attr('numApp')) == numApp){
 					elem = $(this);
 				}
 			});
-			$('#resultReportApplication').find('.carousel-inner').children(':first').appendTo(elem.find('.applicationReports'));
+
+			$('#resultReportApplication').find('.applicationReports').addClass('hidden');
+			$('#resultReportApplication').find('.applicationReports').appendTo(elem.find('.resultBox'));
+			
+			//On vide le caroussel de son contenu
+			$('#carouselApplicationReport').empty();
 		});
             			
 
@@ -485,6 +494,8 @@ $(function(){
 				success: function(response) {
 					
 					console.log(response);
+
+					var numeroApp = cloneApplication.attr('numApp');
 					// Pour réinitialiser le message d'attente du bouton
 					$('#formMule').find('button:last').button('reset');
 
@@ -496,6 +507,9 @@ $(function(){
 
 					// On efface le rapport précédent
 					cloneApplication.find('.applicationReports').empty();
+					tabImage[numeroApp] = [];
+					tabTable[numeroApp] = [];
+					tabFileResults[numeroApp] = [];
 
 					try{
 						response = JSON.parse(response);
@@ -532,11 +546,28 @@ $(function(){
 								};
 								displayInformationsClient(response);
 							}
-							// On créé un nouveau rapport de résultat
-							var	reportClone = templateItemReportApplication.clone();
+							// On créé un nouveau rapport de résultats
+							var	reportClone = templateItemReportApplication.clone(),
+								numeroRand = Math.floor(Math.random()*100);
 							reportClone.removeAttr('id');
 							reportClone.removeClass('hidden');
-							if(i==0){reportClone.addClass('active');}
+
+							// On renomme l'ensemble des onglet
+							var elemA =reportClone.find('a'),
+								elemPan = reportClone.find('.tab-pane');
+							elemA[0].href = '#imageResult'+numeroApp+numeroRand;
+							elemA[1].href = '#tableResult'+numeroApp+numeroRand;
+							elemA[2].href = '#graphResult'+numeroApp+numeroRand;
+							elemA[3].href = '#tableOfResults'+numeroApp+numeroRand;
+							elemA[4].href = '#commentairesResult'+numeroApp+numeroRand;
+							elemA[5].href = '#fileResult'+numeroApp+numeroRand;
+
+							elemPan[0].id = 'imageResult'+numeroApp+numeroRand;
+							elemPan[1].id = 'tableResult'+numeroApp+numeroRand;
+							elemPan[2].id = 'graphResult'+numeroApp+numeroRand;
+							elemPan[3].id = 'tableOfResults'+numeroApp+numeroRand;
+							elemPan[4].id = 'commentairesResult'+numeroApp+numeroRand;
+							elemPan[5].id = 'fileResult'+numeroApp+numeroRand;
 							
 							if(tableauReponse['image']){
 
@@ -546,7 +577,7 @@ $(function(){
 								imageResult.append(image);
 
 								// On enregistre la donnée image
-								tabImage.push({
+								tabImage[numeroApp].push({
 									ext: 'png',
 									name: 'no name',
 									rawData: tableauReponse['image'],
@@ -557,7 +588,8 @@ $(function(){
 									size: 1
 								});
 							}else{
-								reportClone.find('.imageResult').html('No picture generated.');
+								reportClone.find('.imageResult').remove();
+								reportClone.find('li:first').remove();
 							}
 
 							if(tableauReponse['table']){
@@ -572,7 +604,7 @@ $(function(){
 						            tableData(txtReader, reportClone);
 
 						            // On enregistre la donnée table
-						            tabTable.push({
+						            tabTable[numeroApp].push({
 										ext: 'csv',
 										name: 'no name',
 										rawData: tableauReponse['table']['data'],
@@ -592,41 +624,10 @@ $(function(){
 						        }
 
 							}else{
-								reportClone.find('.tableResult').html('No table generated.');
-								reportClone.find('.graphResult').html('No graph generated.');
-							}
-
-							if(tableauReponse['comments']){
-								reportClone.find('.commentairesResult').html(tableauReponse['comments']);
-							}else{
-								reportClone.find('.commentairesResult').html('No comment generated.');
-							}
-
-							if(tableauReponse['file']){
-
-								var element = reportClone.find('.fileResult'),
-									editor = ace.edit(element[0]),
-									fileName = tableauReponse['file']['name'],
-									fileExt = tableauReponse['file']['ext'].toLowerCase(),
-									fileData = base64_decode(tableauReponse['file']['data']);
-
-								// On enregistre le fichiers sources
-								tabFileResults.push({
-									ext: 'xml',
-									name: fileName,
-									dataJson: tableauReponse['file']['data'],
-									sample: 1,
-									min: 1,
-									size: 1
-								});
-
-								editor.$blockScrolling = Infinity; // Remove warning
-								editor.setHighlightActiveLine(true); // Underline
-								editor.setValue(fileData, 1);
-								editor.setTheme('ace/theme/monokai'); // Edit the theme
-								editor.getSession().setMode('ace/mode/'+fileExt); // Edit the mode
-							}else{
-								reportClone.find('.fileResult').html('No file generated.');
+								reportClone.find('.tableResult').remove();
+								reportClone.find('.graphResult').remove();
+								$(elemA[1]).parent().remove();
+								$(elemA[2]).parent().remove();
 							}
 
 							if(tableauReponse['tableOfResults']){
@@ -642,10 +643,48 @@ $(function(){
 									bodyTable.append('<td>'+tableauReponse['tableOfResults'][id]+'</td>');
 								}
 							}else{
-								reportClone.find('.tableOfResults').html('No result generated.');
+								reportClone.find('.tableOfResults').remove();
+								$(elemA[3]).parent().remove();
+							}
+
+							if(tableauReponse['comments']){
+								reportClone.find('.commentairesResult').html(tableauReponse['comments']);
+							}else{
+								reportClone.find('.commentairesResult').remove();
+								$(elemA[4]).parent().remove();
+							}
+
+							if(tableauReponse['file']){
+
+								var element = reportClone.find('.fileResult'),
+									editor = ace.edit(element[0]),
+									fileName = tableauReponse['file']['name'],
+									fileExt = tableauReponse['file']['ext'].toLowerCase(),
+									fileData = base64_decode(tableauReponse['file']['data']);
+
+								// On enregistre le fichiers sources
+								tabFileResults[numeroApp].push({
+									ext: 'xml',
+									name: fileName,
+									dataJson: tableauReponse['file']['data'],
+									sample: 1,
+									min: 1,
+									size: 1
+								});
+
+								editor.$blockScrolling = Infinity; // Remove warning
+								editor.setHighlightActiveLine(true); // Underline
+								editor.setValue(fileData, 1);
+								editor.setTheme('ace/theme/monokai'); // Edit the theme
+								editor.getSession().setMode('ace/mode/'+fileExt); // Edit the mode
+							}else{
+								reportClone.find('.fileResult').remove();
+								$(elemA[5]).parent().remove();
 							}
 
 							// On insert le nouveau rapport d'activité dans la box de résultats
+							reportClone.find('li:first').addClass('active');
+							reportClone.find('.tab-pane:first').addClass('active');
             				reportClone.appendTo(cloneApplication.find('.applicationReports'));
             				
 						}
@@ -658,64 +697,47 @@ $(function(){
             				
             				//On ajoute le numéro de l'application dont sont issues les résultats
             				$('#resultReportApplication').attr('numApp', cloneApplication.attr('numApp'));
-            				
+            			
         					// On insert les résultats de l'application
-        					var elem = $('#carouselApplicationReport').find('.carousel-inner');
-
-            				cloneApplication.find('.applicationReports').children(':first').appendTo(elem);
-            				// On gère la numérotation des onglets
-            				$('#carouselApplicationReport').find('.item').each(function(index){
-            					$(this).find('.tab-pane').each(function(){
-            						$(this).attr('id', $(this).attr('id')+index);
-            					});
-            					$(this).find('a').each(function(){
-            						$(this).attr('href', $(this).attr('href')+index);
-            					});
-            					
-            					if(index == 0){
-            						var carouselIndicators = '<li data-target="#carouselApplicationReport" data-slide-to="'+index+'" class="active">';
-            					}else{
-            						var carouselIndicators = '<li data-target="#carouselApplicationReport" data-slide-to="'+index+'">';
-            					}
-            					$('#carouselApplicationReport').find('.carousel-indicators').append(carouselIndicators);
-		
-            				});
-
-
+        					cloneApplication.find('.applicationReports').removeClass('hidden');
+            				cloneApplication.find('.applicationReports').appendTo($('#carouselApplicationReport'));
+            				
 							// On retarde légèrement le traitement des données afin de permettre à la fenêtre modale de s'ouvrir
             				setTimeout(function(){
 
-        						
-								
             					// Traitement des données du caroussel
 	            				// Pour sauvegarder l'image sur ordinateur
-	            				if(tabImage.length != 0){
+	            				if(tabImage[numeroApp].length != 0){
 		            				$('#carouselApplicationReport').find('.imageResult').each(function(index, e){
+			            				
 			            				$(e).click(function(){
-			            					
-			            					var blob = base64toBlob(tabImage[index]['rawData'], 'image/png'),
-												nombre = Math.floor(Math.random()*1000+1),
-												fileName = 'Picture_generated_by_NooLib_'+nombre+'.png';
-											saveAs(blob, fileName);
+			            					if(tabImage[numeroApp][index]){
+				            					var blob = base64toBlob(tabImage[numeroApp][index]['rawData'], 'image/png'),
+													nombre = Math.floor(Math.random()*1000+1),
+													fileName = 'Picture_generated_by_NooLib_'+nombre+'.png';
+												saveAs(blob, fileName);
+											}
 			            				});
 			            			});
 	            				}
 	            				
-		            			if(tabTable.length != 0){
+		            			if(tabTable[numeroApp].length != 0){
 		            				$('#carouselApplicationReport').find('.tableResult').each(function(index, e){
 		            					
 										// Création du graphe
-								        graphLocalData(tabTable[index]['data'], 15000, $(e).parent());
+										if(tabTable[numeroApp][index]){
+									        graphLocalData(tabTable[numeroApp][index]['data'], 15000, $(e).parent());
 
-								        // Pour sauvegarder la table sur ordinateur au format csv
-		            					$(e).click(function(){
+									        // Pour sauvegarder la table sur ordinateur au format csv
+			            					$(e).click(function(){
 
-			            					var stringCSV = tableToCSV(tabTable[index]['legend'], tabTable[index]['rawData']),
-			            						blob =  new Blob([stringCSV], {type: "text/csv;charset=utf-8"}),
-												nombre = Math.floor(Math.random()*1000+1),
-												fileName = 'Table_generated_by_NooLib_'+nombre+'.csv';
-											saveAs(blob, fileName);
-			            				});
+				            					var stringCSV = tableToCSV(tabTable[numeroApp][index]['legend'], tabTable[numeroApp][index]['rawData']),
+				            						blob =  new Blob([stringCSV], {type: "text/csv;charset=utf-8"}),
+													nombre = Math.floor(Math.random()*1000+1),
+													fileName = 'Table_generated_by_NooLib_'+nombre+'.csv';
+												saveAs(blob, fileName);
+				            				});
+			            				}
 		            				});
 		            			}
             				},400);
@@ -764,20 +786,21 @@ $(function(){
 		$('#formSaveResult').on('submit', function(e) {
 
 			e.preventDefault();
+			var numApp = parseInt($('#resultReportApplication').attr('numApp'));
 			
 		  try{
 		  	// On sauvegarde l'ensemble des images
-		  	for(var i=0, a=tabImage.length; i<a; ++i){
-			  	saveResult(tabImage[i]);
+		  	for(var i=0, a=tabImage[numApp].length; i<a; ++i){
+			  	saveResult(tabImage[numApp][i]);
 			}
 
 			// On sauvegarde l'ensemble des fichiers
-		  	for(var i=0, b=tabFileResults.length; i<b; ++i){
-			  	saveResult(tabFileResults[i]);
+		  	for(var i=0, b=tabFileResults[numApp].length; i<b; ++i){
+			  	saveResult(tabFileResults[numApp][i]);
 			}
 
 			// On sauvegarde l'ensemble des tables
-			for(var i=0, s=tabTable.length; i<s; ++i){
+			for(var i=0, s=tabTable[numApp].length; i<s; ++i){
 
 			  	 // On restructure les données pour avoir la forme
 	              // Time | Signal 1 | Signal 2 | ...
@@ -787,18 +810,18 @@ $(function(){
 
 			  	// On extrait les item sélectionnés par l'utilisateur
 	              M[0] = 'Time'; // On ajoute la colonne des temps
-	              for(var k=0, c=tabTable[i].legend.length; k<c ; ++k){
-	                  M[k+1] = tabTable[i].legend[k];
+	              for(var k=0, c=tabTable[numApp][i].legend.length; k<c ; ++k){
+	                  M[k+1] = tabTable[numApp][i].legend[k];
 	              }
 
 	              data.push(M);
 
 	              // On extrait les données de la table
-	              for(var j=0 ; j<tabTable[i].lengthData ; ++j){
+	              for(var j=0 ; j<tabTable[numApp][i].lengthData ; ++j){
 	                  M=[];
-	                  M[0] = j/(tabTable[i].sample); // On récupère la colonne des temps
-	                  for(var k=0, len=tabTable[i].size; k<len ; ++k){
-	                      M[k+1] = tabTable[i].rawData[k][j];
+	                  M[0] = j/(tabTable[numApp][i].sample); // On récupère la colonne des temps
+	                  for(var k=0, len=tabTable[numApp][i].size; k<len ; ++k){
+	                      M[k+1] = tabTable[numApp][i].rawData[k][j];
 	                  }
 
 	                  data.push(M);
@@ -806,8 +829,8 @@ $(function(){
 
 	              var dataJSON = JSON.stringify(data);
 	              dataJSON = dataJSON.replace('\\r', '');// Bizarement il y a un retour chariot \r qui s'insère à la fin de la légende avec le JSON.stringify. On le retire.
-	              tabTable[i].dataJson = dataJSON;
-			  	saveResult(tabTable[i]);
+	              tabTable[numApp][i].dataJson = dataJSON;
+			  	saveResult(tabTable[numApp][i]);
 			}
 
 

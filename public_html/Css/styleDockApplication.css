@@ -164,8 +164,8 @@
 	display: inline-block;
 }
 
-.carousel-control.left, .carousel-control.right {
-    background-image: none
+.item{
+	margin-bottom: 20px;
 }
 
 #resultReportApplication .modal-dialog{
@@ -174,23 +174,4 @@
 
 #image-result-waiter{
 	display: none;
-}
-
-.carousel-indicators {
-	position: absolute;
-	height: 20px;
-	top: -50px;
-}
-.carousel-indicators li{
-	width: 25px;
-	height: 25px;
-	background-color: rgb(200, 200, 200);
-	margin: 0;
-    list-style: none;
-}
-.carousel-indicators .active{
-	width: 25px;
-	height: 25px;
-	background-color: grey;
-	cursor: default;
 }
