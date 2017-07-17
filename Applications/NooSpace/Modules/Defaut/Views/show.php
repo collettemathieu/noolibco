@@ -102,21 +102,20 @@
 
 		<div class="hidden item" id="templateItemReportApplication">
 			<ul class="nav nav-pills">
-				<li><a href="#imageResult" data-toggle="tab">Image</a></li>
-				<li><a href="#tableResult" data-toggle="tab">Table</a></li>
-				<li><a href="#graphResult" data-toggle="tab">Graph</a></li>
-				<li><a href="#tableOfResults" data-toggle="tab">Table of results</a></li>
-				<li><a href="#commentairesResult" data-toggle="tab">Comments</a></li>
-				<li><a href="#fileResult" data-toggle="tab">File</a></li>
+				<li><a href="#table2D" data-toggle="tab">Table</a></li>
+				<li><a href="#graph" data-toggle="tab">Graph</a></li>
+				<li><a href="#results" data-toggle="tab">Results</a></li>
+				<li><a href="#comments" data-toggle="tab">Comments</a></li>
 			</ul>
 			<div class="tab-content">
-				<div class="tab-pane results imageResult centering" id="imageResult"></div>
-				<div class="tab-pane results tableResult" id="tableResult">
-					<table class="table table-bordered table-striped table-condensed"></table>
+				<div class="tab-pane results table2D" id="table2D"></div>
+				<div class="tab-pane centering" id="graph">
+					<div class="graphResult"></div>
+					<div class="tableResult">
+						<table class="table table-bordered table-striped table-condensed"></table>
+					</div>
 				</div>
-				<div class="tab-pane graphResult centering" id="graphResult"></div>
-				<div class="tab-pane results tableOfResults" id="tableOfResults"></div>
-				<div class="tab-pane results commentairesResult" id="commentairesResult"></div>
-				<div class="tab-pane results fileResult editor" id="fileResult"></div>
+				<div class="tab-pane results tableOfResults" id="results"></div>
+				<div class="tab-pane results commentsResult" id="comments"></div>
 			</div>
 		</div>

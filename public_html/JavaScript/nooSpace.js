@@ -6,7 +6,7 @@ $(function(){
 			decalageInitiale = -parseInt(overlayGestionnaireDonnees.css('width')),
 			numberApp = 0, // Compteur du nombre d'application dans la noospace
 			tabImage = [],
-			tabTable = [],
+			tabGraph = [],
 			tabComments = [],
 			tabTableOfResults = [],
 			tabFileResults = [];
@@ -192,7 +192,7 @@ $(function(){
 		            	var numeroApp = cloneApplication.attr('numApp');
 		            	$(this).parent().remove();
 		            	tabImage[numeroApp] = [];
-						tabTable[numeroApp] = [];
+						tabGraph[numeroApp] = [];
 						tabFileResults[numeroApp] = [];
 						console.log(tabImage);
 		            }
@@ -508,7 +508,7 @@ $(function(){
 					// On efface le rapport précédent
 					cloneApplication.find('.applicationReports').empty();
 					tabImage[numeroApp] = [];
-					tabTable[numeroApp] = [];
+					tabGraph[numeroApp] = [];
 					tabFileResults[numeroApp] = [];
 
 					try{
@@ -554,60 +554,73 @@ $(function(){
 
 							// On renomme l'ensemble des onglet
 							var elemA =reportClone.find('a'),
-								elemPan = reportClone.find('.tab-pane');
-							elemA[0].href = '#imageResult'+numeroApp+numeroRand;
-							elemA[1].href = '#tableResult'+numeroApp+numeroRand;
-							elemA[2].href = '#graphResult'+numeroApp+numeroRand;
-							elemA[3].href = '#tableOfResults'+numeroApp+numeroRand;
-							elemA[4].href = '#commentairesResult'+numeroApp+numeroRand;
-							elemA[5].href = '#fileResult'+numeroApp+numeroRand;
+								elemPan = reportClone.find('.tab-pane'),
+								nav = reportClone.find('.nav'),
+								content = reportClone.find('.tab-content');
+							elemA[0].href = '#table2D'+numeroApp+numeroRand;
+							//elemA[1].href = '#tableResult'+numeroApp+numeroRand;
+							elemA[1].href = '#graph'+numeroApp+numeroRand;
+							elemA[2].href = '#results'+numeroApp+numeroRand;
+							elemA[3].href = '#comments'+numeroApp+numeroRand;
+							//elemA[5].href = '#fileResult'+numeroApp+numeroRand;
 
-							elemPan[0].id = 'imageResult'+numeroApp+numeroRand;
-							elemPan[1].id = 'tableResult'+numeroApp+numeroRand;
-							elemPan[2].id = 'graphResult'+numeroApp+numeroRand;
-							elemPan[3].id = 'tableOfResults'+numeroApp+numeroRand;
-							elemPan[4].id = 'commentairesResult'+numeroApp+numeroRand;
-							elemPan[5].id = 'fileResult'+numeroApp+numeroRand;
+							elemPan[0].id = 'table2D'+numeroApp+numeroRand;
+							//elemPan[1].id = 'tableResult'+numeroApp+numeroRand;
+							elemPan[1].id = 'graph'+numeroApp+numeroRand;
+							elemPan[2].id = 'results'+numeroApp+numeroRand;
+							elemPan[3].id = 'comments'+numeroApp+numeroRand;
+							//elemPan[5].id = 'fileResult'+numeroApp+numeroRand;
 							
-							if(tableauReponse['image']){
-
-								var image = new Image(),
-								imageResult = reportClone.find('.imageResult');
-								image.src = 'data:image/png;base64,'+tableauReponse['image'];
-								imageResult.append(image);
-
-								// On enregistre la donnée image
-								tabImage[numeroApp].push({
-									ext: 'png',
-									name: 'no name',
-									rawData: tableauReponse['image'],
-									dataJson: 'data:image/png;base64,'+tableauReponse['image'],
-									data: 'data:image/png;base64,'+tableauReponse['image'],
-									sample: 1,
-									min: 1,
-									size: 1
-								});
+							if(tableauReponse['table']){
+								// A créer
+								reportClone.find('.table2D').remove();
+								$(elemA[0]).parent().remove();
 							}else{
-								reportClone.find('.imageResult').remove();
-								reportClone.find('li:first').remove();
+								reportClone.find('.table2D').remove();
+								$(elemA[0]).parent().remove();	
 							}
 
-							if(tableauReponse['table']){
+							if(tableauReponse['images']){
+
+								var images = tableauReponse['image'];
+
+								for(var i=0, lenImages = images.length; i<lenImages; ++i){
+									var image = new Image(),
+										randomNumberImage = Math.floor(Math.random()*100);
+									
+									image.src = 'data:image/'+tableauReponse['image'][i][ext]+';base64,'+tableauReponse['image'][i][data];
+									nav.append('<li><a href="#image'+numeroApp+randomNumberImage+'" data-toggle="tab">'+tableauReponse['image'][i][name]+'.'+tableauReponse['image'][i][ext]+'</a></li>');
+									content.append('<div class="tab-pane results imageResult centering" id="image'+numeroApp+randomNumberImage+'">'+image+'</div>');
+									
+									// On enregistre la donnée image
+									tabImage[numeroApp].push({
+										ext: tableauReponse['image'][i][ext],
+										name: tableauReponse['image'][i][name],
+										rawData: tableauReponse['image'][i][data],
+										dataJson: 'data:image/'+tableauReponse['image'][i][ext]+';base64,'+tableauReponse['image'],
+										data: 'data:image/'+tableauReponse['image'][i][ext]+';base64,'+tableauReponse['image'],
+										sample: 1,
+										min: 1,
+										size: 1
+									});
+								}
+							}
+							if(tableauReponse['graph']){
 
 								// Création de l'objet TxtReader à partir des données
 					            var txtReader = new TXTFile(),
 					            	num_points_display = 15000;
-					            if(typeof(tableauReponse['table']['legend']) !== 'undefined' && typeof(tableauReponse['table']['data']) !== 'undefined' && typeof(tableauReponse['table']['sampleRate']) !== 'undefined'){
-						            txtReader.construct_from_data(tableauReponse['table']['legend'], tableauReponse['table']['data'], num_points_display, tableauReponse['table']['sampleRate']);
+					            if(typeof(tableauReponse['graph']['legend']) !== 'undefined' && typeof(tableauReponse['graph']['data']) !== 'undefined' && typeof(tableauReponse['graph']['sampleRate']) !== 'undefined'){
+						            txtReader.construct_from_data(tableauReponse['graph']['legend'], tableauReponse['graph']['data'], num_points_display, tableauReponse['graph']['sampleRate']);
 						            
 						            // Création de la table
 						            tableData(txtReader, reportClone);
 
 						            // On enregistre la donnée table
-						            tabTable[numeroApp].push({
+						            tabGraph[numeroApp].push({
 										ext: 'csv',
 										name: 'no name',
-										rawData: tableauReponse['table']['data'],
+										rawData: tableauReponse['graph']['data'],
 										legend: txtReader.get_legend(),
 										data: txtReader,
 										sample: txtReader.get_sample_rate(),
@@ -615,6 +628,10 @@ $(function(){
 										lengthData: txtReader.get_size_signals(),
 										size: txtReader.get_number_of_signals()
 									});
+
+									// Création du graphe	
+							        graphLocalData(txtReader, 15000, reportClone);
+
 
 						        }else{
 						        	var reponse = {
@@ -624,62 +641,68 @@ $(function(){
 						        }
 
 							}else{
-								reportClone.find('.tableResult').remove();
 								reportClone.find('.graphResult').remove();
 								$(elemA[1]).parent().remove();
-								$(elemA[2]).parent().remove();
 							}
 
-							if(tableauReponse['tableOfResults']){
-								
+							if(tableauReponse['results']){
 								var table = reportClone.find('.tableOfResults');
-
-								for(var id in tableauReponse['tableOfResults']){
+								
+								for(var i=0, lenTabResults = tableauReponse['results'].length; i<lenTabResults; ++i){
+									
 									table.append('<table class="table table-nonfluid table-bordered table-striped table-condensed"><thead><tr></tr></thead><tbody><tr></tr></tbody></table>');
 								    var headTable = table.find('thead:last tr'),
 								        bodyTable = table.find('tbody:last tr');
 
-									headTable.append('<th>'+id+'</th>');
-									bodyTable.append('<td>'+tableauReponse['tableOfResults'][id]+'</td>');
+									headTable.append('<th>'+tableauReponse['results'][i]['name']+'</th>');
+									bodyTable.append('<td>'+tableauReponse['results'][i]['value']+'</td>');
+									
 								}
 							}else{
 								reportClone.find('.tableOfResults').remove();
-								$(elemA[3]).parent().remove();
+								$(elemA[2]).parent().remove();
 							}
 
 							if(tableauReponse['comments']){
-								reportClone.find('.commentairesResult').html(tableauReponse['comments']);
+								reportClone.find('.commentsResult').html(tableauReponse['comments']);
 							}else{
 								reportClone.find('.commentairesResult').remove();
-								$(elemA[4]).parent().remove();
+								$(elemA[3]).parent().remove();
 							}
 
-							if(tableauReponse['file']){
+							if(tableauReponse['files']){
 
-								var element = reportClone.find('.fileResult'),
-									editor = ace.edit(element[0]),
-									fileName = tableauReponse['file']['name'],
-									fileExt = tableauReponse['file']['ext'].toLowerCase(),
-									fileData = base64_decode(tableauReponse['file']['data']);
+								for(var i=0, lenFiles = tableauReponse['files'].length; i<lenFiles ; ++i){
+									var randomNumber = Math.floor(Math.random()*100),
+										fileName = tableauReponse['files'][i]['name'],
+										fileExt = tableauReponse['files'][i]['ext'].toLowerCase();
+									nav.append('<li><a href="#file'+numeroApp+randomNumber+'" data-toggle="tab">'+fileName+'.'+fileExt+'</a></li>');
+									content.append('<div class="tab-pane results editor" id="file'+numeroApp+randomNumber+'"></div>');
+									
+									// On enregistre le fichiers sources
+									tabFileResults[numeroApp].push({
+										ext: 'xml',
+										name: fileName,
+										dataJson: tableauReponse['files'][i]['data'],
+										id: 'file'+numeroApp+randomNumber,
+										sample: 1,
+										min: 1,
+										size: 1
+									});	
+								}
 
-								// On enregistre le fichiers sources
-								tabFileResults[numeroApp].push({
-									ext: 'xml',
-									name: fileName,
-									dataJson: tableauReponse['file']['data'],
-									sample: 1,
-									min: 1,
-									size: 1
-								});
-
-								editor.$blockScrolling = Infinity; // Remove warning
-								editor.setHighlightActiveLine(true); // Underline
-								editor.setValue(fileData, 1);
-								editor.setTheme('ace/theme/monokai'); // Edit the theme
-								editor.getSession().setMode('ace/mode/'+fileExt); // Edit the mode
-							}else{
-								reportClone.find('.fileResult').remove();
-								$(elemA[5]).parent().remove();
+								// On crée les éditors
+								setTimeout(function(){
+									for(var i=0, lenFiles = tabFileResults[numeroApp].length; i<lenFiles ; ++i){
+										var editor = ace.edit(tabFileResults[numeroApp][i]['id']),
+											fileData = base64_decode(tabFileResults[numeroApp][i]['dataJson']);
+										editor.$blockScrolling = Infinity; // Remove warning
+										editor.setHighlightActiveLine(true); // Underline
+										editor.setValue(fileData, 1);
+										editor.setTheme('ace/theme/monokai'); // Edit the theme
+										editor.getSession().setMode('ace/mode/'+tabFileResults[numeroApp][i]['ext']); // Edit the mode
+									}
+								}, 500);
 							}
 
 							// On insert le nouveau rapport d'activité dans la box de résultats
@@ -702,47 +725,38 @@ $(function(){
         					cloneApplication.find('.applicationReports').removeClass('hidden');
             				cloneApplication.find('.applicationReports').appendTo($('#carouselApplicationReport'));
             				
-							// On retarde légèrement le traitement des données afin de permettre à la fenêtre modale de s'ouvrir
-            				setTimeout(function(){
-
-            					// Traitement des données du caroussel
-	            				// Pour sauvegarder l'image sur ordinateur
-	            				if(tabImage[numeroApp].length != 0){
-		            				$('#carouselApplicationReport').find('.imageResult').each(function(index, e){
-			            				
-			            				$(e).click(function(){
-			            					if(tabImage[numeroApp][index]){
-				            					var blob = base64toBlob(tabImage[numeroApp][index]['rawData'], 'image/png'),
-													nombre = Math.floor(Math.random()*1000+1),
-													fileName = 'Picture_generated_by_NooLib_'+nombre+'.png';
-												saveAs(blob, fileName);
-											}
-			            				});
-			            			});
-	            				}
-	            				
-		            			if(tabTable[numeroApp].length != 0){
-		            				$('#carouselApplicationReport').find('.tableResult').each(function(index, e){
-		            					
-										// Création du graphe
-										if(tabTable[numeroApp][index]){
-									        graphLocalData(tabTable[numeroApp][index]['data'], 15000, $(e).parent());
-
-									        // Pour sauvegarder la table sur ordinateur au format csv
-			            					$(e).click(function(){
-
-				            					var stringCSV = tableToCSV(tabTable[numeroApp][index]['legend'], tabTable[numeroApp][index]['rawData']),
-				            						blob =  new Blob([stringCSV], {type: "text/csv;charset=utf-8"}),
-													nombre = Math.floor(Math.random()*1000+1),
-													fileName = 'Table_generated_by_NooLib_'+nombre+'.csv';
-												saveAs(blob, fileName);
-				            				});
-			            				}
+        					// Traitement des données du caroussel
+            				// Pour sauvegarder l'image sur ordinateur
+            				if(tabImage[numeroApp].length != 0){
+	            				/*
+	            				$('#carouselApplicationReport').find('.imageResult').each(function(index, e){
+		            				
+		            				$(e).click(function(){
+		            					if(tabImage[numeroApp][index]){
+			            					var blob = base64toBlob(tabImage[numeroApp][index]['rawData'], 'image/png'),
+												nombre = Math.floor(Math.random()*1000+1),
+												fileName = 'Picture_generated_by_NooLib_'+nombre+'.png';
+											saveAs(blob, fileName);
+										}
 		            				});
-		            			}
-            				},400);
+		            			});
+		            			*/
+            				}
             				
-							
+	            			if(tabGraph[numeroApp].length != 0){
+	            				
+						        // Pour sauvegarder la table sur ordinateur au format csv
+            					/*
+            					$(e).click(function(){
+
+	            					var stringCSV = tableToCSV(tabGraph[numeroApp][index]['legend'], tabGraph[numeroApp][index]['rawData']),
+	            						blob =  new Blob([stringCSV], {type: "text/csv;charset=utf-8"}),
+										nombre = Math.floor(Math.random()*1000+1),
+										fileName = 'Table_generated_by_NooLib_'+nombre+'.csv';
+									saveAs(blob, fileName);
+	            				});
+	            				*/
+	            			}	
             			});
 					}else{
 						if(response['erreurs']){
@@ -800,7 +814,7 @@ $(function(){
 			}
 
 			// On sauvegarde l'ensemble des tables
-			for(var i=0, s=tabTable[numApp].length; i<s; ++i){
+			for(var i=0, s=tabGraph[numApp].length; i<s; ++i){
 
 			  	 // On restructure les données pour avoir la forme
 	              // Time | Signal 1 | Signal 2 | ...
@@ -810,18 +824,18 @@ $(function(){
 
 			  	// On extrait les item sélectionnés par l'utilisateur
 	              M[0] = 'Time'; // On ajoute la colonne des temps
-	              for(var k=0, c=tabTable[numApp][i].legend.length; k<c ; ++k){
-	                  M[k+1] = tabTable[numApp][i].legend[k];
+	              for(var k=0, c=tabGraph[numApp][i].legend.length; k<c ; ++k){
+	                  M[k+1] = tabGraph[numApp][i].legend[k];
 	              }
 
 	              data.push(M);
 
 	              // On extrait les données de la table
-	              for(var j=0 ; j<tabTable[numApp][i].lengthData ; ++j){
+	              for(var j=0 ; j<tabGraph[numApp][i].lengthData ; ++j){
 	                  M=[];
-	                  M[0] = j/(tabTable[numApp][i].sample); // On récupère la colonne des temps
-	                  for(var k=0, len=tabTable[numApp][i].size; k<len ; ++k){
-	                      M[k+1] = tabTable[numApp][i].rawData[k][j];
+	                  M[0] = j/(tabGraph[numApp][i].sample); // On récupère la colonne des temps
+	                  for(var k=0, len=tabGraph[numApp][i].size; k<len ; ++k){
+	                      M[k+1] = tabGraph[numApp][i].rawData[k][j];
 	                  }
 
 	                  data.push(M);
@@ -829,8 +843,8 @@ $(function(){
 
 	              var dataJSON = JSON.stringify(data);
 	              dataJSON = dataJSON.replace('\\r', '');// Bizarement il y a un retour chariot \r qui s'insère à la fin de la légende avec le JSON.stringify. On le retire.
-	              tabTable[numApp][i].dataJson = dataJSON;
-			  	saveResult(tabTable[numApp][i]);
+	              tabGraph[numApp][i].dataJson = dataJSON;
+			  	saveResult(tabGraph[numApp][i]);
 			}
 
 
