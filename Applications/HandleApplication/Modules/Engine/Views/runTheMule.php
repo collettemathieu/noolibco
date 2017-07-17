@@ -25,17 +25,12 @@ if($user->getMessageClient()->hasReussite()){
 		$resultat = preg_replace('/(\/home\/noolibco\/.+)/', '', $resultat); // Retire les noms des chemin du serveur NooLib
 		// Pour les failles de type scripts
 		$resultat = htmlspecialchars($resultat, ENT_NOQUOTES);
-
-		
-		
 		array_push($resultatsApplication, $resultat);
 	}
-		
 	$reponse['resultat'] = $resultatsApplication;
 }
 $reponse = json_encode($reponse);
 // On envoie la réponse au format JSON
 // On se protège des failles XSS par htmlspecialchars
 print_r($reponse);
-
 ?>

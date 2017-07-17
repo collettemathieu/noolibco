@@ -25,83 +25,33 @@
 						<?php 
 						// On récupère l'utilisateur en session
 						$userSession = unserialize($user->getAttribute('userSession'));
-						
 						foreach($userSession->getFavoris() as $application){
 							$version = $application->getVersions()[count($application->getVersions()) - 1];
 							// On récupère la liste des tâches
 							$taches = $version->getTaches();
 							?>
 							<div class="appInDock" draggable="true" id="<?php echo $application->getIdApplication();?>">
-								<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div>
-								<div class="dataBox"></div><hr><!--
-								--><img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/><!--
-								--><hr><div class="resultBox">
-										<img src="/Images/results.png"/>
-										<div class="applicationReports hidden"></div>
-									</div>
-								<div class="tachesApplication">
-									<ul>
-									<?php foreach($taches as $tache){ ?>
-										<li id="<?php echo $tache->getNomTache(); ?>"><?php echo $tache->getNomTache(); ?></li>
-									<?php }?>
-									</ul>
-								</div>
-								<div class="parametresApplication">
-									<div class="container-fluid">
-										<div class="row-fluid">
-											<?php $tacheAvecParametre = array();
-											foreach($taches as $tache){
-												$tabParametres = array();
-												foreach($tache->getFonctions() as $fonction){
-													if(count($fonction->getParametres()) != 0){
-														foreach($fonction->getParametres() as $parametre){
-															if($parametre->getStatutPublicParametre()){
-																array_push($tabParametres, $parametre);
-															}
-														}
-													}
-												}
-												if(count($tabParametres) !=0){
-													$tacheAvecParametre[$tache->getNomTache()] = $tabParametres;
-												}
-											}
-
-											if(count($tacheAvecParametre) ===0){?>
-											<div class="alert alert-warning">Sorry, this application cannot be set.</div>
-											<?php }else{?>
-											<form class="well col-lg-12 centering" enctype="multipart/form-data" method="post">
-											<?php foreach($tacheAvecParametre as $nomTache => $tabParametres){?>
-												<ul>
-													<li class="parametresTache">
-														<div class="nomTacheParametreApplication"><?php echo $nomTache; ?></div>
-														<ul>
-
-												<?php foreach($tabParametres as $parametre){ ?>
-															<li>
-																<label for="<?php echo $parametre->getNomParametre(); ?>" class="labelVariable"><?php echo $parametre->getNomParametre(); ?> :</label>
-													 			<input type="text" id="<?php echo $parametre->getNomParametre(); ?>" name="<?php echo $parametre->getIdParametre(); ?>" class="inputVariable valeurDefautParametre" value="<?php echo $parametre->getValeurDefautParametre(); ?>" readonly />
-													 			<input type="hidden" class="valeurMinParametre" value="<?php echo $parametre->getValeurMinParametre(); ?>" />
-													 			<input type="hidden" class="valeurMaxParametre" value="<?php echo $parametre->getValeurMaxParametre(); ?>" />
-													 			<input type="hidden" class="valeurPasParametre" value="<?php echo $parametre->getValeurPasParametre(); ?>" />
-													 			<div class="sliderParametreApplication"></div>
-												 			</li>
-												<?php }?> 
-														</ul>
-													</li>
-												</ul>
-											<?php } ?>
-											<button class="btn btn-default pull-right" type="submit">Save</button>
-											</form>
-											<?php } ?>
+								
+								<!--div class="runApplication"><img src="/Images/play.ico"/></div-->
+								<!-- <div class="dataBox"></div>-->
+								<div class="containerApplication" style="display:inline-flex;float:right;">
+									<!--hr--><!--
+									-->
+									
+									<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/>
+									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div><!--
+									--><hr><div class="resultBox">
+											<img src="/Images/results.png"/>
+											<div class="applicationReports hidden"></div>
 										</div>
-									</div>
 								</div>
+									<div class="tachesApplication">
+									</div>
 							</div>
 						<?php }?>
 					</div>
 				</div>
 			</div>
-
 			<?php if(count($userSession->getFavoris()) !=0){?>
 			<div id="panelSettingsApplication" class="modal fade" role="dialog">
 				<div class="modal-dialog">
@@ -111,7 +61,13 @@
 							<button type="button" class="close" data-dismiss="modal">x</button>
 							<h2 class="modal-title">Settings</h2>
 						</div>
-						<div class="modal-body"></div>
+						<div class="modal-body" >
+						<form  class='well col-lg-12 centering' enctype='multipart/form-data' method='post'>
+							   <div id="tacheSelect"> </div>
+							   <div id="paramsList"></div>
+						</form>
+								
+						</div>
 					</div>	
 				</div>
 			</div>
