@@ -82,7 +82,7 @@ $(function(){
       		}
       		var cloneApplication = app.clone();
       		cloneApplication.appendTo(element);
-      		cloneApplication.css('width','300px').css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX-93+'px'); // 93 pour contrer l'ajout de width:240px
+      		cloneApplication.css('width','auto').css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX-93+'px'); // 93 pour contrer l'ajout de width:240px
 	      	cloneApplication.draggable({
 				revert: false,
 				containment: '#noospace',
@@ -988,9 +988,6 @@ $(function(){
 						
 						$(this).css('display','none');
 						cloneApplication.find('.resize').css('display','inline');
-					
-					
-					
 				});
 				//Poue étendre les datatBox
 				cloneApplication.find(".resize").click(function(){
