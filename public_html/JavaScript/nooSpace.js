@@ -535,14 +535,14 @@ $(function(){
 						// Variables globales
 						var templateItemReportApplication = $('#templateItemReportApplication');
 
-						for(var i=0,c=response['resultat'].length; i<c ; ++i){
+						for(var n=0,lenResultats=response['resultat'].length; n<lenResultats ; ++n){
 
 							try{
-								var tableauReponse = JSON.parse(response['resultat'][i]);
+								var tableauReponse = JSON.parse(response['resultat'][n]);
 							}
 							catch(e){
 								var response = {
-								  'erreurs': '<p>Fatal system error: '+response['resultat'][i]+'.</p>'
+								  'erreurs': '<p>Fatal system error: '+response['resultat'][n]+'.</p>'
 								};
 								displayInformationsClient(response);
 							}
@@ -582,23 +582,24 @@ $(function(){
 
 							if(tableauReponse['images']){
 
-								var images = tableauReponse['image'];
+								var images = tableauReponse['images'];
 
 								for(var i=0, lenImages = images.length; i<lenImages; ++i){
 									var image = new Image(),
 										randomNumberImage = Math.floor(Math.random()*100);
 									
-									image.src = 'data:image/'+tableauReponse['image'][i][ext]+';base64,'+tableauReponse['image'][i][data];
-									nav.append('<li><a href="#image'+numeroApp+randomNumberImage+'" data-toggle="tab">'+tableauReponse['image'][i][name]+'.'+tableauReponse['image'][i][ext]+'</a></li>');
-									content.append('<div class="tab-pane results imageResult centering" id="image'+numeroApp+randomNumberImage+'">'+image+'</div>');
+									image.src = 'data:image/'+images[i]['ext']+';base64,'+images[i]['data'];
+									nav.append('<li><a href="#image'+numeroApp+randomNumberImage+'" data-toggle="tab">'+images[i]['name']+'.'+images[i]['ext']+'</a></li>');
+									content.append('<div class="tab-pane results imageResult text-center" id="image'+numeroApp+randomNumberImage+'"></div>');
+									content.find('#image'+numeroApp+randomNumberImage).append(image);
 									
 									// On enregistre la donnée image
 									tabImage[numeroApp].push({
-										ext: tableauReponse['image'][i][ext],
-										name: tableauReponse['image'][i][name],
-										rawData: tableauReponse['image'][i][data],
-										dataJson: 'data:image/'+tableauReponse['image'][i][ext]+';base64,'+tableauReponse['image'],
-										data: 'data:image/'+tableauReponse['image'][i][ext]+';base64,'+tableauReponse['image'],
+										ext: images[i]['ext'],
+										name: images[i]['name'],
+										rawData: images[i]['data'],
+										dataJson: 'data:image/'+images[i]['ext']+';base64,'+images[i]['data'],
+										data: 'data:image/'+images[i]['ext']+';base64,'+images[i]['data'],
 										sample: 1,
 										min: 1,
 										size: 1

@@ -160,10 +160,6 @@
 	cursor: pointer;
 }
 
-.tableOfResults table{
-	display: inline-block;
-}
-
 .item{
 	margin-bottom: 20px;
 }
