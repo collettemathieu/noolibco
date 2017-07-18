@@ -983,6 +983,7 @@ $(function(){
                 }
             });
         } 
+        //*******************
         //*********************** Added by Naoures
         // Pour initialiser les parametres dans le setApplication selon la tache
         function initParams(nomTache, listeParams){
