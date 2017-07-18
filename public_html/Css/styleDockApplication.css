@@ -220,20 +220,19 @@ display: inline-block;
 	cursor: default;
 }
 /*Style scrollbar*/
-::-webkit-scrollbar{
-	width:15px;
+#scrollUp{
+height: 25px;
+left:15px;
+background-image: url("/Images/arrow_top.png") ;
+width:73px;
+position: absolute;
 }
-::-webkit-scrollbar-track{
-	display:none;
+#scrollDown{
+height: 25px;
+left:15px;
+background-image: url("/Images/arrow_bottom.png");
+width:73px;
+position: absolute;
 }
-::-webkit-scrollbar-thumb{
-	display:none;
-}
-::-webkit-scrollbar-button:start{
-	height:50px;
-	background: url("/Images/arrow_top.png") no-repeat ;
-}
-::-webkit-scrollbar-button:end{
-	height:50px;
-	background: url("/Images/arrow_bottom.png") no-repeat;
-}
+
+	

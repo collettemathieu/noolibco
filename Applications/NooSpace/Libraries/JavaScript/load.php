@@ -7,6 +7,7 @@
 <!-- Others libraries JS -->
 <script type="text/javascript" src="/JavaScript/nooSpace.js"></script>
 <script type="text/javascript" src="/JavaScript/fonctionsForData.js"></script>
+<script type="text/javascript" src="/JavaScript/init.js"></script>
 <script type="text/javascript" src="/JavaScript/addData.js"></script>
 <script type="text/javascript" src="/JavaScript/showData.js"></script>
 

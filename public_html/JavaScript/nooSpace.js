@@ -61,7 +61,6 @@ $(function(){
 		      	if(ui.draggable.parent().attr('id') === 'applicationsInDock' || ui.draggable.hasClass('runIt')){
 
 		      		deployApplication(ui.draggable, $(this), nouvellePositionElementX, nouvellePositionElementY);
-
 				// Pour insérer une nouvelle donnée dans la noospace
 			    }else if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
 
@@ -91,6 +90,8 @@ $(function(){
 
 		    }
 		});
+
+
 		// Pour déployer une application dans la NooSpace
 		function deployApplication(app, element, nouvellePositionElementX, nouvellePositionElementY){
 			var listeParams, listeTache,listTypeDonnee;
@@ -109,9 +110,20 @@ $(function(){
 	      	cloneApplication.draggable({
 				revert: false,
 				containment: '#noospace',
-				start: function(){
+				start: function(event,ui){
 					$(this).find('.containerApplication').children('img').addClass('noClick');
+					//*******************
+					
+					
+				},
+				stop: function(){
+					var nearElement = $(this).find('.resultBox').nearest('.dataBox',0.2);
+					//I m here
+					if(nearElement.length==1) {
+							//$(this).find('.resultBox').remove();
+							console.log($(this).parent().parent());
 
+					}
 				}
 	      	});
 	      	// On réajuste la taille de l'image de l'application
@@ -998,8 +1010,13 @@ $(function(){
  				numeroDonnee = 0,
  				nombreDonnee=arrayDonnee[nomTache].length,
  				pasAffichage=4;
+ 				var step = 73;
+				var scrolling = false;
+
  				if(nombreDonnee>pasAffichage){
- 					contenu="<div class='allDataBox' style='width:120px;float:none;height:"+(pasAffichage*73+25)+"px;overflow-y:auto;overflow-x:hidden;direction:rtl'>";
+ 					contenu="<div class='allDataBox' style='width:120px;float:none;height:"+(pasAffichage*73+25)+"px;overflow:hidden'>";
+ 					contenu+='<div id="scrollUp" style="top:-26px;position:absolute"></div>';
+ 					contenu+='<div id="scrollDown" style="top:'+(pasAffichage*73+25)+'px;position:absolute;"></div>';
  				}else{
  					contenu="<div class='allDataBox' style='width:90px;float:none;height:"+(nombreDonnee*73+25)+"px'>";
  				}
@@ -1098,6 +1115,8 @@ $(function(){
 						for(var i=0; i<nbrLigne;++i){
 							grid_tem_ligne+= 73/nbrLigne+'px '; 
 						}
+						cloneApplication.find(".allDataBox ").find("#scrollUp").css('display','none');
+						cloneApplication.find(".allDataBox ").find("#scrollDown").css('display','none');
 						cloneApplication.find(".allDataBox ").css('grid-template-columns',grid_tem_column);
 						cloneApplication.find(".allDataBox ").css('grid-template-rows',grid_tem_ligne);
 						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height','auto');
@@ -1109,14 +1128,13 @@ $(function(){
 				});
 				//Poue étendre les datatBox
 				cloneApplication.find(".resize").click(function(){
-									
+						cloneApplication.find(".allDataBox ").find("#scrollUp").css('display','inline');
+						cloneApplication.find(".allDataBox ").find("#scrollDown").css('display','inline');				
 						cloneApplication.find('.dataBoxContainer hr').css('display','inline-flex');
 						cloneApplication.find(".allDataBox ").removeClass('dataBox').css('display','initial');
 						cloneApplication.find(".allDataBox ").css('width',90+'px');
 						cloneApplication.children('hr').css('display','none');
-						cloneApplication.find('.allDataBox').css('overflow-y','auto');		
-						cloneApplication.find('.allDataBox').css('direction','rtl');
-
+						cloneApplication.find('.allDataBox').css('overflow','hidden');		
 						if(nombreDonnee>pasAffichage){
 							cloneApplication.find('.allDataBox').css('height',(pasAffichage*73+25)+'px');
 							cloneApplication.find('.allDataBox').css('width','120px');
@@ -1135,8 +1153,51 @@ $(function(){
 						$(this).css('display','none');
 						cloneApplication.find('.reduce').css('display','inline');
 				});
+				// Pour le scrollUp and ScrollDown
+
+					cloneApplication.find("#scrollUp").bind("click", function (event) {
+						console.log('here Up');
+					    event.preventDefault();
+					    // Animates the scrollTop property by the specified
+					    // step.
+					    cloneApplication.find(".allDataBox").animate({
+					        scrollTop: "-=" + step + "px"
+					    });
+					}).bind("mouseover", function (event) {
+					    scrolling = true;
+					    scrollContent("up");
+					}).bind("mouseout", function (event) {
+					    scrolling = false;
+					});
+
+
+					cloneApplication.find("#scrollDown").bind("click", function (event) {
+						console.log('here Up');
+					    event.preventDefault();
+					   cloneApplication.find(".allDataBox").animate({
+					        scrollTop: "+=" + step + "px"
+					    });
+					}).bind("mouseover", function (event) {
+					    scrolling = true;
+					    scrollContent("down");
+					}).bind("mouseout", function (event) {
+					    scrolling = false;
+					});
+					function scrollContent(direction) {
+					    var amount = (direction === "up" ? "-=1px" : "+=1px");
+					    cloneApplication.find(".allDataBox").animate({
+					        scrollTop: amount
+					    }, 1, function () {
+					        if (scrolling) {
+					            scrollContent(direction);
+					        }
+					    });
+
+						}
 
 }
+
+
         function saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect){
         	var modalBody=$('#panelSettingsApplication').find('.modal-body');
 	        	modalBody.find('button').click(function(e){

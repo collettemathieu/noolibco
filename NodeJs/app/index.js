@@ -271,7 +271,7 @@ delFolderInProd = function (utilisateur,nbReq){
 }
 //********Request********
 router.post('/', function(req, res) { 
-	res.header("Access-Control-Allow-Origin","http://172.16.64.3");
+	res.header("Access-Control-Allow-Origin","http://172.16.64.2");
 	var messageClient = new(require('../models/MessageClient'));
 	async (function(){
 		numRequest +=1;

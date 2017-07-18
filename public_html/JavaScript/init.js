@@ -596,3 +596,59 @@ function sliderParametreApplication(cloneContenuPanel){
         });
     });    
 }
+
+//test by Naoures 
+$.fn.nearest = function(selector, radius) {
+    var position = this.offset();
+
+    if (!radius) radius = 10; // pixels
+
+    var positions = [];
+    var elements = [];
+
+    // so, move up and left by the value of radius variable (lets say its 10)
+    // start from the -10 -10 px corner of the element and move all the way to 
+    // +10 +10 coordinats to the right bottom corner of the element
+    var startX = position.left - radius;
+    var startY = position.top - radius;
+    var endX = position.left + this.outerWidth(true) + radius;
+    var endY = position.top + this.outerHeight(true) + radius;
+
+    var positions = [];
+
+    // create horizontal lines
+    // --------------
+    //  your element
+    // --------------
+    for (var x = startX; x < endX; x++) {
+        // creates upper line on the startY coordinate
+        positions.push([x, startY]);
+        // creates bottom line on the endY coordinate
+        positions.push([x, endY]);
+    }
+
+    // create the vertical positions
+    // |              |
+    // | your element |
+    // |              |
+    for (var y = startY; y < endY; y++) {
+        // creates the left line on the startX coordinate
+        positions.push([startX, y]);
+        // creates the right line on the endX coordinate
+        positions.push([endX, y]);
+    }
+
+    // so now the positions array contains all the positions around your element with a radius that you provided
+    for (var i = 0; i < positions.length; i++) {
+        // just loop over the positions, and get every element
+        var position = positions[i];
+        var x = position[0];
+        var y = position[1];
+
+        var element = document.elementFromPoint(x, y);
+        // if element matches with selector, save it for the returned array
+        if ($(element).is(selector) && elements.indexOf(element) === -1) elements.push(element);
+    }
+
+    return $(elements);
+}
