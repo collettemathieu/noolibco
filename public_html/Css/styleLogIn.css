@@ -220,6 +220,98 @@ footer li{
 	display: inline-block;
 }
 
+/*********/
+/* Team  */
+/*********/
+
+.teamTitle{
+  color: black;
+}
+
+.teamPicture{
+  display: inline-block;
+  width: 120px;
+  vertical-align: top;
+}
+
+.teamPicture span{
+  display: block;
+  width: 120px;
+  height: 120px;
+  background: url("/Images/NooLibTeam/spritesheet.jpg") no-repeat;
+}
+
+/* background-position: (colonne)px (ligne)px; */
+/* Léna Buron */
+.teamPicture:nth-child(1) span{
+  background-position: -120px -240px;
+}
+/* Corentin Chevallier */
+.teamPicture:nth-child(2) span{
+  background-position: -120px -120px;
+}
+/* Quentin Denis */
+.teamPicture:nth-child(3) span{
+  background-position: 0px -360px;
+}
+/* Guénaël Dequeker */
+.teamPicture:nth-child(4) span{
+  background-position: -240px -120px;
+}
+/* Steve Despres*/
+.teamPicture:nth-child(5) span{
+  background-position: -240px -360px;
+}
+/* Rémi Dugue*/
+.teamPicture:nth-child(6) span{
+  background-position: -120px -360px;
+}
+/* Antoine Fauchard*/
+.teamPicture:nth-child(7) span{
+  background-position: 0px 0px;
+}
+/* Kevin GrosBois*/
+.teamPicture:nth-child(8) span{
+  background-position: 0px -240px;
+}
+/* Naoures Hassine */
+.teamPicture:nth-child(9) span{
+  background-position: -360px -240px;
+}
+/* Baptiste Houssais */
+.teamPicture:nth-child(10) span{
+  background-position: -240px 0px;
+}
+/* Brian Le Bras*/
+.teamPicture:nth-child(11) span{
+  background-position: -360px 0px;
+}
+/* Jean Mainguy */
+.teamPicture:nth-child(12) span{
+  background-position: -360px -120px;
+}
+/* Baptiste Maudet */
+.teamPicture:nth-child(13) span{
+  background-position: -120px 0px;
+}
+/* Yohann Pichois */
+.teamPicture:nth-child(14) span{
+  background-position: -360px -360px;
+}
+/* Clément Richard */
+.teamPicture:nth-child(15) span{
+  background-position: 0px -120px;
+}
+/* Mathieu */
+.founder{
+  display: block;
+  width: 120px;
+  height: 120px;
+  background: url("/Images/NooLibTeam/spritesheet.jpg") no-repeat;
+  background-position: -240px -240px;
+}
+
+
 /*********************/
 /* Bootstrap Switch  */
 /*********************/
