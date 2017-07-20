@@ -111,13 +111,13 @@
 							<ul class="list-unstyled">
 								<li class="teamPicture"><span></span><p class="text-center">Léna Buron (2 months)</p></li>
 								<li class="teamPicture"><span></span><p class="text-center">Corentin Chevallier (2 months)</p></li>
-								<li class="teamPicture"><span></span><p class="text-center">Quentin Denis (2 months)</p></li>
-								<li class="teamPicture"><span></span><p class="text-center">Guénaël Dequeker (5 months)</p></li>
+								<li class="teamPicture"><a href="/Profile/idAuteur=122"><span></span><p class="text-center">Quentin Denis (2 months)</p></a></li>
+								<li class="teamPicture"><a href="/Profile/idAuteur=79"><span></span><p class="text-center">Guénaël Dequeker (5 months)</p></a></li>
 								<li class="teamPicture"><span></span><p class="text-center">Steve Despres (3 months)</p></li>
 								<li class="teamPicture"><span></span><p class="text-center">Remi Dugue (2 months)</p></li>
 								<li class="teamPicture"><span></span><p class="text-center">Antoine Fauchard (2 months)</p></li>
 								<li class="teamPicture"><span></span><p class="text-center">Kévin Grosbois (1 month)</p></li>
-								<li class="teamPicture"><span></span><p class="text-center">Naoures Hassine (6 months)</p></li>
+								<li class="teamPicture"><a href="/Profile/idAuteur=97"><span></span><p class="text-center">Naoures Hassine (6 months)</p></a></li>
 								<li class="teamPicture"><span></span><p class="text-center">Baptiste Houssais (1 month)</p></li>
 								<li class="teamPicture"><span></span><p class="text-center">Brian Le Bras (1 month)</p></li>
 								<li class="teamPicture"><span></span><p class="text-center">Jean Mainguy (1 month)</p></li>
