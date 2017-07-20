@@ -138,7 +138,10 @@
 						<li><h3>Partners</h3>
 						<ul class="list-inline">
 							<li>
-								<a href="http://www.chu-angers.fr/" target="_blank"><img src="/Images/Social/chuAngers.png" alt="Centre hospitalier et universitaire d'Angers"/></a>
+								<a href="https://www.chu-angers.fr/" target="_blank"><img src="/Images/Social/chuAngers.png" alt="Centre hospitalier et universitaire d'Angers"/></a>
+							</li>
+							<li>
+								<a href="http://www.uco.fr/ima/" target="_blank"><img src="/Images/Social/ima.jpg" alt="Institut de Mathématiques Appliquées de l'Université Catholique de l'Ouest"/></a>
 							</li>
 						</ul>
 					</li>
