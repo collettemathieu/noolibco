@@ -101,7 +101,7 @@ trait MethodeUtilisateurControleur
 						imagecopyresampled($ImageFinale, $ImageInitiale, 0, 0, 0, 0, imagesx($ImageFinale), imagesy($ImageFinale), $largeur_source, $Hauteur_source);
 						
 						//on écrase l'ancienne image avec la nouvelle redimentionnée
-						imagejpeg($ImageFinale, $file->getFilePath(), 65);
+						imagejpeg($ImageFinale, $file->getFilePath(), (int) $config->getVar('divers', 'divers', 'userProfileCompression'));
 						imagedestroy($ImageInitiale);
 						
 						//on supprime l'ancienne photo si celle-ci n'est pas la photo par défaut
