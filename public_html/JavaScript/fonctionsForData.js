@@ -985,6 +985,7 @@ function openGestionnaireDonnees(){
         });
 
         // On anime le déplacement du div du gestionnaire de données
+        overlayGestionnaireDonnees.css('display', 'inline-block');
         overlayGestionnaireDonnees.animate({'left':decalageFinale}, 1500);
         boutonShowGestionnaireDonnees.animate({'left':-decalageInitiale}, 1500);
     }

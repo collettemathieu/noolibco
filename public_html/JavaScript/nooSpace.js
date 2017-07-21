@@ -1,9 +1,7 @@
 $(function(){
 	if($('#noospace').length !=0){
-
-		// Pour gérer l'affichage du gestionnaire de données
+		
 		var overlayGestionnaireDonnees = $('#overlayGestionnaireDonnees'),
-			decalageInitiale = -parseInt(overlayGestionnaireDonnees.css('width')),
 			numberApp = 0, // Compteur du nombre d'application dans la noospace
 			tabImage = [],
 			tabGraph = [],
@@ -12,10 +10,11 @@ $(function(){
 			tabFileResults = [];
 		dataManagerAlreadyOpened = false // Pour connaître le statut du gestionnaire de données
 		addDataAlreadyLoaded = false; // Pour éviter un envoi multiple des formulaires lors de l'ajout de données
-		overlayGestionnaireDonnees.css('display', 'inline-block').css('left', decalageInitiale+'px');
+		
+		// Pour gérer l'affichage du gestionnaire de données
 		$('#boutonShowGestionnaireDonnees').on('click', openGestionnaireDonnees);
 		// Pour gérer l'affichage de la mule
-		$('#laMule').hide();
+		$('#laMule').hide();		
 
 		// On contrôle s'il y a une application déjà présente, dans ce cas on la déploie
 		if($('#noospace .runIt').length !=0){
