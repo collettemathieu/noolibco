@@ -7,9 +7,7 @@
 
 <!-- Others libraries JS -->
 <script type="text/javascript" src="/JavaScript/nooSpace.js"></script>
-<script type="text/javascript" src="/JavaScript/fonctionsForData.js"></script>
 <script type="text/javascript" src="/JavaScript/addData.js"></script>
-<script type="text/javascript" src="/JavaScript/showData.js"></script>
 
 <!-- DICOM viewer - include the cornerstone library -->
 <script type="text/javascript" src="/JavaScript/Frameworks/cornerstone.min.js"></script>
