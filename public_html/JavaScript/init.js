@@ -611,9 +611,8 @@ $.fn.nearest = function(selector, radius) {
     // +10 +10 coordinats to the right bottom corner of the element
     var startX = position.left - radius;
     var startY = position.top - radius;
-    var endX = position.left + this.outerWidth(true) + radius;
-    var endY = position.top + this.outerHeight(true) + radius;
-
+    var endX = position.left +this.outerWidth()+ radius; //this.outerWidth(true) 
+    var endY = position.top +this.outerWidth() +radius; //+ this.outerHeight(true)
     var positions = [];
 
     // create horizontal lines

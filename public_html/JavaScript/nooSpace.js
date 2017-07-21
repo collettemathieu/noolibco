@@ -104,6 +104,7 @@ $(function(){
       			nouvellePositionElementX = parseInt(largeurNooSpace/2);
       			nouvellePositionElementY = parseInt(hauteurNooSpace/3);
       		}
+      		
       		var cloneApplication = app.clone();
       		cloneApplication.appendTo(element);
       		cloneApplication.css('width','auto').css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX-93+'px'); // 93 pour contrer l'ajout de width:240px
@@ -112,18 +113,25 @@ $(function(){
 				containment: '#noospace',
 				start: function(event,ui){
 					$(this).find('.containerApplication').children('img').addClass('noClick');
-					//*******************
 					
 					
 				},
 				stop: function(){
-					var nearElement = $(this).find('.resultBox').nearest('.dataBox',0.2);
+					var nearElement = $(this).find('.resultBox').last().nearest('.dataBox',0.2);
 					//I m here
-					if(nearElement.length==1) {
-							//$(this).find('.resultBox').remove();
-							console.log($(this).parent().parent());
-
-					}
+					console.log(nearElement);
+                    if(nearElement.length==1 && !nearElement.hasClass('resultBox')) {
+                    	//remove le data Box de ll application
+                        var resultBox= $(this).find('.resultBox');
+                        if(!resultBox.hasClass('dataBox'))
+                        	resultBox.remove();
+                        nearElement.addClass('resultBox');
+                        var element= nearElement.parent().prepend($(this));
+                        $(this).css('position','relative').css('top','').css('left','').css('width','');
+                        $(this).draggable('disable');
+                        element.css('float','right').css('overflow','visible');
+                        //$(this).remove();
+                    }
 				}
 	      	});
 	      	// On réajuste la taille de l'image de l'application
@@ -424,11 +432,9 @@ $(function(){
 							for(var i=0;i<nbrDonnee;++i){
 								if(donnees[nomTache][i]['ext']!='input.txt'){
 									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
-									console.log('here');
 									console.log(cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
 								}else{
 									formData.append('tache0data'+(i), cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').val());
-									console.log('here');
 									console.log(cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').val());
 								}
 							}
@@ -603,10 +609,7 @@ $(function(){
 						};
 						displayInformationsClient(response);
 					}
-					//**************
-					console.log("response['resultat']");
-					console.log(response['resultat']);
-					//**********
+					
 					if(response['resultat']){
 						
 						var reponse = {
@@ -629,8 +632,7 @@ $(function(){
 							var tableauReponse = response['resultat'][i];
 							try{
 								var tableauReponse = JSON.parse(response['resultat'][i]);
-								console.log(tableauReponse);
-								
+							
 							}
 							catch(e){
 								console.log("erreur parse tableau response");
@@ -664,10 +666,7 @@ $(function(){
 							}else{
 								reportClone.find('.imageResult').html('No picture generated.');
 							}
-								//**************
-								console.log("tableauReponse['table']");
-								console.log(tableauReponse['table']);
-								//**********	
+								
 							if(tableauReponse['table']){
 
 								// Création de l'objet TxtReader à partir des données
@@ -1015,25 +1014,17 @@ $(function(){
 				var scrolling = false;
 
  				if(nombreDonnee>pasAffichage){
- 					contenu="<div class='allDataBox' style='width:120px;float:none;height:"+(pasAffichage*73+25)+"px;overflow:hidden'>";
- 					contenu+='<div id="scrollUp" style="top:-26px;position:absolute"></div>';
- 					contenu+='<div id="scrollDown" style="top:'+(pasAffichage*73+25)+'px;position:absolute;"></div>';
+ 					contenu="<div class='allDataBox' style='width:120px;float:none;height:"+(pasAffichage*73+25)+"px;overflow-x:visible;overflow-y:hidden;'>";
+ 					contenu+='<div id="scrollUp" style="top:-135px;position:absolute"></div>';
+ 					contenu+='<div id="scrollDown" style="top:'+210+'px;position:absolute;"></div>';
  				}else{
  					contenu="<div class='allDataBox' style='width:90px;float:none;height:"+(nombreDonnee*73+25)+"px'>";
  				}
  				
  				if(nombreDonnee>1){
-				  cloneApplication.append("<button class='reduce' style='display:inline;position:absolute;top:-30px'> - </button>");
+				  cloneApplication.append("<button class='reduce' style='display:inline;position:absolute;top:"+(pasAffichage-1)*-73/2+25+"px'> - </button>");
 				  cloneApplication.append("<button class='resize' style='display:none;position:absolute;top:-30px'>+</button>");
-				 
 				}
-        	   if(nombreDonnee>pasAffichage){
-        	   	  cloneApplication.find('.containerApplication').css('margin-top',(pasAffichage-1)*73/2+'px');
-				  cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(pasAffichage-1)*73/2+'px');
-        	   }else{
-        	   	  cloneApplication.find('.containerApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
-				  cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
-        	   }
 				
 				var angle= 160/nombreDonnee;
 				
@@ -1065,6 +1056,14 @@ $(function(){
 					contenu+="</div><hr>";
 				
 				cloneApplication.children(".containerApplication").before(contenu);
+
+
+				if(nombreDonnee>pasAffichage){
+        	   	  cloneApplication.find('.allDataBox').css('margin-top',(pasAffichage-1)*-73/2+'px');
+        	   }else{
+        	   	  cloneApplication.find('.allDataBox').css('margin-top',(nombreDonnee-1)*-73/2+'px');
+        	   }
+
 				cloneApplication.find('.donneeDataBox').droppable({
 				drop: function(event, ui){
 					if($(this).children().length==0){ //pour n'accepter qu'une seule donnée dans la dataBox
@@ -1097,8 +1096,6 @@ $(function(){
 						cloneApplication.find(".allDataBox ").css('width',73+'px');
 						cloneApplication.find('.dataBoxContainer hr').css('display','none');
 						cloneApplication.find(".allDataBox ").addClass('dataBox').css('display','grid');
-						cloneApplication.find('.containerApplication').css('margin-top','0px');
-						cloneApplication.find('.ajaxLoaderApplication').css('margin-top','0px');
 						cloneApplication.children('hr').css('display','inline');
 						cloneApplication.find('.allDataBox').css('overflow-y','hidden');
 						cloneApplication.find('.allDataBox').css('direction','ltr');
@@ -1123,7 +1120,8 @@ $(function(){
 						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height','auto');
 						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('width',cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height'));
 						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('border-radius',15/nbrColumn+'px');
-						
+						cloneApplication.find('.allDataBox').css('margin-top','0px');
+
 						$(this).css('display','none');
 						cloneApplication.find('.resize').css('display','inline');
 				});
@@ -1135,21 +1133,20 @@ $(function(){
 						cloneApplication.find(".allDataBox ").removeClass('dataBox').css('display','initial');
 						cloneApplication.find(".allDataBox ").css('width',90+'px');
 						cloneApplication.children('hr').css('display','none');
-						cloneApplication.find('.allDataBox').css('overflow','hidden');		
+						cloneApplication.find('.allDataBox').css('overflow-y','visible');		
 						if(nombreDonnee>pasAffichage){
 							cloneApplication.find('.allDataBox').css('height',(pasAffichage*73+25)+'px');
 							cloneApplication.find('.allDataBox').css('width','120px');
-							cloneApplication.find('.containerApplication').css('margin-top',(pasAffichage-1)*73/2+'px');
-						cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(pasAffichage-1)*73/2+'px');
+							cloneApplication.children('.allDataBox').css('margin-top',(pasAffichage-1)*-73/2+'px');
 		 				}else{
 		 					cloneApplication.find('.allDataBox').css('height',(nombreDonnee*73+25)+'px');
 							cloneApplication.find('.allDataBox ').css('width','90px');
-							cloneApplication.find('.containerApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
-						cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
+							cloneApplication.children('.allDataBox').css('margin-top',(nombreDonnee-1)*-73/2+'px');
 		 				}				
 						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('width','73px');
 						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height','73px');
 						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('border-radius','15px');
+						
 										
 						$(this).css('display','none');
 						cloneApplication.find('.reduce').css('display','inline');
@@ -1157,7 +1154,6 @@ $(function(){
 				// Pour le scrollUp and ScrollDown
 
 					cloneApplication.find("#scrollUp").bind("click", function (event) {
-						console.log('here Up');
 					    event.preventDefault();
 					    // Animates the scrollTop property by the specified
 					    // step.
@@ -1173,7 +1169,6 @@ $(function(){
 
 
 					cloneApplication.find("#scrollDown").bind("click", function (event) {
-						console.log('here Up');
 					    event.preventDefault();
 					   cloneApplication.find(".allDataBox").animate({
 					        scrollTop: "+=" + step + "px"
