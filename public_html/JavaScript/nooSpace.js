@@ -533,7 +533,9 @@ $(function(){
 
 						// On récupère le template de rapports et on créé les tableaux de résultats
 						// Variables globales
-						var templateItemReportApplication = $('#templateItemReportApplication');
+						var templateItemReportApplication = $('#templateItemReportApplication'),
+							indexImage = 0,
+							indexGraph = 0;
 
 						for(var n=0,lenResultats=response['resultat'].length; n<lenResultats ; ++n){
 
@@ -587,10 +589,10 @@ $(function(){
 								for(var i=0, lenImages = images.length; i<lenImages; ++i){
 									var image = new Image(),
 										randomNumberImage = Math.floor(Math.random()*100);
-									
+										
 									image.src = 'data:image/'+images[i]['ext']+';base64,'+images[i]['data'];
 									nav.append('<li><a href="#image'+numeroApp+randomNumberImage+'" data-toggle="tab">'+images[i]['name']+'.'+images[i]['ext']+'</a></li>');
-									content.append('<div class="tab-pane results imageResult text-center" id="image'+numeroApp+randomNumberImage+'"></div>');
+									content.append('<div class="tab-pane results imageResult text-center" index-image="'+indexImage+'" id="image'+numeroApp+randomNumberImage+'"></div>');
 									content.find('#image'+numeroApp+randomNumberImage).append(image);
 									
 									// On enregistre la donnée image
@@ -604,6 +606,7 @@ $(function(){
 										min: 1,
 										size: 1
 									});
+									indexImage+=1;
 								}
 							}
 							if(tableauReponse['graph']){
@@ -616,6 +619,8 @@ $(function(){
 						            
 						            // Création de la table
 						            tableData(txtReader, reportClone);
+						            reportClone.find('.tableOfGraph').attr('index-graph', indexGraph);
+						            indexGraph += 1;
 
 						            // On enregistre la donnée table
 						            tabGraph[numeroApp].push({
@@ -713,6 +718,57 @@ $(function(){
             				
 						}
 
+						// Pour sauvegarder l'image sur ordinateur
+						cloneApplication.find('.imageResult').click(function(event){
+							if(tabImage[numeroApp].length != 0){
+	            				var elem = $(event.target);
+
+	            				if(!elem.hasClass('imageResult')){
+	            					elem = elem.parent();
+	            				}
+								try{
+									var index = parseInt(elem.attr('index-image')),
+		            					blob = base64toBlob(tabImage[numeroApp][index]['rawData'], 'image/png'),
+										nombre = Math.floor(Math.random()*1000+1),
+										fileName = 'Picture_generated_by_NooLib_'+nombre+'.png';
+									saveAs(blob, fileName);
+								}
+								catch(err){
+									var response = {
+									  'erreurs': '<p>A system error has occurred. No image found.</p>'
+									};
+									displayInformationsClient(response);
+								}
+								
+            				}
+						});
+
+						// Pour sauvegarder les graphes sur ordinateur
+						cloneApplication.find('.tableOfGraph').click(function(event){
+							if(tabGraph[numeroApp].length != 0){
+	            				var elem = $(event.target);
+	            				
+	            				while(!elem.hasClass('tableOfGraph') && elem[0].nodeName != 'body'){
+	            					elem = elem.parent();
+	            				}
+
+								try{
+									var index = parseInt(elem.attr('index-graph')),
+	            						stringCSV = tableToCSV(tabGraph[numeroApp][index]['legend'], tabGraph[numeroApp][index]['rawData']),
+	            						blob =  new Blob([stringCSV], {type: "text/csv;charset=utf-8"}),
+										nombre = Math.floor(Math.random()*1000+1),
+										fileName = 'Table_generated_by_NooLib_'+nombre+'.csv';
+									saveAs(blob, fileName);
+								}
+								catch(err){
+									var response = {
+									  'erreurs': '<p>A system error has occurred. No table found.</p>'
+									};
+									displayInformationsClient(response);
+								}	
+	            			}
+	            		});
+
             			// On gère l'affichage par la fenêtre modale
             			cloneApplication.find('.resultBox img').click(function(){
             				
@@ -725,39 +781,7 @@ $(function(){
         					// On insert les résultats de l'application
         					cloneApplication.find('.applicationReports').removeClass('hidden');
             				cloneApplication.find('.applicationReports').appendTo($('#carouselApplicationReport'));
-            				
-        					// Traitement des données du caroussel
-            				// Pour sauvegarder l'image sur ordinateur
-            				if(tabImage[numeroApp].length != 0){
-	            				/*
-	            				$('#carouselApplicationReport').find('.imageResult').each(function(index, e){
-		            				
-		            				$(e).click(function(){
-		            					if(tabImage[numeroApp][index]){
-			            					var blob = base64toBlob(tabImage[numeroApp][index]['rawData'], 'image/png'),
-												nombre = Math.floor(Math.random()*1000+1),
-												fileName = 'Picture_generated_by_NooLib_'+nombre+'.png';
-											saveAs(blob, fileName);
-										}
-		            				});
-		            			});
-		            			*/
-            				}
-            				
-	            			if(tabGraph[numeroApp].length != 0){
-	            				
-						        // Pour sauvegarder la table sur ordinateur au format csv
-            					/*
-            					$(e).click(function(){
-
-	            					var stringCSV = tableToCSV(tabGraph[numeroApp][index]['legend'], tabGraph[numeroApp][index]['rawData']),
-	            						blob =  new Blob([stringCSV], {type: "text/csv;charset=utf-8"}),
-										nombre = Math.floor(Math.random()*1000+1),
-										fileName = 'Table_generated_by_NooLib_'+nombre+'.csv';
-									saveAs(blob, fileName);
-	            				});
-	            				*/
-	            			}	
+            					
             			});
 					}else{
 						if(response['erreurs']){

@@ -111,7 +111,7 @@
 				<div class="tab-pane results table2D" id="table2D"></div>
 				<div class="tab-pane centering" id="graph">
 					<div class="graphResult"></div>
-					<div class="tableResult table-responsive">
+					<div class="tableResult table-responsive tableOfGraph">
 						<table class="table table-bordered table-striped table-condensed"></table>
 					</div>
 				</div>
