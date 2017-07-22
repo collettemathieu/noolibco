@@ -11,6 +11,36 @@ $(function(){
 		dataManagerAlreadyOpened = false // Pour connaître le statut du gestionnaire de données
 		addDataAlreadyLoaded = false; // Pour éviter un envoi multiple des formulaires lors de l'ajout de données
 		
+		// Requête pour récupérer la session utilisateur à envoyer à NodeJs
+		$.ajax({
+			url: '/NooSpace/getSession',
+			type: 'POST',
+			async: true,
+			cache: false,
+			contentType: false,
+			processData: false,
+			success: function(response) {
+				try{
+					response=JSON.parse(response);
+					sessionStorage.setItem("id",response['id']);
+					sessionStorage.setItem("isAdmin",response['isAdmin']);
+				}
+				catch(e){
+					var response = {
+					  'erreurs': '<p>A system error has occurred while getting your user session.</p>'
+					};
+					displayInformationsClient(response);
+				}		
+			},
+			error: function(){
+				var response = {
+				  'erreurs': '<p>A system error has occurred while getting your user session.</p>'
+				};
+				displayInformationsClient(response);
+			}
+		});
+
+
 		// Pour gérer l'affichage du gestionnaire de données
 		$('#boutonShowGestionnaireDonnees').on('click', openGestionnaireDonnees);
 		// Pour gérer l'affichage de la mule
@@ -482,8 +512,10 @@ $(function(){
 		// Pour lancer l'application et gérer les résultats de retour
 		function runTheMule(formData, cloneApplication){
 			// On lance la requête ajax
+			formData.append('id',sessionStorage['id']);
+			formData.append('isAdmin',sessionStorage['isAdmin']);
       		$.ajax({
-				url: '/HandleApplication/RunTheMule',
+				url:  'http://'+window.location.hostname+':3000/runTheMule/',
 				type: 'POST',
 				async: true,
 				cache: false,

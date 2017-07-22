@@ -1,13 +1,14 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PHP Version 5 								                          |
+// | PHP Version 7 								                          |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2014 NooLib			         				          |
+// | Copyright (c) 2017 NooLib			         				          |
 // +----------------------------------------------------------------------+
 // | Classe PHP du contrôleur qui permet d'entrer dans la NooSpace,		  |
-// | d'afficher les données et de sélectionner le traitement des données. |											  |
+// | d'afficher les données et de sélectionner le traitement des données. |
 // +----------------------------------------------------------------------+
-// | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>    			  |
+// | Auteurs : Mathieu COLLETTE <collettemathieu@noolib.com>    		  |	  
+// |			Naoures Hassine <naoureshassine@noolib.com>				  |
 // +----------------------------------------------------------------------+
 
 /**
@@ -90,5 +91,34 @@ class DefautController extends \Library\BackController
 			}
 		}
 
+	}
+
+	/**
+	* Récupérer la session utilisateur pour NodeJs
+	*/
+	public function executeGetSession($request)
+	{
+		if ($request->isAjaxRequest()) {
+
+			// On vérifie que l'utilisateur est bien identifié
+			$user = $this->app->getUser();
+			$utilisateur = unserialize($user->getAttribute('userSession'));
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
+
+			$tableOfSession = array();
+				$session = array(
+					'id' => $utilisateur->getIdUtilisateur(),
+					'isAdmin' =>($user->getAttribute('isAdmin')) ? 'true' : 'false'				
+					);
+
+				array_push($tableOfSession, $session);
+			// On ajoute
+			$this->page->addVar('tableOfSession', $session);
+		}else{
+			// On procède à la redirection
+			$response = $this->app->getHTTPResponse();
+			$response->redirect('/');
+		}
 	}
 }
