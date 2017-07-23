@@ -678,7 +678,7 @@ $(function(){
 						        }
 
 							}else{
-								reportClone.find('.graphResult').remove();
+								reportClone.find('.graph').remove();
 								$(elemA[1]).parent().remove();
 							}
 
@@ -703,7 +703,7 @@ $(function(){
 							if(tableauReponse['comments']){
 								reportClone.find('.commentsResult').html(tableauReponse['comments']);
 							}else{
-								reportClone.find('.commentairesResult').remove();
+								reportClone.find('.commentsResult').remove();
 								$(elemA[3]).parent().remove();
 							}
 
