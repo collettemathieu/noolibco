@@ -122,13 +122,14 @@ $(function(){
 					console.log(nearElement);
                     if(nearElement.length==1 && !nearElement.hasClass('resultBox')) {
                     	//remove le data Box de ll application
-                        var resultBox= $(this).find('.resultBox');
+                        var resultBox= $(this).find('.resultBox').last();
                         if(!resultBox.hasClass('dataBox'))
                         	resultBox.remove();
                         nearElement.addClass('resultBox');
                         var element= nearElement.parent().prepend($(this));
                         $(this).css('position','relative').css('top','').css('left','').css('width','');
                         $(this).draggable('disable');
+                         $(this).find('.play').remove();
                         element.css('float','right').css('overflow','visible');
                         //$(this).remove();
                     }
@@ -144,7 +145,7 @@ $(function(){
   				setTimeout(function(){
   					cloneApplication.find('.containerApplication').children('.resultBox').show('slice').css('display', 'inline-block');
   				}, 500);
-
+  			cloneApplication.find('.play').css('visibility','visible');
 	      	// Pour receuillir les données dans la dataBox de l'application
 	      	cloneApplication.children('.dataBox').droppable({
 	      		drop: function(event, ui){
@@ -260,7 +261,6 @@ $(function(){
   
 	      //********************************************************************
 			//************* Menu contextuel de l'application********************
-
 		   	// Pour définir le menu contextuel de l'application
 		    cloneApplication.contextMenu({
 		    	selector: '.imageApplication',
@@ -400,7 +400,7 @@ $(function(){
 						var panelSettingsApplication = $('#panelSettingsApplication'),
 							modalBody = panelSettingsApplication.find('.modal-body'),
 							tacheSelect=panelSettingsApplication.find('#tacheSelect'),
-							currentTache=cloneApplication.find('.tachesApplication'),
+							currentTache=cloneApplication.children('.tachesApplication'),
 							currentNomTache=currentTache.attr('name');
 						tacheSelect.html(listeTache);
 						tacheSelect.find('select').val(currentNomTache);
@@ -418,56 +418,13 @@ $(function(){
 						sliderParametreApplication(modalBody);
 						saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect);
 					}
-					if(key === "Run"){
-						try{
-			               	// On affiche le loader
-				      		cloneApplication.find('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
-				      		// On ajoute les données et les paramètres pour le lancement de l'application
-				      		var form = paramForm = cloneApplication.find('.parametresApplication').serializeArray(),
-				      			nomTache=cloneApplication.find('.tachesApplication').attr('name'),
-				      			donnees=ArrayTacheDonnee(listTypeDonnee),
-				      			formData = new FormData(),
-				      			nbrDonnee=donnees[nomTache].length;
-
-							for(var i=0;i<nbrDonnee;++i){
-								if(donnees[nomTache][i]['ext']!='input.txt'){
-									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
-									console.log(cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
-								}else{
-									formData.append('tache0data'+(i), cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').val());
-									console.log(cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').val());
-								}
-							}
-							formData.append('idApplication', cloneApplication.attr('id'));
-							formData.append('idVersion', cloneApplication.attr('idVersion'));
-							formData.append('tache0', nomTache );
-							// On ajoute le formulaire des paramètres au formulaire général
-							for (var i=0; i<paramForm.length; i++)
-							    formData.append(paramForm[i].name, paramForm[i].value);
-								runTheMule(formData, cloneApplication);
-						}
-			      		catch(e){
-			      			var response = {
-							  'erreurs': '<p>A system error has occurred.</p>'
-							};
-							displayInformationsClient(response);
-							// On cache le loader
-							cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
-
-							// On cache les résultats précédents
-							cloneApplication.find('.resultBox img').hide(600);
-
-							// On efface le rapport précédent
-							cloneApplication.find('.applicationReports').html('');
-			      		}
-					}
-					
+				/*	if(key === "Run"){}*/
 		        },
 		        autoHide: true,
 		        items: {
-		        	"Run":{
+		        	/*"Run":{
 		        		name:"Run Application"
-		        	},
+		        	},*/
 		             "parametreApplication": {
 		            	name: "Set this application"
 		            },
@@ -481,7 +438,73 @@ $(function(){
 		            }
 		        }
 		    });
+		//**************************
+		//Remplace le menu contextuel key == 'run'
+        //Pour exécuter l'application
+        cloneApplication.find('.play').click(function(){
+        	    var formData = new FormData();
+        		formData = runApplication(cloneApplication,formData,0);
+        		runTheMule(formData, cloneApplication);
+        });
 		}
+
+		//************* By Naoures 
+		//fonction récurive pour exécuter une ou plusieur application
+		function runApplication(cloneApplication,formData,appNumber){
+			try{
+			        	// On affiche le loader
+				      	cloneApplication.find('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
+				      	// On ajoute les données et les paramètres pour le lancement de l'application
+				      	var form = paramForm = cloneApplication.find('.parametresApplication').serializeArray(),
+				      	nomTache=cloneApplication.children('.tachesApplication').attr('name'),
+				      	nbrDonnee=cloneApplication.children('.allDataBox').children('.dataBoxContainer').length;
+				      	console.log(nbrDonnee);
+
+						for(var i=0;i<nbrDonnee;++i){
+							if(!cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').hasClass('input-sm')){
+								if(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock').length){
+									var appNumber1=appNumber+1;
+									runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'),formData,appNumber+1);
+								}else{
+									formData.append('tache0data'+i+'_'+appNumber, 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id'));
+								}
+								
+							}else{
+								if(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock').length){
+										appNumber++;
+										runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'),formData,appNumber+1);
+								}else{
+									formData.append('tache0data'+i+'_'+appNumber, cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val());
+								}
+							}
+						}
+						formData.append('idApplication_'+appNumber, cloneApplication.attr('id'));
+						formData.append('idVersion_'+appNumber, cloneApplication.attr('idVersion'));
+						formData.append('tache0_'+appNumber, nomTache );
+						// On ajoute le formulaire des paramètres au formulaire général
+						for (var i=0; i<paramForm.length; i++)
+							formData.append(paramForm[i].name+'_'+appNumber, paramForm[i].value);
+
+							return formData;
+							
+						}
+			    catch(e){
+			      		var response = {
+							  'erreurs': '<p>A system error has occurred.</p>'
+						};
+						console.log(e);
+						displayInformationsClient(response);
+						// On cache le loader
+						cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
+
+						// On cache les résultats précédents
+						cloneApplication.find('.resultBox img').hide(600);
+
+						// On efface le rapport précédent
+						cloneApplication.find('.applicationReports').html('');
+			    }
+		}
+		//**************
 
 		// Pour initialiser les fonctionnalitées de la donnée utilisateur une fois ajouter à la NooSpace
 		function initDonneeUtilisateur(donneeUtilisateur, drop, nouvellePositionElementX, nouvellePositionElementY){
@@ -1022,8 +1045,8 @@ $(function(){
  				}
  				
  				if(nombreDonnee>1){
-				  cloneApplication.append("<button class='reduce' style='display:inline;position:absolute;top:"+(pasAffichage-1)*-73/2+25+"px'> - </button>");
-				  cloneApplication.append("<button class='resize' style='display:none;position:absolute;top:-30px'>+</button>");
+				  contenu+="<button class='reduce' style='display:inline;position:absolute;top:"+(pasAffichage-1)*-73/2+25+"px'> - </button>"; //cloneApplication.append
+				  contenu+="<button class='resize' style='display:none;position:absolute;top:-30px'>+</button>";
 				}
 				
 				var angle= 160/nombreDonnee;
@@ -1090,15 +1113,16 @@ $(function(){
 					
 
 				//Pour réduire les dataBox
-				cloneApplication.find(".reduce").click(function(){
+				cloneApplication.children('.allDataBox').children(".reduce").click(function(){
 						var nbrLigne=1, nbrColumn=2,grid_tem_column='',grid_tem_ligne='';
-						cloneApplication.find(".allDataBox ").css('height',73+'px');
-						cloneApplication.find(".allDataBox ").css('width',73+'px');
-						cloneApplication.find('.dataBoxContainer hr').css('display','none');
-						cloneApplication.find(".allDataBox ").addClass('dataBox').css('display','grid');
+						cloneApplication.children(".allDataBox ").css('height',73+'px');
+						cloneApplication.children(".allDataBox ").css('width',73+'px');
+						cloneApplication.children(".allDataBox ").children('.dataBoxContainer').children('hr').css('display','none');
+						cloneApplication.children(".allDataBox ").children('.dataBoxContainer').children('.appInDock').css('display','none');
+						cloneApplication.children(".allDataBox ").addClass('dataBox').css('display','grid');
 						cloneApplication.children('hr').css('display','inline');
-						cloneApplication.find('.allDataBox').css('overflow-y','hidden');
-						cloneApplication.find('.allDataBox').css('direction','ltr');
+						cloneApplication.children('.allDataBox').css('overflow-y','hidden');
+						cloneApplication.children('.allDataBox').css('direction','ltr');
 						while(nombreDonnee> nbrColumn*nbrLigne){
 							if(nbrLigne<nbrColumn){
 								nbrLigne++;
@@ -1113,43 +1137,44 @@ $(function(){
 						for(var i=0; i<nbrLigne;++i){
 							grid_tem_ligne+= 73/nbrLigne+'px '; 
 						}
-						cloneApplication.find(".allDataBox ").find("#scrollUp").css('display','none');
-						cloneApplication.find(".allDataBox ").find("#scrollDown").css('display','none');
-						cloneApplication.find(".allDataBox ").css('grid-template-columns',grid_tem_column);
-						cloneApplication.find(".allDataBox ").css('grid-template-rows',grid_tem_ligne);
-						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height','auto');
-						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('width',cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height'));
-						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('border-radius',15/nbrColumn+'px');
-						cloneApplication.find('.allDataBox').css('margin-top','0px');
+						cloneApplication.children(".allDataBox ").find("#scrollUp").css('display','none');
+						cloneApplication.children(".allDataBox ").find("#scrollDown").css('display','none');
+						cloneApplication.children(".allDataBox ").css('grid-template-columns',grid_tem_column);
+						cloneApplication.children(".allDataBox ").css('grid-template-rows',grid_tem_ligne);
+						cloneApplication.children('.allDataBox').children('.dataBoxContainer').children('.dataBox').css('height','auto');
+						cloneApplication.children('.allDataBox').children('.dataBoxContainer').children('.dataBox').css('width',cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height'));
+						cloneApplication.children('.allDataBox').children('.dataBoxContainer').children('.dataBox').css('border-radius',15/nbrColumn+'px');
+						cloneApplication.children('.allDataBox').css('margin-top','0px');
 
 						$(this).css('display','none');
-						cloneApplication.find('.resize').css('display','inline');
+						cloneApplication.children('.allDataBox').children('.resize').css('display','inline');
 				});
 				//Poue étendre les datatBox
-				cloneApplication.find(".resize").click(function(){
-						cloneApplication.find(".allDataBox ").find("#scrollUp").css('display','inline');
-						cloneApplication.find(".allDataBox ").find("#scrollDown").css('display','inline');				
-						cloneApplication.find('.dataBoxContainer hr').css('display','inline-flex');
-						cloneApplication.find(".allDataBox ").removeClass('dataBox').css('display','initial');
-						cloneApplication.find(".allDataBox ").css('width',90+'px');
+				cloneApplication.children('.allDataBox').children(".resize").click(function(){
+						cloneApplication.children(".allDataBox ").find("#scrollUp").css('display','inline');
+						cloneApplication.children(".allDataBox ").find("#scrollDown").css('display','inline');				
+						cloneApplication.children(".allDataBox ").children('.dataBoxContainer').children('hr').css('display','inline-flex');
+						cloneApplication.children(".allDataBox ").children('.dataBoxContainer').children('.appInDock').css('display','inline-flex');
+						cloneApplication.children(".allDataBox ").removeClass('dataBox').css('display','initial');
+						cloneApplication.children(".allDataBox ").css('width',90+'px');
 						cloneApplication.children('hr').css('display','none');
-						cloneApplication.find('.allDataBox').css('overflow-y','visible');		
+						cloneApplication.children('.allDataBox').css('overflow-y','visible');		
 						if(nombreDonnee>pasAffichage){
-							cloneApplication.find('.allDataBox').css('height',(pasAffichage*73+25)+'px');
-							cloneApplication.find('.allDataBox').css('width','120px');
+							cloneApplication.children('.allDataBox').css('height',(pasAffichage*73+25)+'px');
+							cloneApplication.children('.allDataBox').css('width','120px');
 							cloneApplication.children('.allDataBox').css('margin-top',(pasAffichage-1)*-73/2+'px');
 		 				}else{
-		 					cloneApplication.find('.allDataBox').css('height',(nombreDonnee*73+25)+'px');
-							cloneApplication.find('.allDataBox ').css('width','90px');
+		 					cloneApplication.children('.allDataBox').css('height',(nombreDonnee*73+25)+'px');
+							cloneApplication.children('.allDataBox ').css('width','90px');
 							cloneApplication.children('.allDataBox').css('margin-top',(nombreDonnee-1)*-73/2+'px');
 		 				}				
-						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('width','73px');
-						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height','73px');
-						cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('border-radius','15px');
+						cloneApplication.children('.allDataBox').children('.dataBoxContainer').children('.dataBox').css('width','73px');
+						cloneApplication.children('.allDataBox').children('.dataBoxContainer').children('.dataBox').css('height','73px');
+						cloneApplication.children('.allDataBox').children('.dataBoxContainer').children('.dataBox').css('border-radius','15px');
 						
 										
 						$(this).css('display','none');
-						cloneApplication.find('.reduce').css('display','inline');
+						cloneApplication.children('.allDataBox').children('.reduce').css('display','inline');
 				});
 				// Pour le scrollUp and ScrollDown
 

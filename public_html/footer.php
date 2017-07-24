@@ -37,7 +37,7 @@
 								<div class="containerApplication" style="display:inline-flex;float:right;">
 									<!--hr--><!--
 									-->
-									
+									<button class='play'style='position:absolute;top:-35px;right:25px;visibility:hidden'>play</button>
 									<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/>
 									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div><!--
 									--><hr><div class="resultBox">
