@@ -514,7 +514,7 @@ $(function(){
 			// On lance la requête ajax
 			formData.append('id',sessionStorage['id']);
 			formData.append('isAdmin',sessionStorage['isAdmin']);
-			var wellUrl = window.location.hostname === 'www.noolib.com' ? 'https://'+window.location.hostname+':3000/runTheMule/' : 'http://'+window.location.hostname+':3000/runTheMule/';
+			var wellUrl = window.location.hostname === 'www.noolib.com' ? 'https://'+window.location.hostname+':8080/runTheMule/' : 'http://'+window.location.hostname+':8080/runTheMule/';
 			
       		$.ajax({
 				url: wellUrl,
