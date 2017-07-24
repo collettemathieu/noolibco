@@ -27,8 +27,8 @@ var ipServer = networks['eth0'][0]['address'];
 // With Https if server = www.noolib.com
 if(ipServer === '5.196.95.48'){
   var server = https.createServer({
-  	key: fs.readFileSync('/etc/letsencrypt/live/www.noolib.com-0001/privkey.pem'),
-  	cert: fs.readFileSync('/etc/letsencrypt/live/www.noolib.com-0001/cert.pem')
+  	key: fs.readFileSync('/home/noolibco/NodeJs/bin/privkey.pem'),
+  	cert: fs.readFileSync('/home/noolibco/NodeJs/bin/cert.pem')
   },app);
 }else{
   var server = http.createServer(app);
