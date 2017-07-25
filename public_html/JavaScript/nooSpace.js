@@ -443,6 +443,8 @@ $(function(){
         //Pour exécuter l'application
         cloneApplication.find('.play').click(function(){
         	    var formData = new FormData();
+        	    // On affiche le loader
+				cloneApplication.children('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
         		formData = runApplication(cloneApplication,formData,0);
         		runTheMule(formData, cloneApplication);
         });
@@ -452,19 +454,29 @@ $(function(){
 		//fonction récurive pour exécuter une ou plusieur application
 		function runApplication(cloneApplication,formData,appNumber){
 			try{
-			        	// On affiche le loader
-				      	cloneApplication.find('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
 				      	// On ajoute les données et les paramètres pour le lancement de l'application
 				      	var form = paramForm = cloneApplication.find('.parametresApplication').serializeArray(),
 				      	nomTache=cloneApplication.children('.tachesApplication').attr('name'),
+				      	k=appNumber,
 				      	nbrDonnee=cloneApplication.children('.allDataBox').children('.dataBoxContainer').length;
-				      	console.log(nbrDonnee);
-
+				      	
 						for(var i=0;i<nbrDonnee;++i){
-							if(!cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').hasClass('input-sm')){
+
+							if(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock').length){
+								k++;
+								runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'),formData,k);
+							}else{
+								if(!cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').hasClass('input-sm')){
+									formData.append('tache0data'+i+'_'+appNumber, 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id'));
+								}else{
+									formData.append('tache0data'+i+'_'+appNumber, cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val());
+								}
+							}
+
+							/*if(!cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').hasClass('input-sm')){
 								if(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock').length){
-									var appNumber1=appNumber+1;
 									runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'),formData,appNumber+1);
+									console.log(Array.from(cloneApplication).indexOf(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock')));
 								}else{
 									formData.append('tache0data'+i+'_'+appNumber, 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id'));
 								}
@@ -476,7 +488,7 @@ $(function(){
 								}else{
 									formData.append('tache0data'+i+'_'+appNumber, cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val());
 								}
-							}
+							}*/
 						}
 						formData.append('idApplication_'+appNumber, cloneApplication.attr('id'));
 						formData.append('idVersion_'+appNumber, cloneApplication.attr('idVersion'));
