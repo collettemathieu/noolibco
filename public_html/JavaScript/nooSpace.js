@@ -445,31 +445,30 @@ $(function(){
         	    var formData = new FormData();
         	    // On affiche le loader
 				cloneApplication.children('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
-        		formData = runApplication(cloneApplication,formData,0);
+        		formData = runApplication(cloneApplication,formData);
         		runTheMule(formData, cloneApplication);
         });
 		}
 
 		//************* By Naoures 
 		//fonction récurive pour exécuter une ou plusieur application
-		function runApplication(cloneApplication,formData,appNumber){
+		function runApplication(cloneApplication,formData){
 			try{
 				      	// On ajoute les données et les paramètres pour le lancement de l'application
 				      	var form = paramForm = cloneApplication.find('.parametresApplication').serializeArray(),
 				      	nomTache=cloneApplication.children('.tachesApplication').attr('name'),
-				      	k=appNumber,
 				      	nbrDonnee=cloneApplication.children('.allDataBox').children('.dataBoxContainer').length;
 				      	
 						for(var i=0;i<nbrDonnee;++i){
 
 							if(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock').length){
-								k++;
-								runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'),formData,k);
+								formData.append('child',i+1);
+								runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'),formData);
 							}else{
 								if(!cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').hasClass('input-sm')){
-									formData.append('tache0data'+i+'_'+appNumber, 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id'));
+									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id'));
 								}else{
-									formData.append('tache0data'+i+'_'+appNumber, cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val());
+									formData.append('tache0data'+i, cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val());
 								}
 							}
 
@@ -490,12 +489,12 @@ $(function(){
 								}
 							}*/
 						}
-						formData.append('idApplication_'+appNumber, cloneApplication.attr('id'));
-						formData.append('idVersion_'+appNumber, cloneApplication.attr('idVersion'));
-						formData.append('tache0_'+appNumber, nomTache );
+						formData.append('idApplication', cloneApplication.attr('id'));
+						formData.append('idVersion', cloneApplication.attr('idVersion'));
+						formData.append('tache0', nomTache );
 						// On ajoute le formulaire des paramètres au formulaire général
 						for (var i=0; i<paramForm.length; i++)
-							formData.append(paramForm[i].name+'_'+appNumber, paramForm[i].value);
+							formData.append(paramForm[i].name, paramForm[i].value);
 
 							return formData;
 							
