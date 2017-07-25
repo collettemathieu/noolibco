@@ -235,7 +235,7 @@ execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction
 				var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+args;
 				console.log(instructions);
 
-					var resultat=exec(instructions + '2>&1',async function(err,stdout,stderr){
+					var resultat=exec(instructions + '2>&1', {maxBuffer: 1024*50000} ,async function(err,stdout,stderr){
 						if(err)  return resolve(err);
 						if(stderr){
 							return resolve(stderr);
