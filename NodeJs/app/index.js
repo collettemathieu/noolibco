@@ -27,7 +27,6 @@ var Config=require('../models/Config');
 
 //variable de stockage
 var abonnement_user=true;
-var outputData = 'undefined';
 var numRequest=0;
 //***Const
 const ENGINE_NO_MATCH_DATA = 'Data entered does not match with the task called. Please verify data loaded on the mule.';
@@ -93,7 +92,7 @@ function escapeShell(cmd){
 function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths){
 	
 		var createur = applicationRunning.getCreateur();
-
+		var outputData;
 		if(tacheDemandee instanceof Tache){
 			
 			var tacheDatas = await(tacheDemandee.getTacheTypeDonneeUtilisateurs());
@@ -236,7 +235,7 @@ execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction
 				var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+args;
 				console.log(instructions);
 
-					var resultat=exec(instructions + '2>&1', {maxBuffer: 1024*50000},async function(err,stdout,stderr){
+					var resultat=exec(instructions + '2>&1',async function(err,stdout,stderr){
 						if(err)  return resolve(err);
 						if(stderr){
 							return resolve(stderr);
@@ -271,11 +270,11 @@ delFolderInProd = function (utilisateur,nbReq){
 }
 //********Request********
 router.post('/', function(req, res) { 
-	res.header("Access-Control-Allow-Origin","http://172.16.64.5");
+	res.header("Access-Control-Allow-Origin","http://172.16.64.2");
 	var messageClient = new(require('../models/MessageClient'));
 	async (function(){
 		numRequest +=1;
-		outputData = undefined;
+		var outputData = undefined;
 		var fields = await(getFormData(req));
 		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
 		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication'][0]));

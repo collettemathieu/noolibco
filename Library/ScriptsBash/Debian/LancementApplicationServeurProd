@@ -14,9 +14,11 @@ homenoolibco="/home/noolibco"
 paramsModifier="";
 fonctionLancer="";
 timeout=15s;
-mkdir $homenoolibco/SafeWorkSpace/Utilisateurs/$2/$6;
 usrPath=$homenoolibco/SafeWorkSpace/Utilisateurs/$2/$6;
 dockerPath="/home/noolibco/Library/ScriptsBash/Debian/docker-run-timeout";
+if [ ! -d $homenoolibco/SafeWorkSpace/Utilisateurs/$2/$6 ]; then
+ mkdir $homenoolibco/SafeWorkSpace/Utilisateurs/$2/$6;
+fi
 if [ -f $homenoolibco/Files/Sources/$1/$3/$4/$5 ]; then
 	cp $homenoolibco/Files/Sources/$1/$3/$4/$5 $homenoolibco/SafeWorkSpace/Utilisateurs/$2/$6/$5;
 	fichier=$5;
