@@ -5,28 +5,15 @@ function MessageClient(){
 }
 
 MessageClient.prototype.addErreur = function(erreur){
-		if(erreur != undefined ){
-			if(erreur.length !=0 ){
-				this.erreurs=this.erreurs.concat(erreur);
-			}else{
-				this.erreurs.push(erreur);
-			}
-		}
+
+	this.erreurs.push(erreur);
 }
 
 MessageClient.prototype.addReussite = function(reussite){
-	if(reussite != undefined){
-		this.reussites = [];
-		if(reussite.length != 0){
-			this.reussites= this.reussites.concat(reussite);
-		} else{
-			this.reussites.push(reussite);
-		}
-	}
+		this.reussites.push(reussite);	
 }
 MessageClient.prototype.hasErreur = function(){
-		if(this.erreurs.length != 0){
-			console.log(this.erreurs.length);			
+		if(this.erreurs.length != 0){		
 			return true;
 		} else{
 			return false;

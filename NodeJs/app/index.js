@@ -233,7 +233,7 @@ execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction
 				var nomApplication = application.getVariableFixeApplication();
 				var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
 				var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+args;
-				console.log(instructions);
+				//console.log(instructions);
 
 					var resultat=exec(instructions + '2>&1', {maxBuffer: 1024*50000} ,async function(err,stdout,stderr){
 						if(err)  return resolve(err);
@@ -255,7 +255,7 @@ delFolderInProd = function (utilisateur,nbReq){
 	return new Promise(function(resolve,reject){
 	 	if(utilisateur instanceof User){
 	 			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur()+' '+nbReq;
-	 			console.log(instructions);
+	 			//console.log(instructions);
 				exec(instructions,function(err){
 					if(err) return resolve(err);
 					return resolve("done");
@@ -393,14 +393,6 @@ router.post('/', function(req, res) {
 				 				}
 				 				++i;
 				 			}
-				 					// Execution du script Bash pour vider le dossier User linux
-									// On execute l'objet Exec
-									//console.log("here");
-									/*setTimeout(async function(){
-										await(delFolderInProd(currentUtilisateur));
-									},20000);*/
-				 					
-				 					//console.log(delForlder);
 				 		}else{
 							messageClient.addErreur(TREE_VERSION_NOT_ACTIVATED);
 						}
@@ -416,7 +408,6 @@ router.post('/', function(req, res) {
 		}else{
 			messageClient.addErreur(NO_APPLICATION);
 		}
-
 		 	
 		 	var response = {};
 			if(messageClient.hasErreur()){
@@ -432,7 +423,6 @@ router.post('/', function(req, res) {
 				var i=0;
 				messageClient.getReussites().forEach(function(resultat){
 					// Pour supprimer les espaces en début/fin de chaîne ainsi que les retours chariots
-			
 					resultat = resultat.toString().trim();
 					
 					resultat = resultat.split('<br>').join('');
