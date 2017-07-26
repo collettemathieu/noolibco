@@ -90,7 +90,7 @@ function escapeShell(cmd){
 	return "'"+ cmd.replace(/(['\\])/g, '\\$1')+"'";
 }
 //****************************************
-function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths){
+function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths,messageClient){
 	
 		var createur = applicationRunning.getCreateur();
 
@@ -271,12 +271,13 @@ delFolderInProd = function (utilisateur,nbReq){
 }
 //********Request********
 router.post('/', function(req, res) { 
-	res.header("Access-Control-Allow-Origin","http://172.16.64.2");
+	res.header("Access-Control-Allow-Origin",req.get('origin'));
 	var messageClient = new(require('../models/MessageClient'));
 	async (function(){
 		numRequest +=1;
 		outputData = undefined;
 		var fields = await(getFormData(req));
+		console.log(fields['fils0']);
 		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
 		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication'][0]));
 		if(currentApplication != false){
@@ -381,7 +382,7 @@ router.post('/', function(req, res) {
 
 				 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
 				 				
-				 					outputData = executeRun(numRequest,fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee));
+				 					outputData = executeRun(numRequest,fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee),messageClient);
 				 					offset = offset + nombreDeDonnee;
 				 					if(outputData != false){
 				 						messageClient.addReussite(outputData);

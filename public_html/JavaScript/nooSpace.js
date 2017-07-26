@@ -455,20 +455,24 @@ $(function(){
 		function runApplication(cloneApplication,formData){
 			try{
 				      	// On ajoute les données et les paramètres pour le lancement de l'application
-				      	var form = paramForm = cloneApplication.find('.parametresApplication').serializeArray(),
+				      	var tableau={},
+				      	form = paramForm = cloneApplication.find('.parametresApplication').serializeArray(),
 				      	nomTache=cloneApplication.children('.tachesApplication').attr('name'),
 				      	nbrDonnee=cloneApplication.children('.allDataBox').children('.dataBoxContainer').length;
 				      	
 						for(var i=0;i<nbrDonnee;++i){
 
 							if(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock').length){
-								formData.append('child',i+1);
-								runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'),formData);
+								formData.append('fils'+i,runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'),new FormData()));
+								formData.append('tache0data'+i, 'fils'+i);
+								//tableau['fils'+i]=runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'));
 							}else{
 								if(!cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').hasClass('input-sm')){
 									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id'));
+									//tableau['tache0data'+i] = 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id');
 								}else{
 									formData.append('tache0data'+i, cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val());
+								    //tableau['tache0data'+i]= cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val();
 								}
 							}
 
@@ -490,12 +494,17 @@ $(function(){
 							}*/
 						}
 						formData.append('idApplication', cloneApplication.attr('id'));
+						//tableau['idApplication']= cloneApplication.attr('id');
 						formData.append('idVersion', cloneApplication.attr('idVersion'));
+						//tableau['idVersion']= cloneApplication.attr('idVersion');
 						formData.append('tache0', nomTache );
-						// On ajoute le formulaire des paramètres au formulaire général
+						//tableau['tache0']= nomTache;
+						 //On ajoute le formulaire des paramètres au formulaire général
 						for (var i=0; i<paramForm.length; i++)
 							formData.append(paramForm[i].name, paramForm[i].value);
+							//tableau[paramForm[i].name] = paramForm[i].value;
 
+							//console.log(tableau);
 							return formData;
 							
 						}
