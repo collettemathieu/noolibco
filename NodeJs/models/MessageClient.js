@@ -5,7 +5,6 @@ function MessageClient(){
 }
 
 MessageClient.prototype.addErreur = function(erreur){
-
 	this.erreurs.push(erreur);
 }
 
