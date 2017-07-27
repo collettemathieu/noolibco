@@ -514,8 +514,10 @@ $(function(){
 			// On lance la requête ajax
 			formData.append('id',sessionStorage['id']);
 			formData.append('isAdmin',sessionStorage['isAdmin']);
+			var wellUrl = window.location.hostname === 'www.noolib.com' ? 'https://'+window.location.hostname+':3000/runTheMule/' : 'http://'+window.location.hostname+':3000/runTheMule/';
+			
       		$.ajax({
-				url:  'http://'+window.location.hostname+':3000/runTheMule/',
+				url: wellUrl,
 				type: 'POST',
 				async: true,
 				cache: false,
@@ -678,7 +680,7 @@ $(function(){
 						        }
 
 							}else{
-								reportClone.find('.graphResult').remove();
+								reportClone.find('.graph').remove();
 								$(elemA[1]).parent().remove();
 							}
 
@@ -703,7 +705,7 @@ $(function(){
 							if(tableauReponse['comments']){
 								reportClone.find('.commentsResult').html(tableauReponse['comments']);
 							}else{
-								reportClone.find('.commentairesResult').remove();
+								reportClone.find('.commentsResult').remove();
 								$(elemA[3]).parent().remove();
 							}
 

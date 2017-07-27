@@ -25,6 +25,7 @@ var Fonction=require('../models/Fonction');
 var Config=require('../models/Config');
 
 
+
 //variable de stockage
 var abonnement_user=true;
 var numRequest=0;
@@ -270,7 +271,7 @@ delFolderInProd = function (utilisateur,nbReq){
 }
 //********Request********
 router.post('/', function(req, res) { 
-	res.header("Access-Control-Allow-Origin","http://172.16.64.2");
+	res.header("Access-Control-Allow-Origin",req.get('origin'));
 	var messageClient = new(require('../models/MessageClient'));
 	async (function(){
 		numRequest +=1;

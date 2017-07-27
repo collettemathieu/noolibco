@@ -7,7 +7,9 @@
 var app = require('../app');
 var debug = require('debug')('nodejs:server');
 var http = require('http');
-var fs=require('fs');
+var https = require('https');
+var fs = require('fs');
+var os = require('os');
 /**
  * Get port from environment and store in Express.
  */
@@ -16,14 +18,22 @@ var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTPS server.
  */
 app.disable('x-powred-by'); //pour sécuriser
-var server = http.createServer(app);
-/*{
-  key: fs.readFileSync('/etc/letsencrypt/live/noolib.com/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/noolib.com/cert.pem')
-},*/
+var networks = os.networkInterfaces();
+var ipServer = networks['eth0'][0]['address'];
+
+// With Https if server = www.noolib.com
+if(ipServer === '5.196.95.48'){
+  var server = https.createServer({
+  	key: fs.readFileSync('/home/noolibco/NodeJs/bin/privkey.pem'),
+  	cert: fs.readFileSync('/home/noolibco/NodeJs/bin/cert.pem')
+  },app);
+}else{
+  var server = http.createServer(app);
+}
+
 /**
  * Listen on provided port, on all network interfaces.
  */
