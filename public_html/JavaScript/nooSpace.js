@@ -442,17 +442,17 @@ $(function(){
 		//Remplace le menu contextuel key == 'run'
         //Pour exécuter l'application
         cloneApplication.find('.play').click(function(){
-        	    var formData = new FormData();
+        	   // var formData = new FormData();
         	    // On affiche le loader
 				cloneApplication.children('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
-        		formData = runApplication(cloneApplication,formData);
-        		runTheMule(formData, cloneApplication);
+        		var formData=runApplication(cloneApplication);
+        		runTheMule(JSON.stringify(formData), cloneApplication);
         });
 		}
 
 		//************* By Naoures 
 		//fonction récurive pour exécuter une ou plusieur application
-		function runApplication(cloneApplication,formData){
+		function runApplication(cloneApplication){
 			try{
 				      	// On ajoute les données et les paramètres pour le lancement de l'application
 				      	var tableau={},
@@ -463,49 +463,32 @@ $(function(){
 						for(var i=0;i<nbrDonnee;++i){
 
 							if(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock').length){
-								formData.append('fils'+i,runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'),new FormData()));
-								formData.append('tache0data'+i, 'fils'+i);
-								//tableau['fils'+i]=runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'));
+								//formData.append('fils'+i,runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'),new FormData()));
+								//formData.append('tache0data'+i, 'fils'+i);
+								tableau['tache0data'+i]=runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'));
 							}else{
 								if(!cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').hasClass('input-sm')){
-									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id'));
-									//tableau['tache0data'+i] = 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id');
+									//formData.append('tache0data'+i, 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id'));
+									tableau['tache0data'+i] = 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id');
 								}else{
-									formData.append('tache0data'+i, cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val());
-								    //tableau['tache0data'+i]= cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val();
+									//formData.append('tache0data'+i, cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val());
+								    tableau['tache0data'+i]= cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val();
 								}
 							}
-
-							/*if(!cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').hasClass('input-sm')){
-								if(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock').length){
-									runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'),formData,appNumber+1);
-									console.log(Array.from(cloneApplication).indexOf(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock')));
-								}else{
-									formData.append('tache0data'+i+'_'+appNumber, 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id'));
-								}
-								
-							}else{
-								if(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock').length){
-										appNumber++;
-										runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'),formData,appNumber+1);
-								}else{
-									formData.append('tache0data'+i+'_'+appNumber, cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val());
-								}
-							}*/
 						}
-						formData.append('idApplication', cloneApplication.attr('id'));
-						//tableau['idApplication']= cloneApplication.attr('id');
-						formData.append('idVersion', cloneApplication.attr('idVersion'));
-						//tableau['idVersion']= cloneApplication.attr('idVersion');
-						formData.append('tache0', nomTache );
-						//tableau['tache0']= nomTache;
+						//formData.append('idApplication', cloneApplication.attr('id'));
+						tableau['idApplication']= cloneApplication.attr('id');
+						//formData.append('idVersion', cloneApplication.attr('idVersion'));
+						tableau['idVersion']= cloneApplication.attr('idVersion');
+						//formData.append('tache0', nomTache );
+						tableau['tache0']= nomTache;
 						 //On ajoute le formulaire des paramètres au formulaire général
 						for (var i=0; i<paramForm.length; i++)
-							formData.append(paramForm[i].name, paramForm[i].value);
-							//tableau[paramForm[i].name] = paramForm[i].value;
+							//formData.append(paramForm[i].name, paramForm[i].value);
+							tableau[paramForm[i].name] = paramForm[i].value;
 
-							//console.log(tableau);
-							return formData;
+							console.log(tableau);
+							return tableau;
 							
 						}
 			    catch(e){
@@ -617,15 +600,20 @@ $(function(){
 		function runTheMule(formData, cloneApplication){
 			
 			// On lance la requête ajax
-			formData.append('id',sessionStorage['id']);
-			formData.append('isAdmin',sessionStorage['isAdmin']);
+			//formData.append('id',sessionStorage['id']);
+			//formData.append('isAdmin',sessionStorage['isAdmin']);
       		$.ajax({
 				url:  'http://'+window.location.hostname+':3000/runTheMule/',
 				type: 'POST',
 				async: true,
+				headers:{
+					'Accept': 'application/json',
+					'content-Type': 'text/plain'
+				},
 				cache: false,
-				data: formData,
-				contentType: false,
+				data:  formData,
+				dataType: 'json', //added
+				//contentType: 'application/json', //false
 				processData: false,
 				success: function(response) {
 					

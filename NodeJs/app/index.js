@@ -272,12 +272,12 @@ delFolderInProd = function (utilisateur,nbReq){
 //********Request********
 router.post('/', function(req, res) { 
 	res.header("Access-Control-Allow-Origin",req.get('origin'));
+	console.log(req.get('origin'));
 	var messageClient = new(require('../models/MessageClient'));
 	async (function(){
 		numRequest +=1;
 		outputData = undefined;
 		var fields = await(getFormData(req));
-		console.log(fields['fils0']);
 		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
 		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication'][0]));
 		if(currentApplication != false){
@@ -329,8 +329,8 @@ router.post('/', function(req, res) {
 					 				tabDonneeUtilisateur.push(inputDonneeUtilisateur);
 					 			}
 		 					j++;
-		 			}
-			 		i++;j=0;
+			 			}
+				 		i++;j=0;
 			 	    }
 				 	if(noError){
 				 		var tabUrlDestinationDonneeUtilisateur = [];
