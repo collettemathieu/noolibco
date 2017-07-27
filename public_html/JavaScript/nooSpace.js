@@ -515,7 +515,7 @@ $(function(){
 			formData.append('id',sessionStorage['id']);
 			formData.append('isAdmin',sessionStorage['isAdmin']);
       		$.ajax({
-				url:  'http://'+window.location.hostname+':3000/runTheMule/',
+				url:  'https://'+window.location.hostname+':3000/runTheMule/',
 				type: 'POST',
 				async: true,
 				cache: false,

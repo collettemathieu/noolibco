@@ -17,6 +17,9 @@
 !/NodeJs
 !/NodeJs/*
 /NodeJs/config/database.js
+/NodeJs/bin/privkey.pem
+/NodeJs/bin/cert.pem
+/NodeJs/npm-debug.log
 *.DS_Store
 *.directory
 *routeur.txt
