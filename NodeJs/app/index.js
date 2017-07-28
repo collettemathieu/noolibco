@@ -269,15 +269,24 @@ delFolderInProd = function (utilisateur,nbReq){
 		}
 	});
 }
+
 //********Request********
 router.post('/', function(req, res) { 
 	res.header("Access-Control-Allow-Origin",req.get('origin'));
 	console.log(req.get('origin'));
-	var messageClient = new(require('../models/MessageClient'));
-	async (function(){
+	var jsonData='';
+	req.on('data',function(data){
+		jsonData += data;
+	});
+	req.on('end', async function(){
+		var messageClient = new(require('../models/MessageClient'));
+	
 		numRequest +=1;
 		outputData = undefined;
-		var fields = await(getFormData(req));
+		console.log(jsonData);
+		var fields = JSON.parse(jsonData);
+		console.log(fields);
+		console.log(typeof jsonData);
 		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
 		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication'][0]));
 		if(currentApplication != false){
@@ -295,6 +304,7 @@ router.post('/', function(req, res) {
 				});
 				}
 			var abonnenementUser = true;
+		
 			if(abonnenementUser || fields['isAdmin'][0] ){
 				if(currentApplication.getIdStatut() > 4 || fields['isAdmin'][0] || idAuteurs.indexOf(fields['id'][0]) ){
 					var i=0, j=0, tabDonneeUtilisateur=[], noError= true;
@@ -461,7 +471,7 @@ router.post('/', function(req, res) {
 			}
 			response = JSON.stringify(response);
 		 	res.send(response);	
-	})();
+	});
 
 });
 

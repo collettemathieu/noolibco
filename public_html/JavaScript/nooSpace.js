@@ -601,6 +601,10 @@ $(function(){
 			
 			// On lance la requête ajax
 			//formData.append('id',sessionStorage['id']);
+			formData= JSON.parse(formData);		
+			formData['id'] = sessionStorage['id'];
+			formData['isAdmin'] = sessionStorage['isAdmin'];
+			console.log(formData);
 			//formData.append('isAdmin',sessionStorage['isAdmin']);
       		$.ajax({
 				url:  'http://'+window.location.hostname+':3000/runTheMule/',
