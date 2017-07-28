@@ -514,8 +514,10 @@ $(function(){
 			// On lance la requête ajax
 			formData.append('id',sessionStorage['id']);
 			formData.append('isAdmin',sessionStorage['isAdmin']);
-			var wellUrl = window.location.hostname === 'www.noolib.com' ? 'https://'+window.location.hostname+':8080/runTheMule/' : 'http://'+window.location.hostname+':8080/runTheMule/';
-			
+			// Serveur Node
+			//var wellUrl = window.location.hostname === 'www.noolib.com' ? 'https://'+window.location.hostname+':8080/runTheMule/' : 'http://'+window.location.hostname+':8080/runTheMule/';
+			// Serveur Apache --- A supprimer !
+			var wellUrl = '/HandleApplication/RunTheMule';
       		$.ajax({
 				url: wellUrl,
 				type: 'POST',
