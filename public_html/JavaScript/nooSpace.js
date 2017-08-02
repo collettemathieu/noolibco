@@ -603,7 +603,9 @@ $(function(){
 			//formData.append('id',sessionStorage['id']);
 			formData= JSON.parse(formData);		
 			formData['id'] = sessionStorage['id'];
+			console.log(sessionStorage['id']);
 			formData['isAdmin'] = sessionStorage['isAdmin'];
+			console.log(sessionStorage['isAdmin']);
 			console.log(formData);
 			//formData.append('isAdmin',sessionStorage['isAdmin']);
       		$.ajax({
@@ -615,7 +617,7 @@ $(function(){
 					'content-Type': 'text/plain'
 				},
 				cache: false,
-				data:  formData,
+				data:  JSON.stringify(formData),
 				dataType: 'json', //added
 				//contentType: 'application/json', //false
 				processData: false,

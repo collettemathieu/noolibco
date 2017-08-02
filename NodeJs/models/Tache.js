@@ -67,8 +67,8 @@ putFonctionsInTache = function(idTache){
 		 	if(rows.length!=0){
 		 		var fonction = new Fonction();
 		 		var array = [];
-		 		rows.forEach(function(row){
-		 			array.push(fonction.getFonctionById(row['id_fonction']));
+		 		rows.forEach(function(row){	 			
+		 			array.push((fonction.getFonctionById(row['id_fonction'])));
 		 		});
 		 		
 		 		return resolve(array);
@@ -88,8 +88,8 @@ putTacheTypeDonneeUtilisateursInTache = function(idTache){
 		 	if(rows.length!=0){
 		 		var tacheTypeDonneeUtilisateur = new TacheTypeDonneeUtilisateur();
 		 		var array = [];
-		 		rows.forEach(function(row){
-		 			array.push(tacheTypeDonneeUtilisateur.getTacheTypeDonneeUtilisateurById(idTache, row['id_type_donnee_utilisateur'], row['id_ordre']));
+		 		rows.forEach(async function(row){
+		 			array.push(await(tacheTypeDonneeUtilisateur.getTacheTypeDonneeUtilisateurById(idTache, row['id_type_donnee_utilisateur'], row['id_ordre'])));
 		 		});
 		 		return resolve(array);
 		 	}

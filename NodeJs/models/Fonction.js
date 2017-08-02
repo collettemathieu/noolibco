@@ -66,8 +66,8 @@ putTachesInFonction = function(fonction){
 		 	if(rows.length!=0){
 		 		var tache = new PDOTache();
 		 		var array = [];
-		 		rows.forEach(function(row){
-		 			array.push(tache.getTacheByIdLimited(row['id_tache']));
+		 		rows.forEach(async function(row){
+		 			array.push(await(tache.getTacheByIdLimited(row['id_tache'])));
 		 		});
 		 		return resolve(array);
 		 	}

@@ -90,14 +90,13 @@ function escapeShell(cmd){
 	return "'"+ cmd.replace(/(['\\])/g, '\\$1')+"'";
 }
 //****************************************
-function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths,messageClient){
+async function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths,messageClient){
 	
 		var createur = applicationRunning.getCreateur();
 
 		if(tacheDemandee instanceof Tache){
 			
 			var tacheDatas = await(tacheDemandee.getTacheTypeDonneeUtilisateurs());
-
 			if(tacheDatas.length === tabDonneeUtilisateur.length){
 				var i=-1;
 				
@@ -105,6 +104,7 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 					i++;
 					var donnee = tabDonneeUtilisateur[i];
 					var typeDonnee = donnee.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
+				
 					var typeAttendu = tacheData.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
 					
 					if(typeAttendu != 'all'){
@@ -140,9 +140,13 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 				messageClient.addErreur(tacheDemandee.getNomTache()+ ': '+ENGINE_NO_MATCH_DATA);
 				return false;
 			}
+			console.log(tacheDemandee);
 			var fonctions = await(tacheDemandee.getFonctions());
+			console.log(fonctions);
 			if(fonctions.length != 0){
 			 var nbrFunction=0;
+			 console.log("here");
+			 console.log(fonctions);
 				fonctions.forEach(function(fonction){
 					var args=[];
 					var params = [];
@@ -165,6 +169,7 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 						}
 
 					// On récupère les paramètres de la fonction modifiés (ou non) par l'utilisateur
+					console.log(fonction);
 					var parametres = await(fonction.getParametres());
 					if(parametres!= false){
 						parametres.forEach(function(parametre){
@@ -234,7 +239,7 @@ execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction
 				var nomApplication = application.getVariableFixeApplication();
 				var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
 				var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+args;
-				console.log(instructions);
+				console.log('excFct '+instructions);
 
 					var resultat=exec(instructions + '2>&1',async function(err,stdout,stderr){
 						if(err)  return resolve(err);
@@ -256,7 +261,7 @@ delFolderInProd = function (utilisateur,nbReq){
 	return new Promise(function(resolve,reject){
 	 	if(utilisateur instanceof User){
 	 			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur()+' '+nbReq;
-	 			console.log(instructions);
+	 			console.log('delFolder  '+instructions);
 				exec(instructions,function(err){
 					if(err) return resolve(err);
 					return resolve("done");
@@ -273,22 +278,17 @@ delFolderInProd = function (utilisateur,nbReq){
 //********Request********
 router.post('/', function(req, res) { 
 	res.header("Access-Control-Allow-Origin",req.get('origin'));
-	console.log(req.get('origin'));
 	var jsonData='';
 	req.on('data',function(data){
 		jsonData += data;
 	});
 	req.on('end', async function(){
 		var messageClient = new(require('../models/MessageClient'));
-	
 		numRequest +=1;
 		outputData = undefined;
-		console.log(jsonData);
 		var fields = JSON.parse(jsonData);
-		console.log(fields);
-		console.log(typeof jsonData);
-		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
-		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication'][0]));
+		var currentUtilisateur=await(user.getUtilisateurById(fields['id']));
+		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication']));
 		if(currentApplication != false){
 			var idAuteurs = [];
 			var auteurs=await(currentApplication.getAuteurs());
@@ -305,20 +305,19 @@ router.post('/', function(req, res) {
 				}
 			var abonnenementUser = true;
 		
-			if(abonnenementUser || fields['isAdmin'][0] ){
-				if(currentApplication.getIdStatut() > 4 || fields['isAdmin'][0] || idAuteurs.indexOf(fields['id'][0]) ){
+			if(abonnenementUser || fields['isAdmin'] ){
+				if(currentApplication.getIdStatut() > 4 || fields['isAdmin'] || idAuteurs.indexOf(fields['id']) ){
 					var i=0, j=0, tabDonneeUtilisateur=[], noError= true;
 
 					while(fields["tache"+i+"data"+j] != undefined){
 		 				j=0;
 		 				while(fields["tache"+i+"data"+j] != undefined){
-					 			if(fields["tache"+i+"data"+j][0].indexOf('noolibData_')!= -1 ){
-					 				var idData = fields["tache"+i+"data"+j][0].replace("noolibData_","");
+					 			if(fields["tache"+i+"data"+j].indexOf('noolibData_')!= -1 ){
+					 				var idData = fields["tache"+i+"data"+j].replace("noolibData_","");
 					 				var donneeUtilisateur = await(PDODonneeUtilisateur.getDonneeUtilisateurById(idData));
-					 				
 					 				if(donneeUtilisateur != false){
 					 					var managerUtilisateurDonneeUtilisateur = new UtilisateurDonneeUtilisateur();
-					 					var utilisateurDonneeUtilisateur = await(managerUtilisateurDonneeUtilisateur.getUtilisateurDonneeUtilisateurById(fields['id'][0],donneeUtilisateur.getIdDonneeUtilisateur()));
+					 					var utilisateurDonneeUtilisateur = await(managerUtilisateurDonneeUtilisateur.getUtilisateurDonneeUtilisateurById(fields['id'],donneeUtilisateur.getIdDonneeUtilisateur()));
 		 								
 					 					if(utilisateurDonneeUtilisateur != false){
 					 						tabDonneeUtilisateur.push(donneeUtilisateur);
@@ -333,7 +332,7 @@ router.post('/', function(req, res) {
 					 				}
 			 					}
 					 			else{
-					 				var idDataInput = fields["tache"+i+"data"+j][0];
+					 				var idDataInput = fields["tache"+i+"data"+j];
 					 				var typeDonneeUtilisateur=await(PDOTypeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension('input.txt'));
 					 				var inputDonneeUtilisateur=new InputDonneeUtilisateur( {'valeurInputDonneUtilisateur':idDataInput, 'typeDonneUtilisateur':typeDonneeUtilisateur});
 					 				tabDonneeUtilisateur.push(inputDonneeUtilisateur);
@@ -352,11 +351,12 @@ router.post('/', function(req, res) {
 				 			}
 				 		});
 				 		// On récupère la version demandée si admin/auteurs ou la dernière version active de l'application
-				 		var idVersion=fields['idVersion'][0];
+				 		var idVersion=fields['idVersion'];
 				 		var version;
 				 		var versions = await(currentApplication.getVersions());
-
-				 		if(idVersion != 'undefined' && idAuteurs.indexOf(fields['id'][0]) ){
+				 	
+				 		if(idVersion != undefined && idAuteurs.indexOf(fields['id']) ){
+				 			
 				 			for(var i=0; i<versions.length ; ++i){
 				 				if(versions[i].getIdVersion() == idVersion){
 				 					version = versions[i];
@@ -364,6 +364,7 @@ router.post('/', function(req, res) {
 				 				}
 				 			}
 				 		} else{
+				 			
 				 			for(var i=0; i<versions.length ; ++i){
 				 				if(versions[i].getActiveVersion()){
 				 					version = versions[i];
@@ -378,7 +379,7 @@ router.post('/', function(req, res) {
 				 			var taches= await(version.getTaches());
 				 			while(fields['tache'+i] != undefined){
 				 				
-				 				var nomTacheApplication = fields['tache'+i][0];
+				 				var nomTacheApplication = fields['tache'+i];
 				 				
 				 				for(var j=0; j<taches.length;++j){
 				 					var task = await(taches[j]);
@@ -393,6 +394,7 @@ router.post('/', function(req, res) {
 				 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
 				 				
 				 					outputData = executeRun(numRequest,fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee),messageClient);
+				 				
 				 					offset = offset + nombreDeDonnee;
 				 					if(outputData != false){
 				 						messageClient.addReussite(outputData);
@@ -470,6 +472,7 @@ router.post('/', function(req, res) {
 				response['resultat'] = resultatsApplication;
 			}
 			response = JSON.stringify(response);
+			console.log(response);
 		 	res.send(response);	
 	});
 

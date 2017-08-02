@@ -40,7 +40,7 @@ Config.prototype.getVar= async function(categorie, sousCategorie, variable){
 
 getSimpleXmlFile = function() {
 	  return new Promise(function(resolve,rejection){
-	  	var xml = fs.readFile('../ConfigSystem/fichierDeConfiguration.xml',function(err,data){
+	  	var xml = fs.readFile('/home/noolibco/ConfigSystem/fichierDeConfiguration.xml',function(err,data){
 			parser.parseString(data,function(err,result){
 				return resolve(result);
 			});

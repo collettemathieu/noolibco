@@ -12,14 +12,14 @@ Application.prototype.getVariableFixeApplication = function(){
 	return this.variableFixeApplication;
 }
 putVersionsInApplication= function (application){
-	return new Promise(async function(resolve,reject){
-		DB.query('SELECT id_version FROM version WHERE id_application = ?',[application.idApplication], function(rows,err){
+	return new Promise( function(resolve,reject){
+		DB.query('SELECT id_version FROM version WHERE id_application = ?',[application.idApplication],async function(rows,err){
 			if(err) return reject(err);
 			if(rows.length !=0){
 				var array=[];
-				rows.forEach( function(row){
+				rows.forEach(async function(row){
 					var version = new Version();
-					array.push(version.getVersionById(row['id_version']));
+					array.push(await(version.getVersionById(row['id_version'])));
 				});
 				return resolve(array);
 			}

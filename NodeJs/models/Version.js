@@ -67,8 +67,4 @@ putTachesInVersion = function(version){
 	 	});
    });
 }
-
-constructVersion = function(donnee){
-
-}
 module.exports= Version;
