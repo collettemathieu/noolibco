@@ -51,11 +51,7 @@ class AddDataController extends \Library\BackController
 
 				// On contrôle les données présentes
 				$extensionFichier = strtolower($request->getPostData('ext'));
-				if(strlen($request->getPostData('nomFichier')) <= 4){
-					$nomFichier = $request->getPostData('nomFichier');
-				}else{
-				$nomFichier = substr($request->getPostData('nomFichier'), 0, -4);
-				}
+				$nomFichier = substr($request->getPostData('nomFichier'), 0, 34);
 				$dataSent = $request->getPostData('donneeUtilisateur');
 				$sampleRateDonneeUtilisateur = (int) $request->getPostData('sampleRateDonneeUtilisateur');
 				$tailleDonneeUtilisateur = (int) $request->getPostData('tailleDonneeUtilisateur');

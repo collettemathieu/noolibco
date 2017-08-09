@@ -103,19 +103,18 @@
 		<div class="hidden item" id="templateItemReportApplication">
 			<ul class="nav nav-pills">
 				<li><a href="#table2D" data-toggle="tab">Table</a></li>
-				<li><a href="#graph" data-toggle="tab">Graph</a></li>
 				<li><a href="#results" data-toggle="tab">Results</a></li>
 				<li><a href="#comments" data-toggle="tab">Comments</a></li>
+				<li><a href="#errors" data-toggle="tab">Errors</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane results table2D" id="table2D"></div>
-				<div class="tab-pane centering graph" id="graph">
-					<div class="graphResult"></div>
-					<div class="tableResult table-responsive tableOfGraph">
-						<table class="table table-bordered table-striped table-condensed"></table>
-					</div>
-				</div>
 				<div class="tab-pane results tableOfResults" id="results"></div>
-				<div class="tab-pane results commentsResult" id="comments"></div>
+				<div class="tab-pane results commentsResult" id="comments">
+					<ul class="list-group"></ul>
+				</div>
+				<div class="tab-pane results errorsResult" id="errors">
+					<ul class="list-group"></ul>
+				</div>
 			</div>
 		</div>
