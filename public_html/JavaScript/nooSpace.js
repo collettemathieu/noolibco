@@ -605,22 +605,19 @@ $(function(){
 			formData['id'] = sessionStorage['id'];
 			console.log(sessionStorage['id']);
 			formData['isAdmin'] = sessionStorage['isAdmin'];
-			console.log(sessionStorage['isAdmin']);
-			console.log(formData);
+			
 			//formData.append('isAdmin',sessionStorage['isAdmin']);
       		$.ajax({
 				url:  'http://'+window.location.hostname+':3000/runTheMule/',
 				type: 'POST',
 				async: true,
-				headers:{
-					'Accept': 'application/json',
-					'content-Type': 'text/plain'
-				},
 				cache: false,
-				data:  JSON.stringify(formData),
-				dataType: 'json', //added
-				//contentType: 'application/json', //false
-				processData: false,
+				//json: true,
+				//headers: {'Content-type':'application/x-www-form-urlencoded'},
+				data:  {jsonData: JSON.stringify(formData)}, 
+				//dataType: 'text', //added
+				//contentType: 'application/x-www-form-urlencoded', //false
+				//processData: false,
 				success: function(response) {
 					
 					// Pour réinitialiser le message d'attente du bouton

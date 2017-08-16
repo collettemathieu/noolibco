@@ -42,6 +42,11 @@ const DENY_HANDLE_DATA = 'You are not authorized to edit this data.';
 const NO_APPLICATION = 'The application asked does not exist.';
 const NO_TASK = 'The task asked does not exist.';
 //***************************
+/*router.use(bodyParser.urlencoded({
+	extended : false
+}));*/
+router.use(bodyParser.json());
+//********
 async function getFormData(req){
 		var promise= await new Promise(function(resolve,reject){
 		var form = new multiparty.Form();
@@ -90,7 +95,7 @@ function escapeShell(cmd){
 	return "'"+ cmd.replace(/(['\\])/g, '\\$1')+"'";
 }
 //****************************************
-async function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths,messageClient){
+function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths,messageClient){
 	
 		var createur = applicationRunning.getCreateur();
 
@@ -99,14 +104,13 @@ async function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,nu
 			var tacheDatas = await(tacheDemandee.getTacheTypeDonneeUtilisateurs());
 			if(tacheDatas.length === tabDonneeUtilisateur.length){
 				var i=-1;
-				
-				tacheDatas.forEach( async function(tacheData){
+				console.log(tacheDatas);
+				tacheDatas.forEach(function(tacheData){
 					i++;
 					var donnee = tabDonneeUtilisateur[i];
 					var typeDonnee = donnee.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
-				
 					var typeAttendu = tacheData.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
-					
+					//console.log(await(tacheData.getTypeDonneeUtilisateurs()));
 					if(typeAttendu != 'all'){
 						// On charge le fichier de configuration
 						var config = new Config();
@@ -142,11 +146,8 @@ async function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,nu
 			}
 			console.log(tacheDemandee);
 			var fonctions = await(tacheDemandee.getFonctions());
-			console.log(fonctions);
 			if(fonctions.length != 0){
 			 var nbrFunction=0;
-			 console.log("here");
-			 console.log(fonctions);
 				fonctions.forEach(function(fonction){
 					var args=[];
 					var params = [];
@@ -169,7 +170,6 @@ async function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,nu
 						}
 
 					// On récupère les paramètres de la fonction modifiés (ou non) par l'utilisateur
-					console.log(fonction);
 					var parametres = await(fonction.getParametres());
 					if(parametres!= false){
 						parametres.forEach(function(parametre){
@@ -278,15 +278,13 @@ delFolderInProd = function (utilisateur,nbReq){
 //********Request********
 router.post('/', function(req, res) { 
 	res.header("Access-Control-Allow-Origin",req.get('origin'));
-	var jsonData='';
-	req.on('data',function(data){
-		jsonData += data;
-	});
-	req.on('end', async function(){
-		var messageClient = new(require('../models/MessageClient'));
+	var messageClient = new(require('../models/MessageClient'));
+
+	async (function(){
 		numRequest +=1;
 		outputData = undefined;
-		var fields = JSON.parse(jsonData);
+
+			var fields = JSON.parse(await(req.body['jsonData']));
 		var currentUtilisateur=await(user.getUtilisateurById(fields['id']));
 		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication']));
 		if(currentApplication != false){
@@ -380,7 +378,7 @@ router.post('/', function(req, res) {
 				 			while(fields['tache'+i] != undefined){
 				 				
 				 				var nomTacheApplication = fields['tache'+i];
-				 				
+				 				console.log(nomTacheApplication);
 				 				for(var j=0; j<taches.length;++j){
 				 					var task = await(taches[j]);
 				 					if(task.getNomTache() == nomTacheApplication){
@@ -393,7 +391,7 @@ router.post('/', function(req, res) {
 
 				 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
 				 				
-				 					outputData = executeRun(numRequest,fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee),messageClient);
+				 					outputData =await(executeRun(numRequest,fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee),messageClient));
 				 				
 				 					offset = offset + nombreDeDonnee;
 				 					if(outputData != false){
@@ -430,8 +428,7 @@ router.post('/', function(req, res) {
 		}else{
 			messageClient.addErreur(NO_APPLICATION);
 		}
-
-		 	
+ 	
 		 	var response = {};
 			if(messageClient.hasErreur()){
 				var texte = '';
@@ -474,9 +471,11 @@ router.post('/', function(req, res) {
 			response = JSON.stringify(response);
 			console.log(response);
 		 	res.send(response);	
-	});
 
-});
+		})();	
+
+		});
+
 
 function escapeHtml(text){
 	return text.split('/&/g').join('&amp;').split('/</g').join('&lt;').split('/>/g').join('&gt;');

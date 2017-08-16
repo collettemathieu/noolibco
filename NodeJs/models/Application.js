@@ -17,9 +17,9 @@ putVersionsInApplication= function (application){
 			if(err) return reject(err);
 			if(rows.length !=0){
 				var array=[];
-				rows.forEach(async function(row){
+				rows.forEach( function(row){
 					var version = new Version();
-					array.push(await(version.getVersionById(row['id_version'])));
+					array.push(version.getVersionById(row['id_version']));
 				});
 				return resolve(array);
 			}

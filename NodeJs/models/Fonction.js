@@ -27,7 +27,7 @@ Fonction.prototype.getFonctionById = function(id){
 				fonction.nomFonction = rows[0]['nom_fonction'];
 				fonction.urlFonction = rows[0]['url_fonction'];
 				fonction.extensionFonction = rows[0]['extension_fonction'];
-				fonction.parametres=await(putParametresInFonction(fonction));
+				fonction.parametres=await(putParametresInFonction(rows[0]['id_fonction']));
 				//fonction.taches = putTachesInFonction(fonction);
 		 		return resolve(fonction);
 		 	}
@@ -40,13 +40,14 @@ Fonction.prototype.getFonctionById = function(id){
 
 putParametresInFonction = function(fonction){
 	 return new Promise((resolve,reject)=>{
-	 	DB.query("SELECT id_parametre FROM fonction_parametre WHERE id_fonction = ?  ORDER BY id_ordre",[fonction.idFonction],function(rows,err){
+	 	DB.query("SELECT id_parametre FROM fonction_parametre WHERE id_fonction = ?  ORDER BY id_ordre",[fonction],function(rows,err){
 	 		if(err)
 	 			return err;
 		 	if(rows.length!=0){
 		 		var parametre = new Parametre();
 		 		var array = [];
 		 		rows.forEach(function(row){
+		 			//console.log(parametre.getParametreById(row['id_parametre']));
 		 			array.push(parametre.getParametreById(row['id_parametre']));
 		 		});
 		 		return resolve(array);
@@ -60,14 +61,14 @@ putParametresInFonction = function(fonction){
 
 putTachesInFonction = function(fonction){
 	return new Promise((resolve,reject)=>{
-	 	DB.query("SELECT id_tache FROM tache_fonction WHERE id_fonction = ? ORDER BY id_ordre ",[fonction.idFonction],function(rows,err){
+	 	DB.query("SELECT id_tache FROM tache_fonction WHERE id_fonction = ? ORDER BY id_ordre ",[fonction],function(rows,err){
 	 		if(err)
 	 			return err;
 		 	if(rows.length!=0){
 		 		var tache = new PDOTache();
 		 		var array = [];
-		 		rows.forEach(async function(row){
-		 			array.push(await(tache.getTacheByIdLimited(row['id_tache'])));
+		 		rows.forEach( function(row){
+		 			array.push(tache.getTacheByIdLimited(row['id_tache']));
 		 		});
 		 		return resolve(array);
 		 	}
