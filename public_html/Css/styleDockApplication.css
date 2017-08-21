@@ -171,3 +171,20 @@
 #image-result-waiter{
 	display: none;
 }
+
+/*Style scrollbar*/
+#scrollUp{
+height: 25px;
+left:15px;
+background-image: url("/Images/arrow_top.png") ;
+width:73px;
+position: absolute;
+}
+
+#scrollDown{
+height: 25px;
+left:15px;
+background-image: url("/Images/arrow_bottom.png");
+width:73px;
+position: absolute;
+}
