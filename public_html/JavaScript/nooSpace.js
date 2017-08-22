@@ -527,7 +527,7 @@ $(function(){
 				contentType: false,
 				processData: false,
 				success: function(response) {
-					
+					console.log(response);
 					var numeroApp = cloneApplication.attr('numApp');
 					// Pour réinitialiser le message d'attente du bouton
 					$('#formMule').find('button:last').button('reset');
