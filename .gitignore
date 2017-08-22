@@ -20,6 +20,8 @@
 /NodeJs/bin/privkey.pem
 /NodeJs/bin/cert.pem
 /NodeJs/npm-debug.log
+/NodeJs/nodejs.log
+/NodeJs/nohup.out
 *.DS_Store
 *.directory
 *routeur.txt
