@@ -1,0 +1,224 @@
+/***************/
+/*   Frontend  */
+/***************/
+
+
+/* Pour le texte de l'actualité */
+.actualite{
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+	background-attachment: fixed;
+	height: 600px;
+}
+
+.parent{
+  position: relative;
+}
+
+.rightArrow, .leftArrow{
+  position: absolute;
+  cursor: pointer;
+  opacity: 0.5;
+  z-index: 100;
+}
+
+.rightArrow:hover, .leftArrow:hover{
+  opacity: 0.7;
+}
+
+.rightArrow{
+  top: 45%;
+  right: 4%;
+}
+
+.leftArrow{
+  top: 45%;
+  left: 3%;
+}
+
+.caseActualite{
+	display: inline-block;
+	color: white;
+	text-align: justify;
+	max-height: 470px;
+	background-color: rgba(0, 0, 0, 0.6);
+	margin: 50px 20px 20px 20px;
+	padding: 20px;
+	overflow: hidden;
+	font-size: 1.1em;
+	border-radius: 5px;
+}
+
+
+/* Pour le texte d'information */
+.mainInformation{
+	font-size: 1.2em;
+  margin-bottom: 100px;
+}
+
+.aboutScienceAPart{
+	background-image: url("/Images/education_large2.jpg");                                 
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+	background-attachment: fixed;
+  color: white;
+  font-family: 'OpenSansLight';
+}
+
+.aboutScienceAPart h1{
+  font-size: 3.5em;
+  margin-bottom: 100px;
+}
+
+/* Pour les statistics */
+.circle strong {
+    position: absolute;
+    top: 55px;
+    right: 0px;
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+}
+
+
+/* Pour l'éditorial */
+.editorial{
+	font-family: 'OpenSansLight';
+}
+
+.maxWidthEditorial{
+  max-width: 800px;
+  height: 700px;
+  overflow: hidden;
+}
+
+blockquote{
+  display:block;
+  background: #fff;
+  padding: 15px 20px 15px 45px;
+  margin: 40px 0px 0px 0px;
+  position: relative;
+  
+  /*Font*/
+  font-size: 1.5em;
+  color: #666;
+  text-align: justify;
+  
+  /*Borders - (Optional)*/
+  border-left: 0px solid rgb(200, 200, 200);
+
+}
+
+blockquote::before{
+  content: "\201C"; /*Unicode for Left Double Quote*/
+  
+  /*Font*/
+  font-family: Georgia, serif;
+  font-size: 60px;
+  font-weight: bold;
+  color: #999;
+  
+  /*Positioning*/
+  position: absolute;
+  left: 10px;
+  top:-10px;
+}
+
+blockquote::after{
+  /*Reset to make sure*/
+  content: "";
+}
+
+blockquote a{
+  text-decoration: none;
+  background: #eee;
+  cursor: pointer;
+  padding: 0 3px;
+  color: #c76c0c;
+}
+
+blockquote a:hover{
+ color: #666;
+}
+
+blockquote em{
+  font-style: italic;
+}
+
+.blurEffect{
+  position: relative;
+  top: -25px;
+  left: 0px;
+  height: 60px;
+}
+
+.blurEffect{
+  opacity: 0.9;
+}
+
+.edito{
+  display: inline-block;
+  cursor: pointer;
+  width:55px;
+  height:55px;
+  line-height: 55px;
+  background:#fafafa;
+  box-shadow: 2px 2px 16px black;
+  border-radius:50%;
+  color:#555;
+}
+
+.edito:hover{
+  background: #eeeeee;
+}
+
+.divArrowsEdito{
+  margin-bottom: 40px;
+}
+
+.arrowsEdito{
+  margin: auto;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.arrowsEdito:hover{
+  opacity: 0.7;
+}
+
+.numberEdito{
+  display: inline-block;
+  height: 32px;
+  font-size: 1.1em;
+  line-height: 32px;
+  vertical-align: bottom;
+}
+
+/* Media queries */
+@media screen and (max-width: 768px) {
+  .actualite{
+    display: none;
+    visibility: hidden;
+  }
+
+  .aboutScienceAPart{
+    background-image: none;
+    background-size: auto;
+    background-attachment: scroll;
+    background-color: rgb(70, 70, 70);
+  }
+
+  .rightArrow, .leftArrow{
+    display: none;
+    visibility: hidden;
+  }
+
+  blockquote{
+    margin-top: 60px;
+  }
+}

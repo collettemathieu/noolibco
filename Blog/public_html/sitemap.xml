@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.google.com/schemas/sitemap/0.84">
+	<url>
+		<loc>
+			https://blog.noolib.com/
+		</loc>
+	</url>
+	<url>
+		<loc>
+			https://blog.noolib.com/Blog/
+		</loc>
+	</url>
+
+	<url>
+		<loc>
+			https://blog.noolib.com/Cours/
+		</loc>
+	</url>
+	<url>
+		<loc>
+			https://blog.noolib.com/Services/
+		</loc>
+	</url>
+</urlset>
+

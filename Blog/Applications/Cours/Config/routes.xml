@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/Cours/" module="Defaut" action="show"/>
+	<route url="/Cours/CoursFromCoursGlobal" module="Defaut" action="getCoursFromCoursGlobal"/>
+	<route url="/Cours/([a-zA-Z0-9-]+)" module="Defaut" action="showCours" vars="titreCours"/>
+</routes>

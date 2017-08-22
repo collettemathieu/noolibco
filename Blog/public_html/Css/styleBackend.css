@@ -1,0 +1,171 @@
+/***************/
+/*   Backend   */
+/***************/
+
+.backend{
+	background: url("/Images/backgroundBackend.jpg");
+	background-size: cover;
+	background-attachment: fixed;
+	height: 600px;
+}
+
+.paddingTopBackend{
+	padding-top: 100px;
+}
+
+#listeUtilisateurs li, .listeArticles li, .listeCours li, .listeCoursGlobal li, .listeActualites li, .listeCommentaires li, .listeEditos li{
+	color: black;
+}
+
+#listeUtilisateurs li, .listeCommentaires li{
+	cursor: pointer;
+	margin-bottom: 1px;
+}
+
+.listeArticles a, .listeCours a, .listeCoursGlobal a, .listeActualites a, .listeEditos a{
+	text-decoration: none;
+}
+
+#listeUtilisateurs li:hover, .listeArticles li:hover, .listeCours li:hover, .listeCoursGlobal li:hover, .listeEditos li:hover, .listeActualites li:hover, .listeCommentaires li:hover{
+	background-color: rgb(200, 200, 200);
+}
+
+.listeMedias li{
+	margin-right: 20px;
+}
+
+.listeMedias img{
+	display: inline-block;
+	width: 100%;
+	cursor: pointer;
+}
+
+.menuArticleBackend, .menuActualiteBackend, .menuCoursGlobalBackend, .menuCoursBackend{
+	margin-bottom: 5px;
+}
+
+.menuArticleBackend:last-child, .menuActualiteBackend:last-child, .menuCoursGlobalBackend:last-child, .menuCoursBackend:last-child{
+	margin-bottom: 0px;
+}
+
+.enTeteArticleBackend a, .enTeteActualiteBackend a{
+	display: inline-block;
+}
+
+.imageActualite{
+	width: 200px;
+}
+
+/* Pour les cases Menu */
+.caseMenu {
+	display: inline-block;
+	color: black;
+	width: 200px;
+	height: 200px;
+	background-color: rgba(230, 230, 230, 0.6);
+	margin: 20px 20px 80px 20px;
+	padding: 0;
+	border-radius: 15px;
+}
+
+.caseMenu p {
+	display: inline-block;
+	margin: 0;
+	padding: 15px;
+	font-size: 1.6em;
+}
+
+.caseMenu img {
+	display: inline-block;
+	margin: 0px 0px 0px 60px;
+	padding: 0;
+}
+
+.caseMenu:hover{
+	background-color: rgba(200, 200, 200, 1);
+	color: black;
+}
+
+/* Gestionnaire de données */
+
+#boutonShowGestionnaireDonnees{
+	display: inline-block;
+	position: fixed;
+	top: 70px;
+	left: 0px;
+	padding-right: 5px;
+	text-align: center;
+	
+	cursor: pointer;
+	width: 55px;
+	height: 40px;
+	border-radius: 0px 5px 5px 0px;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+#boutonShowGestionnaireDonnees img{
+	display: inline-block;
+	vertical-align: bottom;
+
+}
+
+#boutonShowGestionnaireDonnees:hover{
+	width: 65px;
+}
+
+#overlayGestionnaireDonnees{
+	display: none;
+	position: fixed;
+	top: 65px;
+	left: 0;
+	width: 500px;
+	height: 550px;
+	z-index: 999;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+.headerGestionnaireDonnees{
+	display: block;
+	height: 55px;
+}
+
+
+.inHeaderGestionnaireDonnees{
+	display: block;
+	width: 450px;
+	margin: auto;
+	margin-top: 15px;
+	border-bottom: white solid 1px;
+}
+
+.titreGestionnaire{
+	display: inline-block;
+	font-size: 1.5em;
+	height: 55px;
+	line-height: 55px;
+	width: 270px;
+}
+
+
+#sectionGestionnaireDonnees{
+	display: inline-block;
+	width: 500px;
+}
+
+
+#inSectionGestionnaireDonnees{
+	display: block;
+	width: 500px;
+	margin: 10px auto 0px auto;
+	height: 450px;
+	padding: 20px;
+	z-index: 999;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.image-dataManager-waiter{
+	padding: 20px;
+}

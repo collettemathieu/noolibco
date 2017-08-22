@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/Sphinx/" module="ADZ" action="sdq"/>
+	<route url="/Sphinx/Search/" module="Search" action="search"/>
+</routes>

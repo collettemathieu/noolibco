@@ -1,0 +1,59 @@
+/***************/
+/*   Services  */
+/***************/
+
+.service{
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+
+.service a{
+	color: #457fca;
+}
+
+.services{                                     
+	background-size: cover;
+	background-attachment: fixed;
+	width: 100%;
+	overflow: hidden;
+}
+
+.services p, .services ul{
+	font-size: 1.4em;
+	text-align: justify;
+}
+
+.service1{
+	background-color: rgb(240, 240, 240);	
+}
+
+.service2{
+	color: white;
+	background: #457fca; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #457fca , #5691c8); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #457fca , #5691c8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+
+.service4{
+	color: white;
+
+
+	background: #FFB75E; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #FFB75E , #ED8F03); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #FFB75E , #ED8F03); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+              
+}
+
+.service4 form{
+	color: black;
+}
+
+.imageService{
+	line-height: 600px;
+}
+
+.imageService img{
+	max-width: 350px;
+}
+

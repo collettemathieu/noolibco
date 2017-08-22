@@ -1,0 +1,134 @@
+	<div class="services service1">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="col-lg-12 maxWidth centering">
+					<div class="col-sm-offset-1 col-sm-5 service">
+						<h1>Pour tout le monde</h1>
+						<p>ScienceAPart est réalisé et enrichi par des passionnés. Cependant, la création
+							des articles et des cours demande beaucoup de temps de préparation (écriture, 
+							mise en forme, mise en ligne, etc.). Le maintien de la plateforme sur 
+							différents supports informatiques est également très chronophage.
+						</p>
+						<p>Vous pouvez aider le développement de ScienceAPart en
+							 apportant votre contribution financière. Il n'y a évidement aucune 
+							obligation à cela et nous nous efforçerons toujours
+							de vous fournir un contenu de qualité.
+						</p>
+						<p>Et si vous avez une remarque à nous adresser,
+							n'hésitez pas à nous <a href="#contact">contacter</a> directement.</p>
+						<form class="well well-lg" method="post" action="/NewsLetter/AjouterUtilisateur/">
+							<legend>Envie de recevoir la newsletter ?</legend>
+							<div class="form-group">
+								<input type="input" required name="nom" class="form-control" placeholder="Entrez votre nom..."/>
+							</div>
+							<div class="form-group">
+								<input type="email" required name="adresseMail" class="form-control" placeholder="Entrez votre adresse électonique..."/>
+							</div>
+							<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Traitement..." type="submit">C'est parti !</button>	
+						</form>
+					</div>
+					<div class="col-sm-5 text-center imageService">
+						<img class="hidden-xs" src="/Images/computer.png"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="services service2">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="col-lg-12 maxWidth centering">
+					<div class="col-sm-5 text-center imageService">
+						<img class="hidden-xs" src="/Images/serviceEnseignementSup.png"/>
+					</div>
+					<div class="col-sm-offset-1 col-sm-5 service">
+						<h1>Pour les écoles et les laboratoires</h1>
+						<p>ScienceAPart est bien au fait de la recherche académique et collabore par différentes voies :</p>
+						<ul>
+							<li>Enseignements auprès de vos étudiants en :
+								<ol>
+									<li>Mathématiques</li>
+									<li>Physique</li>
+									<li>Informatique (Web, C++, Matlab, Latex)</li>
+								</ol>
+							</li>
+							<li>Aide à la valorisation de vos activités de Recherche auprès du grand public</li>
+							<li>Aide à la restructuration du site web de votre laboratoire</li>
+							<li>Aide à l'écriture de documents scientifiques (Appel à projet, publication, etc.)</li>
+							<li>Mise en place de projets collaboratifs</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="services service4">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="col-lg-12 maxWidth centering">
+					<div class="col-sm-offset-1 col-sm-5 service">
+						<h1>Pour les entreprises</h1>
+						<p>Nous avons l’habitude de collaborer avec des entreprises de différentes manières :</p>
+						<ul>
+							<li>Synthèse bibliographique et veille technologique</li>
+							<li>Formation auprès de votre personnel</li>
+							<li>Mise en place de projets</li>
+						</ul>
+						<p>Mais aussi...</p>
+						<ul>
+							<li>Insertion de bannières publicitaires</li>
+							<li>Affiliation</li>
+							<li>Création de contenus dédiés hébergés sur ScienceAPart.com ou sur votre site Internet</li>
+							<li>Création de contenus en marque blanche</li>
+						</ul>
+						<p>Nous serions ravis d’échanger avec vous sur vos problématiques afin d’y répondre via une prestation sur-mesure.</p>
+					</div>
+					<div class="col-sm-5 text-center imageService">
+						<img class="hidden-xs" src="/Images/entreprise3.png"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="services service1">
+		<div id="contact" class="container-fluid">
+			<div class="row-fluid services service1">
+				<div class="col-lg-12 maxWidth centering">
+					<div class="col-sm-5 centering service">
+						<h1>Contactez-nous !</h1>
+						<form class="well well-lg" method="post" action="/Services/Contact/">
+							<legend>Petit formulaire à remplir !</legend>
+							<div class="form-group">
+								<label for="nom">Votre nom</label>
+								<input type="input" id="nom" required name="nom" class="form-control" placeholder="Entrez votre nom..."/>
+							</div>
+							<div class="form-group">
+								<label for="adresseMail">Votre adresse de contact</label>
+								<input type="email" id="adresseMail" required name="adresseMail" class="form-control" placeholder="Entrez votre adresse électonique..."/>
+							</div>
+							<div class="form-group">
+								<label for="select">Objet du contact</label>
+								<select id="select" name="sujet" class="form-control">
+									<option>Question ?</option>
+									<option>Besoin de formation</option>
+									<option>Aide à l'écriture</option>
+									<option>Synthèse et veille technologique</option>
+									<option>Affiliation</option>
+									<option>Projet collaboratif</option>
+									<option>Aide à la valorisation</option>
+									<option>Autre ?</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="message">Votre message</label>
+								<textarea rows="4" id="message" required name="message" class="form-control" placeholder="Votre texte..."></textarea>
+							</div>
+							<button class="btn btn-primary" data-loading-text="<span class='glyphicon glyphicon-refresh spinning'></span> Traitement..." type="submit">Envoyer</button>	
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

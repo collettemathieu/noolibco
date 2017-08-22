@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/Commentaire/ValiderCommentaire/id=([0-9]+)" module="Validation" action="validerCommentaire" vars="idCommentaire"/>
+	<route url="/Commentaire/AjouterCommentaire" module="Validation" action="ajouterCommentaire"/>
+</routes>

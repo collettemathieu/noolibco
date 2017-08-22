@@ -1,0 +1,117 @@
+/****************/
+/*   Article(s) */
+/****************/
+
+.articles{
+	padding: 90px 0px 40px 0px;
+	background-color: rgb(230, 230, 230);
+	
+}	
+
+.article{
+	margin-top: 90px;
+}
+
+/* Pour chaque article */
+.caseArticle{
+	display: inline-block;
+	color: black;
+	text-align: justify;
+	width: 238px;
+	background-color: white;
+	text-decoration: none;
+	vertical-align: top;
+	margin: 0px 10px 20px 6px;
+	border-radius: 5px;
+	box-shadow: -1px 1px 10px grey;
+}
+
+.caseArticle:hover{
+	text-decoration: none;
+	color: black;
+}
+
+.caseArticle img{
+	width: 238px;
+	border-radius: 5px 5px 0px 0px;
+}
+
+.mainText{
+	padding: 20px;
+}
+
+.mainText p {
+	margin-top: 10px;
+}
+
+.informationArticle{
+	display: block;
+	width: 100%;
+}
+
+.mainBackgroundArticle{
+	background-color: rgb(230, 230, 230);
+}
+
+.backgroundArticle{
+	background-color: white;
+	padding: 50px;
+	margin-bottom: 40px;
+	border-radius: 5px;
+}
+
+.headerArticle{
+	display: inline-block;
+	font-family: 'OpenSansLight';
+	color: rgb(140, 140, 140);
+	margin-top: 40px;
+	border-top: 1px rgb(220, 220, 220) solid;
+	border-bottom: 1px rgb(220, 220, 220) solid;
+}
+.imageArticle{
+	margin: 40px 0px 40px 0px;
+}
+
+.contentArticle{
+	display: block;
+	text-align: justify;
+	font-size: 1.2em;
+}
+
+.tableRestriction{
+	display: block;
+	width: 650px;
+}
+
+.referencesArticle{
+	display: inline-block;
+	font-family: 'Trebuchet';
+	font-style: italic;
+	margin-bottom: 20px;
+	color: rgb(140, 140, 140);
+	border-top: 1px rgb(220, 220, 220) solid;
+	border-bottom: 1px rgb(220, 220, 220) solid;
+}
+
+.commentairesArticle{
+	display: inline-block;
+	font-family: 'Trebuchet';
+	font-style: italic;
+	margin-bottom: 40px;
+	color: rgb(140, 140, 140);
+	border-top: 1px rgb(220, 220, 220) solid;
+	border-bottom: 1px rgb(220, 220, 220) solid;
+}
+
+.formCommentaireArticle{
+	font-family: 'Trebuchet';
+	font-style: italic;
+	color: rgb(140, 140, 140);
+}
+
+/* Media queries */
+@media screen and (max-width: 768px) {
+  .mobile{
+    font-size: 0.5em;
+  }
+}

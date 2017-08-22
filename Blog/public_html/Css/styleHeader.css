@@ -1,0 +1,15 @@
+/**********************/
+/*      HEADER        */
+/**********************/
+
+.navbar{
+  background-color: rgba(30, 30, 30, 0.8);
+}
+
+.navbar-brand{
+	font-size: 2em;
+}
+
+header nav li a{
+	font-size: 1.2em;
+}

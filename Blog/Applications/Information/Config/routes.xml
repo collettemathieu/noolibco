@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/Information/Cookies" module="Cookies" action="show"/>
+	<route url="/Information/MentionsLegales" module="MentionsLegales" action="show"/>
+	<route url="/Information/APropos" module="APropos" action="show"/>
+</routes>

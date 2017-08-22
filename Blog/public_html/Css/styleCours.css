@@ -1,0 +1,176 @@
+/**************/
+/*   Cours    */
+/**************/
+
+.courss{
+	padding: 90px 0px 40px 0px;
+	background-color: rgb(230, 230, 230);
+}	
+
+#showAllCours .modal-content{
+	background-color: rgb(230, 230, 230);
+	max-width: 826px;
+	min-height: 100px;
+	margin: auto;
+}
+
+.loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid grey; /* Blue */
+ 	border-bottom: 4px solid grey;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    left: 47%;
+    -webkit-animation: spinLoader 2s linear infinite;
+    animation: spinLoader 2s linear infinite;
+}
+
+@-webkit-keyframes spinLoader {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spinLoader {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* Pour chaque article */
+.caseCours{
+	display: inline-block;
+	color: black;
+	text-align: justify;
+	width: 238px;
+	background-color: white;
+	text-decoration: none;
+	vertical-align: top;
+	margin: 0px 10px 20px 6px;
+	border-radius: 5px;
+	box-shadow: -1px 1px 10px grey;
+}
+
+.caseCours:hover{
+	text-decoration: none;
+	color: black;
+}
+
+.caseCours img{
+	width: 238px;
+	border-radius: 5px 5px 0px 0px;
+}
+
+.mainText{
+	padding: 20px;
+}
+
+.mainText p {
+	margin-top: 10px;
+}
+
+.informationCours{
+	display: block;
+	width: 100%;
+}
+
+.cours{
+	margin-top: 90px;
+}
+
+.mainBackgroundCours{
+	background-color: rgb(230, 230, 230);
+}
+
+.backgroundCours{
+	background-color: white;
+	padding: 50px;
+	margin-bottom: 40px;
+	border-radius: 5px;
+}
+
+.headerCours{
+	display: inline-block;
+	font-family: 'OpenSansLight';
+	color: rgb(140, 140, 140);
+	margin-top: 40px;
+	border-top: 1px rgb(220, 220, 220) solid;
+	border-bottom: 1px rgb(220, 220, 220) solid;
+}
+
+.imageCours{
+	margin: 40px 0px 40px 0px;
+}
+
+.sommaire, .coursAssocies{
+	margin-bottom: 60px;
+	
+}
+.coursAssocies{
+	padding: 20px;
+	border-top: 1px rgb(220, 220, 220) solid;
+	border-bottom: 1px rgb(220, 220, 220) solid;
+}
+.sommaire h2, .coursAssocies h2{
+	margin-top: 0;
+	padding-top: 0;
+}
+.sommaire a, .coursAssocies a{
+	text-decoration: none;
+}
+
+.contentCours{
+	display: block;
+	text-align: justify;
+	font-size: 1.2em;
+}
+
+.tableRestriction{
+	display: block;
+	width: 650px;
+}
+
+.referencesCours{
+	display: inline-block;
+	font-family: 'Trebuchet';
+	font-style: italic;
+	margin-bottom: 20px;
+	color: rgb(140, 140, 140);
+	border-top: 1px rgb(220, 220, 220) solid;
+	border-bottom: 1px rgb(220, 220, 220) solid;
+}
+
+.commentairesCours{
+	display: inline-block;
+	font-family: 'Trebuchet';
+	font-style: italic;
+	margin-bottom: 40px;
+	color: rgb(140, 140, 140);
+	border-top: 1px rgb(220, 220, 220) solid;
+	border-bottom: 1px rgb(220, 220, 220) solid;
+}
+
+.formCommentaireCours{
+	font-family: 'Trebuchet';
+	font-style: italic;
+	color: rgb(140, 140, 140);
+}
+
+iframe{
+	width: 560px;
+	height: 315px;
+}
+
+/* Media queries */
+@media screen and (max-width: 768px) {
+  .mobile{
+    font-size: 0.5em;
+  }
+
+  iframe{
+	width: 100%;
+	height: 100%;
+}
+}
