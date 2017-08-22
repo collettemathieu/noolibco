@@ -33,6 +33,7 @@
 !/Blog/ConfigSystem/Template/*
 !/Blog/Library
 !/Blog/Library/*
+/Blog/Library/PDOFactory.class.php
 !/Blog/public_html
 !/Blog/public_html/*
 /Blog/public_html/.htaccess
