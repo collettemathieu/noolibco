@@ -506,16 +506,14 @@ $(function(){
 			//On vide le caroussel de son contenu
 			$('#carouselApplicationReport').empty();
 		});
-            			
-
-
+           
 		// Pour lancer l'application et gérer les résultats de retour
 		function runTheMule(formData, cloneApplication){
 			// On lance la requête ajax
 			formData.append('id',sessionStorage['id']);
 			formData.append('isAdmin',sessionStorage['isAdmin']);
 			// Serveur Node
-			var wellUrl = window.location.hostname === 'www.noolib.com' ? 'http://node.noolib.com/runTheMule/' : 'http://'+window.location.hostname+':3000/runTheMule/';
+			var wellUrl = window.location.hostname === 'www.noolib.com' ? 'https://node.noolib.com/runTheMule/' : 'http://'+window.location.hostname+':3000/runTheMule/';
 			// Serveur Apache --- A supprimer !
 			//var wellUrl = '/HandleApplication/RunTheMule';
       		$.ajax({
