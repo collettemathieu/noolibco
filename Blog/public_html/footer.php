@@ -14,7 +14,6 @@
 											<li><a href="/Services/#contact">Contactez-nous !</a></li>
 											<li><a href="/Information/Cookies">Les cookies</a></li>
 											<li><a href="/Information/MentionsLegales">Mentions légales</a></li>
-											<li><a href="/Information/APropos">A propos !</a></li>
 										</ul>
 									</div>
 									<div class="col-sm-5 hidden-xs">

@@ -10,7 +10,9 @@
 							différents supports informatiques est également très chronophage.
 						</p>
 						<p>Vous pouvez aider le développement de NooLib en
-							 apportant votre contribution financière. Il n'y a évidement aucune 
+							 apportant votre contribution financière. Dans ce cas, rendez-vous
+							 sur notre page <a href="https://www.tipeee.com/noolib" target="_blank">Tipeee</a>. 
+							 Il n'y a évidement aucune 
 							obligation à cela et nous nous efforçerons toujours
 							de vous fournir un contenu de qualité.
 						</p>
@@ -46,8 +48,8 @@
 						<h1>Pour les écoles et les laboratoires</h1>
 						<p>NooLib est bien au fait de la recherche académique et collabore par différentes voies :</p>
 						<ul>
-							<li>Enseignements</li>
 							<li>Aide à la valorisation de vos activités de Recherche auprès du grand public</li>
+							<li>Aide à la diffusion de vos algorithmes de Recherche</li>
 							<li>Mise en place de projets collaboratifs</li>
 						</ul>
 					</div>
@@ -63,15 +65,10 @@
 						<h1>Pour les entreprises</h1>
 						<p>Nous avons l’habitude de collaborer avec des entreprises de différentes manières :</p>
 						<ul>
-							<li>Synthèse bibliographique et veille technologique</li>
-							<li>Formation auprès de votre personnel</li>
-							<li>Mise en place de projets</li>
-						</ul>
-						<p>Mais aussi...</p>
-						<ul>
-							<li>Insertion de bannières publicitaires</li>
+							<li>Insertion intelligente de bannières publicitaires</li>
 							<li>Affiliation</li>
-							<li>Création de contenus dédiés hébergés sur noolib.com ou sur votre site Internet</li>
+							<li>Mise en place de projets collaboratifs</li>
+							<li>Création de contenus dédiés hébergés sur <a href="https://www.noolib.com" target="_blank">Noolib</a> ou sur votre site Internet</li>
 							<li>Création de contenus en marque blanche</li>
 						</ul>
 						<p>Nous serions ravis d’échanger avec vous sur vos problématiques afin d’y répondre via une prestation sur-mesure.</p>
@@ -104,12 +101,11 @@
 								<label for="select">Objet du contact</label>
 								<select id="select" name="sujet" class="form-control">
 									<option>Question ?</option>
-									<option>Besoin de formation</option>
-									<option>Aide à l'écriture</option>
-									<option>Synthèse et veille technologique</option>
 									<option>Affiliation</option>
+									<option>Publicité</option>
 									<option>Projet collaboratif</option>
 									<option>Aide à la valorisation</option>
+									<option>Aide à la diffusion</option>
 									<option>Autre ?</option>
 								</select>
 							</div>
