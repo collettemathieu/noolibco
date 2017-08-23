@@ -79,7 +79,7 @@ Go to https://www.noolib.com/Hire/ .
 				<div class="row">
 					<div class="col-lg-12 centering maxWidth">
 						<div class="col-lg-8 text-center centering">
-							<h5>© 2017 NooLib - All rights reserved</h5>
+							<h5>© 2017 NooLib - All rights reserved - </h5>
 							<ul>
 								<li><a href="https://www.tipeee.com/noolib" target="_blank" data-toggle="tooltip" title="Help us with tipeee!"><img src="/Images/Social/tipeee.png"/></a></li>
 								<li><a href="https://blog.noolib.com" target="_blank" data-toggle="tooltip" title="NooLib The Blog!"><img src="/Images/Social/blog.png"/></a></li>
