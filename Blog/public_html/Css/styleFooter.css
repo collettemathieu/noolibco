@@ -37,7 +37,7 @@ footer hr{
 	border-top: 1px solid rgb(200, 200, 200);
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 767px) {
 	.mobileFooter {
 		float:none;
 		margin:0 auto;
