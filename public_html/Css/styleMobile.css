@@ -47,7 +47,7 @@ section{
 }
 
 footer{
-  height: 4%;
+  height: 6%;
 }
 
 /* Pour le centrage verticale des éléments */
@@ -152,9 +152,7 @@ h5{
   margin: 0;
   padding: 0;
 }
-.red{
-  border: 1px red solid;
-}
+
 /* Pour les puces */
 footer ul{
   display: inline-block;
