@@ -66,6 +66,15 @@
 			placement:'right', 
 			trigger:'hover'
 		});
+	}else{
+		$('[data-toggle="tooltip"]').tooltip(
+			delay: {
+				show: 800,
+				hide: 100
+			}, 
+			placement:'top', 
+			trigger:'hover'
+		);
 	}
 
 /************/
