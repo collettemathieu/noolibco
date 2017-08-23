@@ -2,7 +2,7 @@
 			<?php if(!$user->isAuthenticated()){ ?>
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-7 centering" >
+					<div class="col-lg-5 centering" >
 						<h5>© 2017 NooLib - All rights reserved - </h5>
 						<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#team">Team</button>
 						<button ng-click="contactModal()" class="btn btn-default btn-xs">Contact</button>
