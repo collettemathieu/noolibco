@@ -7,6 +7,8 @@
 						<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#team">Team</button>
 						<button ng-click="contactModal()" class="btn btn-default btn-xs">Contact</button>
 						<ul>
+							<li><a href="https://blog.noolib.com" target="_blank"><img src="/Images/Social/blog.png"/></a></li>
+							<li><a href="https://www.tipeee.com/noolib" target="_blank"><img src="/Images/Social/tipeee.png"/></a></li>
 							<li><a href="https://twitter.com/NoolibApp" target="_blank"><img src="/Images/Social/twitter.png"/></a></li>
 							<li><a href="https://www.facebook.com/Noolib-1648329638748950/" target="_blank"><img src="/Images/Social/facebook.png" alt="lien facebook"/></a></li>
 							<li><a href="https://www.linkedin.com/company/noolib" target="_blank"><img src="/Images/Social/linkedin.png" alt="lien linkedin"/></a></li>
