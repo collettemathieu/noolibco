@@ -146,6 +146,18 @@ h2{
   color: white;
 }
 
+/* Pour les puces */
+footer ul{
+  display: inline-block;
+  list-style-type: none;
+  padding: 0;
+}
+
+footer li{
+  display: inline-block;
+  cursor: pointer;
+}
+
 /* Media queries */
 @media screen and (max-width: 560px) {
   h1{

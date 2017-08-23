@@ -69,7 +69,7 @@
 	}else{
 		$('[data-toggle="tooltip"]').tooltip({
 			delay: {
-				show: 800,
+				show: 500,
 				hide: 100
 			}, 
 			placement:'top', 
