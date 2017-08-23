@@ -60,17 +60,19 @@
 					</div>
 					<div class="col-lg-12 maxWidth centering text-center">
 						<div class="text-center centering col-lg-5">
-							<h1>Aborder la science avec philosophie</h1>
+							<h1>NooLib, des applications mais pas que...</h1>
 						</div>
 						<div class="col-sm-offset-1 col-sm-4">	
 							<div class="mainInformation text-justify">
-								<p>ScienceAPart est un blog qui vous invite à découvrir la science avec philosophie et pédagogie.</p>
-								<p>A l'heure des Big Data, nous pensons qu'il apparaît indispensable de posséder les bons outils et les bons repères afin d'appréhender au mieux les informations qui nous parviennent.
+								<p>NooLib permet d'exécuter des algorithmes en ligne. 
+									C'est bien mais nous pensons qu'il fallait accompagner la plateforme d'un véritable lieu d'échange.</p>
+								<p>A l'heure des Big Data, il apparaît indispensable de posséder les bons outils et les bons repères afin d'appréhender au mieux les informations qui nous parviennent.
 								La science possède ses propres outils afin de démêler le vrai du faux. Encore faut-il savoir les utiliser à bon escient !</p>
-								<p>Vous découvrirez sur ScienceAPart : 
+								<p>Vous découvrirez sur NooLib The Blog : 
 									<ul>
-										<li>des articles, afin de mieux interpréter les informations du quotidien.</li>
-										<li>des cours en ligne, afin de vous offrir un regard critique sur le monde qui vous entoure.</li>
+										<li>des articles, afin de mieux comprendre les applications disponibles sur la plateforme.</li>
+										<li>des articles encore, sur des sujets scientifiques, afin d'acquérir un regard critique sur le monde qui vous entoure.</li>
+										<li>des cours, afin de vous offrir un panorama des recherches actuellement menées dans les laboratoires et qui utilisent NooLib.</li>
 										<li>des services pour tous, pour les écoles, les laboratoires et pour les entreprises.</li>
 									</ul>
 							</div>
