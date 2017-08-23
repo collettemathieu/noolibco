@@ -2,5 +2,4 @@
 <routes>
 	<route url="/Information/Cookies" module="Cookies" action="show"/>
 	<route url="/Information/MentionsLegales" module="MentionsLegales" action="show"/>
-	<route url="/Information/APropos" module="APropos" action="show"/>
 </routes>
