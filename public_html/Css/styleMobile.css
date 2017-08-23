@@ -152,7 +152,9 @@ h5{
   margin: 0;
   padding: 0;
 }
-
+red{
+  border: 1px red solid;
+}
 /* Pour les puces */
 footer ul{
   display: inline-block;
