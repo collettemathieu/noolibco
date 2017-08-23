@@ -76,9 +76,9 @@ Go to https://www.noolib.com/Hire/ .
 		<!-- FOOTER -->
 		<footer>
 			<div class="container">
-				<div class="row red">
+				<div class="row">
 					<div class="col-lg-12 centering maxWidth">
-						<div class="col-lg-7 centering">
+						<div class="col-lg-7 text-center centering red">
 							<h5>© 2017 NooLib - All rights reserved - </h5>
 							<ul>
 								<li><a href="https://www.tipeee.com/noolib" target="_blank" data-toggle="tooltip" title="Help us with tipeee!"><img src="/Images/Social/tipeee.png"/></a></li>
