@@ -1,16 +1,16 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PHP Version 5 								                          |
+// | PHP Version 7 								                          |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2016 aboutscience	         				          |
+// | Copyright (c) 2017 NooLib The Blog	         				          |
 // +----------------------------------------------------------------------+
-// | Lancement de l'application Blog.									  |						  			  					  |
+// | Lancement de l'application Articles								  |						  			  					  |
 // +----------------------------------------------------------------------+
-// | Auteur : Mathieu COLLETTE <collettemathieu@aboutscience.net> 		  |
+// | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>		 		  |
 // +----------------------------------------------------------------------+
 
 /**
- * @name:  Blog
+ * @name:  Articles
  * @access: public
  * @version: 1
  */
@@ -18,5 +18,5 @@
 
 require '../Library/autoloadClasseEtTrait.php';
 
-$application = new Applications\Blog\BlogApplication;
+$application = new Applications\Articles\ArticlesApplication;
 $application->run();

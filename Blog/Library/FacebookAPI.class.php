@@ -14,7 +14,7 @@ class FacebookAPI {
     private $fb; 
     
     public function __construct () {
-    	$config = parse_ini_file("../ConfigSystem/Facebook/config.ini");
+    	$config = parse_ini_file("../../ConfigSystem/Facebook/config.ini");
     	$this->setApp_Id($config);
     	$this->setApp_Secret($config);
     	$this->setPage_Id($config);
@@ -104,7 +104,6 @@ class FacebookAPI {
           exit;
         }         
         $graphNode = $responsePost->getGraphNode(); 
-        //echo 'Posted with id: ' . $graphNode['id'];
     }
 }	
 	

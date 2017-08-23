@@ -10,14 +10,14 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="/">ScienceAPart</a>
+	      <a class="navbar-brand" href="/">The blog</a>
 	    </div>
 
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
-	        <li><a href="/Blog/">Blog</a></li>
-	        <li><a href="/Cours/">Cours</a></li>
+	        <li><a href="/Articles/">Articles</a></li>
+	        <li><a href="https://www.noolib.com">noolib.com</a></li>
 	        <li><a href="/Services/">Services</a></li>
 	      </ul>
 	      <form class="navbar-form pull-right hidden-xs" action="/Sphinx/Search/" method="post">

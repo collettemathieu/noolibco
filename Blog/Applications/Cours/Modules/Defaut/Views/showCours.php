@@ -7,7 +7,7 @@
 						<h1><?php echo $cours->getTitreCours();?></h1>
 						
 						<div class="col-sm-12 headerCours centering text-center">
-							<h5>ScienceAPart | le <?php echo $date->format('d-m-Y');?></h5>
+							<h5>NooLib The Blog | le <?php echo $date->format('d-m-Y');?></h5>
 							<h5>Par <?php echo $cours->getAuteur()->getNomUtilisateur();?></h5>
 
 						</div>
@@ -18,7 +18,7 @@
 							if(count($cours->getCoursGlobal()->getCours()) > 1){
 							?>
 						<div class="col-lg-sm coursAssocies">
-							<h2>Cours associé(s)</h2>
+							<h2>Articles associé(s)</h2>
 						<?php foreach($cours->getCoursGlobal()->getCours() as $coursAssocie){
 							if($coursAssocie->getUrlTitreCours() != $cours->getUrlTitreCours()){?>
 							<a href="/Cours/<?php echo $coursAssocie->getUrlTitreCours();?>"><?php echo $coursAssocie->getTitreCours();?></a><br/>

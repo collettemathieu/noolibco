@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<routes>
-	<route url="/Blog/" module="Defaut" action="show"/>
-	<route url="/Blog/([a-zA-Z0-9-]+)" module="Defaut" action="showArticle" vars="titreArticle"/>
-</routes>

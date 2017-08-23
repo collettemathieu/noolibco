@@ -1,12 +1,12 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PHP Version 5                                                        |
+// | PHP Version 7                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2016 ScienceAPart									  |
+// | Copyright (c) 2017 NooLib The Blog									  |
 // +----------------------------------------------------------------------+
 // | Classe PHP de l'application pour poster sur les réseaux sociaux.	  |		   			  										  |
 // +----------------------------------------------------------------------+
-// | Auteurs : Mathieu COLLETTE <collettemathieu@scienceapart.com> 		  |
+// | Auteurs : Mathieu COLLETTE <collettemathieu@noolib.com> 			  |
 // +----------------------------------------------------------------------+
 
 /**

@@ -1,13 +1,13 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PHP Version 5                                                        |
+// | PHP Version 7                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2016 ScienceAPart                                      |
+// | Copyright (c) 2017 NooLib The Blog                                   |
 // +----------------------------------------------------------------------+
 // | Classe PHP du contrôleur pour l'autopost                             |
 // | d'une nouvelle application sur Facebook.                             |
 // +----------------------------------------------------------------------+
-// | Auteurs : Mathieu COLLETTE <collettemathieu@scienceapart.com>        |
+// | Auteurs : Mathieu COLLETTE <collettemathieu@noolib.com>              |
 // +----------------------------------------------------------------------+
 
 /**
@@ -62,10 +62,10 @@ class AutoPostController extends \Library\BackController
         
         if($entite instanceof \Library\Entities\Article){
           $message = substr($entite->getTitreArticle().'
-https://www.scienceapart.com/Blog/'.$entite->getUrlTitreArticle(), 0, 140);
+https://blog.noolib.com/Articles/'.$entite->getUrlTitreArticle(), 0, 140);
         }elseif($entite instanceof \Library\Entities\Cours){
           $message = substr($entite->getTitreCours().'
-https://www.scienceapart.com/Cours/'.$entite->getUrlTitreCours(), 0, 140);
+https://blog.noolib.com/Cours/'.$entite->getUrlTitreCours(), 0, 140);
         }
 
         $status = array(

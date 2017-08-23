@@ -1,15 +1,14 @@
 <!DOCTYPE HTML>
 <html dir="ltr" lang="fr-FR">
 <!--
-
-  ___   _                    _    _____        _                         
- / _ \ | |                  | |  /  ___|      (_)                        
-/ /_\ \| |__    ___   _   _ | |_ \ `-.    ___  _   ___  _ __    ___  ___ 
-|  _  || '_ \  / _ \ | | | || __| ` -. \ / __|| | / _ \| '_ \  / __|/ _ \
-| | | || |_) || (_) || |_| || |_ /\__/ /| (__ | ||  __/| | | || (__|  __/
-\_| |_/|_.__/  \___/  \__,_| \__|\____/  \___||_| \___||_| |_| \___|\___|
-
-
+  _   _             _      _ _       _______ _            ____  _             
+ | \ | |           | |    (_) |     |__   __| |          |  _ \| |            
+ |  \| | ___   ___ | |     _| |__      | |  | |__   ___  | |_) | | ___   __ _ 
+ | . ` |/ _ \ / _ \| |    | | '_ \     | |  | '_ \ / _ \ |  _ <| |/ _ \ / _` |
+ | |\  | (_) | (_) | |____| | |_) |    | |  | | | |  __/ | |_) | | (_) | (_| |
+ |_| \_|\___/ \___/|______|_|_.__/     |_|  |_| |_|\___| |____/|_|\___/ \__, |
+                                                                         __/ |
+                                                                        |___/ 
 -->
 
 	<head>
@@ -48,18 +47,18 @@
 		<meta name="msapplication-TileImage" content="/Images/Favicon/ms-icon-144x144.png">
 		<meta name="theme-color" content="#ffffff">
 		
-		<meta name="keywords" content="blog, science, article, cours, collette, mathieu, pédagogie, enseignement, étudiant, université, laboratoire, entreprise, plateforme, collaboratif"/>
+		<meta name="keywords" content="blog, science, article, cours, pédagogie, enseignement, étudiant, université, laboratoire, entreprise, plateforme, collaboratif"/>
 		
-		<meta name="description" content="Bienvenue sur ScienceAPart, le blog qui permet d'aborder les sciences avec philosophie."/>
+		<meta name="description" content="Bienvenue sur le Blog de NooLib."/>
 		
 		<title><?php
 			$URI = $_SERVER['REQUEST_URI'];
 			if($URI == '/'){
-				echo 'ScienceAPart : démêler la science !';
+				echo 'NooLib The Blog';
 			}else{
 				$repertoires = explode('/', $URI);
 				if(empty($repertoires[count($repertoires)-1])){
-					echo $repertoires[count($repertoires)-2].' - ScienceAPart';
+					echo $repertoires[count($repertoires)-2].' - NooLib';
 				}else{
 					echo $repertoires[count($repertoires)-1];
 				}

@@ -4,12 +4,12 @@
 				<div class="col-lg-12 maxWidth centering">
 					<div class="col-sm-offset-1 col-sm-5 service">
 						<h1>Pour tout le monde</h1>
-						<p>ScienceAPart est réalisé et enrichi par des passionnés. Cependant, la création
-							des articles et des cours demande beaucoup de temps de préparation (écriture, 
+						<p>NooLib The Blog est réalisé et enrichi par des passionnés. Cependant, la création
+							des articles demande beaucoup de temps de préparation (écriture, 
 							mise en forme, mise en ligne, etc.). Le maintien de la plateforme sur 
 							différents supports informatiques est également très chronophage.
 						</p>
-						<p>Vous pouvez aider le développement de ScienceAPart en
+						<p>Vous pouvez aider le développement de NooLib en
 							 apportant votre contribution financière. Il n'y a évidement aucune 
 							obligation à cela et nous nous efforçerons toujours
 							de vous fournir un contenu de qualité.
@@ -44,18 +44,10 @@
 					</div>
 					<div class="col-sm-offset-1 col-sm-5 service">
 						<h1>Pour les écoles et les laboratoires</h1>
-						<p>ScienceAPart est bien au fait de la recherche académique et collabore par différentes voies :</p>
+						<p>NooLib est bien au fait de la recherche académique et collabore par différentes voies :</p>
 						<ul>
-							<li>Enseignements auprès de vos étudiants en :
-								<ol>
-									<li>Mathématiques</li>
-									<li>Physique</li>
-									<li>Informatique (Web, C++, Matlab, Latex)</li>
-								</ol>
-							</li>
+							<li>Enseignements</li>
 							<li>Aide à la valorisation de vos activités de Recherche auprès du grand public</li>
-							<li>Aide à la restructuration du site web de votre laboratoire</li>
-							<li>Aide à l'écriture de documents scientifiques (Appel à projet, publication, etc.)</li>
 							<li>Mise en place de projets collaboratifs</li>
 						</ul>
 					</div>
@@ -79,7 +71,7 @@
 						<ul>
 							<li>Insertion de bannières publicitaires</li>
 							<li>Affiliation</li>
-							<li>Création de contenus dédiés hébergés sur ScienceAPart.com ou sur votre site Internet</li>
+							<li>Création de contenus dédiés hébergés sur noolib.com ou sur votre site Internet</li>
 							<li>Création de contenus en marque blanche</li>
 						</ul>
 						<p>Nous serions ravis d’échanger avec vous sur vos problématiques afin d’y répondre via une prestation sur-mesure.</p>

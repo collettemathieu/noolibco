@@ -26,8 +26,6 @@
 !/Blog/*
 !/Blog/Applications
 !/Blog/Applications/*
-!/Blog/Files
-!/Blog/Files/*
 /Blog/ConfigSystem/*
 !/Blog/ConfigSystem/Template
 !/Blog/ConfigSystem/Template/*

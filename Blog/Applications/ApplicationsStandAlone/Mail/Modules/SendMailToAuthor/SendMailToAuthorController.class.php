@@ -1,12 +1,12 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PHP Version 5                                                        |
+// | PHP Version 7                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2016 ScienceAPart									  |
+// | Copyright (c) 2017 NooLib The Blog									  |
 // +----------------------------------------------------------------------+
 // | Classe PHP du contrôleur pour l'envoi d'un mail à un auteur.		  |	  										  |
 // +----------------------------------------------------------------------+
-// | Auteurs : Mathieu COLLETTE <collettemathieu@scienceapart.com> 		  |
+// | Auteurs : Mathieu COLLETTE <collettemathieu@noolib.com> 			  |
 // +----------------------------------------------------------------------+
 
 
@@ -35,7 +35,7 @@ class SendMailToAuthorController extends \Library\BackController
 		// On récupère les variables du message
 		$variablesArray = $user->getFlash();
 
-		$expediteur = 'contact@scienceapart.com';
+		$expediteur = 'contactteam@noolib.com';
 		$destinataire = $variablesArray['mailAuteur'];
 		$titreMail = $variablesArray['titreMessage'];
 		$lienValidation = $variablesArray['lienValidation'];

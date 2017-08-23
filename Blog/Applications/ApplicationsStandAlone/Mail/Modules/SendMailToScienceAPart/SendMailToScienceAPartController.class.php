@@ -1,12 +1,12 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PHP Version 5 								                          |
+// | PHP Version 7                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2016 ScienceAPart			   				          |
+// | Copyright (c) 2017 NooLib The Blog									  |
 // +----------------------------------------------------------------------+
-// | Classe PHP du contrôleur pour l'envoi d'un mail à un ScienceAPart.	  |
+// | Classe PHP du contrôleur pour l'envoi d'un mail à un NooLib.		  |	  										  |
 // +----------------------------------------------------------------------+
-// | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>    			  |
+// | Auteurs : Mathieu COLLETTE <collettemathieu@noolib.com> 			  |
 // +----------------------------------------------------------------------+
 
 /**
@@ -32,7 +32,7 @@ class SendMailToScienceAPartController extends \Library\BackController{
 		$variablesArray = $user->getFlash();
 
 		$expediteur = $variablesArray['mailAuteur'];
-		$destinataire = 'contact@scienceapart.com';
+		$destinataire = 'contactteam@noolib.com';
 		$titreMail = $variablesArray['titreMessage'];
 
 		//On définit le message du mail
