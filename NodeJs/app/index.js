@@ -353,7 +353,7 @@ router.post('/', function(req, res) {
 				 				}
 				 			}
 				 		} else{
-				 			for(var i=0; i<versions.length ; ++i){
+				 			for(var i=versions.length-1; i>=0 ; --i){
 				 				if(versions[i].getActiveVersion()){
 				 					version = versions[i];
 				 					break;

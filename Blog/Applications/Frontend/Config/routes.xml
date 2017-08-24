@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/" module="Defaut" action="show"/>
+	<route url="/Statistiques/" module="Defaut" action="returnStats"/>
+	<route url="/GetActualite/" module="Defaut" action="returnActualite"/>
+	<route url="/GetEdito/" module="Defaut" action="returnEdito"/>
+</routes>

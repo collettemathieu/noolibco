@@ -1,0 +1,65 @@
+/***************************************/
+/* Feuille de style pour le footer	   */
+/***************************************/
+
+footer{
+	height: 400px;
+	background-color: rgb(50, 50, 50);
+	font-family: "OpenSansLight";
+	font-size: 0.9em;
+	color: white;
+}
+
+
+footer ul{
+	display: inline-block;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+footer ul li:first-child{
+	font-family: "OpenSans";
+	font-size: 1.7em;
+}
+
+footer ul li a{
+	color: white;
+	font-size: 1.2em;
+}
+
+footer ul li a:hover{
+	color: white;
+}
+
+footer ul{
+	margin: 10px 0px 20px 0px;
+}
+
+footer hr{
+	height: none;
+	border: none;
+	border-top: 1px solid rgb(200, 200, 200);
+}
+
+@media screen and (max-width: 767px) {
+	.mobileFooter {
+		float:none;
+		margin:0 auto;
+		margin-top: 15px;
+		text-align: center;
+	}
+
+	.imageFooter{
+		max-width: 128px;
+	}
+
+	footer ul li:first-child{
+		font-family: "OpenSans";
+	}
+
+	footer ul li a{
+		padding: 5px;
+		font-size: 1.2em;
+	}
+}

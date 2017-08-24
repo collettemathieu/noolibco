@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/ForAdminOnly/" module="Defaut" action="show"/>
+	<route url="/ForAdminOnly/SortirDuModeAdmin" module="Defaut" action="sortirDuModeAdmin"/>
+	<route url="/ForAdminOnly/PasserEnAdmin" module="Defaut" action="passerEnAdmin"/>
+
+
+	<route url="/ForAdminOnly/Outils/" module="Outils" action="show"/>
+	<route url="/ForAdminOnly/Prez/" module="Prez" action="show"/>
+
+
+	<route url="/ForAdminOnly/Medias/" module="Medias" action="show"/>
+	<route url="/ForAdminOnly/Medias/id=([0-9]+)" module="Medias" action="showMedia" vars="idMedia"/>
+	<route url="/ForAdminOnly/Medias/ImporterMedia" module="Medias" action="importerMedia"/>
+	<route url="/ForAdminOnly/Medias/PickUpMedias" module="Medias" action="pickUpMedias"/>
+	<route url="/ForAdminOnly/Medias/SupprimerMedia" module="Medias" action="supprimerMedia"/>
+
+
+	<route url="/ForAdminOnly/Editos/" module="Editos" action="show"/>
+	<route url="/ForAdminOnly/Editos/id=([0-9]+)" module="Editos" action="showEdito" vars="idEdito"/>
+	<route url="/ForAdminOnly/Editos/CreerEdito" module="Editos" action="creerEdito"/>
+	<route url="/ForAdminOnly/Editos/ModifierTexteEdito" module="Editos" action="modifierTexteEdito"/>
+	<route url="/ForAdminOnly/Editos/SupprimerEdito" module="Editos" action="supprimerEdito"/>
+
+
+	<route url="/ForAdminOnly/Commentaires/" module="Commentaires" action="show"/>
+	<route url="/ForAdminOnly/Commentaires/Articles/" module="Commentaires" action="showArticle"/>
+	<route url="/ForAdminOnly/Commentaires/Cours/" module="Commentaires" action="showCours"/>
+	<route url="/ForAdminOnly/Commentaires/AjouterCommentaire" module="Commentaires" action="ajouterCommentaire"/>
+	<route url="/ForAdminOnly/Commentaires/SupprimerCommentaire" module="Commentaires" action="supprimerCommentaire"/>
+	<route url="/ForAdminOnly/Commentaires/ValidationAdminCommentaire" module="Commentaires" action="validationAdminCommentaire"/>
+
+
+	<route url="/ForAdminOnly/Actualites/" module="Actualites" action="show"/>
+	<route url="/ForAdminOnly/Actualites/CreerActualite" module="Actualites" action="creerActualite"/>
+	<route url="/ForAdminOnly/Actualites/id=([0-9]+)" module="Actualites" action="showActualite" vars="idActualite"/>
+	<route url="/ForAdminOnly/Actualites/PublierDepublierActualite" module="Actualites" action="publierDepublierActualite"/>
+	<route url="/ForAdminOnly/Actualites/ModifierTexteActualite" module="Actualites" action="modifierTexteActualite"/>
+	<route url="/ForAdminOnly/Actualites/ModifierTitreActualite" module="Actualites" action="modifierTitreActualite"/>
+	<route url="/ForAdminOnly/Actualites/ModifierUrlLienActualite" module="Actualites" action="modifierUrlLienActualite"/>
+	<route url="/ForAdminOnly/Actualites/ModifierImageActualite" module="Actualites" action="modifierImageActualite"/>
+	<route url="/ForAdminOnly/Actualites/SupprimerActualite" module="Actualites" action="supprimerActualite"/>
+
+
+
+	<route url="/ForAdminOnly/Utilisateurs/" module="Utilisateurs" action="show"/>
+	<route url="/ForAdminOnly/Utilisateurs/CreerUtilisateur" module="Utilisateurs" action="creerUtilisateur"/>
+	<route url="/ForAdminOnly/Utilisateurs/ModifierUtilisateur" module="Utilisateurs" action="modifierUtilisateur"/>
+	<route url="/ForAdminOnly/Utilisateurs/SupprimerUtilisateur" module="Utilisateurs" action="supprimerUtilisateur"/>
+
+
+
+	<route url="/ForAdminOnly/Articles/" module="Articles" action="show"/>
+	<route url="/ForAdminOnly/Articles/id=([0-9]+)" module="Articles" action="showArticle" vars="idArticle"/>
+	<route url="/ForAdminOnly/Articles/CreerArticle" module="Articles" action="creerArticle"/>
+	<route url="/ForAdminOnly/Articles/ModifierImageArticle" module="Articles" action="modifierImageArticle"/>
+	<route url="/ForAdminOnly/Articles/ModifierTexteArticle" module="Articles" action="modifierTexteArticle"/>
+	<route url="/ForAdminOnly/Articles/ModifierReferencesArticle" module="Articles" action="modifierReferencesArticle"/>
+	<route url="/ForAdminOnly/Articles/SaveJSArticle" module="Articles" action="saveJSArticle"/>
+	<route url="/ForAdminOnly/Articles/PublierDepublierArticle" module="Articles" action="publierDepublierArticle"/>
+	<route url="/ForAdminOnly/Articles/ModifierTitreArticle" module="Articles" action="modifierTitreArticle"/>
+	<route url="/ForAdminOnly/Articles/ModifierDescriptionArticle" module="Articles" action="modifierDescriptionArticle"/>
+	<route url="/ForAdminOnly/Articles/ModifierMotClesArticle" module="Articles" action="modifierMotClesArticle"/>
+	<route url="/ForAdminOnly/Articles/ModifierCategorieArticle" module="Articles" action="modifierCategorieArticle"/>
+	<route url="/ForAdminOnly/Articles/SupprimerArticle" module="Articles" action="supprimerArticle"/>
+	<route url="/ForAdminOnly/Articles/SeekReference" module="Articles" action="seekReference"/>
+	<route url="/ForAdminOnly/Articles/ProcessFacebookApplication(.*)" module="Articles" action="processFacebookApplication"/>
+	<route url="/ForAdminOnly/Articles/PostOnSocialNetworks/idArticle=([0-9]+)" module="Articles" action="postOnSocialNetworks" vars="idArticle"/>
+
+
+
+	<route url="/ForAdminOnly/CoursSelect/" module="CoursSelect" action="select"/>
+	
+
+	<route url="/ForAdminOnly/Cours/" module="Cours" action="show"/>
+	<route url="/ForAdminOnly/Cours/id=([0-9]+)" module="Cours" action="showCours" vars="idCours"/>
+	<route url="/ForAdminOnly/Cours/CreerCours" module="Cours" action="creerCours"/>
+	<route url="/ForAdminOnly/Cours/MAJSommaireFigureCours/id=([0-9]+)" module="Cours" action="MAJSommaireFigureCours" vars="idCours"/>
+	<route url="/ForAdminOnly/Cours/ModifierImageCours" module="Cours" action="modifierImageCours"/>
+	<route url="/ForAdminOnly/Cours/ModifierTexteCours" module="Cours" action="modifierTexteCours"/>
+	<route url="/ForAdminOnly/Cours/ModifierReferencesCours" module="Cours" action="modifierReferencesCours"/>
+	<route url="/ForAdminOnly/Cours/SaveJSCours" module="Cours" action="saveJSCours"/>
+	<route url="/ForAdminOnly/Cours/PublierDepublierCours" module="Cours" action="publierDepublierCours"/>
+	<route url="/ForAdminOnly/Cours/ModifierTitreCours" module="Cours" action="modifierTitreCours"/>
+	<route url="/ForAdminOnly/Cours/ModifierDescriptionCours" module="Cours" action="modifierDescriptionCours"/>
+	<route url="/ForAdminOnly/Cours/ModifierMotClesCours" module="Cours" action="modifierMotClesCours"/>
+	<route url="/ForAdminOnly/Cours/ModifierCategorieCours" module="Cours" action="modifierCategorieCours"/>
+	<route url="/ForAdminOnly/Cours/ModifierCoursGlobalCours" module="Cours" action="modifierCoursGlobalCours"/>
+	<route url="/ForAdminOnly/Cours/SupprimerCours" module="Cours" action="supprimerCours"/>
+	<route url="/ForAdminOnly/Cours/SeekReference" module="Cours" action="seekReference"/>
+	<route url="/ForAdminOnly/Cours/PostOnSocialNetworks/idCours=([0-9]+)" module="Cours" action="postOnSocialNetworks" vars="idCours"/>
+
+
+	<route url="/ForAdminOnly/CoursGlobal/" module="CoursGlobal" action="show"/>
+	<route url="/ForAdminOnly/CoursGlobal/id=([0-9]+)" module="CoursGlobal" action="showCoursGlobal" vars="idCoursGlobal"/>
+	<route url="/ForAdminOnly/CoursGlobal/CreerCoursGlobal" module="CoursGlobal" action="creerCoursGlobal"/>
+	<route url="/ForAdminOnly/CoursGlobal/ModifierImageCoursGlobal" module="CoursGlobal" action="modifierImageCoursGlobal"/>
+	<route url="/ForAdminOnly/CoursGlobal/PublierDepublierCoursGlobal" module="CoursGlobal" action="publierDepublierCoursGlobal"/>
+	<route url="/ForAdminOnly/CoursGlobal/ModifierTitreCoursGlobal" module="CoursGlobal" action="modifierTitreCoursGlobal"/>
+	<route url="/ForAdminOnly/CoursGlobal/ModifierDescriptionCoursGlobal" module="CoursGlobal" action="modifierDescriptionCoursGlobal"/>
+	<route url="/ForAdminOnly/CoursGlobal/ModifierCategorieCoursGlobal" module="CoursGlobal" action="modifierCategorieCoursGlobal"/>
+	<route url="/ForAdminOnly/CoursGlobal/SupprimerCoursGlobal" module="CoursGlobal" action="supprimerCoursGlobal"/>
+
+
+
+	<route url="/ForAdminOnly/Configurations/" module="Configurations" action="show"/>
+	<route url="/ForAdminOnly/Configurations/CreerConfigurations" module="Configurations" action="creerConfigurations"/>
+	<route url="/ForAdminOnly/Configurations/ModifierConfigurations" module="Configurations" action="modifierConfigurations"/>
+	<route url="/ForAdminOnly/Configurations/SupprimerConfigurations" module="Configurations" action="supprimerConfigurations"/>
+	<route url="/ForAdminOnly/Configurations/AjouterElementsConfigurations" module="Configurations" action="ajouterElementsConfigurations"/>
+	<route url="/ForAdminOnly/Configurations/SupprimerCategorieConfigurations" module="Configurations" action="supprimerCategorieConfigurations"/>
+	<route url="/ForAdminOnly/Configurations/ModifierCategorieConfigurations" module="Configurations" action="modifierCategorieConfigurations"/>
+	<route url="/ForAdminOnly/Configurations/AjouterSousCategorieConfigurations" module="Configurations" action="ajouterSousCategorieConfigurations"/>
+	<route url="/ForAdminOnly/Configurations/SupprimerSousCategorieConfigurations" module="Configurations" action="supprimerSousCategorieConfigurations"/>
+	<route url="/ForAdminOnly/Configurations/ModifierSousCategorieConfigurations" module="Configurations" action="modifierSousCategorieConfigurations"/>
+	
+</routes>

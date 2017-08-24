@@ -1,0 +1,57 @@
+/**************/
+/*   LogIn    */
+/**************/
+
+.erreur{
+	background: url("/Images/background_error.jpg");
+	background-size: cover;
+	background-attachment: fixed;
+	height: 600px;
+}
+
+/* Pour le texte de l'erreur */
+.caseErreur{
+	display: inline-block;
+	color: white;
+	text-align: justify;
+	max-height: 450px;
+	background-color: rgba(0, 0, 0, 0.6);
+	margin: 20px;
+	padding: 20px;
+	overflow: hidden;
+	font-size: 1.1em;
+	border-radius: 5px;
+}
+
+
+/* Pour les cases Menu */
+.caseMenu {
+	display: inline-block;
+	color: black;
+	width: 90px;
+	height: 90px;
+	background-color: rgba(230, 230, 230, 0.6);
+	margin: 0px;
+	padding: 0px;
+	border-radius: 15px;
+	text-align: center;
+}
+
+.caseMenu p {
+	display: inline-block;
+	margin: 0;
+	padding: 10px 10px 0px 10px;
+	font-size: 1em;
+}
+
+.caseMenu img {
+	display: inline-block;
+	width: 50px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.caseMenu:hover{
+	background-color: rgba(200, 200, 200, 1);
+	color: black;
+}

@@ -47,7 +47,7 @@ section{
 }
 
 footer{
-  height: 4%;
+  height: 10%;
 }
 
 /* Pour le centrage verticale des éléments */
@@ -144,6 +144,25 @@ h2{
   font-size: 1.5em;
   text-align: justify;
   color: white;
+}
+
+h5{
+  font-size: 1.1em;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+/* Pour les puces */
+footer ul{
+  display: inline-block;
+  list-style-type: none;
+  padding: 0;
+}
+
+footer li{
+  display: inline-block;
+  cursor: pointer;
 }
 
 /* Media queries */

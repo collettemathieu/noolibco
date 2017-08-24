@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes>
+	<route url="/Articles/" module="Defaut" action="show"/>
+	<route url="/Articles/([a-zA-Z0-9-]+)" module="Defaut" action="showArticle" vars="titreArticle"/>
+</routes>

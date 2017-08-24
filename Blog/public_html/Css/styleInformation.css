@@ -1,0 +1,40 @@
+/******************/
+/*   Information  */
+/******************/
+
+.information{
+	background: url("/Images/background_error.jpg");
+	 -webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+	background-attachment: fixed;
+	height: 600px;
+}
+
+/* Pour le texte */
+.caseInformation{
+	display: inline-block;
+	color: white;
+	text-align: justify;
+	max-height: 450px;
+	background-color: rgba(0, 0, 0, 0.6);
+	margin: 20px;
+	padding: 20px;
+	overflow: auto;
+	font-size: 1.1em;
+	border-radius: 5px;
+}
+
+.caseInformation button{
+	margin-bottom: 20px;
+}
+
+/* Media queries */
+@media screen and (max-width: 992px) {
+  	.information{
+  		width:100wh;
+    	height:100vh;
+		background-attachment: inherit;
+	}
+}

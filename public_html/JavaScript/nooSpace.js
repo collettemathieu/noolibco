@@ -506,16 +506,14 @@ $(function(){
 			//On vide le caroussel de son contenu
 			$('#carouselApplicationReport').empty();
 		});
-            			
-
-
+           
 		// Pour lancer l'application et gérer les résultats de retour
 		function runTheMule(formData, cloneApplication){
 			// On lance la requête ajax
 			formData.append('id',sessionStorage['id']);
 			formData.append('isAdmin',sessionStorage['isAdmin']);
-			var wellUrl = window.location.hostname === 'www.noolib.com' ? 'https://'+window.location.hostname+':3000/runTheMule/' : 'http://'+window.location.hostname+':3000/runTheMule/';
-			
+			var wellUrl = window.location.hostname === 'www.noolib.com' ? 'https://node.noolib.com/runTheMule/' : 'http://'+window.location.hostname+':3000/runTheMule/';
+
       		$.ajax({
 				url: wellUrl,
 				type: 'POST',
@@ -525,9 +523,6 @@ $(function(){
 				contentType: false,
 				processData: false,
 				success: function(response) {
-					
-					console.log(response);
-
 					var numeroApp = cloneApplication.attr('numApp');
 					// Pour réinitialiser le message d'attente du bouton
 					$('#formMule').find('button:last').button('reset');
@@ -576,179 +571,202 @@ $(function(){
 								var tableauReponse = JSON.parse(response['resultat'][n]);
 							}
 							catch(e){
-								var response = {
-								  'erreurs': '<p>Fatal system error: '+response['resultat'][n]+'.</p>'
-								};
+								var error = response['resultat'][n];
+									response = {
+									  'erreurs': '<p>A fatal system error has occured. Please take a look at the report.</p>'
+									},
+									tableauReponse = [];
 								displayInformationsClient(response);
+								tableauReponse['systemError'] = error;
 							}
-							// On créé un nouveau rapport de résultats
-							var	reportClone = templateItemReportApplication.clone(),
-								numeroRand = Math.floor(Math.random()*100);
-							reportClone.removeAttr('id');
-							reportClone.removeClass('hidden');
+							finally{
+								// On créé un nouveau rapport de résultats
+								var	reportClone = templateItemReportApplication.clone(),
+									numeroRand = Math.floor(Math.random()*100);
+								reportClone.removeAttr('id');
+								reportClone.removeClass('hidden');
 
-							// On renomme l'ensemble des onglet
-							var elemA =reportClone.find('a'),
-								elemPan = reportClone.find('.tab-pane'),
-								nav = reportClone.find('.nav'),
-								content = reportClone.find('.tab-content');
-							elemA[0].href = '#table2D'+numeroApp+numeroRand;
-							//elemA[1].href = '#tableResult'+numeroApp+numeroRand;
-							elemA[1].href = '#graph'+numeroApp+numeroRand;
-							elemA[2].href = '#results'+numeroApp+numeroRand;
-							elemA[3].href = '#comments'+numeroApp+numeroRand;
-							//elemA[5].href = '#fileResult'+numeroApp+numeroRand;
+								// On renomme l'ensemble des onglet
+								var elemA =reportClone.find('a'),
+									elemPan = reportClone.find('.tab-pane'),
+									nav = reportClone.find('.nav'),
+									content = reportClone.find('.tab-content');
+								elemA[0].href = '#table2D'+numeroApp+numeroRand;
+								elemA[1].href = '#results'+numeroApp+numeroRand;
+								elemA[2].href = '#comments'+numeroApp+numeroRand;
+								elemA[3].href = '#errors'+numeroApp+numeroRand;
 
-							elemPan[0].id = 'table2D'+numeroApp+numeroRand;
-							//elemPan[1].id = 'tableResult'+numeroApp+numeroRand;
-							elemPan[1].id = 'graph'+numeroApp+numeroRand;
-							elemPan[2].id = 'results'+numeroApp+numeroRand;
-							elemPan[3].id = 'comments'+numeroApp+numeroRand;
-							//elemPan[5].id = 'fileResult'+numeroApp+numeroRand;
-							
-							if(tableauReponse['table']){
-								// A créer
-								reportClone.find('.table2D').remove();
-								$(elemA[0]).parent().remove();
-							}else{
-								reportClone.find('.table2D').remove();
-								$(elemA[0]).parent().remove();	
-							}
-
-							if(tableauReponse['images']){
-
-								var images = tableauReponse['images'];
-
-								for(var i=0, lenImages = images.length; i<lenImages; ++i){
-									var image = new Image(),
-										randomNumberImage = Math.floor(Math.random()*100);
-										
-									image.src = 'data:image/'+images[i]['ext']+';base64,'+images[i]['data'];
-									nav.append('<li><a href="#image'+numeroApp+randomNumberImage+'" data-toggle="tab">'+images[i]['name']+'.'+images[i]['ext']+'</a></li>');
-									content.append('<div class="tab-pane results imageResult text-center" index-image="'+indexImage+'" id="image'+numeroApp+randomNumberImage+'"></div>');
-									content.find('#image'+numeroApp+randomNumberImage).append(image);
-									
-									// On enregistre la donnée image
-									tabImage[numeroApp].push({
-										ext: images[i]['ext'],
-										name: images[i]['name'],
-										rawData: images[i]['data'],
-										dataJson: 'data:image/'+images[i]['ext']+';base64,'+images[i]['data'],
-										data: 'data:image/'+images[i]['ext']+';base64,'+images[i]['data'],
-										sample: 1,
-										min: 1,
-										size: 1
-									});
-									indexImage+=1;
-								}
-							}
-							if(tableauReponse['graph']){
-
-								// Création de l'objet TxtReader à partir des données
-					            var txtReader = new TXTFile(),
-					            	num_points_display = 15000;
-					            if(typeof(tableauReponse['graph']['legend']) !== 'undefined' && typeof(tableauReponse['graph']['data']) !== 'undefined' && typeof(tableauReponse['graph']['sampleRate']) !== 'undefined'){
-						            txtReader.construct_from_data(tableauReponse['graph']['legend'], tableauReponse['graph']['data'], num_points_display, tableauReponse['graph']['sampleRate']);
-						            
-						            // Création de la table
-						            tableData(txtReader, reportClone);
-						            reportClone.find('.tableOfGraph').attr('index-graph', indexGraph);
-						            indexGraph += 1;
-
-						            // On enregistre la donnée table
-						            tabGraph[numeroApp].push({
-										ext: 'csv',
-										name: 'no name',
-										rawData: tableauReponse['graph']['data'],
-										legend: txtReader.get_legend(),
-										data: txtReader,
-										sample: txtReader.get_sample_rate(),
-										min: 1,
-										lengthData: txtReader.get_size_signals(),
-										size: txtReader.get_number_of_signals()
-									});
-
-									// Création du graphe	
-							        graphLocalData(txtReader, 15000, reportClone);
-
-
-						        }else{
-						        	var reponse = {
-										erreurs: '<p>Legend, array of data or sample rate is missing for displaying the data.</p>'
-									}
-									displayInformationsClient(reponse);
-						        }
-
-							}else{
-								reportClone.find('.graph').remove();
-								$(elemA[1]).parent().remove();
-							}
-
-							if(tableauReponse['results']){
-								var table = reportClone.find('.tableOfResults');
+								elemPan[0].id = 'table2D'+numeroApp+numeroRand;
+								elemPan[1].id = 'results'+numeroApp+numeroRand;
+								elemPan[2].id = 'comments'+numeroApp+numeroRand;
+								elemPan[3].id = 'errors'+numeroApp+numeroRand;
 								
-								for(var i=0, lenTabResults = tableauReponse['results'].length; i<lenTabResults; ++i){
-									
-									table.append('<table class="table table-nonfluid table-bordered table-striped table-condensed"><thead><tr></tr></thead><tbody><tr></tr></tbody></table>');
-								    var headTable = table.find('thead:last tr'),
-								        bodyTable = table.find('tbody:last tr');
-
-									headTable.append('<th>'+tableauReponse['results'][i]['name']+'</th>');
-									bodyTable.append('<td>'+tableauReponse['results'][i]['value']+'</td>');
-									
-								}
-							}else{
-								reportClone.find('.tableOfResults').remove();
-								$(elemA[2]).parent().remove();
-							}
-
-							if(tableauReponse['comments']){
-								reportClone.find('.commentsResult').html(tableauReponse['comments']);
-							}else{
-								reportClone.find('.commentsResult').remove();
-								$(elemA[3]).parent().remove();
-							}
-
-							if(tableauReponse['files']){
-
-								for(var i=0, lenFiles = tableauReponse['files'].length; i<lenFiles ; ++i){
-									var randomNumber = Math.floor(Math.random()*100),
-										fileName = tableauReponse['files'][i]['name'],
-										fileExt = tableauReponse['files'][i]['ext'].toLowerCase();
-									nav.append('<li><a href="#file'+numeroApp+randomNumber+'" data-toggle="tab">'+fileName+'.'+fileExt+'</a></li>');
-									content.append('<div class="tab-pane results editor" id="file'+numeroApp+randomNumber+'"></div>');
-									
-									// On enregistre le fichiers sources
-									tabFileResults[numeroApp].push({
-										ext: 'xml',
-										name: fileName,
-										dataJson: tableauReponse['files'][i]['data'],
-										id: 'file'+numeroApp+randomNumber,
-										sample: 1,
-										min: 1,
-										size: 1
-									});	
+								if(tableauReponse['table']){
+									// A créer
+									reportClone.find('.table2D').remove();
+									$(elemA[0]).parent().remove();
+								}else{
+									reportClone.find('.table2D').remove();
+									$(elemA[0]).parent().remove();	
 								}
 
-								// On crée les éditors
-								setTimeout(function(){
-									for(var i=0, lenFiles = tabFileResults[numeroApp].length; i<lenFiles ; ++i){
-										var editor = ace.edit(tabFileResults[numeroApp][i]['id']),
-											fileData = base64_decode(tabFileResults[numeroApp][i]['dataJson']);
-										editor.$blockScrolling = Infinity; // Remove warning
-										editor.setHighlightActiveLine(true); // Underline
-										editor.setValue(fileData, 1);
-										editor.setTheme('ace/theme/monokai'); // Edit the theme
-										editor.getSession().setMode('ace/mode/'+tabFileResults[numeroApp][i]['ext']); // Edit the mode
+								if(tableauReponse['images']){
+
+									var images = tableauReponse['images'];
+
+									for(var i=0, lenImages = images.length; i<lenImages; ++i){
+										var image = new Image(),
+											randomNumberImage = Math.floor(Math.random()*100);
+											
+										image.src = 'data:image/'+images[i]['ext']+';base64,'+images[i]['data'];
+										nav.append('<li><a href="#image'+numeroApp+randomNumberImage+'" data-toggle="tab">'+images[i]['name']+'.'+images[i]['ext']+'</a></li>');
+										content.append('<div class="tab-pane results imageResult text-center" index-image="'+indexImage+'" id="image'+numeroApp+randomNumberImage+'"></div>');
+										content.find('#image'+numeroApp+randomNumberImage).append(image);
+										
+										// On enregistre la donnée image
+										tabImage[numeroApp].push({
+											ext: images[i]['ext'],
+											name: images[i]['name'],
+											rawData: images[i]['data'],
+											dataJson: 'data:image/'+images[i]['ext']+';base64,'+images[i]['data'],
+											data: 'data:image/'+images[i]['ext']+';base64,'+images[i]['data'],
+											sample: 1,
+											min: 1,
+											size: 1
+										});
+										indexImage+=1;
 									}
-								}, 500);
-							}
+								}
+								if(tableauReponse['graphs']){
 
-							// On insert le nouveau rapport d'activité dans la box de résultats
-							reportClone.find('li:first').addClass('active');
-							reportClone.find('.tab-pane:first').addClass('active');
-            				reportClone.appendTo(cloneApplication.find('.applicationReports'));
-            				
+									var graphs = tableauReponse['graphs'];
+
+									for(var i=0, lenGraphs = graphs.length; i<lenGraphs; ++i){
+									
+										// Création de l'objet TxtReader à partir des données
+							            var txtReader = new TXTFile(),
+							            	num_points_display = 15000,
+							            	randomNumberGraph = Math.floor(Math.random()*100);
+							            
+							            if(typeof(graphs[i]['legend']) !== 'undefined' && typeof(graphs[i]['data']) !== 'undefined' && typeof(graphs[i]['sampleRate']) !== 'undefined'){
+								            txtReader.construct_from_data(graphs[i]['legend'], graphs[i]['data'], num_points_display, graphs[i]['sampleRate']);
+								            
+								            nav.append('<li><a href="#graph'+numeroApp+randomNumberGraph+'" data-toggle="tab">'+graphs[i]['name']+'</a></li>');
+											content.append('<div class="tab-pane centering" id="graph'+numeroApp+randomNumberGraph+'"><div class="graphResult"></div><div class="tableResult table-responsive tableOfGraph"><table class="table table-bordered table-striped table-condensed"></table></div></div>');
+											var divGraph = content.find('#graph'+numeroApp+randomNumberGraph);									
+
+								            // Création de la table
+								            tableData(txtReader, divGraph);
+								            divGraph.find('.tableOfGraph').attr('index-graph', indexGraph);
+								            indexGraph += 1;
+
+								            // On enregistre la donnée table
+								            tabGraph[numeroApp].push({
+												ext: 'csv',
+												name: graphs[i]['name'],
+												rawData: graphs[i]['data'],
+												legend: txtReader.get_legend(),
+												data: txtReader,
+												sample: txtReader.get_sample_rate(),
+												min: 1,
+												lengthData: txtReader.get_size_signals(),
+												size: txtReader.get_number_of_signals()
+											});
+
+											// Création du graphe	
+									        graphLocalData(txtReader, 15000, divGraph);
+
+								        }else{
+								        	var reponse = {
+												erreurs: '<p>Legend, array of data or sample rate is missing for displaying the data.</p>'
+											}
+											displayInformationsClient(reponse);
+								        }
+								    }
+								}
+
+								if(tableauReponse['results']){
+									var table = reportClone.find('.tableOfResults');
+									
+									for(var i=0, lenTabResults = tableauReponse['results'].length; i<lenTabResults; ++i){
+										
+										table.append('<table class="table table-nonfluid table-bordered table-striped table-condensed"><thead><tr></tr></thead><tbody><tr></tr></tbody></table>');
+									    var headTable = table.find('thead:last tr'),
+									        bodyTable = table.find('tbody:last tr');
+
+										headTable.append('<th>'+tableauReponse['results'][i]['name']+'</th>');
+										bodyTable.append('<td>'+tableauReponse['results'][i]['value']+'</td>');
+										
+									}
+								}else{
+									reportClone.find('.tableOfResults').remove();
+									$(elemA[1]).parent().remove();
+								}
+
+								if(tableauReponse['comments']){
+									for(var i=0, lenTabComments = tableauReponse['comments'].length; i<lenTabComments; ++i){
+										reportClone.find('.commentsResult').append('<li class="list-group-item"><h4>'+tableauReponse['comments'][i]['name']+'</h4><p>'+tableauReponse['comments'][i]['content']+'</p></li>');
+									}
+								}else{
+									reportClone.find('.commentsResult').remove();
+									$(elemA[2]).parent().remove();
+								}
+
+								if(tableauReponse['files']){
+
+									for(var i=0, lenFiles = tableauReponse['files'].length; i<lenFiles ; ++i){
+										var randomNumber = Math.floor(Math.random()*100),
+											fileName = tableauReponse['files'][i]['name'],
+											fileExt = tableauReponse['files'][i]['ext'].toLowerCase();
+										nav.append('<li><a href="#file'+numeroApp+randomNumber+'" data-toggle="tab">'+fileName+'.'+fileExt+'</a></li>');
+										content.append('<div class="tab-pane results editor" id="file'+numeroApp+randomNumber+'"></div>');
+										
+										// On enregistre le fichiers sources
+										tabFileResults[numeroApp].push({
+											ext: 'xml',
+											name: fileName,
+											dataJson: tableauReponse['files'][i]['data'],
+											id: 'file'+numeroApp+randomNumber,
+											sample: 1,
+											min: 1,
+											size: 1
+										});	
+									}
+
+									// On crée les éditors
+									setTimeout(function(){
+										for(var i=0, lenFiles = tabFileResults[numeroApp].length; i<lenFiles ; ++i){
+											var editor = ace.edit(tabFileResults[numeroApp][i]['id']),
+												fileData = base64_decode(tabFileResults[numeroApp][i]['dataJson']);
+											editor.$blockScrolling = Infinity; // Remove warning
+											editor.setHighlightActiveLine(true); // Underline
+											editor.setValue(fileData, 1);
+											editor.setTheme('ace/theme/monokai'); // Edit the theme
+											editor.getSession().setMode('ace/mode/'+tabFileResults[numeroApp][i]['ext']); // Edit the mode
+										}
+									}, 500);
+								}
+
+								if(tableauReponse['errors'] || tableauReponse['systemError']){
+									if(tableauReponse['errors']){
+										for(var i=0, lenTabErrors = tableauReponse['errors'].length; i<lenTabErrors; ++i){
+											reportClone.find('.errorsResult').append('<li class="list-group-item list-group-item-danger"><h4>'+tableauReponse['errors'][i]['name']+'</h4><p>'+tableauReponse['errors'][i]['content']+'</p></li>');
+										}
+									}
+									if(tableauReponse['systemError']){
+										reportClone.find('.errorsResult').append('<li class="list-group-item list-group-item-danger"><h4>System error</h4><p>'+tableauReponse['systemError']+'</p></li>');
+										
+									}
+								}else{
+									reportClone.find('.errorsResult').remove();
+									$(elemA[3]).parent().remove();
+								}
+
+								// On insert le nouveau rapport d'activité dans la box de résultats
+								reportClone.find('li:first').addClass('active');
+								reportClone.find('.tab-pane:first').addClass('active');
+	            				reportClone.appendTo(cloneApplication.find('.applicationReports'));
+            				}
 						}
 
 						// Pour sauvegarder l'image sur ordinateur
