@@ -28,6 +28,11 @@ footer ul li a{
 	font-size: 1.2em;
 }
 
+footer ul li a img{
+	display: inline;
+	text-align: bottom;
+}
+
 footer ul li a:hover{
 	color: white;
 }
