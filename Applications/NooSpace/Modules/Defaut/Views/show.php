@@ -7,9 +7,10 @@
 				$taches = $version->getTaches();
 				?>
 					<div class="appInDock runIt" id="<?php echo $applicationNooSpace->getIdApplication();?>" idVersion="<?php echo $version->getIdVersion();?>">
-						<div class="containerApplication" style="display:inline-flex;">
+								<div class="containerApplication" style="display:inline-flex;">
 									<!--hr--><!--
 									-->
+									<button class='play'style='position:absolute;top:-35px;right:25px;visibility:hidden'>play</button>
 									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div>
 									<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($applicationNooSpace->getUrlLogoApplication())); ?>"/>
 									<hr><div class="resultBox">

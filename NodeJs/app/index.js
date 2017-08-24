@@ -29,7 +29,6 @@ var DonneeResultat= require('../models/DonneeResultat');
 
 //variable de stockage
 var abonnement_user=true;
-var outputData = 'undefined';
 var numRequest=0;
 //***Const
 const ENGINE_NO_MATCH_DATA = 'Data entered does not match with the task called. Please verify data loaded on the mule.';
@@ -98,7 +97,7 @@ function escapeShell(cmd){
 }
 //****************************************
 function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths,messageClient){
-	
+		var outputData;
 		var createur = applicationRunning.getCreateur();
 
 		if(tacheDemandee instanceof Tache){
@@ -234,7 +233,6 @@ execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction
 				var nomApplication = application.getVariableFixeApplication();
 				var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
 				var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+args;
-
 					var resultat=exec(instructions + '2>&1',async function(err,stdout,stderr){
 						if(err)  return resolve(err);
 						if(stderr){
@@ -276,8 +274,32 @@ GetDataUrl = function (fields, idUser, messageClient){
 	while(fields["tache"+i+"data"+j] != undefined){
 		 			while(fields["tache"+i+"data"+j] != undefined){
 		 					if(typeof fields["tache"+i+"data"+j] == 'object'){
-		 						var test =GetDataUrl(fields["tache"+i+"data"+j],idUser,messageClient);
-								tabDonneeUtilisateur.push(test);
+		 						var outputData =GetDataUrl(fields["tache"+i+"data"+j],idUser,messageClient);
+		 						outputData = outputData.toString().trim();
+										outputData = outputData.split('<br>').join('');
+										outputData=outputData.split('<br />').join('');
+									    outputData= outputData.split("\n").join('');
+									    outputData= outputData.split("\r" ).join('');
+										// Pour supprimer tout ce qu'il y a avant et après les {} du résultat // Eviter les headers par exemple de php
+										outputData = outputData.split('/^(.*?){/').join('{'); // Avant
+										outputData = outputData.split('/(.*)}.*$/').join('$1}'); // Après
+										//resultat=resultat.split('[').join('{').split(']').join('}');					
+									    outputData = unescape(encodeURIComponent(outputData));// Pour un encodage en UTF8
+										 // Retire les noms des chemin du serveur NooLib
+										 outputData = outputData.split('/(\/home\/noolibco\/.+)/').join('');
+										// Pour les failles de type scripts
+										outputData = escapeHtml(outputData);
+										/*if(outputData.indexOf('[')== 0 && outputData.lastIndexOf(']')==outputData.length-1){
+												outputData = outputData.substr(1);
+												outputData = outputData.substr(0,outputData.length-1);
+										}*/
+									outputData= JSON.parse(outputData);
+									var imageBuffer = new Buffer(outputData['image'], 'base64');
+									var nombreAlea = Math.floor(Math.random()*1000+1);
+									fs.writeFile('/home/noolibco/Files/Data/'+currentUtilisateur.getVariableFixeUtilisateur()+'/Picture_Result_generated_by_NooLib_'+nombreAlea+'.jpg', imageBuffer,function(err){});
+									var typeDonneeUtilisateur=await(PDOTypeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension('all.image'));
+					 				var donneeResultat=new DonneeResultat( {'urlDonneeUtilisateur':'../Files/Data/naoures.hassine_gmail.com341309/Picture_Result_generated_by_NooLib_'+nombreAlea+'.jpg', 'typeDonneUtilisateur':typeDonneeUtilisateur});
+								tabDonneeUtilisateur.push(donneeResultat);
 		 					}else{
 					 			if(fields["tache"+i+"data"+j].indexOf('noolibData_')!= -1 ){
 					 				var idData = fields["tache"+i+"data"+j].replace("noolibData_","");
@@ -312,7 +334,6 @@ runApplication = function (fields,currentUtilisateur,tabDonneeUtilisateur,messag
 			var tabUrlDestinationDonneeUtilisateur= [];
 			var version;
 			var versions = await(currentApplication.getVersions());
-
 			tabDonneeUtilisateur.forEach(function(donneeUtilisateur){
 				if(donneeUtilisateur instanceof DonneeUtilisateur && !(donneeUtilisateur instanceof InputDonneeUtilisateur)){
 				 	tabUrlDestinationDonneeUtilisateur.push(donneeUtilisateur.getUrlDonneeUtilisateur());
@@ -320,9 +341,8 @@ runApplication = function (fields,currentUtilisateur,tabDonneeUtilisateur,messag
 				 	tabUrlDestinationDonneeUtilisateur.push(false);
 				}
 			});
-			
 
-	 		if(idVersion != undefined && idAuteurs.indexOf(fields['id']) ){
+	 		if(idVersion != undefined ){ //&& idAuteurs.indexOf(fields['id']) 
 				 			
 				 			for(var i=0; i<versions.length ; ++i){
 				 				if(versions[i].getIdVersion() == idVersion){
@@ -363,37 +383,8 @@ runApplication = function (fields,currentUtilisateur,tabDonneeUtilisateur,messag
 				 				
 				 					offset = offset + nombreDeDonnee;
 				 					if(outputData != false){
-				 						messageClient.addReussite(outputData); //to delete!   
-				 						//****************
-				 						outputData = outputData.toString().trim();
-					
-										outputData = outputData.split('<br>').join('');
-										outputData=outputData.split('<br />').join('');
-									    outputData= outputData.split("\n").join('');
-									    outputData= outputData.split("\r" ).join('');
-										// Pour supprimer tout ce qu'il y a avant et après les {} du résultat // Eviter les headers par exemple de php
-										outputData = outputData.split('/^(.*?){/').join('{'); // Avant
-										outputData = outputData.split('/(.*)}.*$/').join('$1}'); // Après
-										//resultat=resultat.split('[').join('{').split(']').join('}');					
-									    outputData = unescape(encodeURIComponent(outputData));// Pour un encodage en UTF8
-										 // Retire les noms des chemin du serveur NooLib
-										 outputData = outputData.split('/(\/home\/noolibco\/.+)/').join('');
-										// Pour les failles de type scripts
-										outputData = escapeHtml(outputData);
-										/*if(outputData.indexOf('[')== 0 && outputData.lastIndexOf(']')==outputData.length-1){
-												outputData = outputData.substr(1);
-												outputData = outputData.substr(0,outputData.length-1);
-										}*/
-										console.log(outputData);
-
-									outputData= JSON.parse(outputData);
-									console.log('***********');
-									var imageBuffer = new Buffer(outputData['image'], 'base64');
-									var nombreAlea = Math.floor(Math.random()*1000+1);
-									fs.writeFile('/home/noolibco/Files/Data/'+currentUtilisateur.getVariableFixeUtilisateur()+'/Picture_Result_generated_by_NooLib_'+nombreAlea+'.jpg', imageBuffer,function(err){});
-									var typeDonneeUtilisateur=await(PDOTypeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension('all.image'));
-					 				var donneeResultat=new DonneeResultat( {'urlDonneeUtilisateur':'/Picture_Result_generated_by_NooLib_'+nombreAlea+'.jpg', 'typeDonneUtilisateur':typeDonneeUtilisateur});
-									return donneeResultat
+				 						return outputData;
+				 						
 				 					}else {
 				 						messageClient.addErreur("erreur 1"); //A voir ???
 				 					}
@@ -419,7 +410,7 @@ router.post('/', function(req, res) {
 
 	async (function(){
 		numRequest +=1;
-		outputData = undefined;
+		var outputData = undefined;
 
 		var fields = JSON.parse(req.body['jsonData']);
 		var currentUtilisateur=await(user.getUtilisateurById(fields['id']));
@@ -443,8 +434,8 @@ router.post('/', function(req, res) {
 			if(abonnenementUser || fields['isAdmin'] ){
 				if(currentApplication.getIdStatut() > 4 || fields['isAdmin'] || idAuteurs.indexOf(fields['id']) ){
 					var i=0, j=0, tabDonneeUtilisateur=[], noError= true;
-					var erreur= GetDataUrl(fields,fields['id'],messageClient);
-					console.log('result:  '+erreur);
+					var resulatFromRun= GetDataUrl(fields,fields['id'],messageClient);
+					messageClient.addReussite(resulatFromRun);
 
 					
 				 
