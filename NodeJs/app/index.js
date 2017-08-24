@@ -7,6 +7,7 @@ var util = require('util');
 var exec = require('child_process').exec;//Sync;
 var async=require('asyncawait/async');
 var await=require('asyncawait/await');
+var fs=require('fs');
 //donnée de l'application
 var DonneeUtilisateur= require('../models/DonneeUtilisateur');
 var PDODonneeUtilisateur= new DonneeUtilisateur();
@@ -23,6 +24,7 @@ var UtilisateurDonneeUtilisateur= require('../models/UtilisateurDonneeUtilisateu
 var InputDonneeUtilisateur= require('./InputDonneeUtilisateur');
 var Fonction=require('../models/Fonction');
 var Config=require('../models/Config');
+var DonneeResultat= require('../models/DonneeResultat');
 
 
 //variable de stockage
@@ -100,17 +102,14 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 		var createur = applicationRunning.getCreateur();
 
 		if(tacheDemandee instanceof Tache){
-			
 			var tacheDatas = await(tacheDemandee.getTacheTypeDonneeUtilisateurs());
 			if(tacheDatas.length === tabDonneeUtilisateur.length){
 				var i=-1;
-				console.log(tacheDatas);
 				tacheDatas.forEach(function(tacheData){
 					i++;
 					var donnee = tabDonneeUtilisateur[i];
 					var typeDonnee = donnee.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
 					var typeAttendu = tacheData.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
-					//console.log(await(tacheData.getTypeDonneeUtilisateurs()));
 					if(typeAttendu != 'all'){
 						// On charge le fichier de configuration
 						var config = new Config();
@@ -144,7 +143,6 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 				messageClient.addErreur(tacheDemandee.getNomTache()+ ': '+ENGINE_NO_MATCH_DATA);
 				return false;
 			}
-			console.log(tacheDemandee);
 			var fonctions = await(tacheDemandee.getFonctions());
 			if(fonctions.length != 0){
 			 var nbrFunction=0;
@@ -224,10 +222,7 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 			return outputData;
 		}else{
 			messageClient.addErreur(FORMAT_TACHE);
-		}
-			
-			
-		
+		}			
 }
 
 
@@ -239,7 +234,6 @@ execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction
 				var nomApplication = application.getVariableFixeApplication();
 				var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
 				var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+args;
-				console.log('excFct '+instructions);
 
 					var resultat=exec(instructions + '2>&1',async function(err,stdout,stderr){
 						if(err)  return resolve(err);
@@ -261,7 +255,6 @@ delFolderInProd = function (utilisateur,nbReq){
 	return new Promise(function(resolve,reject){
 	 	if(utilisateur instanceof User){
 	 			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur()+' '+nbReq;
-	 			console.log('delFolder  '+instructions);
 				exec(instructions,function(err){
 					if(err) return resolve(err);
 					return resolve("done");
@@ -274,86 +267,62 @@ delFolderInProd = function (utilisateur,nbReq){
 		}
 	});
 }
-
-//********Request********
-router.post('/', function(req, res) { 
-	res.header("Access-Control-Allow-Origin",req.get('origin'));
-	var messageClient = new(require('../models/MessageClient'));
-
-	async (function(){
-		numRequest +=1;
-		outputData = undefined;
-
-			var fields = JSON.parse(await(req.body['jsonData']));
-		var currentUtilisateur=await(user.getUtilisateurById(fields['id']));
-		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication']));
-		if(currentApplication != false){
-			var idAuteurs = [];
-			var auteurs=await(currentApplication.getAuteurs());
-				if(auteurs != false){
-					auteurs.forEach(function(itemAuteur){
-					var mailAuteur= itemAuteur.getMailAuteur();
-					if(mailAuteur != false){
-						var utilisateurAuteur=await(user.getUtilisateurByMail(mailAuteur));
-						if(utilisateurAuteur != false){
-							idAuteurs.push(utilisateurAuteur.getIdUtilisateur());
-						}
-					}
-				});
-				}
-			var abonnenementUser = true;
-		
-			if(abonnenementUser || fields['isAdmin'] ){
-				if(currentApplication.getIdStatut() > 4 || fields['isAdmin'] || idAuteurs.indexOf(fields['id']) ){
-					var i=0, j=0, tabDonneeUtilisateur=[], noError= true;
-
-					while(fields["tache"+i+"data"+j] != undefined){
-		 				j=0;
-		 				while(fields["tache"+i+"data"+j] != undefined){
+//*********************************** Combine Apllication 
+GetDataUrl = function (fields, idUser, messageClient){
+	var i=0, j=0;
+	var noError=true;
+	var currentUtilisateur=await(user.getUtilisateurById(idUser));
+	var tabDonneeUtilisateur=[];
+	while(fields["tache"+i+"data"+j] != undefined){
+		 			while(fields["tache"+i+"data"+j] != undefined){
+		 					if(typeof fields["tache"+i+"data"+j] == 'object'){
+		 						var test =GetDataUrl(fields["tache"+i+"data"+j],idUser,messageClient);
+								tabDonneeUtilisateur.push(test);
+		 					}else{
 					 			if(fields["tache"+i+"data"+j].indexOf('noolibData_')!= -1 ){
 					 				var idData = fields["tache"+i+"data"+j].replace("noolibData_","");
 					 				var donneeUtilisateur = await(PDODonneeUtilisateur.getDonneeUtilisateurById(idData));
 					 				if(donneeUtilisateur != false){
-					 					var managerUtilisateurDonneeUtilisateur = new UtilisateurDonneeUtilisateur();
-					 					var utilisateurDonneeUtilisateur = await(managerUtilisateurDonneeUtilisateur.getUtilisateurDonneeUtilisateurById(fields['id'],donneeUtilisateur.getIdDonneeUtilisateur()));
-		 								
-					 					if(utilisateurDonneeUtilisateur != false){
 					 						tabDonneeUtilisateur.push(donneeUtilisateur);
-					 						
-					 					}else{
-					 						noError = false;
-					 						messageClient.addErreur(DENY_HANDLE_DATA);
-					 					}
 					 				}else{
 					 					noError = false;
-					 					messageClient.addErreur(ENGINE_NO_DATA);
+					 					messageClient.addErreur(DENY_HANDLE_DATA);
 					 				}
-			 					}
-					 			else{
+					 			}else{
 					 				var idDataInput = fields["tache"+i+"data"+j];
 					 				var typeDonneeUtilisateur=await(PDOTypeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension('input.txt'));
 					 				var inputDonneeUtilisateur=new InputDonneeUtilisateur( {'valeurInputDonneUtilisateur':idDataInput, 'typeDonneUtilisateur':typeDonneeUtilisateur});
 					 				tabDonneeUtilisateur.push(inputDonneeUtilisateur);
-					 			}
-		 					j++;
-			 			}
-				 		i++;j=0;
-			 	    }
-				 	if(noError){
-				 		var tabUrlDestinationDonneeUtilisateur = [];
-				 		tabDonneeUtilisateur.forEach(function(donneeUtilisateur){
-				 			if(donneeUtilisateur instanceof DonneeUtilisateur && !(donneeUtilisateur instanceof InputDonneeUtilisateur)){
-				 				tabUrlDestinationDonneeUtilisateur.push(donneeUtilisateur.getUrlDonneeUtilisateur());
-				 			} else {
-				 				tabUrlDestinationDonneeUtilisateur.push(false);
-				 			}
-				 		});
-				 		// On récupère la version demandée si admin/auteurs ou la dernière version active de l'application
-				 		var idVersion=fields['idVersion'];
-				 		var version;
-				 		var versions = await(currentApplication.getVersions());
-				 	
-				 		if(idVersion != undefined && idAuteurs.indexOf(fields['id']) ){
+					 		 	}
+			 				}
+					 			j++;
+					 		}
+		 					i++;j=0;
+				 		if(noError){
+				 			return runApplication(fields,currentUtilisateur,tabDonneeUtilisateur,messageClient);
+				 		}else{
+						messageClient.addErreur(ENGINE_NO_DATA_MULE);
+						}
+			 		}				 		
+}
+
+runApplication = function (fields,currentUtilisateur,tabDonneeUtilisateur,messageClient){
+			var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication']));
+			var idVersion=fields['idVersion'];
+			var tabUrlDestinationDonneeUtilisateur= [];
+			var version;
+			var versions = await(currentApplication.getVersions());
+
+			tabDonneeUtilisateur.forEach(function(donneeUtilisateur){
+				if(donneeUtilisateur instanceof DonneeUtilisateur && !(donneeUtilisateur instanceof InputDonneeUtilisateur)){
+				 	tabUrlDestinationDonneeUtilisateur.push(donneeUtilisateur.getUrlDonneeUtilisateur());
+				} else {
+				 	tabUrlDestinationDonneeUtilisateur.push(false);
+				}
+			});
+			
+
+	 		if(idVersion != undefined && idAuteurs.indexOf(fields['id']) ){
 				 			
 				 			for(var i=0; i<versions.length ; ++i){
 				 				if(versions[i].getIdVersion() == idVersion){
@@ -378,7 +347,6 @@ router.post('/', function(req, res) {
 				 			while(fields['tache'+i] != undefined){
 				 				
 				 				var nomTacheApplication = fields['tache'+i];
-				 				console.log(nomTacheApplication);
 				 				for(var j=0; j<taches.length;++j){
 				 					var task = await(taches[j]);
 				 					if(task.getNomTache() == nomTacheApplication){
@@ -395,7 +363,37 @@ router.post('/', function(req, res) {
 				 				
 				 					offset = offset + nombreDeDonnee;
 				 					if(outputData != false){
-				 						messageClient.addReussite(outputData);
+				 						messageClient.addReussite(outputData); //to delete!   
+				 						//****************
+				 						outputData = outputData.toString().trim();
+					
+										outputData = outputData.split('<br>').join('');
+										outputData=outputData.split('<br />').join('');
+									    outputData= outputData.split("\n").join('');
+									    outputData= outputData.split("\r" ).join('');
+										// Pour supprimer tout ce qu'il y a avant et après les {} du résultat // Eviter les headers par exemple de php
+										outputData = outputData.split('/^(.*?){/').join('{'); // Avant
+										outputData = outputData.split('/(.*)}.*$/').join('$1}'); // Après
+										//resultat=resultat.split('[').join('{').split(']').join('}');					
+									    outputData = unescape(encodeURIComponent(outputData));// Pour un encodage en UTF8
+										 // Retire les noms des chemin du serveur NooLib
+										 outputData = outputData.split('/(\/home\/noolibco\/.+)/').join('');
+										// Pour les failles de type scripts
+										outputData = escapeHtml(outputData);
+										/*if(outputData.indexOf('[')== 0 && outputData.lastIndexOf(']')==outputData.length-1){
+												outputData = outputData.substr(1);
+												outputData = outputData.substr(0,outputData.length-1);
+										}*/
+										console.log(outputData);
+
+									outputData= JSON.parse(outputData);
+									console.log('***********');
+									var imageBuffer = new Buffer(outputData['image'], 'base64');
+									var nombreAlea = Math.floor(Math.random()*1000+1);
+									fs.writeFile('/home/noolibco/Files/Data/'+currentUtilisateur.getVariableFixeUtilisateur()+'/Picture_Result_generated_by_NooLib_'+nombreAlea+'.jpg', imageBuffer,function(err){});
+									var typeDonneeUtilisateur=await(PDOTypeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension('all.image'));
+					 				var donneeResultat=new DonneeResultat( {'urlDonneeUtilisateur':'/Picture_Result_generated_by_NooLib_'+nombreAlea+'.jpg', 'typeDonneUtilisateur':typeDonneeUtilisateur});
+									return donneeResultat
 				 					}else {
 				 						messageClient.addErreur("erreur 1"); //A voir ???
 				 					}
@@ -405,20 +403,51 @@ router.post('/', function(req, res) {
 				 				}
 				 				++i;
 				 			}
-				 					// Execution du script Bash pour vider le dossier User linux
-									// On execute l'objet Exec
-									//console.log("here");
-									/*setTimeout(async function(){
-										await(delFolderInProd(currentUtilisateur));
-									},20000);*/
-				 					
-				 					//console.log(delForlder);
 				 		}else{
 							messageClient.addErreur(TREE_VERSION_NOT_ACTIVATED);
 						}
-					}else{
-						messageClient.addErreur(ENGINE_NO_DATA_MULE);
+						return false; //return une donneeUtilisateur qui contien l'url et le nom 
+						
+					
+}
+//****************************
+
+//********Request********
+router.post('/', function(req, res) { 
+	res.header("Access-Control-Allow-Origin",req.get('origin'));
+	var messageClient = new(require('../models/MessageClient'));
+
+	async (function(){
+		numRequest +=1;
+		outputData = undefined;
+
+		var fields = JSON.parse(req.body['jsonData']);
+		var currentUtilisateur=await(user.getUtilisateurById(fields['id']));
+		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication']));
+		if(currentApplication != false){
+			var idAuteurs = [];
+			var auteurs=await(currentApplication.getAuteurs());
+				if(auteurs != false){
+					auteurs.forEach(function(itemAuteur){
+					var mailAuteur= itemAuteur.getMailAuteur();
+					if(mailAuteur != false){
+						var utilisateurAuteur=await(user.getUtilisateurByMail(mailAuteur));
+						if(utilisateurAuteur != false){
+							idAuteurs.push(utilisateurAuteur.getIdUtilisateur());
+						}
 					}
+				});
+				}
+			var abonnenementUser = true;
+		
+			if(abonnenementUser || fields['isAdmin'] ){
+				if(currentApplication.getIdStatut() > 4 || fields['isAdmin'] || idAuteurs.indexOf(fields['id']) ){
+					var i=0, j=0, tabDonneeUtilisateur=[], noError= true;
+					var erreur= GetDataUrl(fields,fields['id'],messageClient);
+					console.log('result:  '+erreur);
+
+					
+				 
 				}else{
 						messageClient.addErreur(APPLICATION_NOT_ACTIVATED);
 					}
@@ -428,6 +457,8 @@ router.post('/', function(req, res) {
 		}else{
 			messageClient.addErreur(NO_APPLICATION);
 		}
+				 	
+			
  	
 		 	var response = {};
 			if(messageClient.hasErreur()){
@@ -469,7 +500,6 @@ router.post('/', function(req, res) {
 				response['resultat'] = resultatsApplication;
 			}
 			response = JSON.stringify(response);
-			console.log(response);
 		 	res.send(response);	
 
 		})();	

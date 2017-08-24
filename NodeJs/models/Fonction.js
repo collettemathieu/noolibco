@@ -47,7 +47,6 @@ putParametresInFonction = function(fonction){
 		 		var parametre = new Parametre();
 		 		var array = [];
 		 		rows.forEach(function(row){
-		 			//console.log(parametre.getParametreById(row['id_parametre']));
 		 			array.push(parametre.getParametreById(row['id_parametre']));
 		 		});
 		 		return resolve(array);
