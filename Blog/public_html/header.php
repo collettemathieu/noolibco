@@ -17,8 +17,8 @@
 	    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
 	        <li><a href="/Articles/">Articles</a></li>
-	        <li><a href="https://www.noolib.com">noolib.com</a></li>
 	        <li><a href="/Services/">Services</a></li>
+	        <li><a href="https://www.noolib.com">noolib.com</a></li>
 	      </ul>
 	      <form class="navbar-form pull-right hidden-xs" action="/Sphinx/Search/" method="post">
 	      	<input type="text" name="mots" class="input-sm form-control" placeholder="Rechercher..."/>

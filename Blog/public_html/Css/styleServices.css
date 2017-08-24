@@ -7,10 +7,6 @@
 	margin-bottom: 100px;
 }
 
-.service a{
-	color: #457fca;
-}
-
 .services{                                     
 	background-size: cover;
 	background-attachment: fixed;
@@ -55,5 +51,9 @@
 
 .imageService img{
 	max-width: 350px;
+}
+
+.noolibService{
+	color: white;
 }
 

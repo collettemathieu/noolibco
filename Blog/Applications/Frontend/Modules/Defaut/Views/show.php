@@ -59,10 +59,10 @@
 						<div class="edito"><img src="\Images\arrowEditorial.png"/></div>
 					</div>
 					<div class="col-lg-12 maxWidth centering text-center">
-						<div class="text-center centering col-lg-5">
+						<div class="text-center centering col-lg-7">
 							<h1>NooLib, des applications mais pas que...</h1>
 						</div>
-						<div class="col-sm-offset-1 col-sm-4">	
+						<div class="col-sm-offset-1 col-sm-5">	
 							<div class="mainInformation text-justify">
 								<p>NooLib permet d'exécuter des algorithmes en ligne. 
 									C'est bien mais nous pensons qu'il fallait accompagner la plateforme d'un véritable lieu d'échange.</p>

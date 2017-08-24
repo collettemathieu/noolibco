@@ -20,15 +20,20 @@ footer ul{
 
 footer ul li:first-child{
 	font-family: "OpenSans";
-	font-size: 1.1em;
+	font-size: 1.7em;
 }
 
 footer ul li a{
 	color: white;
+	font-size: 1.2em;
 }
 
 footer ul li a:hover{
 	color: white;
+}
+
+footer ul{
+	margin: 10px 0px 20px 0px;
 }
 
 footer hr{
@@ -51,7 +56,6 @@ footer hr{
 
 	footer ul li:first-child{
 		font-family: "OpenSans";
-		font-size: 1.7em;
 	}
 
 	footer ul li a{
