@@ -3,10 +3,10 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-5 centering" >
-						<h5>© 2017 NooLib - All rights reserved - </h5>
-						<a href="https://blog.noolib.com" class="btn btn-xs">The Blog</a>
-						<button class="btn btn-default btn-xs" data-toggle="modal" data-target="#team">Team</button>
-						<button ng-click="contactModal()" class="btn btn-primary btn-xs">Contact</button>
+						<h5>© 2017 NooLib - </h5>
+						<a href="https://blog.noolib.com" target="_blank" class="btn btn-xs" data-toggle="tooltip" title="The NooLib Blog!">The Blog</a>
+						<button class="btn btn-default btn-xs" data-toggle="modal" data-target="#team" data-toggle="tooltip" title="The NooLib Team!">Team</button>
+						<button ng-click="contactModal()" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Contact us!">Contact</button>
 						<ul>
 							<li><a href="https://www.tipeee.com/noolib" target="_blank" data-toggle="tooltip" title="Help us on tipeee!"><img src="/Images/Social/tipeee.png"/></a></li>
 						</ul>
