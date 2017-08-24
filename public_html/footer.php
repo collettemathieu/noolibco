@@ -4,11 +4,11 @@
 				<div class="row">
 					<div class="col-lg-5 centering" >
 						<h5>© 2017 NooLib - All rights reserved - </h5>
+						<a href="https://blog.noolib.com" class="btn btn-default btn-xs">The Blog</a>
 						<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#team">Team</button>
 						<button ng-click="contactModal()" class="btn btn-default btn-xs">Contact</button>
 						<ul>
-							<li><a href="https://www.tipeee.com/noolib" target="_blank" data-toggle="tooltip" title="Help us with tipeee!"><img src="/Images/Social/tipeee.png"/></a></li>
-							<li><a href="https://blog.noolib.com" target="_blank" data-toggle="tooltip" title="NooLib The Blog!"><img src="/Images/Social/blog.png"/></a></li>
+							<li><a href="https://www.tipeee.com/noolib" target="_blank" data-toggle="tooltip" title="Help us on tipeee!"><img src="/Images/Social/tipeee.png"/></a></li>
 						</ul>
 					</div>
 				</div>
