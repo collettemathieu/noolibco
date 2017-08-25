@@ -80,7 +80,7 @@
 							<div class="appInDock" draggable="true" id="<?php echo $application->getIdApplication();?>">
 								<div class="containerApplication">
 									<div class="top">
-										<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/>
+										<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/>&brvbar;
 										<div class="playButton"><img src="/Images/play.png"/></div>
 									</div>
 									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div><!--

@@ -468,7 +468,7 @@ $(function(){
 	    	}
 
 			// On affiche les info-bulles
-			donneeUtilisateur.popover({placement:'bottom', trigger:'hover'});
+			donneeUtilisateur.popover({placement:'right', trigger:'hover'});
 
 	  		donneeUtilisateur.contextMenu({
 		    	selector: 'img',
@@ -1225,19 +1225,22 @@ $(function(){
 
 			cloneApplication.children(".containerApplication").before(contenu);
 			cloneApplication.find('.donneeDataBox').droppable({
-			drop: function(event, ui){
-				if($(this).children().length==0){ //pour n'accepter qu'une seule donnée dans la dataBox
-				var positionSourisX = event.clientX,
-				largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
-				if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
-					initDonneeUtilisateur(ui.draggable.clone(), $(this), 2, 2);
-				}else{
-					$(this).append(ui.draggable);
-					ui.draggable.css('position',''); //pour que la donnée se place au bon endroit du drag
-					ui.draggable.css('top', 2+'px').css('left', 2+'px'); //.css('position','absolute')
+				drop: function(event, ui){
+					if($(this).children().length==0){ //pour n'accepter qu'une seule donnée dans la dataBox
+						var positionSourisX = event.clientX,
+							largeurGestionnaireDonnee = parseInt($('#overlayGestionnaireDonnees').css('width'));
+						if(ui.draggable.parent().attr('id') === 'inListeDonneesUser' && positionSourisX > largeurGestionnaireDonnee){
+							initDonneeUtilisateur(ui.draggable.clone(), $(this), 2, 2);
+						}else{
+							$(this).append(ui.draggable);
+							ui.draggable.css('position',''); //pour que la donnée se place au bon endroit du drag
+							ui.draggable.css('top', 2+'px').css('left', 2+'px'); //.css('position','absolute')
+						}
 					}
+				},
+				over: function(event, ui){
+
 				}
-			}
 			});
 
 			//Pour afficher la dataBox
@@ -1247,7 +1250,7 @@ $(function(){
 				cloneApplication.find('.dataBoxContainer hr').css('display', 'inline-block');
 				
 				// Pour gérer les popover des data-box
-				cloneApplication.find('[data-toggle="popover"]').popover({
+				cloneApplication.find('.donneeDataBox').popover({
 					placement:'left', 
 					trigger:'hover'
 				}).on('show.bs.popover', function(){
