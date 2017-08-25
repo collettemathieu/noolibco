@@ -190,7 +190,6 @@
 	visibility: hidden;
 	padding: 0px;
 	margin: 0px;
-	border: 1px red solid;
 }
 
 .playButton img{
@@ -198,7 +197,6 @@
 	cursor: pointer;
 	padding: 0px;
 	margin: 0px;
-	border: 1px blue solid;
 }
 
 /*********************/

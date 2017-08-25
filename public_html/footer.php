@@ -81,7 +81,7 @@
 								<div class="containerApplication">
 									<div class="top">
 										<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/>
-										<div class="playButton">&boxv;<img src="/Images/play.png"/></div>
+										<div class="playButton"><img src="/Images/play.png"/></div>
 									</div>
 									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div><!--
 									--><hr><div class="resultBox">

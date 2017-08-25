@@ -489,12 +489,24 @@ $(function(){
 	      	donneeUtilisateur.draggable({
 				revert: false,
 				containment: '#noospace',
-				snap: '.dataBox',
-				start: function(){
+				snap:'.dataBox',
+				appendTo:'#noospace',
+				helper:'clone',
+				start: function(event, ui){
+					$(this).hide();
 					$(this).children('img').addClass('noClick');
 				},
 				drag: function(event, ui){
 					$(this).popover('hide');
+				},
+				stop: function(event, ui){
+					if($(this).parent().attr('id') === 'noospace'){
+						$(this).css({
+							'top':$(ui.helper).position().top,
+							'left':$(ui.helper).position().left
+						});
+					}
+					$(this).show();
 				}
 	      	});
 		}
@@ -1221,7 +1233,7 @@ $(function(){
 					initDonneeUtilisateur(ui.draggable.clone(), $(this), 2, 2);
 				}else{
 					$(this).append(ui.draggable);
-					ui.draggable.css('position',''); //pour que la donnée se met au bon endroit du drag
+					ui.draggable.css('position',''); //pour que la donnée se place au bon endroit du drag
 					ui.draggable.css('top', 2+'px').css('left', 2+'px'); //.css('position','absolute')
 					}
 				}
