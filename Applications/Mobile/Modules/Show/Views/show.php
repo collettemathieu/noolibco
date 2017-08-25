@@ -3,7 +3,7 @@
 			<div class="col-lg-12 centering maxWidth">
 				<!-- Info Mobile -->
 			    <div class="col-lg-6 text-center alert alert-warning">
-		        	<span>Use NooLib on your mobile.</span>
+		        	<span>Ooops, you cannot use NooLib on your mobile yet.</span>
 		        	<span>Please stay tuned !</span>
 			    </div><br>
 				<div class="col-lg-6">
