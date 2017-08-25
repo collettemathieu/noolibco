@@ -140,9 +140,11 @@ $(function(){
 
 	      	// On affiche les boîtes de dialogue supplémentaires autour de l'application
 	      	cloneApplication.find('.containerApplication').children('hr').show().css('display', 'inline-block');
-  				setTimeout(function(){
-  					cloneApplication.find('.containerApplication').children('.resultBox').show('slice').css('display', 'inline-block');
-  				}, 500);
+			setTimeout(function(){
+				cloneApplication.find('.containerApplication').children('.resultBox').show('slice').css('display', 'inline-block');
+				// On affiche le bouton Play
+	      		cloneApplication.find('.playButton').css('visibility', 'visible').css('display', 'block');
+			}, 500);
 
 	      	// Pour receuillir les données dans la dataBox de l'application
 	      	cloneApplication.children('.dataBox').droppable({
@@ -175,7 +177,7 @@ $(function(){
 				processData: false,
 				success: function(response) {
 					try{
-						 response = JSON.parse(response);
+						response = JSON.parse(response);
 						listTypeDonnee = response['listeTypeDonnee'];
 						listeTache=response['listeTache'];
 						listeParams=response['listeParams'];
@@ -200,17 +202,61 @@ $(function(){
 			    tacheApplication=cloneApplication.find('.tachesApplication');
 			    parametres=[];
 							    
-						tacheApplication.attr('name',nomTache);	
-						initDataBox(cloneApplication,listTypeDonnee,nomTache);
-						parametres=ArrayTacheParam(listeParams);
-						 tacheApplication.append('<form></form>');
-						if(typeof parametres[nomTache] != "undefined"){
-							for(var i=0;i<parametres[nomTache].length;++i){
-								//Pour afficher les parametres
-								tacheApplication.find('form').append("<input type='text' id='"+parametres[nomTache][i]['nomParams']+"' name='"+parametres[nomTache][i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ parametres[nomTache][i]['defaultVal']+"' readonly />");
-							}
-						}
+				tacheApplication.attr('name',nomTache);	
+				initDataBox(cloneApplication,listTypeDonnee,nomTache);
+				parametres=ArrayTacheParam(listeParams);
+				tacheApplication.append('<form></form>');
+				if(typeof parametres[nomTache] != "undefined"){
+					for(var i=0;i<parametres[nomTache].length;++i){
+						//Pour afficher les parametres
+						tacheApplication.find('form').append("<input type='text' id='"+parametres[nomTache][i]['nomParams']+"' name='"+parametres[nomTache][i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ parametres[nomTache][i]['defaultVal']+"' readonly />");
+					}
+				}
 			}, 800);
+
+			// Pour exécuter la tâche de l'application
+			cloneApplication.find('.playButton').click(function(){
+				try{
+	               	// On affiche le loader
+		      		cloneApplication.find('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
+		      		// On ajoute les données et les paramètres pour le lancement de l'application
+		      		var paramForm = cloneApplication.find('.tachesApplication form').serializeArray(),
+		      			nomTache=cloneApplication.find('.tachesApplication').attr('name'),
+		      			donnees=ArrayTacheDonnee(listTypeDonnee),
+		      			formData = new FormData(),
+		      			nbrDonnee=donnees[nomTache].length;
+
+					for(var i=0;i<nbrDonnee;++i){
+						if(donnees[nomTache][i]['ext']!='input.txt'){
+							formData.append('tache0data'+i, 'noolibData_'+cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
+						}else{
+							formData.append('tache0data'+(i), cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').val());
+						}
+					}
+					formData.append('idApplication', cloneApplication.attr('id'));
+					formData.append('idVersion', cloneApplication.attr('idVersion'));
+					formData.append('tache0', nomTache );
+					// On ajoute le formulaire des paramètres au formulaire général
+					for (var i=0; i<paramForm.length; i++)
+					    formData.append(paramForm[i].name, paramForm[i].value);
+						runTheMule(formData, cloneApplication);
+				}
+	      		catch(e){
+	      			var response = {
+					  'erreurs': '<p>A system error has occurred.</p>'
+					};
+					displayInformationsClient(response);
+					// On cache le loader
+					cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
+
+					// On cache les résultats précédents
+					cloneApplication.find('.resultBox img').hide(600);
+
+					// On efface le rapport précédent
+					cloneApplication.find('.applicationReports').html('');
+	      		}
+			});
+	           
 
 			//********************************************************************
 			//************* Menu contextuel de l'application********************
@@ -219,7 +265,7 @@ $(function(){
 		    	selector: '.imageApplication',
 		        callback: function(key, options) {
 		            if(key === 'delete'){
-		            	$(this).parent().parent().remove(); // edited by Naoures
+		            	$(this).parent().parent().parent().remove(); // edited by Naoures
 		            	var numeroApp = cloneApplication.attr('numApp');
 		            	tabImage[numeroApp] = [];
 						tabGraph[numeroApp] = [];
@@ -381,58 +427,14 @@ $(function(){
 						sliderParametreApplication(modalBody);
 						saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect);
 					}
-					if(key === "Run"){
-						try{
-			               	// On affiche le loader
-				      		cloneApplication.find('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
-				      		// On ajoute les données et les paramètres pour le lancement de l'application
-				      		var paramForm = cloneApplication.find('.tachesApplication form').serializeArray(),
-				      			nomTache=cloneApplication.find('.tachesApplication').attr('name'),
-				      			donnees=ArrayTacheDonnee(listTypeDonnee),
-				      			formData = new FormData(),
-				      			nbrDonnee=donnees[nomTache].length;
-
-							for(var i=0;i<nbrDonnee;++i){
-								if(donnees[nomTache][i]['ext']!='input.txt'){
-									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
-								}else{
-									formData.append('tache0data'+(i), cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').val());
-								}
-							}
-							formData.append('idApplication', cloneApplication.attr('id'));
-							formData.append('idVersion', cloneApplication.attr('idVersion'));
-							formData.append('tache0', nomTache );
-							// On ajoute le formulaire des paramètres au formulaire général
-							for (var i=0; i<paramForm.length; i++)
-							    formData.append(paramForm[i].name, paramForm[i].value);
-								runTheMule(formData, cloneApplication);
-						}
-			      		catch(e){
-			      			var response = {
-							  'erreurs': '<p>A system error has occurred.</p>'
-							};
-							displayInformationsClient(response);
-							// On cache le loader
-							cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
-
-							// On cache les résultats précédents
-							cloneApplication.find('.resultBox img').hide(600);
-
-							// On efface le rapport précédent
-							cloneApplication.find('.applicationReports').html('');
-			      		}
-					}
 		        },
 		        autoHide: true,
 		        items: {
-		        	"Run":{
-		        		name:"Run Application"
-		        	},
-		             "parametreApplication": {
-		            	name: "Set this application"
+		        	"parametreApplication": {
+		            	name: "Set it"
 		            },
 		            "mule":{
-		            	name: "Load/Unload the mule"
+		            	name: "Load/Unload its mule"
 		            },
 		            "sep1": "---------",
 		            "delete": {
@@ -442,8 +444,6 @@ $(function(){
 		        }
 		    });
 		}
-
-		
 
 		// Pour initialiser les fonctionnalitées de la donnée utilisateur une fois ajouter à la NooSpace
 		function initDonneeUtilisateur(donneeUtilisateur, drop, nouvellePositionElementX, nouvellePositionElementY){
@@ -552,7 +552,8 @@ $(function(){
 			//On vide le caroussel de son contenu
 			$('#carouselApplicationReport').empty();
 		});
-           
+
+
 		// Pour lancer l'application et gérer les résultats de retour
 		function runTheMule(formData, cloneApplication){
 			// On lance la requête ajax
@@ -1234,11 +1235,11 @@ $(function(){
 				cloneApplication.find('.dataBoxContainer hr').css('display', 'inline-block');
 				
 				// Pour gérer les popover des data-box
-				$('[data-toggle="popover"]').popover({
+				cloneApplication.find('[data-toggle="popover"]').popover({
 					placement:'left', 
 					trigger:'hover'
 				}).on('show.bs.popover', function(){
-					$(this).data('bs.popover').tip().css('max-width', '200px');
+					$(this).data('bs.popover').tip().css('max-width', '250px');
 				});
 			}, 500);
 			

@@ -78,10 +78,11 @@
 							$taches = $version->getTaches();
 							?>
 							<div class="appInDock" draggable="true" id="<?php echo $application->getIdApplication();?>">
-								
-								<div class="runApplication"><img src="/Images/play.ico"/></div>
 								<div class="containerApplication">
-									<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/>
+									<div class="top">
+										<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/>
+										<div class="playButton">&boxv;<img src="/Images/play.png"/></div>
+									</div>
 									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div><!--
 									--><hr><div class="resultBox">
 											<img src="/Images/results.png"/>
