@@ -443,6 +443,7 @@ $(function(){
 		    });
 		}
 
+		
 
 		// Pour initialiser les fonctionnalitées de la donnée utilisateur une fois ajouter à la NooSpace
 		function initDonneeUtilisateur(donneeUtilisateur, drop, nouvellePositionElementX, nouvellePositionElementY){
@@ -1138,60 +1139,53 @@ $(function(){
         	var numberParams=0;
         	var contenuParams="";
         	$('.modal-body').find('#paramsList').children().remove();
-        		for(i=0;i<listeParams.length;++i){
-        			if(listeParams[i]['nomTache']==nomTache){
-        				//Reecrire tout le html dans footer.php !!!!!! 
-						contenuParams+="<li><label for='"+listeParams[i]['nomParams']+"' class='labelVariable'>"+ listeParams[i]['nomParams']+" :</label><input type='text' id='"+listeParams[i]['nomParams']+"' name='"+listeParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ listeParams[i]['defaultVal']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+listeParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+listeParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+listeParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";		
-        				numberParams++;
-        			}
-        		}
-        		//S'il y a aucun parametre
-        		if(numberParams==0){
-        			$('.modal-body').find("#paramsList").append("<div class='alert alert-warning'>Sorry, this application cannot be set.</div><button class='btn btn-default pull-right' type='submit'>Save</button>");
-        		}else{
-        			var contenu="<ul><li class='parametresTache'><ul>";
-        			contenu+=contenuParams+"</ul></li></ul><button class='btn btn-default pull-right' type='submit'>Save</button>";
-        			$('.modal-body').find('#paramsList').append(contenu);
-        		}
+    		for(i=0;i<listeParams.length;++i){
+    			if(listeParams[i]['nomTache']==nomTache){
+					contenuParams+="<li><label for='"+listeParams[i]['nomParams']+"' class='labelVariable'>"+ listeParams[i]['nomParams']+" :</label><input type='text' id='"+listeParams[i]['nomParams']+"' name='"+listeParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ listeParams[i]['defaultVal']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+listeParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+listeParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+listeParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";		
+    				numberParams++;
+    			}
+    		}
+    		//S'il y a aucun parametre
+    		if(numberParams==0){
+    			$('.modal-body').find("#paramsList").append("<br><div class='alert alert-warning'>This task cannot be set.</div><button class='btn btn-default pull-right' type='submit'>Save</button>");
+    		}else{
+    			var contenu="<ul><li class='parametresTache'><ul>";
+    			contenu+=contenuParams+"</ul></li></ul><button class='btn btn-default pull-right' type='submit'>Save</button>";
+    			$('.modal-body').find('#paramsList').append(contenu);
+    		}
         } 
-       function initDataBox(cloneApplication,listTypeDonnee,nomTache){
+       	function initDataBox(cloneApplication,listTypeDonnee,nomTache){
 			var arrayDonnee=ArrayTacheDonnee(listTypeDonnee),
 			numeroDonnee = 0,
 			nombreDonnee=arrayDonnee[nomTache].length,
-			pasAffichage=4;
+			pasAffichage=3;
 			var step = 73;
 			var scrolling = false;
 
-
-				if(nombreDonnee>pasAffichage){
-					contenu="<div class='allDataBox' style='width:120px;float:none;height:"+(pasAffichage*73+25)+"px;overflow-y:auto;overflow-x:hidden;direction:rtl'>";
-					contenu+='<div id="scrollUp" style="top:-26px;position:absolute"></div>';
-					contenu+='<div id="scrollDown" style="top:'+(pasAffichage*73+25)+'px;position:absolute;"></div>';
-				}else{
-					contenu="<div class='allDataBox' style='width:90px;float:none;height:"+(nombreDonnee*73+25)+"px'>";
-				}
-				
-				if(nombreDonnee>1){
-			  cloneApplication.append("<button class='reduce' style='display:inline;position:absolute;top:-30px'> - </button>");
-			  cloneApplication.append("<button class='resize' style='display:none;position:absolute;top:-30px'>+</button>");
-			 
+			if(nombreDonnee>pasAffichage){
+				contenu='<div class="surContainer" style="height:'+(pasAffichage*step+25)+'px;">';
+				contenu+="<div class='allDataBox' style='height:"+(pasAffichage*step+25)+"px;'>";
+				contenu+='<div id="scrollUp"></div>';
+				contenu+='<div id="scrollDown" style="top:'+(pasAffichage*step+25)+'px;"></div>';
+			}else{
+				contenu="<div class='allDataBox' style='width:90px;height:"+(nombreDonnee*step+25)+"px'>";
 			}
-    	   if(nombreDonnee>pasAffichage){
-    	   	  cloneApplication.find('.containerApplication').css('margin-top',(pasAffichage-1)*73/2+'px');
-			  cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(pasAffichage-1)*73/2+'px');
-    	   }else{
-    	   	  cloneApplication.find('.containerApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
-			  cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
-    	   }
+    	   	if(nombreDonnee>pasAffichage){
+    	   	  cloneApplication.find('.containerApplication').css('margin-top',(pasAffichage-1)*step/2+'px');
+			  cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(pasAffichage-1)*step/2+'px');
+			}else{
+				cloneApplication.find('.containerApplication').css('margin-top',(nombreDonnee-1)*step/2+'px');
+				cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(nombreDonnee-1)*step/2+'px');
+			}
 			
 			var angle= 160/nombreDonnee;
 			
 			for(var c=nombreDonnee, i=0; i<c ; ++i){
-				contenu+= '<div class="dataBoxContainer" style="display:inline-flex;direction:ltr">';
+				contenu+= '<div class="dataBoxContainer">';
 				if(arrayDonnee[nomTache][i]['ext'] != 'input.txt'){
 					contenu += '<div class="dataBox donneeDataBox" name="tache0data'+numeroDonnee+'" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+arrayDonnee[nomTache][i]['ext']+'</span> '+arrayDonnee[nomTache][i]['description']+'" title="'+arrayDonnee[nomTache][i]['nomTypeDonnee']+'"></div>';				
 				}else{
-					contenu += '<input type="txt" name="tache0data'+numeroDonnee+'" class="dataBox input-sm" value="" placeholder="'+arrayDonnee[nomTache][i]['description']+'" data-html="true" data-toggle="popover" data-content="'+arrayDonnee[nomTache][i]['nomTypeDonnee']+'"/>';
+					contenu += '<input type="txt" name="tache0data'+numeroDonnee+'" class="dataBox input-sm" value="" data-html="true" data-toggle="popover" data-content="'+arrayDonnee[nomTache][i]['description']+'" title="'+arrayDonnee[nomTache][i]['nomTypeDonnee']+'"/>';
 				}
 				
 				//Pour l'inclinaison de hr
@@ -1210,9 +1204,12 @@ $(function(){
 				}
 					++numeroDonnee;
 			}
-			
+			if(nombreDonnee>pasAffichage){
+				contenu+="</div></div><hr>";
+			}else{
 				contenu+="</div><hr>";
-			
+			}
+
 			cloneApplication.children(".containerApplication").before(contenu);
 			cloneApplication.find('.donneeDataBox').droppable({
 			drop: function(event, ui){
@@ -1230,81 +1227,24 @@ $(function(){
 			}
 			});
 
-				//Pour afficher la dataBox
-				var nbDataBox=cloneApplication.find('.allDataBox  .dataBoxContainer .dataBox').length;
-					setTimeout(function(){
-							cloneApplication.find('.dataBoxContainer').children('.dataBox').show('slice').css('display', 'inline-block');
-							cloneApplication.find('.dataBoxContainer hr').css('display', 'inline-block');
-								}, 500);
-					var dernierSlice= 0;
+			//Pour afficher la dataBox
+			var nbDataBox=cloneApplication.find('.allDataBox  .dataBoxContainer .dataBox').length;
+			setTimeout(function(){
+				cloneApplication.find('.dataBoxContainer').children('.dataBox').show('slice').css('display', 'inline-block');
+				cloneApplication.find('.dataBoxContainer hr').css('display', 'inline-block');
 				
-
-			//Pour réduire les dataBox
-			cloneApplication.find(".reduce").click(function(){
-					var nbrLigne=1, nbrColumn=2,grid_tem_column='',grid_tem_ligne='';
-					cloneApplication.find(".allDataBox ").css('height',73+'px');
-					cloneApplication.find(".allDataBox ").css('width',73+'px');
-					cloneApplication.find('.dataBoxContainer hr').css('display','none');
-					cloneApplication.find(".allDataBox ").addClass('dataBox').css('display','grid');
-					cloneApplication.find('.containerApplication').css('margin-top','0px');
-					cloneApplication.find('.ajaxLoaderApplication').css('margin-top','0px');
-					cloneApplication.children('hr').css('display','inline');
-					cloneApplication.find('.allDataBox').css('overflow-y','hidden');
-					cloneApplication.find('.allDataBox').css('direction','ltr');
-					while(nombreDonnee> nbrColumn*nbrLigne){
-						if(nbrLigne<nbrColumn){
-							nbrLigne++;
-						}else{
-							nbrColumn++;
-						}
-					}
-					
-					for(var i=0; i<nbrColumn;++i){
-						grid_tem_column+= 73/nbrColumn+'px '; 
-					}
-					for(var i=0; i<nbrLigne;++i){
-						grid_tem_ligne+= 73/nbrLigne+'px '; 
-					}
-					cloneApplication.find(".allDataBox ").find("#scrollUp").css('display','none');
-					cloneApplication.find(".allDataBox ").find("#scrollDown").css('display','none');
-					cloneApplication.find(".allDataBox ").css('grid-template-columns',grid_tem_column);
-					cloneApplication.find(".allDataBox ").css('grid-template-rows',grid_tem_ligne);
-					cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height','auto');
-					cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('width',cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height'));
-					cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('border-radius',15/nbrColumn+'px');
-					
-					$(this).css('display','none');
-					cloneApplication.find('.resize').css('display','inline');
-			});
-			//Poue étendre les datatBox
-			cloneApplication.find(".resize").click(function(){
-					cloneApplication.find(".allDataBox ").find("#scrollUp").css('display','inline');
-					cloneApplication.find(".allDataBox ").find("#scrollDown").css('display','inline');				
-					cloneApplication.find('.dataBoxContainer hr').css('display','inline-flex');
-					cloneApplication.find(".allDataBox ").removeClass('dataBox').css('display','initial');
-					cloneApplication.find(".allDataBox ").css('width',90+'px');
-					cloneApplication.children('hr').css('display','none');
-					cloneApplication.find('.allDataBox').css('overflow','hidden');		
-					if(nombreDonnee>pasAffichage){
-						cloneApplication.find('.allDataBox').css('height',(pasAffichage*73+25)+'px');
-						cloneApplication.find('.allDataBox').css('width','120px');
-						cloneApplication.find('.containerApplication').css('margin-top',(pasAffichage-1)*73/2+'px');
-					cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(pasAffichage-1)*73/2+'px');
-	 				}else{
-	 					cloneApplication.find('.allDataBox').css('height',(nombreDonnee*73+25)+'px');
-						cloneApplication.find('.allDataBox ').css('width','90px');
-						cloneApplication.find('.containerApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
-					cloneApplication.find('.ajaxLoaderApplication').css('margin-top',(nombreDonnee-1)*73/2+'px');
-	 				}				
-					cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('width','73px');
-					cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('height','73px');
-					cloneApplication.find('.allDataBox .dataBoxContainer .dataBox').css('border-radius','15px');
-									
-					$(this).css('display','none');
-					cloneApplication.find('.reduce').css('display','inline');
-			});
+				// Pour gérer les popover des data-box
+				$('[data-toggle="popover"]').popover({
+					placement:'left', 
+					trigger:'hover'
+				}).on('show.bs.popover', function(){
+					$(this).data('bs.popover').tip().css('max-width', '200px');
+				});
+			}, 500);
+			
+			var dernierSlice= 0;
+			
 			// Pour le scrollUp and ScrollDown
-
 			cloneApplication.find("#scrollUp").bind("click", function (event) {
 			    event.preventDefault();
 			    // Animates the scrollTop property by the specified
@@ -1319,7 +1259,6 @@ $(function(){
 			    scrolling = false;
 			});
 
-
 			cloneApplication.find("#scrollDown").bind("click", function (event) {
 			    event.preventDefault();
 			   cloneApplication.find(".allDataBox").animate({
@@ -1331,8 +1270,9 @@ $(function(){
 			}).bind("mouseout", function (event) {
 			    scrolling = false;
 			});
+			
 			function scrollContent(direction) {
-			    var amount = (direction === "up" ? "-=1px" : "+=1px");
+			    var amount = (direction === "up" ? "-=5px" : "+=5px");
 			    cloneApplication.find(".allDataBox").animate({
 			        scrollTop: amount
 			    }, 1, function () {
@@ -1340,34 +1280,31 @@ $(function(){
 			            scrollContent(direction);
 			        }
 			    });
-
 			}
-
 		}
-
 
         function saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect){
         	var modalBody=$('#panelSettingsApplication').find('.modal-body');
         	
-	        	modalBody.find('button').click(function(e){
-					     	e.preventDefault();
-					     	cloneApplication.find('.reduce').remove();
-        					cloneApplication.find('.resize').remove();
-					     	cloneApplication.find('.tachesApplication form').children().remove();
-					     	//pour sauvgarder les valeurs des parametres
-					     	modalBody.find('.parametresTache ul').find('li').each(function(){
-					     		cloneApplication.find('.tachesApplication form').append($(this).find('input').first());
-					     	});
-					     	//pour supprimer les anciennes dataBox 
-								cloneApplication.find(".allDataBox").each(function(){		
-										cloneApplication.children('hr').remove();
-									    $(this).remove();
-								});
-								//itialiser les nouvelles dataBox avec l'animation
-								initDataBox(cloneApplication,listTypeDonnee,tacheSelect.find('select').val());
-  								//fermer la fenetre
-								$('#panelSettingsApplication').modal('hide');
-							});
+        	modalBody.find('button').click(function(e){
+		     	e.preventDefault();
+		     	cloneApplication.find('.tachesApplication form').children().remove();
+		     	//pour sauvgarder les valeurs des parametres
+		     	modalBody.find('.parametresTache ul').find('li').each(function(){
+		     		cloneApplication.find('.tachesApplication form').append($(this).find('input').first());
+		     	});
+
+		     	//pour supprimer les anciennes dataBox/surContainer
+				cloneApplication.find(".allDataBox").each(function(){		
+						cloneApplication.children('hr').remove();
+					    $(this).remove();
+				});
+				cloneApplication.find(".surContainer").remove();
+				//initialiser les nouvelles dataBox avec l'animation
+				initDataBox(cloneApplication,listTypeDonnee,tacheSelect.find('select').val());
+					//fermer la fenetre
+				$('#panelSettingsApplication').modal('hide');
+			});
         }
 
         function ArrayTacheDonnee(listTypeDonnee){
@@ -1381,10 +1318,10 @@ $(function(){
         		for(var j=0;j<listTypeDonnee.length;++j){
         			if(listTypeDonnee[j]['nomTache']=== nomTache){
         				tache[nomTache][k]=[];
-        					tache[nomTache][k]['ext']=listTypeDonnee[j]['ext'];
-        					tache[nomTache][k]['description']=listTypeDonnee[j]['description'];
-        					tache[nomTache][k]['nomTypeDonnee']=listTypeDonnee[j]['nomTypeDonnee'];
-        					k++;
+    					tache[nomTache][k]['ext']=listTypeDonnee[j]['ext'];
+    					tache[nomTache][k]['description']=listTypeDonnee[j]['description'];
+    					tache[nomTache][k]['nomTypeDonnee']=listTypeDonnee[j]['nomTypeDonnee'];
+    					k++;
         			}
         		}
         	}
@@ -1401,13 +1338,13 @@ $(function(){
         		for(var j=0;j<listeParams.length;++j){
         			if(listeParams[j]['nomTache']=== nomTache){
         				tache[nomTache][k]=[];
-        					tache[nomTache][k]['idParams']=listeParams[j]['idParams'];
-        					tache[nomTache][k]['nomParams']=listeParams[j]['nomParams'];
-        					tache[nomTache][k]['defaultVal']=listeParams[j]['defaultVal'];
-        					tache[nomTache][k]['minVal']=listeParams[j]['minVal'];
-        					tache[nomTache][k]['maxVal']=listeParams[j]['maxVal'];
-        					tache[nomTache][k]['pasVal']=listeParams[j]['pasVal'];
-        					k++;
+    					tache[nomTache][k]['idParams']=listeParams[j]['idParams'];
+    					tache[nomTache][k]['nomParams']=listeParams[j]['nomParams'];
+    					tache[nomTache][k]['defaultVal']=listeParams[j]['defaultVal'];
+    					tache[nomTache][k]['minVal']=listeParams[j]['minVal'];
+    					tache[nomTache][k]['maxVal']=listeParams[j]['maxVal'];
+    					tache[nomTache][k]['pasVal']=listeParams[j]['pasVal'];
+    					k++;
         			}
         		}
         	}

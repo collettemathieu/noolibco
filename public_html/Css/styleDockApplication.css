@@ -82,6 +82,11 @@
 	vertical-align: middle;
 }
 
+.containerApplication{
+	display:inline-flex;
+	float:right;
+}
+
 .dataBox, .resultBox{
 	display: none;
 	height: 73px;
@@ -172,23 +177,42 @@
 	display: none;
 }
 
-/*Style scrollbar*/
+/*********************/
+/* Scrollbar DataBox */
+/*********************/
+
+.surContainer{
+	width:100px;
+	overflow: hidden;
+}
+
+.allDataBox{
+	width:120px;
+	overflow: auto;
+}
+
+.dataBoxContainer{
+	display:inline-flex;
+	direction:ltr;
+}
+
+/*Style bouton invisible pour dataBox*/
 #scrollUp{
-height: 25px;
-left:15px;
-background-image: url("/Images/arrow_top.png") ;
-width:73px;
-position: absolute;
+	height: 25px;
+	width:73px;
+	position: absolute;
+	left:15px;
+	top:-26px;
 }
 
 #scrollDown{
-height: 25px;
-left:15px;
-background-image: url("/Images/arrow_bottom.png");
-width:73px;
-position: absolute;
+	height: 25px;
+	width:73px;
+	position: absolute;
+	left:15px;
 }
-/*Style scrollbar*/
+
+/*Style scrollbar webkit*/
 ::-webkit-scrollbar{
 	width:0px;
 }
@@ -198,4 +222,3 @@ position: absolute;
 ::-webkit-scrollbar-thumb{
 	display:none;
 }
-
