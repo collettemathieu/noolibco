@@ -3,14 +3,14 @@
 		
 		setTimeout(function(){
 			displayArticles();
-		}, 200);
+		}, 300);
 		
 
 		$(window).resize(function(){
 			$(document).ready(function(){
 				setTimeout(function(){
 					displayArticles();
-				}, 200);
+				}, 300);
 			});
 			
 		});
