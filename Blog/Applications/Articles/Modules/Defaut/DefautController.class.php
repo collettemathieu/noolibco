@@ -26,9 +26,6 @@ class DefautController extends \Library\BackController
 		//On récupère tous les articles
 		$articles = $managerArticle->getAllArticles();
 
-		// On ajoute les articles à la page
-		$this->page->addVar('articles', $articles);
-
 		$admin = $request->getCookieData('admin');
 		// On ajoute la variable admin à la page
 		$this->page->addVar('admin', $admin);
@@ -38,16 +35,36 @@ class DefautController extends \Library\BackController
 		//On récupère tous les cours
 		$courss = $managerCours->getAllCours();
 
-		$coursAAfficher = array();
 		foreach($courss as $cours){
-			//$cours = $managerCours->putCoursGlobalInCours($cours);
 			if($cours->getEnLigneCours() || $admin){
-				array_push($coursAAfficher, $cours);
+				array_push($articles, $cours);
 			}
 		}
 
-		// On ajoute les cours à la page
-		$this->page->addVar('courss', $coursAAfficher);
+		// On ordonne les articles par date de parution
+		uasort($articles, 
+			function ($a, $b) {
+				if($a instanceof \Library\Entities\Cours){
+					$dateA = new \DateTime($a->getDateCreationCours());
+				}else{
+					$dateA = new \DateTime($a->getDateCreationArticle());
+				}
+				if($b instanceof \Library\Entities\Cours){
+					$dateB = new \DateTime($b->getDateCreationCours());
+				}else{
+					$dateB = new \DateTime($b->getDateCreationArticle());
+				}
+				$a = $dateA->getTimestamp();
+				$b = $dateB->getTimestamp();
+			    if ($a == $b) {
+			        return 0;
+			    }
+			    return ($a > $b) ? -1 : 1;
+			}
+		);
+
+		// On ajoute les articles à la page
+		$this->page->addVar('articles', $articles);
 
 	}
 
