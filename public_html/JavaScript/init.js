@@ -45,6 +45,8 @@
 			}, 
 			placement:'top', 
 			trigger:'hover'
+		}).on('show.bs.tooltip', function(){
+			$(this).data('bs.tooltip').tip().css('width', '200px');// Pour réajuster la taille en fonction de caseMenu => Bug mystère
 		});
 
 		// Pour afficher les infos bulles Bottom du menu général
