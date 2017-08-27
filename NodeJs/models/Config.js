@@ -12,35 +12,30 @@ Config.prototype.getVar= async function(categorie, sousCategorie, variable){
 	var xml = await(getSimpleXmlFile());
 	xml=xml['definitions'];
 
-				if(xml[categorie] != ''){
-					var donneesCategorie = xml[categorie];
-			         
-					if(donneesCategorie[0][sousCategorie] != undefined){
-	
-						var donneesSousCategorie = donneesCategorie[0][sousCategorie];
-						
-						//console.log(donneesSousCategorie);
-						if(donneesSousCategorie[0]['define']!= undefined){
-							//console.log('here');
-							//console.log(donneesSousCategorie[0]['define'][0]['$']['value']);
-							return donneesSousCategorie[0]['define'][0]['$']['value'];
-						}else{
-							return null;
-						}
-					}else{
-						return null;
-					}
+	if(xml[categorie] != ''){
+		var donneesCategorie = xml[categorie];
+         
+		if(donneesCategorie[0][sousCategorie] != undefined){
 
-				}else{
-					return null;
-				}
-		
-	
+			var donneesSousCategorie = donneesCategorie[0][sousCategorie];
+			
+			if(donneesSousCategorie[0]['define']!= undefined){
+				return donneesSousCategorie[0]['define'][0]['$']['value'];
+			}else{
+				return null;
+			}
+		}else{
+			return null;
+		}
+
+	}else{
+		return null;
+	}
 }
 
 getSimpleXmlFile = function() {
 	  return new Promise(function(resolve,rejection){
-	  	var xml = fs.readFile('../ConfigSystem/fichierDeConfiguration.xml',function(err,data){
+	  	var xml = fs.readFile('/home/noolibco/ConfigSystem/fichierDeConfiguration.xml',function(err,data){
 			parser.parseString(data,function(err,result){
 				return resolve(result);
 			});
