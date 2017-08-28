@@ -1,11 +1,16 @@
 (function(){
 	if($('.caseArticle').length != 0){
 		
-		displayArticles();
+		setTimeout(function(){
+			displayArticles();
+		}, 300);
+		
 
 		$(window).resize(function(){
 			$(document).ready(function(){
-				displayArticles();
+				setTimeout(function(){
+					displayArticles();
+				}, 300);
 			});
 			
 		});

@@ -28,6 +28,10 @@ footer ul li a{
 	font-size: 1.2em;
 }
 
+footer ul li{
+	text-align: bottom;
+}
+
 footer ul li a:hover{
 	color: white;
 }
@@ -40,26 +44,4 @@ footer hr{
 	height: none;
 	border: none;
 	border-top: 1px solid rgb(200, 200, 200);
-}
-
-@media screen and (max-width: 767px) {
-	.mobileFooter {
-		float:none;
-		margin:0 auto;
-		margin-top: 15px;
-		text-align: center;
-	}
-
-	.imageFooter{
-		max-width: 128px;
-	}
-
-	footer ul li:first-child{
-		font-family: "OpenSans";
-	}
-
-	footer ul li a{
-		padding: 5px;
-		font-size: 1.2em;
-	}
 }
