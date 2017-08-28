@@ -1186,9 +1186,9 @@ $(function(){
 			for(var c=nombreDonnee, i=0; i<c ; ++i){
 				contenu+= '<div class="dataBoxContainer" style="display:inline-flex;direction:ltr">';
 				if(arrayDonnee[nomTache][i]['ext'] != 'input.txt'){
-					contenu += '<div class="dataBox donneeDataBox" name="tache0data'+numeroDonnee+'" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+listTypeDonnee[i]['ext']+'</span> '+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"></div>';				
+					contenu += '<div class="dataBox donneeDataBox" name="tache0data'+numeroDonnee+'" data-html="true" data-toggle="popover" data-content="<span class=\'badge\'>'+arrayDonnee[nomTache][i]['ext']+'</span> '+arrayDonnee[nomTache][i]['description']+'" title="'+arrayDonnee[nomTache][i]['nomTypeDonnee']+'"></div>';				
 				}else{
-					contenu += '<input type="txt" name="tache0data'+numeroDonnee+'" class="dataBox input-sm" value="" placeholder="'+listTypeDonnee[i]['description']+'" data-html="true" data-toggle="popover" data-content="'+listTypeDonnee[i]['description']+'" title="'+listTypeDonnee[i]['nomTypeDonnee']+'"/>';
+					contenu += '<input type="txt" name="tache0data'+numeroDonnee+'" class="dataBox input-sm" value="" placeholder="'+arrayDonnee[nomTache][i]['description']+'" data-html="true" data-toggle="popover" data-content="'+arrayDonnee[nomTache][i]['nomTypeDonnee']+'"/>';
 				}
 				
 				//Pour l'inclinaison de hr
