@@ -365,7 +365,9 @@ $(function(){
 							currentNomTache=currentTache.attr('name');
 						tacheSelect.html(listeTache);
 						tacheSelect.find('select').val(currentNomTache);
-						initParams(currentNomTache,listeParams);
+							initParams(currentNomTache,listeParams);
+
+						
 						panelSettingsApplication.modal('show');
 						// la fenêtre modale dans les paramètres de l'application
 							tacheSelect.find('select').change(function(){
