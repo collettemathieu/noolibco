@@ -920,7 +920,7 @@ $(function(){
 					
 					// On affiche un message d'erreur
 					var response = {
-					  'erreurs': '<p>A system error has occurred. Please drag and drop a valid data into the data box of the application.</p>'
+					  'erreurs': '<p>A unknown error has occurred or too many requests have been sent. Please take a break or change your data.</p>'
 					};
 					displayInformationsClient(response);
 
