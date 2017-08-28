@@ -23,6 +23,15 @@ var UtilisateurDonneeUtilisateur= require('../models/UtilisateurDonneeUtilisateu
 var InputDonneeUtilisateur= require('./InputDonneeUtilisateur');
 var Fonction=require('../models/Fonction');
 var Config=require('../models/Config');
+var client = require('redis').createClient();
+var limiter = require('express-limiter')(router, client);
+limiter({
+	path:'/',
+	method:'post',
+	lookup:['connection.remoteAddress'],
+	total:5,// 5 requests per minute
+	expire: 1000*60 // in ms
+});
 
 
 

@@ -19,6 +19,7 @@
 /NodeJs/config/database.js
 /NodeJs/bin/privkey.pem
 /NodeJs/bin/cert.pem
+/NodeJs/bin/npm-debug.log
 /NodeJs/npm-debug.log
 /NodeJs/nodejs.log
 /NodeJs/nohup.out
