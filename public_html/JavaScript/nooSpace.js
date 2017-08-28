@@ -1391,6 +1391,8 @@ $(function(){
 
         function saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect){
         	var modalBody=$('#panelSettingsApplication').find('.modal-body');
+        	cloneApplication.find('.reduce').css('display','none');
+        	cloneApplication.find('.resize').css('display','none');
 	        	modalBody.find('button').click(function(e){
 					     	e.preventDefault();
 					     	cloneApplication.find('.tachesApplication form').children().remove();
