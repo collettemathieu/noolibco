@@ -1400,8 +1400,8 @@ $(function(){
         	
 	        	modalBody.find('button').click(function(e){
 					     	e.preventDefault();
-					     	cloneApplication.find('.reduce').css('display','none');
-        					cloneApplication.find('.resize').css('display','none');
+					     	cloneApplication.find('.reduce').remove();
+        					cloneApplication.find('.resize').remove();
 					     	cloneApplication.find('.tachesApplication form').children().remove();
 					     	//pour sauvgarder les valeurs des parametres
 					     	modalBody.find('.parametresTache ul').find('li').each(function(){
