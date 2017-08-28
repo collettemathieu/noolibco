@@ -507,7 +507,12 @@ $(function(){
 				}
 			});
 	    	donneeUtilisateur.appendTo(drop);
-	  		donneeUtilisateur.css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX+'px');
+
+	  		if(drop.attr("id")=="noospace"){
+	    		donneeUtilisateur.css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX+'px');
+	    	}else{
+	    		donneeUtilisateur.css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX+'px');
+	    	}
 
 			// On affiche les info-bulles
 			donneeUtilisateur.popover({placement:'bottom', trigger:'hover'});
