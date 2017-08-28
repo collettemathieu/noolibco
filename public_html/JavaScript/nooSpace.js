@@ -92,7 +92,7 @@ $(function(){
 			    	}
 					
 			    // Pour retirer une donnée d'une dataBox de l'application
-			    }else if(ui.draggable.parent().hasClass('dataBox ui-droppable')){
+			    }else if(ui.draggable.parent().hasClass('dataBox')){
 			    	
 			    	$(this).append(ui.draggable);
 					ui.draggable.css('position','absolute').css('top', nouvellePositionElementY+'px').css('left', nouvellePositionElementX+'px');
