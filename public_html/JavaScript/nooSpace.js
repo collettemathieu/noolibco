@@ -161,52 +161,6 @@ $(function(){
 	      		}
 	      	});
 
-	      	
-			// Menu contextuel de l'application
-			$.contextMenu.types.Tache = function(item, opt, root) {
-
-		        $(cloneApplication.children('.tachesApplication').html())
-		            .appendTo(this)
-		            .on('click', 'li', function() {
-		               	
-		            	try{
-			               	// On affiche le loader
-				      		cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
-				      		
-				      		// On ajoute les données et les paramètres pour le lancement de l'application
-				      		var form = paramForm = cloneApplication.find('.parametresApplication form').serializeArray(),
-				      			formData = new FormData();
-
-							formData.append('tache0data0', 'noolibData_'+cloneApplication.find('.donneeUser').attr('id'));
-							formData.append('idApplication', cloneApplication.attr('id'));
-							formData.append('idVersion', cloneApplication.attr('idVersion'));
-							formData.append('tache0', $(this).attr('id'));
-
-							// On ajoute le formulaire des paramètres au formulaire général
-							for (var i=0; i<paramForm.length; i++)
-							    formData.append(paramForm[i].name, paramForm[i].value);
-
-							runTheMule(formData, cloneApplication);
-						}
-			      		catch(e){
-			      			var response = {
-							  'erreurs': '<p>A system error has occurred.</p>'
-							};
-							displayInformationsClient(response);
-							// On cache le loader
-							cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
-
-							// On cache les résultats précédents
-							cloneApplication.find('.resultBox img').hide(600);
-
-							// On efface le rapport précédent
-							cloneApplication.find('.applicationReports').html('');
-			      		}
-		            });
-
-		            this.removeClass('context-menu-item').addClass('context-menu-tache');     
-		    };
-
 		    //******************************************************************************
   			//Requete ajax pour savoir le nombre de données, la liste des taches et les parametres.
 			var formData = new FormData();
@@ -362,7 +316,7 @@ $(function(){
 								      		// On récupère la mule de l'application
 							            	// On ajoute l'id de l'application
 								      		var form = document.querySelector('#formMule'),
-								      			paramForm = cloneApplication.find('.parametresApplication form').serializeArray(),
+								      			paramForm = cloneApplication.find('.tachesApplication form').serializeArray(),
 								      			formData = new FormData(form);
 								      		// On ajoute le formulaire des paramètres au formulaire général
 											for (var i=0; i<paramForm.length; i++)
@@ -430,7 +384,7 @@ $(function(){
 			               	// On affiche le loader
 				      		cloneApplication.find('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
 				      		// On ajoute les données et les paramètres pour le lancement de l'application
-				      		var form = paramForm = cloneApplication.find('.parametresApplication').serializeArray(),
+				      		var paramForm = cloneApplication.find('.tachesApplication form').serializeArray(),
 				      			nomTache=cloneApplication.find('.tachesApplication').attr('name'),
 				      			donnees=ArrayTacheDonnee(listTypeDonnee),
 				      			formData = new FormData(),
@@ -439,12 +393,8 @@ $(function(){
 							for(var i=0;i<nbrDonnee;++i){
 								if(donnees[nomTache][i]['ext']!='input.txt'){
 									formData.append('tache0data'+i, 'noolibData_'+cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
-									console.log('here');
-									console.log(cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
 								}else{
 									formData.append('tache0data'+(i), cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').val());
-									console.log('here');
-									console.log(cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').val());
 								}
 							}
 							formData.append('idApplication', cloneApplication.attr('id'));
@@ -1353,7 +1303,6 @@ $(function(){
 			// Pour le scrollUp and ScrollDown
 
 			cloneApplication.find("#scrollUp").bind("click", function (event) {
-				console.log('here Up');
 			    event.preventDefault();
 			    // Animates the scrollTop property by the specified
 			    // step.
@@ -1369,7 +1318,6 @@ $(function(){
 
 
 			cloneApplication.find("#scrollDown").bind("click", function (event) {
-				console.log('here Up');
 			    event.preventDefault();
 			   cloneApplication.find(".allDataBox").animate({
 			        scrollTop: "+=" + step + "px"
