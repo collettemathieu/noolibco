@@ -1162,8 +1162,9 @@ $(function(){
 			var step = 73;
 			var scrolling = false;
 
+
 				if(nombreDonnee>pasAffichage){
-					contenu="<div class='allDataBox' style='width:120px;float:none;height:"+(pasAffichage*73+25)+"px;overflow:hidden'>";
+					contenu="<div class='allDataBox' style='width:120px;float:none;height:"+(pasAffichage*73+25)+"px;overflow-y:auto;overflow-x:hidden;direction:rtl'>";
 					contenu+='<div id="scrollUp" style="top:-26px;position:absolute"></div>';
 					contenu+='<div id="scrollDown" style="top:'+(pasAffichage*73+25)+'px;position:absolute;"></div>';
 				}else{

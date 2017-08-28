@@ -188,3 +188,14 @@ background-image: url("/Images/arrow_bottom.png");
 width:73px;
 position: absolute;
 }
+/*Style scrollbar*/
+::-webkit-scrollbar{
+	width:0px;
+}
+::-webkit-scrollbar-track{
+	display:none;
+}
+::-webkit-scrollbar-thumb{
+	display:none;
+}
+
