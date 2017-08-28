@@ -409,6 +409,7 @@ $(function(){
 							currentTache=cloneApplication.find('.tachesApplication'),
 							currentNomTache=currentTache.attr('name');
 						tacheSelect.html(listeTache);
+						console.log(listeTache);
 						tacheSelect.find('select').val(currentNomTache);
 						initParams(currentNomTache,listeParams);
 						panelSettingsApplication.modal('show');
