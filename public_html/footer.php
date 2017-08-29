@@ -85,9 +85,9 @@
 									</div>
 									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div><!--
 									--><hr><div class="resultBox">
-											<img src="/Images/results.png"/>
-											<div class="applicationReports hidden"></div>
-										</div>
+										<img src="/Images/results.png"/>
+										<div class="applicationReports hidden"></div>
+									</div>
 								</div>
 								<div class="tachesApplication"></div>
 							</div>
