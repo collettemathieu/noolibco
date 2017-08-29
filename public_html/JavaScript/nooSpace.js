@@ -2454,10 +2454,8 @@ function tableToCSV(legend, table){
 * Permet d'afficher les données CSV sous forme d'une table
 */
 function tableData(data, overlay){
-    
     var table = $(overlay).find('.tableResult table');
     table.empty(); // On vide la table
-
     table.append('<thead><tr></tr></thead><tbody></tbody>');
     var headTable = table.find('thead tr'),
         bodyTable = table.find('tbody'),
@@ -2477,18 +2475,20 @@ function tableData(data, overlay){
         headTable.append('<th>'+data.get_legend()[i]+'</th>');
     }
     // On renseigne les valeurs du tableau
-    for(var i=0 ; i < tailleTable-1 ; ++i){
+    for(var i=0 ; i < tailleTable ; ++i){
         text += '<tr>';
         for(var j=0, c=data.get_series().length ; j < c ; ++j){
             text += '<td>'+data.get_series()[j][i][1]+'</td>';
         }
         text += '</tr>';
     }
-    text += '<tr>';
-    for(var j=0, c=data.get_series().length ; j < c ; ++j){
-        text += '<td>...</td>';
-    }
-    text += '</tr>';
+    if(tailleTable === 50){
+	    text += '<tr>';
+	    for(var j=0, c=data.get_series().length ; j < c ; ++j){
+	        text += '<td>...</td>';
+	    }
+	    text += '</tr>';
+	}
     bodyTable.append(text);
     
 }

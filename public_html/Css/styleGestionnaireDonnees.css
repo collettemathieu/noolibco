@@ -9,7 +9,7 @@
 	left: 0px;
 	padding-right: 5px;
 	text-align: center;
-	
+	z-index: 9999;
 	cursor: pointer;
 	width: 55px;
 	height: 40px;

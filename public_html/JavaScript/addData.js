@@ -24,8 +24,6 @@ function addData(){
       overlayFormulaire.find('.modal-body .row:first .graphResult').empty();
       overlayFormulaire.find('.modal-body .row:last').empty();
 
-      //var t0 = new Date().getTime();
-
       // On affiche l'indicateur de progression
       $('#image-local-waiter').show();
 
@@ -283,7 +281,7 @@ function addData(){
                   data.push(M);
               }
               var dataJSON = JSON.stringify(data);
-              dataJSON = dataJSON.replace('\\r', '');// Bizarement il y a un retour chariot \r qui s'insère à la fin de la légende avec le JSON.stringify. On le retire.
+              //dataJSON = dataJSON.replace('\\r', '');// Bizarement il y a un retour chariot \r qui s'insère à la fin de la légende avec le JSON.stringify. On le retire.
               $('#localData').attr('value', dataJSON);
               $('#sampleRateDonnee').attr('value', namespaceGraphLocalData.dataForForm['sampleRate']);
               $('#tailleDonnee').attr('value', tailleDonnee);

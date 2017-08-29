@@ -11,7 +11,7 @@ function TXTFile(raw_data, extFichier) {
       this.donnees = this.set_data_from_csv(raw_data);
     }
     this.numberOfSignals = this.donnees[0].length;
-    this.sizeData = this.donnees.length;
+    this.sizeData = this.donnees.length-1;// On retire la légende
     this.step = Math.round(this.sizeData/1000); // On crée un navigator à 1000 points
     if(this.step < 1) this.step = 1;
   }
@@ -148,7 +148,7 @@ TXTFile.prototype.get_size_signals = function() {
 */
 TXTFile.prototype.set_data_from_txt = function(raw_data) {
   
-  var testHeader = false, indice=0, tableTest = [], data = [], rgx = /(.+)\s/g, match;
+  var testHeader = false, indice=0, tableTest = [], data = [], rgx = /(.+)/g, match;
 
   // On transforme les données sous forme de tableau à l'aide d'une Regex
   while (match = rgx.exec(raw_data)) {
@@ -217,11 +217,10 @@ TXTFile.prototype.set_data_from_txt = function(raw_data) {
 TXTFile.prototype.set_data_from_csv = function(raw_data) {
 
   var data = [],
-      rgx = /(.+)\s/g, match;
+      rgx = /(.+)/g, match; // g pour prendre tous les matches
 
   // On transforme les données sous forme de tableau à l'aide d'une Regex
-  while (match = rgx.exec(raw_data)) {
-    
+  while (match = rgx.exec(raw_data)) {   
     data.push(match[0].split(/[;,\t]/));
   }
 
@@ -265,7 +264,7 @@ TXTFile.prototype.get_view_signals_data = function(num_points_display) {
       this.series[i] = [];
   }
 
-  for(var j=1; j<this.sizeData; ++j){
+  for(var j=1; j<this.sizeData+1; ++j){
       if(j < num_points_display){
         for(var i=0; i<this.numberOfSignals; ++i){
             this.series[i][j-1] = [((j-1)/this.sampleRate)*1000*this.sampleRate, parseFloat(this.donnees[j][i])];

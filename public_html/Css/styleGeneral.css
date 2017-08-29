@@ -187,7 +187,7 @@ animation-duration:0.8s;
   width: 400px;
   top: 70px;
   right: 20px;
-  z-index: 9999;
+  z-index: 99999;
 }
 
 .rotate270 {

@@ -220,9 +220,7 @@ class DataManagerController extends \Library\BackController
 
 								// On crée le pas d'affichage pour limiter le nombre de points à 1000 points pour le navigateur
 								$pas = round($tailleDonneeUtilisateur/1000); // On souhaite un affichage de mille valeurs maximum
-								if($pas < 1){
-									$pas = 1;
-								}
+								if($pas < 1){$pas = 1;}
 
 								while(($line = fgetcsv($fichierData, 500, ',')) !== false){
 									
