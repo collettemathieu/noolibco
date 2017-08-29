@@ -89,8 +89,7 @@
 											<div class="applicationReports hidden"></div>
 										</div>
 								</div>
-									<div class="tachesApplication">
-									</div>
+								<div class="tachesApplication"></div>
 							</div>
 						<?php }?>
 					</div>
