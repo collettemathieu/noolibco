@@ -75,13 +75,12 @@ TXTFile.prototype.set_series = function(array_series) {
 */
 TXTFile.prototype.construct_from_data = function(array_legend, array_data, num_points_display, sample_rate) {
   if(Array.isArray(array_data) && Array.isArray(array_legend)){
-    var tempArray = [],
-        tempArrayDonnees = [],
+    var tempArrayDonnees = [],
         sizeArray = array_data.length;
 
     // On ajoute la légende à l'objet
     this.set_legend(array_legend);
-
+    
     // On ajoute les données à l'objet
     for(var j=0, c=array_data[0].length; j<c; ++j){
       for(var i=0; i<sizeArray; ++i){
@@ -92,7 +91,7 @@ TXTFile.prototype.construct_from_data = function(array_legend, array_data, num_p
     }
   
     // On renseigne les attributs de l'objet
-    this.sizeData = this.donnees.length;
+    this.sizeData = this.donnees.length-1;// On retire la légende
     this.numberOfSignals = array_data.length;
     if(typeof(sample_rate) !== 'undefined'){
       sample_rate = parseFloat(sample_rate);

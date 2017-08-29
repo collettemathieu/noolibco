@@ -2442,7 +2442,6 @@ function tableToCSV(legend, table){
             }  
             string += '\r\n';
         }
-
         return string;
     }else{
         console.log('tableToCSV::legend or table is not an array.');
