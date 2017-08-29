@@ -1237,9 +1237,6 @@ $(function(){
 							ui.draggable.css('top', 2+'px').css('left', 2+'px'); //.css('position','absolute')
 						}
 					}
-				},
-				over: function(event, ui){
-
 				}
 			});
 
@@ -1250,7 +1247,7 @@ $(function(){
 				cloneApplication.find('.dataBoxContainer hr').css('display', 'inline-block');
 				
 				// Pour gérer les popover des data-box
-				cloneApplication.find('.donneeDataBox').popover({
+				cloneApplication.find('[data-toggle="tooltip"]').popover({
 					placement:'left', 
 					trigger:'hover'
 				}).on('show.bs.popover', function(){
