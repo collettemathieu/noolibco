@@ -98,28 +98,24 @@ header .modal-body li{
 .teamPicture:nth-child(9) span{
 	background-position: -360px -240px;
 }
-/* Baptiste Houssais */
-.teamPicture:nth-child(10) span{
-	background-position: -240px 0px;
-}
 /* Brian Le Bras*/
-.teamPicture:nth-child(11) span{
+.teamPicture:nth-child(10) span{
 	background-position: -360px 0px;
 }
 /* Jean Mainguy */
-.teamPicture:nth-child(12) span{
+.teamPicture:nth-child(11) span{
 	background-position: -360px -120px;
 }
 /* Baptiste Maudet */
-.teamPicture:nth-child(13) span{
+.teamPicture:nth-child(12) span{
 	background-position: -120px 0px;
 }
 /* Yohann Pichois */
-.teamPicture:nth-child(14) span{
+.teamPicture:nth-child(13) span{
 	background-position: -360px -360px;
 }
 /* Clément Richard */
-.teamPicture:nth-child(15) span{
+.teamPicture:nth-child(14) span{
 	background-position: 0px -120px;
 }
 /* Mathieu */

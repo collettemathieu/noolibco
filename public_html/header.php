@@ -118,7 +118,6 @@
 								<li class="teamPicture"><span></span><p class="text-center">Antoine Fauchard (2 months)</p></li>
 								<li class="teamPicture"><span></span><p class="text-center">Kévin Grosbois (1 month)</p></li>
 								<li class="teamPicture"><a href="/Profile/idAuteur=97"><span></span><p class="text-center">Naoures Hassine (6 months)</p></a></li>
-								<li class="teamPicture"><span></span><p class="text-center">Baptiste Houssais (1 month)</p></li>
 								<li class="teamPicture"><span></span><p class="text-center">Brian Le Bras (1 month)</p></li>
 								<li class="teamPicture"><span></span><p class="text-center">Jean Mainguy (1 month)</p></li>
 								<li class="teamPicture"><span></span><p class="text-center">Baptiste Maudet (2 months)</p></li>

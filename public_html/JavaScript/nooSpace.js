@@ -920,7 +920,7 @@ $(function(){
 					
 					// On affiche un message d'erreur
 					var response = {
-					  'erreurs': '<p>A unknown error has occurred or too many requests have been sent. Please take a break or change your data.</p>'
+					  'erreurs': '<p>Too many requests have been sent or an unknown error has occurred. Please try again in a few minutes or change your data.</p>'
 					};
 					displayInformationsClient(response);
 
