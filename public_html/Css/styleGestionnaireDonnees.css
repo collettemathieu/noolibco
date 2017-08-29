@@ -219,6 +219,9 @@ input[type="checkbox"]:checked + label{
 /**
 *	Charger et visualiser une donnée
 */
+#overlayFormulaireAjoutDonneeLocale, #overlayAfficherDonnee{
+	z-index: 99999;
+}
 
 #overlayFormulaireAjoutDonneeLocale .modal-dialog, #overlayAfficherDonnee .modal-dialog{
 	width: 90%;

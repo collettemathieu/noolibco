@@ -181,6 +181,10 @@
 	display: none;
 }
 
+#panelSettingsApplication, #resultReportApplication{
+	z-index: 99999;
+}
+
 
 /***************************/
 /* Button Play Application */

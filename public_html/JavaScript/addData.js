@@ -141,7 +141,7 @@ function addData(){
               overlayFormulaire.modal('hide');
           }
 
-        // Si ce n'est pas une image, c'est-à-dire un graphe
+        // Si ce n'est pas une image, c'est-à-dire une table
         }else{
 
           // On affiche la fenêtre des données
@@ -162,8 +162,6 @@ function addData(){
               // On affiche les données sous la forme d'une table
               tableData(txtReader, '#overlayFormulaireAjoutDonneeLocale');
 
-              //var t1 = new Date().getTime();
-              //alert(t1-t0 + ' ms');
             }
             catch(e){
                 var response = {
