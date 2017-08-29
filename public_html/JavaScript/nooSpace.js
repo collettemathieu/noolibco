@@ -1247,7 +1247,7 @@ $(function(){
 				cloneApplication.find('.dataBoxContainer hr').css('display', 'inline-block');
 				
 				// Pour gérer les popover des data-box
-				cloneApplication.find('[data-toggle="tooltip"]').popover({
+				cloneApplication.find('.dataBox').popover({
 					placement:'left', 
 					trigger:'hover'
 				}).on('show.bs.popover', function(){
