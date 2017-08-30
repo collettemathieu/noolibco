@@ -165,7 +165,7 @@ blockquote em{
   cursor: pointer;
   width:55px;
   height:55px;
-  line-height: 55px;
+  line-height: 65px;
   background:#fafafa;
   box-shadow: 2px 2px 16px black;
   border-radius:50%;
@@ -181,10 +181,12 @@ blockquote em{
 }
 
 .arrowsEdito{
+  display: inline-block;
   margin: auto;
   width: 32px;
   height: 32px;
   cursor: pointer;
+  background: url("/Images/spritesheet.png") no-repeat;
 }
 
 .arrowsEdito:hover{
@@ -195,8 +197,41 @@ blockquote em{
   display: inline-block;
   height: 32px;
   font-size: 1.1em;
-  line-height: 32px;
+  line-height: 20px;
   vertical-align: bottom;
+}
+
+
+/* SpriteSheet */
+.rightArrow span, .leftArrow span{
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  background: url("/Images/spritesheet.png") no-repeat;
+}
+
+.edito span{
+  display: inline-block;
+  width: 21px;
+  height: 15px;
+  background: url("/Images/spritesheet.png") no-repeat;
+}
+
+/* background-position: (colonne)px (ligne)px; */
+.rightArrow span{
+  background-position: -145px 0px;
+}
+.leftArrow span{
+  background-position: -90px 0px;
+}
+.edito span{
+  background-position: 0px 0px;
+}
+.leftEditoArrow{
+  background-position: 0px -64px;
+}
+.rightEditoArrow{
+  background-position: -96px -64px;
 }
 
 /* Media queries */

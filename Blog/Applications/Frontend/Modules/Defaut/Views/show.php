@@ -2,8 +2,8 @@
 		<div class="actualite" style="background-image: url('<?php echo $actualite->getUrlImageActualite(); ?>')">
 			<div class="container-fluid">
 				<div class="row-fluid parent">
-					<div class="rightArrow"><img src="/Images/rightArrow.png"/></div>
-					<div class="leftArrow hidden"><img src="/Images/leftArrow.png"/></div>
+					<div class="rightArrow"><span></span></div>
+					<div class="leftArrow hidden"><span></span></div>
 					<div class="col-lg-12 maxWidth centering">
 						<div class="col-lg-5 col-sm-8 fadeIn">
 							<div class="caseActualite">
@@ -44,9 +44,9 @@
 					</blockquote>
 
 					<div class="col-lg-12 divArrowsEdito text-center centering">
-						<img class="arrowsEdito leftEditoArrow infoBulleBottom hidden" title="Article précédent" src="/Images/leftArrowEdito.png"/>
+						<span class="arrowsEdito leftEditoArrow infoBulleBottom hidden" title="Article précédent" src="/Images/leftArrowEdito.png"></span>
 						<span class="numberEdito" id="number">1</span>
-						<img class="arrowsEdito rightEditoArrow infoBulleBottom" title="Article suivant" src="/Images/rightArrowEdito.png"/>
+						<span class="arrowsEdito rightEditoArrow infoBulleBottom" title="Article suivant" src="/Images/rightArrowEdito.png"></span>
 					</div>
 				</div>
 			</div>
@@ -56,7 +56,7 @@
 			<div class="container-fluid">
 				<div class="row-fluid">
 					<div class="col-lg-12 centering text-center blurEffect">
-						<div class="edito"><img src="\Images\arrowEditorial.png"/></div>
+						<div class="edito"><span></span></div>
 					</div>
 					<div class="col-lg-12 maxWidth centering text-center">
 						<div class="text-center centering col-lg-7">
