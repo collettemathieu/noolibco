@@ -20,17 +20,17 @@
 										<li>
 											<a href="https://twitter.com/NoolibApp" target="_blank">
 												<div class="col-sm-4 col-xs-4">
-													<img class="img-responsive" src="/Images/Social/twitter.png"/>
+													<img class="twitter"/>
 												</div>
 											</a>
 											<a href="https://www.facebook.com/Noolib-1648329638748950/" target="_blank">
 												<div class="col-sm-4 col-xs-4">
-													<img class="img-responsive" src="/Images/Social/facebook.png" alt="lien facebook"/>
+													<img class="facebook"/>
 												</div>
 											</a>
 											<a href="https://www.linkedin.com/company/noolib" target="_blank">
 												<div class="col-sm-4 col-xs-4">
-													<img class="img-responsive" src="/Images/Social/linkedin.png" alt="lien linkedin"/>
+													<img class="linkedin"/>
 												</div>
 											</a>
 										</li>
