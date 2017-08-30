@@ -45,3 +45,26 @@ footer hr{
 	border: none;
 	border-top: 1px solid rgb(200, 200, 200);
 }
+
+/* SpriteSheet */
+img{
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	background: url("/Images/spritesheet.png") no-repeat;
+	border: 0px white dashed;
+}
+
+/* background-position: (colonne)px (ligne)px; */
+/* Twitter */
+.twitter{
+	background-position: -130px -64px;
+}
+/* Facebook */
+.facebook{
+	background-position: -22px 0px;
+}
+/* Linkedin */
+.linkedin{
+	background-position: -30px -64px;
+}
