@@ -411,14 +411,14 @@ $(function(){
 							currentNomTache=currentTache.attr('name');
 						tacheSelect.html(listeTache);
 						tacheSelect.find('select').val(currentNomTache);
-							initParams(currentNomTache,listeParams);
+							initParams(cloneApplication,currentNomTache,listeParams);
 
 						
 						panelSettingsApplication.modal('show');
 						// la fenêtre modale dans les paramètres de l'application
 							tacheSelect.find('select').change(function(){
 								//initialiser les parametres de l'application en changant la tache
-								initParams($(this).val(), listeParams);
+								initParams(cloneApplication,$(this).val(), listeParams);
 								//pour récuperer la tache actuelle de l'application
 								currentTache.attr('name',$(this).val());
 								saveSetApplication(cloneApplication,listTypeDonnee);
@@ -1155,13 +1155,15 @@ $(function(){
 
         //*********************** Added by Naoures
         // Pour initialiser les parametres dans le setApplication selon la tache
-        function initParams(nomTache, listeParams){
+        function initParams(cloneApplication,nomTache, listeParams){
         	var numberParams=0;
         	var contenuParams="";
+    		var valParams = cloneApplication.find('.tachesApplication form').serializeArray();
+
         	$('.modal-body').find('#paramsList').children().remove();
     		for(i=0;i<listeParams.length;++i){
     			if(listeParams[i]['nomTache']==nomTache){
-					contenuParams+="<li><label for='"+listeParams[i]['nomParams']+"' class='labelVariable'>"+ listeParams[i]['nomParams']+" :</label><input type='text' id='"+listeParams[i]['nomParams']+"' name='"+listeParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ listeParams[i]['defaultVal']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+listeParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+listeParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+listeParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";		
+					contenuParams+="<li><label for='"+listeParams[i]['nomParams']+"' class='labelVariable'>"+ listeParams[i]['nomParams']+" :</label><input type='text' id='"+listeParams[i]['nomParams']+"' name='"+listeParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ valParams[i]['value']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+listeParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+listeParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+listeParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";		
     				numberParams++;
     			}
     		}
