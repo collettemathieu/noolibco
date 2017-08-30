@@ -90,11 +90,10 @@ function escapeShell(cmd){
 	return "'"+ cmd.replace(/(['\\])/g, '\\$1')+"'";
 }
 //****************************************
-function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths,messageClient){
+function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths){
 	
 		var createur = applicationRunning.getCreateur();
 		var outputData;
-		var error = false;
 		if(tacheDemandee instanceof Tache){
 			
 			var tacheDatas = await(tacheDemandee.getTacheTypeDonneeUtilisateurs());
@@ -102,7 +101,7 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 			if(tacheDatas.length === tabDonneeUtilisateur.length){
 				var i=-1;
 				
-				tacheDatas.forEach(function(tacheData){
+				tacheDatas.forEach( async function(tacheData){
 					i++;
 					var donnee = tabDonneeUtilisateur[i];
 					var typeDonnee = donnee.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
@@ -120,31 +119,29 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 							if(typeAttendu != 'all.image.without.dicom'){
 								if(typeDonnee != typeAttendu){
 									messageClient.addErreur(tacheDemandee.getNomTache() +': '+ ENGINE_NO_MATCH_DATA);
-									error = true;							
+									return false;								
 								}
 							}else{
 								extensionsImageAutorisees.splice(extensionsImageAutorisees.indexOf('dcm'),1);
 								extensionsImageAutorisees.splice(extensionsImageAutorisees.indexOf('dcm'),1);
 									if(extensionsImageAutorisees.indexOf(typeDonnee)<0){
 										messageClient.addErreur(tacheDemandee.getNomTache() + ': '+ENGINE_NO_MATCH_DATA);
-										error = true;
 									}														
 							}
 						}else {
 							if(extensionsImageAutorisees.indexOf(typeDonnee)<0){
 								messageClient.addErreur(tacheDemandee.getNomTache() + ': '+ENGINE_NO_MATCH_DATA);
-								error = true;
+								return false;
 							}
 						}
 					}
 				});
 			} else{
 				messageClient.addErreur(tacheDemandee.getNomTache()+ ': '+ENGINE_NO_MATCH_DATA);
-				error = true;
+				return false;
 			}
-			if(!error){
 			var fonctions = await(tacheDemandee.getFonctions());
-			if(fonctions != false){
+			if(fonctions.length != 0){
 			 var nbrFunction=0;
 				fonctions.forEach(function(fonction){
 					var args=[];
@@ -220,11 +217,6 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 				messageClient.addErreur(ENGINE_NO_ACTION_FOR_TASK);
 			}
 			return outputData;
-			}else{
-				return false;
-			}
-			//****************
-			
 		}else{
 			messageClient.addErreur(FORMAT_TACHE);
 		}
@@ -242,6 +234,7 @@ execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction
 				var nomApplication = application.getVariableFixeApplication();
 				var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
 				var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+args;
+				console.log(instructions);
 
 					var resultat=exec(instructions + '2>&1', {maxBuffer: 1024*50000} ,async function(err,stdout,stderr){
 						if(err)  return resolve(err);
@@ -388,9 +381,9 @@ router.post('/', function(req, res) {
 
 				 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
 				 				
-				 					outputData = executeRun(numRequest,fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee),messageClient);
+				 					outputData = executeRun(numRequest,fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee));
 				 					offset = offset + nombreDeDonnee;
-				 					if(outputData != false && outputData != undefined){
+				 					if(outputData != false){
 				 						messageClient.addReussite(outputData);
 				 					}else {
 				 						messageClient.addErreur("No report generated.");
