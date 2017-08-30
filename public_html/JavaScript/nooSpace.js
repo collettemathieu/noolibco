@@ -421,11 +421,18 @@ $(function(){
 								initParams($(this).val(), listeParams);
 								//pour récuperer la tache actuelle de l'application
 								currentTache.attr('name',$(this).val());
-								saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect);
+								saveSetApplication(cloneApplication,listTypeDonnee);
+								//pour supprimer les anciennes dataBox/surContainer
+								cloneApplication.find(".allDataBox").each(function(){		
+									cloneApplication.children('hr').remove();
+									$(this).remove();
+								});
+								//initialiser les nouvelles dataBox avec l'animation
+								initDataBox(cloneApplication,listTypeDonnee,tacheSelect.find('select').val());
 									sliderParametreApplication(modalBody);
 							});
 						sliderParametreApplication(modalBody);
-						saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect);
+						saveSetApplication(cloneApplication,listTypeDonnee);
 					}
 		        },
 		        autoHide: true,
@@ -1296,7 +1303,7 @@ $(function(){
 			}
 		}
 
-        function saveSetApplication(cloneApplication,listTypeDonnee,tacheSelect){
+        function saveSetApplication(cloneApplication,listTypeDonnee){
         	var modalBody=$('#panelSettingsApplication').find('.modal-body');
         	
         	modalBody.find('button').click(function(e){
@@ -1307,14 +1314,9 @@ $(function(){
 		     		cloneApplication.find('.tachesApplication form').append($(this).find('input').first());
 		     	});
 
-		     	//pour supprimer les anciennes dataBox/surContainer
-				cloneApplication.find(".allDataBox").each(function(){		
-						cloneApplication.children('hr').remove();
-					    $(this).remove();
-				});
-				cloneApplication.find(".surContainer").remove();
+				cloneApplication.find(".surContainer").remove(); // SurContainer???? 
 				//initialiser les nouvelles dataBox avec l'animation
-				initDataBox(cloneApplication,listTypeDonnee,tacheSelect.find('select').val());
+				//initDataBox(cloneApplication,listTypeDonnee,tacheSelect.find('select').val());
 					//fermer la fenetre
 				$('#panelSettingsApplication').modal('hide');
 			});
