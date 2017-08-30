@@ -52,7 +52,6 @@ img{
 	width: 64px;
 	height: 64px;
 	background: url("/Images/spritesheet.png") no-repeat;
-	border: 0px white dashed;
 }
 
 /* background-position: (colonne)px (ligne)px; */
