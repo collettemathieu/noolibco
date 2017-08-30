@@ -423,6 +423,7 @@ $(function(){
 								currentTache.attr('name',$(this).val());
 								saveSetApplication(cloneApplication,listTypeDonnee);
 								//pour supprimer les anciennes dataBox/surContainer
+								cloneApplication.find(".surContainer").remove();
 								cloneApplication.find(".allDataBox").each(function(){		
 									cloneApplication.children('hr').remove();
 									$(this).remove();
@@ -1163,7 +1164,11 @@ $(function(){
         	$('.modal-body').find('#paramsList').children().remove();
     		for(i=0;i<listeParams.length;++i){
     			if(listeParams[i]['nomTache']==nomTache){
-					contenuParams+="<li><label for='"+listeParams[i]['nomParams']+"' class='labelVariable'>"+ listeParams[i]['nomParams']+" :</label><input type='text' id='"+listeParams[i]['nomParams']+"' name='"+listeParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ valParams[i]['value']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+listeParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+listeParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+listeParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";		
+    				if(valParams[i]!= undefined){
+    					contenuParams+="<li><label for='"+listeParams[i]['nomParams']+"' class='labelVariable'>"+ listeParams[i]['nomParams']+" :</label><input type='text' id='"+listeParams[i]['nomParams']+"' name='"+listeParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ valParams[i]['value']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+listeParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+listeParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+listeParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";
+    				}else{
+    					contenuParams+="<li><label for='"+listeParams[i]['nomParams']+"' class='labelVariable'>"+ listeParams[i]['nomParams']+" :</label><input type='text' id='"+listeParams[i]['nomParams']+"' name='"+listeParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ listeParams[i]['defaultVal']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+listeParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+listeParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+listeParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";
+    				}	
     				numberParams++;
     			}
     		}
@@ -1316,10 +1321,8 @@ $(function(){
 		     		cloneApplication.find('.tachesApplication form').append($(this).find('input').first());
 		     	});
 
-				cloneApplication.find(".surContainer").remove(); // SurContainer???? 
-				//initialiser les nouvelles dataBox avec l'animation
-				//initDataBox(cloneApplication,listTypeDonnee,tacheSelect.find('select').val());
-					//fermer la fenetre
+				//cloneApplication.find(".surContainer").remove(); 
+				//fermer la fenetre
 				$('#panelSettingsApplication').modal('hide');
 			});
         }
