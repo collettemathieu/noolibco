@@ -144,11 +144,9 @@
 		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.ui.position.min.js"></script>
 		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.easing.1.3.min.js"></script>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		<!-- Critical scripts -->
-		<script type="text/javascript" src="/JavaScript/initBrowser.js"></script>
-		<!-- Files JS -->
-		<script type="text/javascript" src="/JavaScript/displayInformationsClient.js"></script>
 		<!-- Chargement des librairies JS -->
 		<?php echo $librairiesJS; ?>
+		<!-- Critical scripts -->
+		<script type="text/javascript" src="/JavaScript/init.js"></script>
 	</body>
 </html>

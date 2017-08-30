@@ -132,7 +132,6 @@
 		
 		<!-- Files JS -->
 		<script type="text/javascript" src="/JavaScript/dropZoneFunction.js"></script>
-		<script type="text/javascript" src="/JavaScript/displayInformationsClient.js"></script>
 		<script type="text/javascript" src="/JavaScript/managerUtilisateurs.js"></script>
 		<script type="text/javascript" src="/JavaScript/managerCommentairesBackend.js"></script>
 		<script type="text/javascript" src="/JavaScript/managerActualites.js"></script>
@@ -143,7 +142,7 @@
 		<script type="text/javascript" src="/JavaScript/initBackend.js"></script>
 
 		<!-- Critical scripts -->
-		<script type="text/javascript" src="/JavaScript/initBrowser.js"></script>
+		<script type="text/javascript" src="/JavaScript/init.js"></script>
 
 		<!-- Chargement des librairies JS -->
 		<?php echo $librairiesJS; ?>
