@@ -142,7 +142,7 @@
 		<script type="text/javascript" src="/JavaScript/initBackend.js"></script>
 
 		<!-- Critical scripts -->
-		<script type="text/javascript" src="/JavaScript/init.min.js"></script>
+		<script type="text/javascript" src="/JavaScript/init.js"></script>
 
 		<!-- Chargement des librairies JS -->
 		<?php echo $librairiesJS; ?>
