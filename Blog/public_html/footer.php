@@ -4,7 +4,7 @@
 					<div class="col-sm-6 centering maxWidth">
 						<div class="row">
 							<div class="col-lg-12">
-									<div class="col-sm-6 col-xs-12 mobileFooter centering text-center">
+									<div class="col-sm-8 col-xs-12 mobileFooter centering text-center">
 										<ul>
 											<li>NooLib The Blog</li>
 											<li><a href="/Services/#contact">Contactez-nous !</a></li>
@@ -14,7 +14,7 @@
 									</div>
 							</div>
 							<div class="col-lg-12">
-								<div class="col-sm-6 centering text-center">
+								<div class="col-sm-8 centering text-center">
 									<ul>
 										<li>Nous suivre</li>
 										<li>
