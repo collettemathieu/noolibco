@@ -47,7 +47,7 @@ footer hr{
 }
 
 /* SpriteSheet */
-img{
+footer span{
 	display: inline-block;
 	width: 64px;
 	height: 64px;
