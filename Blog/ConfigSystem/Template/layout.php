@@ -147,6 +147,6 @@
 		<!-- Chargement des librairies JS -->
 		<?php echo $librairiesJS; ?>
 		<!-- Critical scripts -->
-		<script type="text/javascript" src="/JavaScript/init.js"></script>
+		<script type="text/javascript" src="/JavaScript/init.min.js"></script>
 	</body>
 </html>
