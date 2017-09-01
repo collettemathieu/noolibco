@@ -225,7 +225,7 @@ $(function(){
 		      		// On ajoute les données et les paramètres pour le lancement de l'application
 		      		var paramForm = cloneApplication.find('.tachesApplication form').serializeArray(),
 		      			nomTache=cloneApplication.find('.tachesApplication').find('.activated').attr('name'),
-		      			donnees=ArrayTacheDonnee(listTypeDonnee), //herrrrrrrrrrrrrre
+		      			donnees=ArrayTacheDonnee(listTypeDonnee),
 		      			formData = new FormData(),
 		      			nbrDonnee=donnees[nomTache].length;
 
