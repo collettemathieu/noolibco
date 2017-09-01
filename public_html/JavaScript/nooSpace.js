@@ -224,8 +224,8 @@ $(function(){
 		      		cloneApplication.find('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
 		      		// On ajoute les données et les paramètres pour le lancement de l'application
 		      		var paramForm = cloneApplication.find('.tachesApplication form').serializeArray(),
-		      			nomTache=cloneApplication.find('.tachesApplication').attr('name'),
-		      			donnees=ArrayTacheDonnee(listTypeDonnee),
+		      			nomTache=cloneApplication.find('.tachesApplication').find('.activated').attr('name'),
+		      			donnees=ArrayTacheDonnee(listTypeDonnee), //herrrrrrrrrrrrrre
 		      			formData = new FormData(),
 		      			nbrDonnee=donnees[nomTache].length;
 
