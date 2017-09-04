@@ -7,6 +7,7 @@ var util = require('util');
 var exec = require('child_process').exec;//Sync;
 var async=require('asyncawait/async');
 var await=require('asyncawait/await');
+var fs=require('fs');
 //donnée de l'application
 var DonneeUtilisateur= require('../models/DonneeUtilisateur');
 var PDODonneeUtilisateur= new DonneeUtilisateur();
@@ -23,6 +24,7 @@ var UtilisateurDonneeUtilisateur= require('../models/UtilisateurDonneeUtilisateu
 var InputDonneeUtilisateur= require('./InputDonneeUtilisateur');
 var Fonction=require('../models/Fonction');
 var Config=require('../models/Config');
+var DonneeResultat= require('../models/DonneeResultat');
 var client = require('redis').createClient();
 var limiter = require('express-limiter')(router, client);
 limiter({
@@ -114,9 +116,22 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 				tacheDatas.forEach(function(tacheData){
 					i++;
 					var donnee = tabDonneeUtilisateur[i];
-					var typeDonnee = donnee.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
+					var typeDonnee ;
 					var typeAttendu = tacheData.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
-					
+					if(donnee instanceof DonneeResultat ){
+						console.log(typeAttendu);
+							typeDonnee = typeAttendu;
+							if(typeDonnee == 'csv'){
+
+							}
+							if(typeDonnee == 'all.image'){
+								console.log("here");
+								var resultFile = fs.readFile(donnee.getUrlDonneeUtilisateur(),'utf8',function(err){});
+								console.log(resultFile);
+							}
+					}else{
+						 typeDonnee = donnee.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
+					}
 					if(typeAttendu != 'all'){
 						// On charge le fichier de configuration
 						var config = new Config();
@@ -182,7 +197,7 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 						parametres.forEach(function(parametre){
 							
 							if(fields[parametre.getIdParametre()] != undefined && parametre.getStatutPublicParametre()){
-								var valueParam = fields[parametre.getIdParametre()][0];
+								var valueParam = fields[parametre.getIdParametre()];
 								if(valueParam <= parametre.getValeurMaxParametre() && valueParam >= parametre.getValeurMinParametre()){
 									//params[parametre.getNomParametre()] = valueParam;
 									params.push(valueParam);
@@ -251,7 +266,7 @@ execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction
 			var nomApplication = application.getVariableFixeApplication();
 			var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
 			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+args;
-
+				console.log(instructions);
 				var resultat=exec(instructions + '2>&1', {maxBuffer: 1024*50000} ,async function(err,stdout,stderr){
 					if(err)  return resolve(err);
 					if(stderr){
@@ -285,6 +300,142 @@ delFolderInProd = function (utilisateur,nbReq){
 		}
 	});
 }
+
+//*********************************** Combine Apllication 
+GetDataUrl = function (fields, idUser, messageClient){
+	var i=0, j=0;
+	var noError=true;
+	var currentUtilisateur=await(user.getUtilisateurById(idUser));
+	var tabDonneeUtilisateur=[];
+	while(fields["tache"+i+"data"+j] != undefined){
+		 			while(fields["tache"+i+"data"+j] != undefined){
+		 					if(typeof fields["tache"+i+"data"+j] == 'object'){
+		 						var outputData =GetDataUrl(fields["tache"+i+"data"+j],idUser,messageClient);
+		 						outputData = outputData.toString().trim();
+										outputData = outputData.split('<br>').join('');
+										outputData=outputData.split('<br />').join('');
+									    outputData= outputData.split("\n").join('');
+									    outputData= outputData.split("\r" ).join('');
+										// Pour supprimer tout ce qu'il y a avant et après les {} du résultat // Eviter les headers par exemple de php
+										outputData = outputData.split('/^(.*?){/').join('{'); // Avant
+										outputData = outputData.split('/(.*)}.*$/').join('$1}'); // Après
+										//resultat=resultat.split('[').join('{').split(']').join('}');					
+									    outputData = unescape(encodeURIComponent(outputData));// Pour un encodage en UTF8
+										 // Retire les noms des chemin du serveur NooLib
+										 outputData = outputData.split('/(\/home\/noolibco\/.+)/').join('');
+										// Pour les failles de type scripts
+										outputData = escapeHtml(outputData);
+										/*if(outputData.indexOf('[')== 0 && outputData.lastIndexOf(']')==outputData.length-1){
+												outputData = outputData.substr(1);
+												outputData = outputData.substr(0,outputData.length-1);
+										}*/
+									//outputData= JSON.parse(outputData);
+									var nombreAlea = Math.floor(Math.random()*1000+1);
+									fs.writeFile('/home/noolibco/SafeWorkSpace/Utilisateurs/'+currentUtilisateur.getVariableFixeUtilisateur()+'/temp/File_Result_generated_by_NooLib_'+nombreAlea+'.txt', outputData,function(err){});
+					 				var donneeResultat=new DonneeResultat( {'urlDonneeUtilisateur':'/home/noolibco/SafeWorkSpace/Utilisateurs'+currentUtilisateur.getVariableFixeUtilisateur()+'/temp/Picture_Result_generated_by_NooLib_'+nombreAlea+'.jpg', 'typeDonneUtilisateur':typeDonneeUtilisateur});
+									tabDonneeUtilisateur.push(donneeResultat);
+		 					}else{
+					 			if(fields["tache"+i+"data"+j].indexOf('noolibData_')!= -1 ){
+					 				var idData = fields["tache"+i+"data"+j].replace("noolibData_","");
+					 				var donneeUtilisateur = await(PDODonneeUtilisateur.getDonneeUtilisateurById(idData));
+					 				if(donneeUtilisateur != false){
+					 						tabDonneeUtilisateur.push(donneeUtilisateur);
+					 				}else{
+					 					noError = false;
+					 					messageClient.addErreur(DENY_HANDLE_DATA);
+					 				}
+					 			}else{
+					 				var idDataInput = fields["tache"+i+"data"+j];
+					 				var typeDonneeUtilisateur=await(PDOTypeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension('input.txt'));
+					 				var inputDonneeUtilisateur=new InputDonneeUtilisateur( {'valeurInputDonneUtilisateur':idDataInput, 'typeDonneUtilisateur':typeDonneeUtilisateur});
+					 				tabDonneeUtilisateur.push(inputDonneeUtilisateur);
+					 		 	}
+			 				}
+					 			j++;
+					 		}
+		 					i++;j=0;
+				 		if(noError){
+				 			return runApplication(fields,currentUtilisateur,tabDonneeUtilisateur,messageClient);
+				 		}else{
+						messageClient.addErreur(ENGINE_NO_DATA_MULE);
+						}
+			 		}				 		
+}
+
+runApplication = function (fields,currentUtilisateur,tabDonneeUtilisateur,messageClient){
+			var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication']));
+			var idVersion=fields['idVersion'];
+			var tabUrlDestinationDonneeUtilisateur= [];
+			var version;
+			var versions = await(currentApplication.getVersions());
+			tabDonneeUtilisateur.forEach(function(donneeUtilisateur){
+				if(donneeUtilisateur instanceof DonneeUtilisateur && !(donneeUtilisateur instanceof InputDonneeUtilisateur)){
+				 	tabUrlDestinationDonneeUtilisateur.push(donneeUtilisateur.getUrlDonneeUtilisateur());
+				} else {
+				 	tabUrlDestinationDonneeUtilisateur.push(false);
+				}
+			});
+
+	 		if(idVersion != undefined ){ //&& idAuteurs.indexOf(fields['id']) 
+				 			
+				 			for(var i=0; i<versions.length ; ++i){
+				 				if(versions[i].getIdVersion() == idVersion){
+				 					version = versions[i];
+				 					break;
+				 				}
+				 			}
+				 		} else{
+				 			
+				 			for(var i=0; i<versions.length ; ++i){
+				 				if(versions[i].getActiveVersion()){
+				 					version = versions[i];
+				 					break;
+				 				}
+				 			}
+				 		}
+
+				 		if(version != 'undefined' && version != null){
+				 		
+				 			var i=0, tabTaches= [], noError=true , offset= 0, tacheDemandee;
+				 			var taches= await(version.getTaches());
+				 			while(fields['tache'+i] != undefined){
+				 				
+				 				var nomTacheApplication = fields['tache'+i];
+				 				for(var j=0; j<taches.length;++j){
+				 					var task = await(taches[j]);
+				 					if(task.getNomTache() == nomTacheApplication){
+				 						tacheDemandee = task;
+				 						break;
+				 					}
+				 				}
+				 				
+				 				if(tacheDemandee != undefined && tacheDemandee != false){
+
+				 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
+				 				
+				 					outputData =await(executeRun(numRequest,fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee),messageClient));
+				 					offset = offset + nombreDeDonnee;
+				 					if(outputData != false){
+				 						return outputData;
+				 						
+				 					}else {
+				 						messageClient.addErreur("erreur 1"); //A voir ???
+				 					}
+				 					tacheDemandee = false;
+				 				}else{
+				 					messageClient.addErreur(NO_TASK);
+				 				}
+				 				++i;
+				 			}
+				 		}else{
+							messageClient.addErreur(TREE_VERSION_NOT_ACTIVATED);
+						}
+						return false; //return une donneeUtilisateur qui contien l'url et le nom 
+						
+					
+}
+//****************************
+
 //********Request********
 router.post('/', function(req, res) { 
 	res.header("Access-Control-Allow-Origin",req.get('origin'));
@@ -292,9 +443,10 @@ router.post('/', function(req, res) {
 	async (function(){
 		numRequest +=1;
 		var outputData = undefined;
-		var fields = await(getFormData(req));
-		var currentUtilisateur=await(user.getUtilisateurById(fields['id'][0]));
-		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication'][0]));
+		var fields = JSON.parse(req.body['jsonData']);
+
+		var currentUtilisateur=await(user.getUtilisateurById(fields['id']));
+		var currentApplication=await(application.getApplicationByIdWithAllParameters(fields['idApplication']));
 		if(currentApplication != false){
 			var idAuteurs = [];
 			var auteurs=await(currentApplication.getAuteurs());
@@ -310,112 +462,12 @@ router.post('/', function(req, res) {
 				});
 				}
 			var abonnenementUser = true;
-			if(abonnenementUser || fields['isAdmin'][0] ){
-				if(currentApplication.getIdStatut() > 4 || fields['isAdmin'][0] || idAuteurs.indexOf(fields['id'][0]) ){
-					var i=0, j=0, tabDonneeUtilisateur=[], noError= true;
-
-					while(fields["tache"+i+"data"+j] != undefined){
-		 				j=0;
-		 				while(fields["tache"+i+"data"+j] != undefined){
-					 			if(fields["tache"+i+"data"+j][0].indexOf('noolibData_')!= -1 ){
-					 				var idData = fields["tache"+i+"data"+j][0].replace("noolibData_","");
-					 				var donneeUtilisateur = await(PDODonneeUtilisateur.getDonneeUtilisateurById(idData));
-					 				
-					 				if(donneeUtilisateur != false){
-					 					var managerUtilisateurDonneeUtilisateur = new UtilisateurDonneeUtilisateur();
-					 					var utilisateurDonneeUtilisateur = await(managerUtilisateurDonneeUtilisateur.getUtilisateurDonneeUtilisateurById(fields['id'][0],donneeUtilisateur.getIdDonneeUtilisateur()));
-		 								
-					 					if(utilisateurDonneeUtilisateur != false){
-					 						tabDonneeUtilisateur.push(donneeUtilisateur);
-					 						
-					 					}else{
-					 						noError = false;
-					 						messageClient.addErreur(DENY_HANDLE_DATA);
-					 					}
-					 				}else{
-					 					noError = false;
-					 					messageClient.addErreur(ENGINE_NO_DATA);
-					 				}
-			 					}
-					 			else{
-					 				var idDataInput = fields["tache"+i+"data"+j][0];
-					 				var typeDonneeUtilisateur=await(PDOTypeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension('input.txt'));
-					 				var inputDonneeUtilisateur=new InputDonneeUtilisateur( {'valeurInputDonneUtilisateur':idDataInput, 'typeDonneUtilisateur':typeDonneeUtilisateur});
-					 				tabDonneeUtilisateur.push(inputDonneeUtilisateur);
-					 			}
-		 					j++;
-		 			}
-			 		i++;j=0;
-			 	    }
-				 	if(noError){
-				 		var tabUrlDestinationDonneeUtilisateur = [];
-				 		tabDonneeUtilisateur.forEach(function(donneeUtilisateur){
-				 			if(donneeUtilisateur instanceof DonneeUtilisateur && !(donneeUtilisateur instanceof InputDonneeUtilisateur)){
-				 				tabUrlDestinationDonneeUtilisateur.push(donneeUtilisateur.getUrlDonneeUtilisateur());
-				 			} else {
-				 				tabUrlDestinationDonneeUtilisateur.push(false);
-				 			}
-				 		});
-				 		// On récupère la version demandée si admin/auteurs ou la dernière version active de l'application
-				 		var idVersion=fields['idVersion'][0];
-				 		var version;
-				 		var versions = await(currentApplication.getVersions());
-
-				 		if(idVersion != 'undefined' && idAuteurs.indexOf(fields['id'][0]) ){
-				 			for(var i=0; i<versions.length ; ++i){
-				 				if(versions[i].getIdVersion() == idVersion){
-				 					version = versions[i];
-				 					break;
-				 				}
-				 			}
-				 		} else{
-				 			for(var i=versions.length-1; i>=0 ; --i){
-				 				if(versions[i].getActiveVersion()){
-				 					version = versions[i];
-				 					break;
-				 				}
-				 			}
-				 		}
-
-				 		if(version != 'undefined' && version != null){
-				 		
-				 			var i=0, tabTaches= [], noError=true , offset= 0, tacheDemandee;
-				 			var taches= await(version.getTaches());
-				 			while(fields['tache'+i] != undefined){
-				 				
-				 				var nomTacheApplication = fields['tache'+i][0];
-				 				
-				 				for(var j=0; j<taches.length;++j){
-				 					var task = await(taches[j]);
-				 					if(task.getNomTache() == nomTacheApplication){
-				 						tacheDemandee = task;
-				 						break;
-				 					}
-				 				}
-				 				
-				 				if(tacheDemandee != undefined && tacheDemandee != false){
-
-				 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
-				 				
-				 					outputData = executeRun(numRequest,fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee),messageClient);
-				 					offset = offset + nombreDeDonnee;
-				 					if(outputData != false && outputData != undefined){
-				 						messageClient.addReussite(outputData);
-				 					}else {
-				 						messageClient.addErreur("No report generated.");
-				 					}
-				 					tacheDemandee = false;
-				 				}else{
-				 					messageClient.addErreur(NO_TASK);
-				 				}
-				 				++i;
-				 			}
-				 		}else{
-							messageClient.addErreur(TREE_VERSION_NOT_ACTIVATED);
-						}
-					}else{
-						messageClient.addErreur(ENGINE_NO_DATA_MULE);
-					}
+			if(abonnenementUser || fields['isAdmin']){
+				if(currentApplication.getIdStatut() > 4 || fields['isAdmin'] || idAuteurs.indexOf(fields['id']) ){
+					
+					var resulatFromRun= GetDataUrl(fields,fields['id'],messageClient);
+					messageClient.addReussite(resulatFromRun);
+				 	
 				}else{
 						messageClient.addErreur(APPLICATION_NOT_ACTIVATED);
 					}

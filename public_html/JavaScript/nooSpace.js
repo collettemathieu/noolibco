@@ -129,7 +129,26 @@ $(function(){
 				containment: '#noospace',
 				start: function(){
 					$(this).find('.containerApplication').children('img').addClass('noClick');
+				},
+				//Pour combiner les application 
+				stop: function(){
+					var nearElement = $(this).find('.resultBox').last().nearest('.dataBox',0.2);
+                    if(nearElement.length==1 && !nearElement.hasClass('resultBox')) {
+                    	//remove le data Box de ll application
+                        var resultBox= $(this).find('.resultBox').last();
+                        if(!resultBox.hasClass('dataBox'))
+                        	resultBox.remove();
+                        nearElement.addClass('resultBox');
+                        var element= nearElement.parent().prepend($(this));
+                        $(this).css('position','relative').css('top','').css('left','').css('width','');
+                        $(this).draggable('disable');
+                        $(this).find('.playButton').remove();
+                        element.parent().css('overflow','visible');
+                        element.css('float','right').css('overflow','visible');
+                        //$(this).remove();
+                    }
 				}
+
 	      	});
 
 	      	// On réajuste la taille de l'image de l'application
@@ -216,45 +235,10 @@ $(function(){
 
 			// Pour exécuter la tâche de l'application
 			cloneApplication.find('.playButton').click(function(){
-				try{
 	               	// On affiche le loader
 		      		cloneApplication.find('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
-		      		// On ajoute les données et les paramètres pour le lancement de l'application
-		      		var paramForm = cloneApplication.find('.tachesApplication form').serializeArray(),
-		      			nomTache=cloneApplication.find('.tachesApplication').attr('name'),
-		      			donnees=ArrayTacheDonnee(listTypeDonnee),
-		      			formData = new FormData(),
-		      			nbrDonnee=donnees[nomTache].length;
-
-					for(var i=0;i<nbrDonnee;++i){
-						if(donnees[nomTache][i]['ext']!='input.txt'){
-							formData.append('tache0data'+i, 'noolibData_'+cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').find('.donneeUser').attr('id'));
-						}else{
-							formData.append('tache0data'+(i), cloneApplication.children('.allDataBox').find('.dataBox:eq('+(i)+')').val());
-						}
-					}
-					formData.append('idApplication', cloneApplication.attr('id'));
-					formData.append('idVersion', cloneApplication.attr('idVersion'));
-					formData.append('tache0', nomTache );
-					// On ajoute le formulaire des paramètres au formulaire général
-					for (var i=0; i<paramForm.length; i++)
-					    formData.append(paramForm[i].name, paramForm[i].value);
-						runTheMule(formData, cloneApplication);
-				}
-	      		catch(e){
-	      			var response = {
-					  'erreurs': '<p>A system error has occurred.</p>'
-					};
-					displayInformationsClient(response);
-					// On cache le loader
-					cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
-
-					// On cache les résultats précédents
-					cloneApplication.find('.resultBox img').hide(600);
-
-					// On efface le rapport précédent
-					cloneApplication.find('.applicationReports').html('');
-	      		}
+		      		var formData=runApplication(cloneApplication);
+        			runTheMule(JSON.stringify(formData), cloneApplication);
 			});
 	           
 
@@ -577,8 +561,10 @@ $(function(){
 		// Pour lancer l'application et gérer les résultats de retour
 		function runTheMule(formData, cloneApplication){
 			// On lance la requête ajax
-			formData.append('id',sessionStorage['id']);
-			formData.append('isAdmin',sessionStorage['isAdmin']);
+			formData= JSON.parse(formData);		
+			formData['id'] = sessionStorage['id'];
+			formData['isAdmin'] = sessionStorage['isAdmin'];
+
 			var wellUrl = window.location.hostname === 'www.noolib.com' ? 'https://node.noolib.com/runTheMule/' : 'http://'+window.location.hostname+':3000/runTheMule/';
 
       		$.ajax({
@@ -586,9 +572,9 @@ $(function(){
 				type: 'POST',
 				async: true,
 				cache: false,
-				data: formData,
-				contentType: false,
-				processData: false,
+				data:  {jsonData: JSON.stringify(formData)}, 
+				//contentType: false,
+				//processData: false,
 				success: function(response) {
 					var numeroApp = cloneApplication.attr('numApp');
 					// Pour réinitialiser le message d'attente du bouton
@@ -2084,6 +2070,55 @@ function graphData(graphObjet){
     });
 }
 
+
+
+	//************* By Naoures 
+	//fonction récurssive pour exécuter une ou plusieur application
+	function runApplication(cloneApplication){
+		try{
+				// On ajoute les données et les paramètres pour le lancement de l'application
+				var tableau={},
+				form = paramForm = cloneApplication.find('.tachesApplication').serializeArray(),
+				nomTache=cloneApplication.children('.tachesApplication').attr('name'),
+				nbrDonnee=cloneApplication.children('.allDataBox').children('.dataBoxContainer').length;
+				      	
+				for(var i=0;i<nbrDonnee;++i){
+					var test = $(cloneApplication.find('.dataBox:eq('+(i)+')').attr('data-content')).html();
+					if(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock').length){
+							tableau['tache0data'+i]=runApplication(cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.appInDock'));
+					}else{
+						if(!cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').hasClass('input-sm')){
+							tableau['tache0data'+i] = 'noolibData_'+cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').find('.donneeUser').attr('id');
+						}else{
+							tableau['tache0data'+i]= cloneApplication.children('.allDataBox').children('.dataBoxContainer:eq('+(i)+')').children('.dataBox').val();
+						}
+					}
+				}
+						
+				tableau['idApplication']= cloneApplication.attr('id');
+				tableau['idVersion']= cloneApplication.attr('idVersion');
+				tableau['tache0']= nomTache;
+				//On ajoute le formulaire des paramètres au formulaire général
+				for (var i=0; i<paramForm.length; i++)
+					tableau[paramForm[i].name] = paramForm[i].value;
+					return tableau;
+				}
+		catch(e){
+			    var response = {
+					 'erreurs': '<p>A system error has occurred.</p>'
+				};
+				console.log(e);
+				displayInformationsClient(response);
+				// On cache le loader
+				cloneApplication.children('.ajaxLoaderApplication').css('visibility', 'hidden').css('display', 'none');
+
+				// On cache les résultats précédents
+				cloneApplication.find('.resultBox img').hide(600);
+				// On efface le rapport précédent
+				cloneApplication.find('.applicationReports').html('');
+			    }
+		}
+		//**************
 
 /**
 * Pour ouvrir/fermer le gestionnaire de données
