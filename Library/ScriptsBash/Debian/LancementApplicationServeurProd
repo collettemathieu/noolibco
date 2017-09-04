@@ -56,9 +56,12 @@ if [ -f $homenoolibco/Files/Sources/$1/$3/$4/$5 ]; then
 		params=$(echo $7 | tr "§" "\n"); # Pour NodeJs
 		for param in $params
 		do
-		    if [ -f $homenoolibco"/Files/Data/"$2"/"$param ];
+		     if [ -f $homenoolibco"/Files/Data/"$2"/"$param ] 
 		        then
-		                cp $homenoolibco"/Files/Data/"$2"/"$param $homenoolibco/SafeWorkSpace/Utilisateurs/$2/$6;    
+		                cp $homenoolibco"/Files/Data/"$2"/"$param $homenoolibco/SafeWorkSpace/Utilisateurs/$2/$6;
+			elif [ -f $homenoolibco"/SafeWorkSpace/Utilisateurs/"$2"/temp/"$param ]
+			then
+				cp $homenoolibco"/SafeWorkSpace/Utilisateurs/"$2"/temp/"$param $homenoolibco/SafeWorkSpace/Utilisateurs/$2/$6;
 			fi
 			paramsModifier=$paramsModifier" "$param;
 		done

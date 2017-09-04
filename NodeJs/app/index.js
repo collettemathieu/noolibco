@@ -102,7 +102,6 @@ function escapeShell(cmd){
 }
 //****************************************
 function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersionRunning,tacheDemandee,tabDonneeUtilisateur,filesPaths,messageClient){
-	
 		var createur = applicationRunning.getCreateur();
 		var outputData;
 		var error = false;
@@ -119,15 +118,21 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 					var typeDonnee ;
 					var typeAttendu = tacheData.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
 					if(donnee instanceof DonneeResultat ){
-						console.log(typeAttendu);
-							typeDonnee = typeAttendu;
-							if(typeDonnee == 'csv'){
+							
+							if(typeAttendu == 'csv'){
 
 							}
-							if(typeDonnee == 'all.image'){
-								console.log("here");
-								var resultFile = fs.readFile(donnee.getUrlDonneeUtilisateur(),'utf8',function(err){});
-								console.log(resultFile);
+							if(typeAttendu == 'all.image'){
+								typeDonnee='jpg';
+								var resultFile = fs.readFileSync(donnee.getUrlDonneeUtilisateur(),'utf8'); //donnee.getUrlDonneeUtilisateur()
+								//console.log(donnee.getUrlDonneeUtilisateur());
+								resultFile = JSON.parse(resultFile);
+								var imageBuffer = new Buffer(resultFile[0]['images'][0]['data'],'base64');
+								donnee.setUrlDonneeUtilisateur(donnee.getUrlDonneeUtilisateur().replace('File','Picture').replace('txt','jpg'));
+								filesPaths[i]= donnee.getUrlDonneeUtilisateur();
+								fs.writeFile(donnee.getUrlDonneeUtilisateur(), imageBuffer,function(err){});
+
+
 							}
 					}else{
 						 typeDonnee = donnee.getTypeDonneeUtilisateur().getExtensionTypeDonneeUtilisateur();
@@ -167,88 +172,84 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 				error = true;
 			}
 			if(!error){
-			var fonctions = await(tacheDemandee.getFonctions());
-			if(fonctions != false){
-			 var nbrFunction=0;
-				fonctions.forEach(function(fonction){
-					var args=[];
-					var params = [];
-					var j=0;
-					nbrFunction +=1;
+				var fonctions = await(tacheDemandee.getFonctions());
+				if(fonctions != false){
+					 var nbrFunction=0;
+						fonctions.forEach(function(fonction){
+							var args=[];
+							var params = [];
+							var j=0;
+							nbrFunction +=1;
+							filesPaths.forEach(function(file){
 
-					filesPaths.forEach(function(file){
-
-						if(file == false){
-							args.push(tabDonneeUtilisateur[j].getValeurInputDonneeUtilisateur());
-						} else{
-							args.push(strrchr(file, '/').substr(1));
-						}
-						++j;
-					});		
-						
-
-						if(outputData != undefined ) {
-							outputData= escapeShell(outputData);
-						}
-
-					// On récupère les paramètres de la fonction modifiés (ou non) par l'utilisateur
-					var parametres = await(fonction.getParametres());
-					if(parametres!= false){
-						parametres.forEach(function(parametre){
-							
-							if(fields[parametre.getIdParametre()] != undefined && parametre.getStatutPublicParametre()){
-								var valueParam = fields[parametre.getIdParametre()];
-								if(valueParam <= parametre.getValeurMaxParametre() && valueParam >= parametre.getValeurMinParametre()){
-									//params[parametre.getNomParametre()] = valueParam;
-									params.push(valueParam);
-
-								}else{
-									params.push(parametre.getValeurDefautParametre);
+								if(file == false){
+									args.push(tabDonneeUtilisateur[j].getValeurInputDonneeUtilisateur());
+								} else{
+									args.push(strrchr(file, '/').substr(1));
 								}
-							} else{
-								params.push(parametre.getValeurDefautParametre());
+								++j;
+							});		
+								
+
+								if(outputData != undefined ) {
+									outputData= escapeShell(outputData);
+								}
+
+							// On récupère les paramètres de la fonction modifiés (ou non) par l'utilisateur
+							var parametres = await(fonction.getParametres());
+							if(parametres!= false){
+								parametres.forEach(function(parametre){
+									
+									if(fields[parametre.getIdParametre()] != undefined && parametre.getStatutPublicParametre()){
+										var valueParam = fields[parametre.getIdParametre()];
+										if(valueParam <= parametre.getValeurMaxParametre() && valueParam >= parametre.getValeurMinParametre()){
+											//params[parametre.getNomParametre()] = valueParam;
+											params.push(valueParam);
+
+										}else{
+											params.push(parametre.getValeurDefautParametre);
+										}
+									} else{
+										params.push(parametre.getValeurDefautParametre());
+									}
+								});
 							}
+							// On transforme le tableau d'arguments en chaine de caratères
+							args = args.join('§');
+							params = params.join('§');
+
+					        if(params != ''){
+					        	args = args +'§'+ params + '§' + outputData;
+					        }else{
+					        	args= args+ '§'+ outputData;
+					        }
+					        // Execution du script Bash pour executer une fonction de l'application
+					        outputData=await(execFct(nbReq,createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args));	
+					      	var result = outputData.toString().trim();
+					        result= result.split('<br>').join('').split('<br />').join('').split("\n").join('').split("\r" ).join('');
+					       	result=unescape(encodeURIComponent(result));
+					       	
+					    	try{
+					       		result= JSON.parse(result);	
+					       		 if(outputData != undefined && outputData != ""){
+					         	     	outputData = outputData;
+						         }else{
+						         	outputData=false;
+						         }
+					       	}catch (e){
+					       		outputData = '{"erreurs": "'+outputData+'"}';
+					       	}  
+
 						});
-					}
-					// On transforme le tableau d'arguments en chaine de caratères
-					args = args.join('§');
-					params = params.join('§');
-
-			        if(params != ''){
-			        	args = args +'§'+ params + '§' + outputData;
-			        }else{
-			        	args= args+ '§'+ outputData;
-			        }
-			      
-			        // Execution du script Bash pour executer une fonction de l'application
-			        outputData=await(execFct(nbReq,createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args));	
-			      	var result = outputData.toString().trim();
-			        result= result.split('<br>').join('').split('<br />').join('').split("\n").join('').split("\r" ).join('');
-			       	result=unescape(encodeURIComponent(result));
-			       	
-			    	try{
-			       		result= JSON.parse(result);	
-			       		 if(outputData != undefined && outputData != ""){
-			         	     	outputData = outputData;
-				         }else{
-				         	outputData=false;
-				         }
-			       	}catch (e){
-			       		outputData = '{"erreurs": "'+outputData+'"}';
-			       	}  
-
-				});
-			 await(delFolderInProd(currentUtilisateur,nbReq));
-			}
-			else{
-				messageClient.addErreur(ENGINE_NO_ACTION_FOR_TASK);
-			}
-			return outputData;
+					 await(delFolderInProd(currentUtilisateur,nbReq));
+				}
+				else{
+					messageClient.addErreur(ENGINE_NO_ACTION_FOR_TASK);
+				}
+				return outputData;
 			}else{
 				return false;
 			}
-			//****************
-			
 		}else{
 			messageClient.addErreur(FORMAT_TACHE);
 		}
@@ -266,7 +267,7 @@ execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction
 			var nomApplication = application.getVariableFixeApplication();
 			var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
 			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+args;
-				console.log(instructions);
+				//console.log(instructions);
 				var resultat=exec(instructions + '2>&1', {maxBuffer: 1024*50000} ,async function(err,stdout,stderr){
 					if(err)  return resolve(err);
 					if(stderr){
@@ -332,7 +333,8 @@ GetDataUrl = function (fields, idUser, messageClient){
 									//outputData= JSON.parse(outputData);
 									var nombreAlea = Math.floor(Math.random()*1000+1);
 									fs.writeFile('/home/noolibco/SafeWorkSpace/Utilisateurs/'+currentUtilisateur.getVariableFixeUtilisateur()+'/temp/File_Result_generated_by_NooLib_'+nombreAlea+'.txt', outputData,function(err){});
-					 				var donneeResultat=new DonneeResultat( {'urlDonneeUtilisateur':'/home/noolibco/SafeWorkSpace/Utilisateurs'+currentUtilisateur.getVariableFixeUtilisateur()+'/temp/Picture_Result_generated_by_NooLib_'+nombreAlea+'.jpg', 'typeDonneUtilisateur':typeDonneeUtilisateur});
+									var typeDonneeUtilisateur=await(PDOTypeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension('jpg'));
+					 				var donneeResultat=new DonneeResultat( {'urlDonneeUtilisateur':'/home/noolibco/SafeWorkSpace/Utilisateurs/'+currentUtilisateur.getVariableFixeUtilisateur()+'/temp/File_Result_generated_by_NooLib_'+nombreAlea+'.txt', 'typeDonneUtilisateur':typeDonneeUtilisateur});
 									tabDonneeUtilisateur.push(donneeResultat);
 		 					}else{
 					 			if(fields["tache"+i+"data"+j].indexOf('noolibData_')!= -1 ){
@@ -412,7 +414,6 @@ runApplication = function (fields,currentUtilisateur,tabDonneeUtilisateur,messag
 				 				if(tacheDemandee != undefined && tacheDemandee != false){
 
 				 					var nombreDeDonnee = await(tacheDemandee.getTacheTypeDonneeUtilisateurs()).length;
-				 				
 				 					outputData =await(executeRun(numRequest,fields,currentUtilisateur, currentApplication, version.getNumVersion(), tacheDemandee, tabDonneeUtilisateur.slice(offset,offset+nombreDeDonnee),tabUrlDestinationDonneeUtilisateur.slice( offset, offset+nombreDeDonnee),messageClient));
 				 					offset = offset + nombreDeDonnee;
 				 					if(outputData != false){
@@ -491,6 +492,7 @@ router.post('/', function(req, res) {
 				var resultatsApplication = [];
 				var i=0;
 				messageClient.getReussites().forEach(function(resultat){
+					console.log('combien de fois');
 					// Pour supprimer les espaces en début/fin de chaîne ainsi que les retours chariots
 					resultat = resultat.toString().trim();
 					

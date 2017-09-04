@@ -11,6 +11,9 @@ DonneeUtilisateur.prototype.getIdDonneeUtilisateur = function(){
 DonneeUtilisateur.prototype.getUrlDonneeUtilisateur = function(){
 	return this.urlDonneeUtilisateur;
 }
+DonneeUtilisateur.prototype.setUrlDonneeUtilisateur = function(url){
+	 this.urlDonneeUtilisateur= url;
+}
 DonneeUtilisateur.prototype.getTypeDonneeUtilisateur = function(){
 	return this.typeDonneeUtilisateur;
 }

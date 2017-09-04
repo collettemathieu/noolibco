@@ -546,12 +546,13 @@ $(function(){
 				elem;
 			$('.appInDock').each(function(){
 				if(parseInt($(this).attr('numApp')) == numApp){
+					console.log($(this));
 					elem = $(this);
 				}
 			});
 
 			$('#resultReportApplication').find('.applicationReports').addClass('hidden');
-			$('#resultReportApplication').find('.applicationReports').appendTo(elem.find('.resultBox'));
+			$('#resultReportApplication').find('.applicationReports').appendTo(elem.children('.containerApplication').children('.resultBox'));
 			
 			//On vide le caroussel de son contenu
 			$('#carouselApplicationReport').empty();
