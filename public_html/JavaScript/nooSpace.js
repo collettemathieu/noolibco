@@ -198,20 +198,23 @@ $(function(){
 			});
 			//Pour afficher les parametres
 			setTimeout(function(){
-		  	var nomTache=listTypeDonnee[0]['nomTache'],
-			    tacheApplication=cloneApplication.find('.tachesApplication');
+		  	var tacheApplication=cloneApplication.find('.tachesApplication');
 			    parametres=[];
-							    
 				tacheApplication.attr('name',nomTache);	
-				initDataBox(cloneApplication,listTypeDonnee,nomTache);
+				initDataBox(cloneApplication,listTypeDonnee,listTypeDonnee[0]['nomTache']);
 				parametres=ArrayTacheParam(listeParams);
-				tacheApplication.append('<form></form>');
-				if(typeof parametres[nomTache] != "undefined"){
-					for(var i=0;i<parametres[nomTache].length;++i){
-						//Pour afficher les parametres
-						tacheApplication.find('form').append("<input type='text' id='"+parametres[nomTache][i]['nomParams']+"' name='"+parametres[nomTache][i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ parametres[nomTache][i]['defaultVal']+"' readonly />");
+				for(var j=0;j<listTypeDonnee.length;++j){
+					var nomTache = listTypeDonnee[j]['nomTache'];
+					tacheApplication.append('<form name="'+nomTache+'"></form>');
+					if(typeof parametres[nomTache] != "undefined"){
+						for(var i=0;i<parametres[nomTache].length;++i){
+							//Pour afficher les parametres
+							tacheApplication.find('form:eq('+j+')').append("<input type='text' id='"+parametres[nomTache][i]['nomParams']+"' name='"+parametres[nomTache][i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ parametres[nomTache][i]['defaultVal']+"' readonly />");
+						}
 					}
 				}
+				cloneApplication.find($("form[name='"+listTypeDonnee[0]['nomTache']+"'")).addClass('activated');
+				
 			}, 800);
 
 			// Pour exécuter la tâche de l'application
@@ -408,20 +411,22 @@ $(function(){
 							modalBody = panelSettingsApplication.find('.modal-body'),
 							tacheSelect=panelSettingsApplication.find('#tacheSelect'),
 							currentTache=cloneApplication.find('.tachesApplication'),
-							currentNomTache=currentTache.attr('name');
+							currentNomTache=currentTache.find('.activated').attr('name');//currentTache.attr('name');
+
 						tacheSelect.html(listeTache);
 						tacheSelect.find('select').val(currentNomTache);
-							initParams(cloneApplication,currentNomTache,listeParams);
+						initParams(cloneApplication,currentNomTache,listeParams);
 
 						
 						panelSettingsApplication.modal('show');
 						// la fenêtre modale dans les paramètres de l'application
 							tacheSelect.find('select').change(function(){
+								//pour récuperer la tache actuelle de l'application
+								currentTache.find('form').removeClass('activated'); // i m here
+								cloneApplication.find($("form[name='"+$(this).val()+"'")).addClass('activated');
 								//initialiser les parametres de l'application en changant la tache
 								initParams(cloneApplication,$(this).val(), listeParams);
-								//pour récuperer la tache actuelle de l'application
-								currentTache.attr('name',$(this).val());
-								saveSetApplication(cloneApplication,listTypeDonnee);
+								saveSetApplication(cloneApplication,listTypeDonnee,$(this).val());
 								//pour supprimer les anciennes dataBox/surContainer
 								cloneApplication.find(".surContainer").remove();
 								cloneApplication.find(".allDataBox").each(function(){		
@@ -433,7 +438,7 @@ $(function(){
 									sliderParametreApplication(modalBody);
 							});
 						sliderParametreApplication(modalBody);
-						saveSetApplication(cloneApplication,listTypeDonnee);
+						saveSetApplication(cloneApplication,listTypeDonnee,currentNomTache);
 					}
 		        },
 		        autoHide: true,
@@ -1157,23 +1162,15 @@ $(function(){
         //*********************** Added by Naoures
         // Pour initialiser les parametres dans le setApplication selon la tache
         function initParams(cloneApplication,nomTache, listeParams){
-        	var numberParams=0;
         	var contenuParams="";
-    		var valParams = cloneApplication.find('.tachesApplication form').serializeArray();
-
+    		var valParams = cloneApplication.find('.tachesApplication').find($("form[name='"+nomTache+"'")).serializeArray();
+    		var tableauParams = ArrayTacheParam(listeParams)[nomTache];
         	$('.modal-body').find('#paramsList').children().remove();
-    		for(i=0;i<listeParams.length;++i){
-    			if(listeParams[i]['nomTache']==nomTache){
-    				if(valParams[i]!= undefined){
-    					contenuParams+="<li><label for='"+listeParams[i]['nomParams']+"' class='labelVariable'>"+ listeParams[i]['nomParams']+" :</label><input type='text' id='"+listeParams[i]['nomParams']+"' name='"+listeParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ valParams[i]['value']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+listeParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+listeParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+listeParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";
-    				}else{
-    					contenuParams+="<li><label for='"+listeParams[i]['nomParams']+"' class='labelVariable'>"+ listeParams[i]['nomParams']+" :</label><input type='text' id='"+listeParams[i]['nomParams']+"' name='"+listeParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ listeParams[i]['defaultVal']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+listeParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+listeParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+listeParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";
-    				}	
-    				numberParams++;
-    			}
+    		for(i=0;i<tableauParams.length;++i){
+    					contenuParams+="<li><label for='"+tableauParams[i]['nomParams']+"' class='labelVariable'>"+ tableauParams[i]['nomParams']+" :</label><input type='text' id='"+tableauParams[i]['nomParams']+"' name='"+tableauParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ valParams[i]['value']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+tableauParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+tableauParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+tableauParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";
     		}
     		//S'il y a aucun parametre
-    		if(numberParams==0){
+    		if(tableauParams.length==0){
     			$('.modal-body').find("#paramsList").append("<br><div class='alert alert-warning'>This task cannot be set.</div><button class='btn btn-default pull-right' type='submit'>Save</button>");
     		}else{
     			var contenu="<ul><li class='parametresTache'><ul>";
@@ -1310,15 +1307,15 @@ $(function(){
 			}
 		}
 
-        function saveSetApplication(cloneApplication,listTypeDonnee){
+        function saveSetApplication(cloneApplication,listTypeDonnee,nomTache){
         	var modalBody=$('#panelSettingsApplication').find('.modal-body');
         	
         	modalBody.find('button').click(function(e){
 		     	e.preventDefault();
-		     	cloneApplication.find('.tachesApplication form').children().remove();
+		        cloneApplication.find('.tachesApplication').find($("form[name='"+nomTache+"'")).children().remove();
 		     	//pour sauvgarder les valeurs des parametres
 		     	modalBody.find('.parametresTache ul').find('li').each(function(){
-		     		cloneApplication.find('.tachesApplication form').append($(this).find('input').first());
+		     		cloneApplication.find('.tachesApplication').find($("form[name='"+nomTache+"'")).append($(this).find('input').first());
 		     	});
 
 				//cloneApplication.find(".surContainer").remove(); 
