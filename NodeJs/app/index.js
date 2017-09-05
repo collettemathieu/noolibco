@@ -533,6 +533,9 @@ router.post('/', function(req, res) {
 				
 				response['resultat'] = resultatsApplication;
 			}
+			//**************** Delete files in temps directory
+			exec('rm /home/noolibco/SafeWorkSpace/Utilisateurs/'+currentUtilisateur.getVariableFixeUtilisateur()+'/temp/*',function(err,stdout,stderr){});
+			//*******************
 			response = JSON.stringify(response);
 		 	res.send(response);	
 	})();
