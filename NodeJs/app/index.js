@@ -40,6 +40,7 @@ limiter({
 //variable de stockage
 var abonnement_user=true;
 var numRequest=0;
+var noError;
 //***Const
 const ENGINE_NO_MATCH_DATA = 'Data entered does not match with the task called. Please verify data loaded on the mule.';
 const TREE_VERSION_NOT_ACTIVATED = 'Sorry, any version of this application is activated. Please, stay tuned!';
@@ -305,27 +306,29 @@ delFolderInProd = function (utilisateur,nbReq){
 //*********************************** Combine Apllication 
 GetDataUrl = function (fields, idUser, messageClient){
 	var i=0, j=0;
-	var noError=true;
+	var noError = true;
 	var currentUtilisateur=await(user.getUtilisateurById(idUser));
 	var tabDonneeUtilisateur=[];
 	while(fields["tache"+i+"data"+j] != undefined){
 		 			while(fields["tache"+i+"data"+j] != undefined){
 		 					if(typeof fields["tache"+i+"data"+j] == 'object'){
 		 						var outputData =GetDataUrl(fields["tache"+i+"data"+j],idUser,messageClient);
-		 						outputData = outputData.toString().trim();
-										outputData = outputData.split('<br>').join('');
-										outputData=outputData.split('<br />').join('');
-									    outputData= outputData.split("\n").join('');
-									    outputData= outputData.split("\r" ).join('');
-										// Pour supprimer tout ce qu'il y a avant et après les {} du résultat // Eviter les headers par exemple de php
-										outputData = outputData.split('/^(.*?){/').join('{'); // Avant
-										outputData = outputData.split('/(.*)}.*$/').join('$1}'); // Après
-										//resultat=resultat.split('[').join('{').split(']').join('}');					
-									    outputData = unescape(encodeURIComponent(outputData));// Pour un encodage en UTF8
-										 // Retire les noms des chemin du serveur NooLib
-										 outputData = outputData.split('/(\/home\/noolibco\/.+)/').join('');
-										// Pour les failles de type scripts
-										outputData = escapeHtml(outputData);
+		 						//console.log(outputData);
+		 						if(outputData != undefined && outputData!= false){
+		 							outputData = outputData.toString().trim();
+									outputData = outputData.split('<br>').join('');
+									outputData=outputData.split('<br />').join('');
+									outputData= outputData.split("\n").join('');
+									outputData= outputData.split("\r" ).join('');
+									// Pour supprimer tout ce qu'il y a avant et après les {} du résultat // Eviter les headers par exemple de php
+									outputData = outputData.split('/^(.*?){/').join('{'); // Avant
+									outputData = outputData.split('/(.*)}.*$/').join('$1}'); // Après
+									//resultat=resultat.split('[').join('{').split(']').join('}');					
+									outputData = unescape(encodeURIComponent(outputData));// Pour un encodage en UTF8
+									// Retire les noms des chemin du serveur NooLib
+									outputData = outputData.split('/(\/home\/noolibco\/.+)/').join('');
+									// Pour les failles de type scripts
+									outputData = escapeHtml(outputData);
 										/*if(outputData.indexOf('[')== 0 && outputData.lastIndexOf(']')==outputData.length-1){
 												outputData = outputData.substr(1);
 												outputData = outputData.substr(0,outputData.length-1);
@@ -336,8 +339,13 @@ GetDataUrl = function (fields, idUser, messageClient){
 									var typeDonneeUtilisateur=await(PDOTypeDonneeUtilisateur.getTypeDonneeUtilisateurByExtension('jpg'));
 					 				var donneeResultat=new DonneeResultat( {'urlDonneeUtilisateur':'/home/noolibco/SafeWorkSpace/Utilisateurs/'+currentUtilisateur.getVariableFixeUtilisateur()+'/temp/File_Result_generated_by_NooLib_'+nombreAlea+'.txt', 'typeDonneUtilisateur':typeDonneeUtilisateur});
 									tabDonneeUtilisateur.push(donneeResultat);
+		 						}else {
+		 							noError = false;
+		 						}
+		
 		 					}else{
-					 			if(fields["tache"+i+"data"+j].indexOf('noolibData_')!= -1 ){
+		 						if(noError){
+		 							if(fields["tache"+i+"data"+j].indexOf('noolibData_')!= -1 ){
 					 				var idData = fields["tache"+i+"data"+j].replace("noolibData_","");
 					 				var donneeUtilisateur = await(PDODonneeUtilisateur.getDonneeUtilisateurById(idData));
 					 				if(donneeUtilisateur != false){
@@ -352,16 +360,20 @@ GetDataUrl = function (fields, idUser, messageClient){
 					 				var inputDonneeUtilisateur=new InputDonneeUtilisateur( {'valeurInputDonneUtilisateur':idDataInput, 'typeDonneUtilisateur':typeDonneeUtilisateur});
 					 				tabDonneeUtilisateur.push(inputDonneeUtilisateur);
 					 		 	}
+		 					} else{
+		 						messageClient.addErreur(ENGINE_NO_DATA_MULE);
+					 			
 			 				}
-					 			j++;
-					 		}
-		 					i++;j=0;
-				 		if(noError){
-				 			return runApplication(fields,currentUtilisateur,tabDonneeUtilisateur,messageClient);
-				 		}else{
-						messageClient.addErreur(ENGINE_NO_DATA_MULE);
-						}
-			 		}				 		
+		 					}
+					 j++;
+					}
+		i++;j=0;
+		if(noError){
+			return runApplication(fields,currentUtilisateur,tabDonneeUtilisateur,messageClient);
+		}else{
+			messageClient.addErreur(ENGINE_NO_DATA_MULE);
+		}
+	}				 		
 }
 
 runApplication = function (fields,currentUtilisateur,tabDonneeUtilisateur,messageClient){
@@ -398,7 +410,7 @@ runApplication = function (fields,currentUtilisateur,tabDonneeUtilisateur,messag
 
 				 		if(version != 'undefined' && version != null){
 				 		
-				 			var i=0, tabTaches= [], noError=true , offset= 0, tacheDemandee;
+				 			var i=0, tabTaches= [], offset= 0, tacheDemandee;
 				 			var taches= await(version.getTaches());
 				 			while(fields['tache'+i] != undefined){
 				 				
@@ -467,7 +479,10 @@ router.post('/', function(req, res) {
 				if(currentApplication.getIdStatut() > 4 || fields['isAdmin'] || idAuteurs.indexOf(fields['id']) ){
 					
 					var resulatFromRun= GetDataUrl(fields,fields['id'],messageClient);
-					messageClient.addReussite(resulatFromRun);
+					if(resulatFromRun != false && resulatFromRun != undefined){	
+							console.log(resulatFromRun);
+							messageClient.addReussite(resulatFromRun);
+					}
 				 	
 				}else{
 						messageClient.addErreur(APPLICATION_NOT_ACTIVATED);

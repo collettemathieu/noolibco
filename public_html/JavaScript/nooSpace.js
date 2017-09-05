@@ -236,7 +236,7 @@ $(function(){
 			// Pour exécuter la tâche de l'application
 			cloneApplication.find('.playButton').click(function(){
 	               	// On affiche le loader
-		      		cloneApplication.find('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
+		      		cloneApplication.children('.containerApplication').children('.ajaxLoaderApplication').css('visibility', 'visible').css('display', 'block');
 		      		var formData=runApplication(cloneApplication);
         			runTheMule(JSON.stringify(formData), cloneApplication);
 			});
