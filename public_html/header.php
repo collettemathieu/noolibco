@@ -7,13 +7,14 @@
 		<!--Menu boutons-->
 		<nav>
 			<ul class="list-inline">
-				<li><a href="/Profile/"><img src="/Images/profilMini.png" data-html="true" data-toggle="popover" data-content="Edit your profile"/></a></li>
-				<li id="helperButton"><a><img src="/Images/aide.png" data-html="true" data-toggle="popover" data-content="May I help you ?"/></a></li>
-				<li data-toggle="modal" href="#infoNoolibApplication"><a><img src="/Images/information.png" data-html="true" data-toggle="popover" data-content="About Noolib"/></a></li>
+				<li id="profileTour"><a href="/Profile/"><img src="/Images/profilMini.png" data-html="true" data-toggle="popover" data-content="Edit your profile"/></a></li>
+				<li id="helperButton"><a><img src="/Images/aide.png" data-html="true" data-toggle="popover" data-content="Contact us!"/></a></li>
+				<li id="startTour"><a><img src="/Images/aide.png" data-html="true" data-toggle="popover" data-content="May I help you ?"/></a></li>
+				<li id="teamTour" data-toggle="modal" href="#infoNoolibApplication"><a><img src="/Images/information.png" data-html="true" data-toggle="popover" data-content="About Noolib"/></a></li>
 				<?php if($user->getAttribute('isAdmin')) { ?>
 				<li><a href="/PourAdminSeulement/SortirDuModeAdmin"><img src="/Images/quitAdminMode.png" data-html="true" data-toggle="popover" data-content="Return to user mode"/></a></li>
 				<?php } ?>
-				<li><a href="/LogIn/Deconnexion"><img src="/Images/cross.png" data-html="true" data-toggle="popover" data-content="Log out"/></a></li>
+				<li id="logTour"><a href="/LogIn/Deconnexion"><img src="/Images/cross.png" data-html="true" data-toggle="popover" data-content="Log out"/></a></li>
 			</ul>
 		</nav>
 
