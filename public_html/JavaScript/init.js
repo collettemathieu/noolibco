@@ -11,7 +11,36 @@
 		$('#startTour').on('click',function(){
 			var tour = new Tour({
 				backdrop:true,
-				steps:[{
+				steps:[
+				{
+					element:'#profileTour',
+					content:'Discover and edit your profile here.',
+					title:'Your profile',
+					smartPlacement:true,
+					backdrop: false
+				},
+				{
+					element:'#startTour',
+					content:'For each page of NooLib, you can find a specific tour just like this one.',
+					title:'Need some help ?',
+					smartPlacement:true,
+					backdrop: false
+				},
+				{
+					element:'#teamTour',
+					content:'Discover here the NooLib team and our partners.',
+					title:'The NooLib Informations',
+					smartPlacement:true,
+					backdrop: false
+				},
+				{
+					element:'#logTour',
+					content:'Or just log out from the platform :-(',
+					title:'Log out',
+					smartPlacement:true,
+					backdrop: false
+				},
+				{
 					element:'#firstTour',
 					content:'To find the application you need, use the library tool.',
 					smartPlacement:true
@@ -35,30 +64,6 @@
 					element:'#fiveTour',
 					content:'For setting your account and change, for example, your wallpaper, use the settings tool.',
 					smartPlacement:true
-				},
-				{
-					element:'#profileTour',
-					content:'Discover and edit your profile here.',
-					smartPlacement:true,
-					backdrop: false
-				},
-				{
-					element:'#startTour',
-					content:'For each page of NooLib, you can find a specific help just like this one.',
-					smartPlacement:true,
-					backdrop: false
-				},
-				{
-					element:'#teamTour',
-					content:'Discover here the NooLib team.',
-					smartPlacement:true,
-					backdrop: false
-				},
-				{
-					element:'#logTour',
-					content:'Or just log out from the platform :-(',
-					smartPlacement:true,
-					backdrop: false
 				},
 				{
 					element:'#overlayDockApplication',

@@ -9,8 +9,8 @@
 			<ul class="list-inline">
 				<li id="profileTour"><a href="/Profile/"><img src="/Images/userProfile.png" data-html="true" data-toggle="popover" data-content="Edit your profile"/></a></li>
 				<li id="helperButton"><a><img src="/Images/contact.png" data-html="true" data-toggle="popover" data-content="Contact us!"/></a></li>
-				<li id="startTour"><a><img src="/Images/aide.png" data-html="true" data-toggle="popover" data-content="May I help you ?"/></a></li>
-				<li id="teamTour" data-toggle="modal" href="#infoNoolibApplication"><a><img src="/Images/information.png" data-html="true" data-toggle="popover" data-content="About Noolib"/></a></li>
+				<li id="startTour"><a><img src="/Images/aide.png" data-html="true" data-toggle="popover" data-content="Take a tour?"/></a></li>
+				<li id="teamTour" data-toggle="modal" href="#infoNoolibApplication"><a><img src="/Images/information.png" data-html="true" data-toggle="popover" data-content="About Noolib!"/></a></li>
 				<?php if($user->getAttribute('isAdmin')) { ?>
 				<li><a href="/PourAdminSeulement/SortirDuModeAdmin"><img src="/Images/quitAdminMode.png" data-html="true" data-toggle="popover" data-content="Return to user mode"/></a></li>
 				<?php } ?>
