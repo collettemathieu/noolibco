@@ -14,6 +14,10 @@ header nav img{
 	padding-bottom: 5px;
 }
 
+.lastImage{
+	margin-right: 10px;
+}
+
 header .modal-body img{
 	height: 80px;
 }

@@ -6,7 +6,7 @@
 	if($user->isAuthenticated() && $user->jsIsActivated()) { ?>
 		<!--Menu boutons-->
 		<nav>
-			<ul class="list-inline">
+			<ul class="list-inline pull-right">
 				<li id="profileTour"><a href="/Profile/"><img src="/Images/userProfile.png" data-html="true" data-toggle="popover" data-content="Edit your profile"/></a></li>
 				<li id="startTour"><a><img src="/Images/aide.png" data-html="true" data-toggle="popover" data-content="Take a tour?"/></a></li>
 				<li id="contactUs"><a><img src="/Images/contact.png" data-html="true" data-toggle="popover" data-content="Contact us!"/></a></li>
@@ -14,7 +14,7 @@
 				<?php if($user->getAttribute('isAdmin')) { ?>
 				<li><a href="/PourAdminSeulement/SortirDuModeAdmin"><img src="/Images/quitAdminMode.png" data-html="true" data-toggle="popover" data-content="Return to user mode"/></a></li>
 				<?php } ?>
-				<li id="logTour"><a href="/LogIn/Deconnexion"><img src="/Images/cross.png" data-html="true" data-toggle="popover" data-content="Log out"/></a></li>
+				<li id="logTour"><a href="/LogIn/Deconnexion"><img class="lastImage" src="/Images/cross.png" data-html="true" data-toggle="popover" data-content="Log out"/></a></li>
 			</ul>
 		</nav>
 
