@@ -199,22 +199,24 @@ $(function(){
 			//Pour afficher les parametres
 			setTimeout(function(){
 		  	var tacheApplication=cloneApplication.find('.tachesApplication');
-			    parametres=[];
-				tacheApplication.attr('name',nomTache);	
+			    parametres=[],
+			    currentTache='';
 				initDataBox(cloneApplication,listTypeDonnee,listTypeDonnee[0]['nomTache']);
 				parametres=ArrayTacheParam(listeParams);
 				for(var j=0;j<listTypeDonnee.length;++j){
 					var nomTache = listTypeDonnee[j]['nomTache'];
-					tacheApplication.append('<form name="'+nomTache+'"></form>');
-					if(typeof parametres[nomTache] != "undefined"){
-						for(var i=0;i<parametres[nomTache].length;++i){
-							//Pour afficher les parametres
-							tacheApplication.find('form:eq('+j+')').append("<input type='text' id='"+parametres[nomTache][i]['nomParams']+"' name='"+parametres[nomTache][i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ parametres[nomTache][i]['defaultVal']+"' readonly />");
+					if(nomTache != currentTache){
+						tacheApplication.append('<form name="'+nomTache+'"></form>');
+						currentTache = nomTache;
+						if(typeof parametres[nomTache] != "undefined"){
+							for(var i=0;i<parametres[nomTache].length;++i){
+								//Pour afficher les parametres
+								tacheApplication.find($("form[name='"+nomTache+"']")).append("<input type='text' id='"+parametres[nomTache][i]['nomParams']+"' name='"+parametres[nomTache][i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ parametres[nomTache][i]['defaultVal']+"' readonly />");
+							}
 						}
 					}
 				}
 				cloneApplication.find($("form[name='"+listTypeDonnee[0]['nomTache']+"'")).addClass('activated');
-				
 			}, 800);
 
 			// Pour exécuter la tâche de l'application

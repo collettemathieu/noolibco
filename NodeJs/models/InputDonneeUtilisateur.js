@@ -1,4 +1,4 @@
-var DonneeUtilisateur = require('../models/DonneeUtilisateur');
+var DonneeUtilisateur = require('./DonneeUtilisateur');
 
 
 function InputDonneeUtilisateur(donnee) {
