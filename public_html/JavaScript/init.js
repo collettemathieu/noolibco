@@ -22,7 +22,14 @@
 				{
 					element:'#startTour',
 					content:'For each page of NooLib, you can find a specific tour just like this one.',
-					title:'Need some help ?',
+					title:'Need some help?',
+					smartPlacement:true,
+					backdrop: false
+				},
+				{
+					element:'#contactUs',
+					content:'If you want to contact us for any questions, please do not hesitate.',
+					title:'Contact us?',
 					smartPlacement:true,
 					backdrop: false
 				},
@@ -183,17 +190,10 @@
 /********************/
 
 	// Pour afficher l'aide à l'utilisateur
-	$('#helperButton').click(function(e){
+	$('#contactUs').click(function(e){
 		e.preventDefault();
-		var currentUrl = document.location.href;
-		currentUrl = currentUrl.substring(currentUrl.indexOf('/', 8)+1);
-		if(currentUrl.length == 0){
-			currentUrl = 'Frontend/';
-		}
-		currentUrl = '/Helper/'+currentUrl.substring(0,currentUrl.indexOf('/'));
-
 		$.ajax({
-            url: currentUrl,
+            url: '/Helper/',
             type: 'POST',
             async: true,
             cache: false,
@@ -230,6 +230,7 @@
 		                    btn.button('reset');
 		                    response = JSON.parse(response);
 		                    displayInformationsClient(response);
+		                    $('#helperApplication').modal('hide');
 		                },
 		                error: function(){
 		                    btn.button('reset');

@@ -8,8 +8,8 @@
 		<nav>
 			<ul class="list-inline">
 				<li id="profileTour"><a href="/Profile/"><img src="/Images/userProfile.png" data-html="true" data-toggle="popover" data-content="Edit your profile"/></a></li>
-				<li id="helperButton"><a><img src="/Images/contact.png" data-html="true" data-toggle="popover" data-content="Contact us!"/></a></li>
 				<li id="startTour"><a><img src="/Images/aide.png" data-html="true" data-toggle="popover" data-content="Take a tour?"/></a></li>
+				<li id="contactUs"><a><img src="/Images/contact.png" data-html="true" data-toggle="popover" data-content="Contact us!"/></a></li>
 				<li id="teamTour" data-toggle="modal" href="#infoNoolibApplication"><a><img src="/Images/information.png" data-html="true" data-toggle="popover" data-content="About Noolib!"/></a></li>
 				<?php if($user->getAttribute('isAdmin')) { ?>
 				<li><a href="/PourAdminSeulement/SortirDuModeAdmin"><img src="/Images/quitAdminMode.png" data-html="true" data-toggle="popover" data-content="Return to user mode"/></a></li>
@@ -153,12 +153,11 @@
 
 		<div id="helperApplication" class="modal fade" role="dialog">
 		  <div class="modal-dialog">
-
 		    <!-- Modal content-->
 		    <div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">x</button>
-					<h2 class="modal-title">Help center</h2>
+					<h2 class="modal-title">Need some help?</h2>
 				</div>
 				<div class="modal-body"></div>
 		    </div>
