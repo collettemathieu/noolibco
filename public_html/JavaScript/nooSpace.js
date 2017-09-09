@@ -449,7 +449,7 @@ $(function(){
 		            	name: "Set it"
 		            },
 		            "mule":{
-		            	name: "Load/Unload its mule"
+		            	name: "Call the mule"
 		            },
 		            "sep1": "---------",
 		            "delete": {
