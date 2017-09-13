@@ -3,6 +3,7 @@ var allowedTableType = ['csv'], allowedTextType = ['txt'];
 function TXTFile(raw_data, extFichier) {
   this.donnees = [];
 
+
   if(typeof(raw_data) !== 'undefined' && typeof(extFichier) !== 'undefined'){
 
     if(allowedTextType.indexOf(extFichier) != -1){
@@ -19,7 +20,6 @@ function TXTFile(raw_data, extFichier) {
   this.series = [];
   this.serieNavigator = [];
   this.sampleRate = 1;
-  
 }
 
 /**
@@ -80,7 +80,7 @@ TXTFile.prototype.construct_from_data = function(array_legend, array_data, num_p
 
     // On ajoute la légende à l'objet
     this.set_legend(array_legend);
-    
+
     // On ajoute les données à l'objet
     for(var j=0, c=array_data[0].length; j<c; ++j){
       for(var i=0; i<sizeArray; ++i){
@@ -216,12 +216,31 @@ TXTFile.prototype.set_data_from_txt = function(raw_data) {
 TXTFile.prototype.set_data_from_csv = function(raw_data) {
 
   var data = [],
+      rgxOne = /(.+)/,
+      raw_data = raw_data.replace(/;;/g,''), // On nettoie des caractères vides
+      raw_data = raw_data.replace(/,,/g,''),
+      raw_data = raw_data.replace(/\.\./g,''),
+      matchOne = new String(rgxOne.exec(raw_data)),
+      lastChar = matchOne[matchOne.length-1],
       rgx = /(.+)/g, match; // g pour prendre tous les matches
 
+// On remplace les virgules des décimales par des points (CSV européen)
+if(/[0-9]+,[0-9]+[;\t]/.test(raw_data)){
+  raw_data = raw_data.replace(/,/g,'.');
+}
+
+
+if(lastChar === ',' || lastChar === ";" || lastChar === "."){
+  // On transforme les données sous forme de tableau à l'aide d'une Regex
+  while (match = rgx.exec(raw_data)) { 
+    data.push(match[0].slice(0,-1).split(/[;,\t]/)); // On retire le dernier caractère
+  }
+}else{
   // On transforme les données sous forme de tableau à l'aide d'une Regex
   while (match = rgx.exec(raw_data)) {   
     data.push(match[0].split(/[;,\t]/));
   }
+}
 
   return data;
 };

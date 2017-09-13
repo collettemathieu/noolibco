@@ -25,7 +25,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes principales
 app.use('/runTheMule', runTheMule);
+// Redirection de toutes les autres routes vers www.noolib.com
+app.use('/', function(req, res){
+	res.statusCode = 302;
+	res.setHeader('location', 'https://www.noolib.com');
+	res.end();
+});
 
 
 

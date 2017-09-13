@@ -30,12 +30,13 @@ html, body{
 }
 
 body{
-	background: url("/Images/BackgroundUtilisateurs/background_defaut.jpg");
-	background-size: cover;
-	background-attachment: fixed;
+	background: url("/Images/MarketingBackground/background_0.jpg");
+  background-size: cover;
+  background-attachment: fixed;
 	margin: auto;
 	font-family: "ComicNeue-Angular-Regular";
 }
+
 
 header{
 	height: 20%;

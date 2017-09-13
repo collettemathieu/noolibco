@@ -3,6 +3,86 @@
 	var url = document.location.href,
 		logIn = /LogIn/;
 
+/*******************/
+/* 	Boostrap Tour  */
+/*******************/
+
+	if(!logIn.test(url)){
+		$('#startTour').on('click',function(){
+			var tour = new Tour({
+				backdrop:true,
+				steps:[
+				{
+					element:'#profileTour',
+					content:'Discover and edit your profile here.',
+					title:'Your profile',
+					smartPlacement:true,
+					backdrop: false
+				},
+				{
+					element:'#startTour',
+					content:'For each page of NooLib, you can find a specific tour just like this one.',
+					title:'Need some help ?',
+					smartPlacement:true,
+					backdrop: false
+				},
+				{
+					element:'#teamTour',
+					content:'Discover here the NooLib team and our partners.',
+					title:'The NooLib Informations',
+					smartPlacement:true,
+					backdrop: false
+				},
+				{
+					element:'#logTour',
+					content:'Or just log out from the platform :-(',
+					title:'Log out',
+					smartPlacement:true,
+					backdrop: false
+				},
+				{
+					element:'#firstTour',
+					content:'To find the application you need, use the library tool.',
+					smartPlacement:true
+				},
+				{
+					element:'#secondTour',
+					content:'The NooSpace is your workspace to run applications online.',
+					smartPlacement:true
+				},
+				{
+					element:'#thirdTour',
+					content:'If you want to deposit your own algorithms and transform them into an application, use this tool.',
+					smartPlacement:true
+				},
+				{
+					element:'#fourTour',
+					content:'You can then manage your own applications.',
+					smartPlacement:true
+				},
+				{
+					element:'#fiveTour',
+					content:'For setting your account and change, for example, your wallpaper, use the settings tool.',
+					smartPlacement:true
+				},
+				{
+					element:'#overlayDockApplication',
+					content:'And finally, the applications in dock where you can find your favorite applications and discover other options by a right click on them. Move your mouse downward to make the dock (dis)appear.',
+					smartPlacement:true,
+					backdrop: false,
+					onShow:function(tour){
+						animPlus(0, -100, $('#overlayDockApplication'));
+					}
+				}
+			]});
+
+			tour.init();
+			tour.start(true);
+		});
+	}
+
+
+
 /****************/
 /* 	NAVIGATION  */
 /****************/
