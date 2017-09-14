@@ -1168,13 +1168,15 @@ $(function(){
     		var valParams = cloneApplication.find('.tachesApplication').find($("form[name='"+nomTache+"'")).serializeArray();
     		var tableauParams = ArrayTacheParam(listeParams)[nomTache];
         	$('.modal-body').find('#paramsList').children().remove();
-    		for(i=0;i<tableauParams.length;++i){
-    					contenuParams+="<li><label for='"+tableauParams[i]['nomParams']+"' class='labelVariable'>"+ tableauParams[i]['nomParams']+" :</label><input type='text' id='"+tableauParams[i]['nomParams']+"' name='"+tableauParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ valParams[i]['value']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+tableauParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+tableauParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+tableauParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";
-    		}
+
+    		
     		//S'il y a aucun parametre
-    		if(tableauParams.length==0){
+    		if(tableauParams == undefined){
     			$('.modal-body').find("#paramsList").append("<br><div class='alert alert-warning'>This task cannot be set.</div><button class='btn btn-default pull-right' type='submit'>Save</button>");
     		}else{
+    			for(i=0;i<tableauParams.length;++i){
+    					contenuParams+="<li><label for='"+tableauParams[i]['nomParams']+"' class='labelVariable'>"+ tableauParams[i]['nomParams']+" :</label><input type='text' id='"+tableauParams[i]['nomParams']+"' name='"+tableauParams[i]['idParams']+"' class='inputVariable valeurDefautParametre' value='"+ valParams[i]['value']+"' readonly /><input type='hidden' class='valeurMinParametre' value='"+tableauParams[i]['minVal']+"' /><input type='hidden' class='valeurMaxParametre' value='"+tableauParams[i]['maxVal']+"' /><input type='hidden' class='valeurPasParametre' value='"+tableauParams[i]['pasVal']+"' /><div class='sliderParametreApplication'></div></li>";
+    			}
     			var contenu="<ul><li class='parametresTache'><ul>";
     			contenu+=contenuParams+"</ul></li></ul><button class='btn btn-default pull-right' type='submit'>Save</button>";
     			$('.modal-body').find('#paramsList').append(contenu);
