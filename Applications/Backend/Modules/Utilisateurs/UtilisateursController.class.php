@@ -880,7 +880,7 @@ class UtilisateursController extends \Library\BackController
 			{
 				$newStatut = $request->getPostData('newStatut');
 				// !=1 car correspond au statu 'Aucun'
-				if(isset($newStatut) && $newStatut != 1)
+				if(isset($newStatut) && $newStatut != 0)
 				{
 					$managerStatut = $this->getManagers()->getManagerOf('StatutUtilisateur');
 					$statut = $managerStatut->getStatutById($newStatut);

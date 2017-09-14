@@ -120,7 +120,7 @@
 
 				<div class="panel panel-default col-lg-12">
 					<div class="panel-heading">
-						<a class="accordion-toggle" href="#item4" data-toggle="collapse"><?php if($utilisateurAAdministrer->getStatut()->getIdStatut() != 1){ ?>
+						<a class="accordion-toggle" href="#item4" data-toggle="collapse"><?php if($utilisateurAAdministrer->getStatut()->getIdStatut() != 0){ ?>
 							Status: <?php echo($utilisateurAAdministrer->getStatut()->getNomStatut()); ?>
 						<?php } ?></a>
 					</div>
