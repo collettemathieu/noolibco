@@ -97,7 +97,6 @@
 					</div>
 				</div>
 			</div>
-			<?php if(count($userSession->getFavoris()) !=0){?>
 			<div id="panelSettingsApplication" class="modal fade" role="dialog">
 				<div class="modal-dialog">
 					<!-- Modal content-->
@@ -116,5 +115,4 @@
 					</div>	
 				</div>
 			</div>
-			<?php }?>
 		<?php }} ?>

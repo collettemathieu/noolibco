@@ -419,26 +419,25 @@ $(function(){
 						tacheSelect.find('select').val(currentNomTache);
 						initParams(cloneApplication,currentNomTache,listeParams);
 
-						
 						panelSettingsApplication.modal('show');
 						// la fenêtre modale dans les paramètres de l'application
-							tacheSelect.find('select').change(function(){
-								//pour récuperer la tache actuelle de l'application
-								currentTache.find('form').removeClass('activated'); // i m here
-								cloneApplication.find($("form[name='"+$(this).val()+"'")).addClass('activated');
-								//initialiser les parametres de l'application en changant la tache
-								initParams(cloneApplication,$(this).val(), listeParams);
-								saveSetApplication(cloneApplication,listTypeDonnee,$(this).val());
-								//pour supprimer les anciennes dataBox/surContainer
-								cloneApplication.find(".surContainer").remove();
-								cloneApplication.find(".allDataBox").each(function(){		
-									cloneApplication.children('hr').remove();
-									$(this).remove();
-								});
-								//initialiser les nouvelles dataBox avec l'animation
-								initDataBox(cloneApplication,listTypeDonnee,tacheSelect.find('select').val());
-									sliderParametreApplication(modalBody);
+						tacheSelect.find('select').change(function(){
+							//pour récuperer la tache actuelle de l'application
+							currentTache.find('form').removeClass('activated'); // i m here
+							cloneApplication.find($("form[name='"+$(this).val()+"'")).addClass('activated');
+							//initialiser les parametres de l'application en changant la tache
+							initParams(cloneApplication,$(this).val(), listeParams);
+							saveSetApplication(cloneApplication,listTypeDonnee,$(this).val());
+							//pour supprimer les anciennes dataBox/surContainer
+							cloneApplication.find(".surContainer").remove();
+							cloneApplication.find(".allDataBox").each(function(){		
+								cloneApplication.children('hr').remove();
+								$(this).remove();
 							});
+							//initialiser les nouvelles dataBox avec l'animation
+							initDataBox(cloneApplication,listTypeDonnee,tacheSelect.find('select').val());
+								sliderParametreApplication(modalBody);
+						});
 						sliderParametreApplication(modalBody);
 						saveSetApplication(cloneApplication,listTypeDonnee,currentNomTache);
 					}
