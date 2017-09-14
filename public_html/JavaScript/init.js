@@ -17,60 +17,70 @@
 					content:'Discover and edit your profile here.',
 					title:'Your profile',
 					smartPlacement:true,
-					backdrop: false
+					backdrop:false
 				},
 				{
 					element:'#startTour',
 					content:'For each page of NooLib, you can find a specific tour just like this one.',
 					title:'Need some help?',
 					smartPlacement:true,
-					backdrop: false
+					backdrop:false
 				},
 				{
 					element:'#contactUs',
 					content:'If you want to contact us for any questions, please do not hesitate.',
 					title:'Contact us?',
 					smartPlacement:true,
-					backdrop: false
+					backdrop:false
 				},
 				{
 					element:'#teamTour',
 					content:'Discover here the NooLib team and our partners.',
 					title:'The NooLib Informations',
 					smartPlacement:true,
-					backdrop: false
+					backdrop:false
 				},
 				{
 					element:'#logTour',
 					content:'Or just log out from the platform :-(',
 					title:'Log out',
 					smartPlacement:true,
-					backdrop: false
+					backdrop:false
 				},
 				{
 					element:'#firstTour',
 					content:'To find the application you need, use the library tool.',
-					smartPlacement:true
+					smartPlacement:true,
+					backdrop:true,
+					backdropContainer:'.col-sm-8'
 				},
 				{
 					element:'#secondTour',
 					content:'The NooSpace is your workspace to run applications online.',
-					smartPlacement:true
+					smartPlacement:true,
+					backdrop:true,
+					backdropContainer:'.col-sm-8'
 				},
 				{
 					element:'#thirdTour',
 					content:'If you want to deposit your own algorithms and transform them into an application, use this tool.',
-					smartPlacement:true
+					smartPlacement:true,
+					backdrop:true,
+					backdropContainer:'.col-sm-8'
 				},
 				{
 					element:'#fourTour',
 					content:'You can then manage your own applications.',
-					smartPlacement:true
+					smartPlacement:true,
+					backdrop:true,
+					backdropContainer:'.col-sm-8'
 				},
 				{
 					element:'#fiveTour',
 					content:'For setting your account and change, for example, your wallpaper, use the settings tool.',
-					smartPlacement:true
+					smartPlacement:true,
+					backdrop:true,
+					backdropContainer:'.col-sm-8'
 				},
 				{
 					element:'#overlayDockApplication',
