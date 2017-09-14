@@ -54,7 +54,7 @@
 								</div> 
 							</div>
 						<?php } ?>
-						<?php if($utilisateurAAfficher->getStatut()->getIdStatut() != 1){ ?>
+						<?php if($utilisateurAAfficher->getStatut()->getIdStatut() != 0){ ?>
 							<div class="panel panel-default col-lg-12">
 								<div class="panel-heading">
 									<a class="accordion-toggle" href="#item2" data-toggle="collapse">Status</a>
@@ -147,7 +147,7 @@
 
 						<div class="panel panel-default col-lg-12">
 							<div class="panel-heading">
-								<a class="accordion-toggle" href="#item4" data-toggle="collapse"><?php if($utilisateurAAfficher->getStatut()->getIdStatut() != 1){ ?>
+								<a class="accordion-toggle" href="#item4" data-toggle="collapse"><?php if($utilisateurAAfficher->getStatut()->getIdStatut() != 0){ ?>
 									Status: <?php echo($utilisateurAAfficher->getStatut()->getNomStatut()); ?>
 								<?php } ?></a>
 							</div>
