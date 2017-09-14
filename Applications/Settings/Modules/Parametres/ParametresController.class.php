@@ -36,15 +36,13 @@ class ParametresController extends \Library\BackController
 		$password = $requete->getPostData('password');
 		
 		// On verifie si l'utilisateur n'a pas accédé à la methode via l'url
-		if($password === null)
-		{
+		if($password === null){
 			$user->getMessageClient()->addErreur('Your are not authorized to remove this account user.');
 
 			$response->redirect('/');
 
 		}
-		else
-		{
+		else{
 			// On charge le fichier de configuration
 			$config = $this->getApp()->getConfig();
 			
@@ -54,9 +52,13 @@ class ParametresController extends \Library\BackController
 				
 				$response->redirect('/Settings/ManageYourAccount');
 			}
-			else
-			{
-				$reponse = $this->supprimerUtilisateur($userSession);
+			else{
+				
+				// On récupère l'utilisateur complet
+				$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
+				//on recuper l'utilisateur à administrer
+				$utilisateurASupprimer = $managerUtilisateur->getUtilisateurByIdWithAllData($userSession->getIdUtilisateur());
+				$reponse = $this->supprimerUtilisateur($utilisateurASupprimer);
 				if($reponse === true){
 					$user->getMessageClient()->addReussite('Your account has been well removed. See you soon !');
 					// On supprime l'utilisateur en session par une deconnexion
