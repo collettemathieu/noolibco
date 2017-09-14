@@ -566,7 +566,7 @@ class LogInController extends \Library\BackController{
 						/**
 						* Création d'une application exemple pour *l'utilisateur 
 						**/
-						if($this->createDemoApplication($newUser)){
+						if($this->createDemoApplication($userVerif)){
 							// On ajoute la variable d'erreurs à la page
 							$user->getMessageClient()->addErreur(self::ERROR_CREATING_EXAMPLE_APPLICATION);
 						}
