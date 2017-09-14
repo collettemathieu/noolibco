@@ -23,6 +23,7 @@ namespace Applications\LogIn\Modules\LogIn;
 class LogInController extends \Library\BackController{
 
 	use \Library\Traits\MethodeUtilisateurControleur;
+	use \Library\Traits\MethodeApplicationControleur;
 	use \Library\Traits\FonctionsUniverselles;
 
 	/**
@@ -565,11 +566,10 @@ class LogInController extends \Library\BackController{
 						/**
 						* Création d'une application exemple pour *l'utilisateur 
 						**/
-						// IIICCCCIII
-
-
-
-
+						if($this->createDemoApplication($newUser)){
+							// On ajoute la variable d'erreurs à la page
+							$user->getMessageClient()->addErreur(self::ERROR_CREATING_EXAMPLE_APPLICATION);
+						}
 
 						// Envoi d'un email à hostmaster pour information qu'un nouvel utilisateur s'est inscrit
 						$variablesArray = array(

@@ -23,7 +23,6 @@ namespace Applications\LogIn\Modules\Inscription;
 class InscriptionController extends \Library\BackController{
 
 	use \Library\Traits\MethodeUtilisateurControleur;
-	use \Library\Traits\MethodeApplicationControleur;
 	use \Library\Traits\FonctionsUniverselles;
 
 	/**
@@ -173,15 +172,7 @@ class InscriptionController extends \Library\BackController{
 							$mailApplication->execute('MailInscription', 'show'); // Module = MailInscription ; action = show
 							
 							// On ajoute la variable de confirmation à la page
-							$user->getMessageClient()->addReussite(self::INSCRIPTION_REGISTRATION_SUCCESSFUL);
-
-							/**
-							* Création d'une application exemple pour *l'utilisateur 
-							**/
-							if($this->createDemoApplication($newUser)){
-								// On ajoute la variable d'erreurs à la page
-								$user->getMessageClient()->addErreur(self::ERROR_CREATING_EXAMPLE_APPLICATION);
-							} 
+							$user->getMessageClient()->addReussite(self::INSCRIPTION_REGISTRATION_SUCCESSFUL); 
 						}else{
 							// On ajoute la variable d'erreurs à la page
 							$user->getMessageClient()->addErreur($newUser->getErreurs());
