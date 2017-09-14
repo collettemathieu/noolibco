@@ -450,7 +450,7 @@ class DefautController extends \Library\BackController
 			$statuts = $managerStatut->getAllStatuts();
 			foreach ($statuts as $statut)
 			{
-				if($statut->getIdStatut() != 1)
+				if($statut->getIdStatut() != 0)
 				{
 					$statutsValides[] = $statut->getNomStatut();
 				}
