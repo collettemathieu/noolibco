@@ -332,13 +332,26 @@
 					</div> 
 				</div>
 				<?php } ?>
-				
 
 				<div class="panel panel-default col-lg-12">
 					<div class="panel-heading">
-						<a class="accordion-toggle" href="#item13" data-toggle="collapse">Delete this user</a>
+						<a class="accordion-toggle" href="#item13" data-toggle="collapse">Create a demonstration application</a>
 					</div>
 					<div id="item13" class="panel-collapse collapse out">
+						<div class="panel-body">
+							<form method="POST" action="/PourAdminSeulement/Utilisateurs/AddDemoApplication">
+								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
+								<button class="btn btn-primary" type="submit">Create</button>
+							</form>
+						</div>
+					</div> 
+				</div>
+
+				<div class="panel panel-default col-lg-12">
+					<div class="panel-heading">
+						<a class="accordion-toggle" href="#item14" data-toggle="collapse">Delete this user</a>
+					</div>
+					<div id="item14" class="panel-collapse collapse out">
 						<div class="panel-body">
 							<form method="POST" action="/PourAdminSeulement/Utilisateurs/SupprimerUtilisateur">
 								<input type="hidden" name="idUtilisateur" value="<?php echo($utilisateurAAdministrer->getIdUtilisateur()) ?>"/>
@@ -352,9 +365,9 @@
 					
 				<div class="panel panel-default col-lg-12">
 					<div class="panel-heading">
-						<a class="accordion-toggle" href="#item14" data-toggle="collapse">Change (or create) his (her) administrator password</a>
+						<a class="accordion-toggle" href="#item15" data-toggle="collapse">Change (or create) his (her) administrator password</a>
 					</div>
-					<div id="item14" class="panel-collapse collapse out">
+					<div id="item15" class="panel-collapse collapse out">
 						<div class="panel-body">
 							<form method="POST" action="/PourAdminSeulement/Utilisateurs/UtilisateurEnAdministrateur">
 								<div class="form-group">

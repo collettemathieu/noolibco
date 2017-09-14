@@ -22,6 +22,52 @@ class FileCopy extends \Library\File{
 	use \Library\Traits\FonctionsUniverselles;
 	
 	/**
+	* Permet de copier la dernière version d'une application d'un utilisateur dans un nouveau dossier d'un autre utilisateur
+	**/
+	public function copyApplication($application, $newUser, $newVariableFixe){
+		if($application instanceof \Library\Entities\Application){
+
+			// On récupère la dernière version
+			$lastVersion = $application->getVersions()[count($application->getVersions())-1];
+
+			// On charge le fichier de configuration
+			$config = $this->getApp()->getConfig();
+			$pathRoot = $config->getVar('application', 'source', 'filePath');
+			$pathLogo = $config->getVar('application', 'logo', 'filePath');
+			
+			// On créé les chemins
+			$pathOldUser = $application->getCreateur()->getVariableFixeUtilisateur();
+			$pathNewUser = $newUser->getVariableFixeUtilisateur();
+			$pathOldApplication = $application->getVariableFixeApplication();
+			$pathNewApplication = $newVariableFixe;
+			$pathVersion = $this->cleanFileName($lastVersion->getNumVersion());
+			$oldVersionPath = $pathRoot.$pathOldUser.'/'.$pathOldApplication.'/'.$pathVersion.'/';
+			$newVersionPath = $pathRoot.$pathNewUser.'/'.$pathNewApplication.'/'.$pathVersion.'/';
+			$oldLogoPath = $pathLogo.$pathOldUser.'/'.$pathOldApplication.'/';
+			$newLogoPath = $pathLogo.$pathNewUser.'/'.$pathNewApplication.'/';
+			
+			// On copie
+			$this->copy_dir($oldVersionPath, $newVersionPath);
+			$this->copy_dir($oldLogoPath, $newLogoPath);
+
+			// On retourne les chemins créés
+			$paths = [
+				'oldVersionPath' => $oldVersionPath,
+				'newVersionPath' => $newVersionPath,
+				'oldLogoPath' => $oldLogoPath,
+				'newLogoPath' => $newLogoPath
+			];
+			return $paths;
+		}else{
+			$this->setErreurs('FILECOPY :: No application or user as parameter of the method.');
+			return false;
+		}
+	}	
+
+
+
+
+	/**
 	* Permet de copier la dernière version d'une application dans un nouveau dossier (nom de la nouvelle version)
 	**/
 	public function copyLastVersionApplication($application, $numNewVersion){

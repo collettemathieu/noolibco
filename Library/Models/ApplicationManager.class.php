@@ -67,6 +67,8 @@ abstract class ApplicationManager extends \Library\Manager
 	
 	abstract function getApplicationByName($nomApplication);
 
+	abstract function getApplicationByNameWithAllParameters($nomApplication);
+
 	abstract function getAllApplications();
 
 	abstract function getAllActiveApplications();

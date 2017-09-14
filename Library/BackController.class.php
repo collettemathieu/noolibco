@@ -49,6 +49,7 @@ abstract class BackController extends ApplicationComponent
 	const DENY_EXECUTE_COMMAND = 'Your are not authorized to execute this command.';
 	const DENY_ACCESS_PAGE = 'Access denied: You are not authorized to access this page.';
 	const ERROR_LOADING_DATA = 'An error has occurred while loading data.';
+	const ERROR_CREATING_EXAMPLE_APPLICATION = 'An error has occurred while creating the demonstration application.';
 	const ERROR_RUNNING_APPLICATION = 'An error has occurred while running the application.';
 	const ERROR_LOADING_APPLICATION = 'An error has occurred while loading the application.';
 	const ERROR_WRITTING_DATA = 'An error has occurred while writing the data.';
@@ -127,6 +128,7 @@ abstract class BackController extends ApplicationComponent
 	const BACKEND_WELCOME_ADMIN = 'You are logged as administrator.';
 	const BACKEND_APPLICATION_CANNOT_BE_ACTIVATED_WITHOUT_VALID_VERSION = 'The application cannot be activated without validating at least one version of this application.';
 	const BACKEND_VERSION_NOT_FOUND = 'The version of application asked is not found.';
+	const ADD_DEMO_APPLICATION = 'The demonstration application has been created successfully.';
 
 	/* SubmitApplication */
 	const SUBMITAPPLICATION_ERROR_REGISTRATION = 'A system error has occurred during the registration.';

@@ -20,8 +20,7 @@ use \Library\Entities\Tache;
 use \Library\Models;
 use Library\Entities\Fonction;
 
-class PDOTacheManager extends \Library\Models\TacheManager
-{
+class PDOTacheManager extends \Library\Models\TacheManager{
 
 /* Définition des méthode de classe */
 

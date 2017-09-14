@@ -283,6 +283,7 @@ class LogInController extends \Library\BackController{
 
 								// On récupère au préalable la page demandée stockée en flash.
 								$pageDemandee = $user->getFlash();
+
 								
 								if(!empty($pageDemandee)){
 									// On procède à la redirection vers la page demandée
@@ -560,6 +561,15 @@ class LogInController extends \Library\BackController{
 						// On execute l'objet Exec
 						$exec = $this->getApp()->getExec();
 						$exec->createUser($userVerif);
+
+						/**
+						* Création d'une application exemple pour *l'utilisateur 
+						**/
+						// IIICCCCIII
+
+
+
+
 
 						// Envoi d'un email à hostmaster pour information qu'un nouvel utilisateur s'est inscrit
 						$variablesArray = array(

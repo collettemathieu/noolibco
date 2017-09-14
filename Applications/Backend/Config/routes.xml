@@ -13,6 +13,7 @@
 	<route url="/PourAdminSeulement/Utilisateurs/UtilisateurEnAdministrateur" module="Utilisateurs" action="utilisateurEnAdministrateur"/>
 	<route url="/PourAdminSeulement/Utilisateurs/ActiveUtilisateur" module="Utilisateurs" action="ActiveUtilisateur"/>
 	<route url="/PourAdminSeulement/Utilisateurs/DesactiveUtilisateur" module="Utilisateurs" action="DesactiveUtilisateur"/>
+	<route url="/PourAdminSeulement/Utilisateurs/AddDemoApplication" module="Utilisateurs" action="addDemoApplication"/>
 	<route url="/PourAdminSeulement/Utilisateurs/BannirUtilisateur" module="Utilisateurs" action="bannirUtilisateur"/>
 	<route url="/PourAdminSeulement/Utilisateurs/GracierUtilisateur" module="Utilisateurs" action="gracierUtilisateur"/>
 	<route url="/PourAdminSeulement/Utilisateurs/SupprimerUtilisateur" module="Utilisateurs" action="supprimerUtilisateur"/>

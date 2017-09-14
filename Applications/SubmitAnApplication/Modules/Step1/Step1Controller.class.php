@@ -182,7 +182,7 @@ class Step1Controller extends \Library\BackController{
 			$managerStatut = $this->getManagers()->getManagerOf('StatutApplication');
 			$statut = $managerStatut->getStatutByNom('Step1Deposit');
 
-			// On créé la variable fixe de l'utilisateur basée sur son mail
+			// On créé la variable fixe de l'application basée sur son nom
 			// On créé un nombre aléatoire
 			$nombre = rand(0,10000000);
 			$variableFixeApplication = $this->cleanFileName($request->getPostData('nomApp')).$nombre;

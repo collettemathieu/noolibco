@@ -22,7 +22,7 @@
 					<div class="form-group has-feedback" ng-class="{'has-error':formTask.descriptionTache.$invalid && formTask.descriptionTache.$dirty, 'has-success':formTask.descriptionTache.$valid}">
 						<div class="input-group">
 							<div class="input-group-addon">Description</div>
-							<textarea name="descriptionTache" ng-model="descriptionTache" ng-minlength="10" ng-maxlength="1000" maxlength=1000 cols="5" required class="form-control" placeholder="Enter a short description of the task."></textarea>
+							<textarea name="descriptionTache" ng-model="descriptionTache" ng-minlength="10" ng-maxlength="1000" maxlength=1000 rows="10" required class="form-control" placeholder="Enter a short description of the task."></textarea>
 						</div>
 						<span ng-class="{'glyphicon form-control-feedback glyphicon-remove':formTask.descriptionTache.$invalid && formTask.descriptionTache.$dirty, 'glyphicon form-control-feedback glyphicon-ok':formTask.descriptionTache.$valid}"></span>
 						<span ng-show="formTask.descriptionTache.$invalid && formTask.descriptionTache.$dirty" class="help-block">Enter a description between 10 and 1000 characters.</span>

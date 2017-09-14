@@ -24,6 +24,7 @@ namespace Applications\Backend\Modules\Utilisateurs;
 class UtilisateursController extends \Library\BackController
 {
 	use \Library\Traits\MethodeUtilisateurControleur;
+	use \Library\Traits\MethodeApplicationControleur;
 	use \Library\Traits\FonctionsUniverselles;
 	
 	public function executeShow($request)
@@ -1010,8 +1011,7 @@ class UtilisateursController extends \Library\BackController
 					{
 						$user->getMessageClient()->addErreur($erreurs);
 					}
-					else
-					{
+					else{
 						//on met la base à jour
 						$managerUtilisateur->saveUtilisateur($utilisateurAAdministrer);
 						$user->getMessageClient()->addReussite('L\'utilisateur est à présent activé.');
@@ -1028,8 +1028,7 @@ class UtilisateursController extends \Library\BackController
 		}
 	}
 	
-	public function executeDesactiveUtilisateur($request)
-	{
+	public function executeDesactiveUtilisateur($request){
 		$user = $this->app->getUser();
 		$response = $this->app->getHTTPResponse();
 		
@@ -1088,7 +1087,59 @@ class UtilisateursController extends \Library\BackController
 			}
 		}
 	}
-	
 
+	public function executeAddDemoApplication($request)
+	{
+		$user = $this->app->getUser();
+		$response = $this->app->getHTTPResponse();
+		
+		// On vérifie que l'utilisateur est connecté
+		if(!$user->getAttribute('isAdmin'))
+		{
+			$response->redirect('/PourAdminSeulement/');
+		}
+		else
+		{
+			$idUtilisateurAAdministrer = $request->getPostData('idUtilisateur');
+			//On appelle le manager des Utilisateurs
+			$managerUtilisateur = $this->getManagers()->getManagerOf('Utilisateur');
+			//on recuper l'utilisateur à administrer
+			$utilisateurAAdministrer = $managerUtilisateur->getUtilisateurByIdWithAllData($idUtilisateurAAdministrer);
+			
+			//on verifie si l'utilisateur n'a pas accédé à la methode via l'url
+			if($utilisateurAAdministrer === false)
+			{
+				// si non, on procède à la redirection
+				$response->redirect('/PourAdminSeulement/');
+			}
+			else
+			{
+				$userSession = unserialize($user->getAttribute('userSession'));
+				//si l'admin tente de s'auto-administrer
+				if($utilisateurAAdministrer->getIdUtilisateur() == $userSession->getIdUtilisateur())
+				{
+					//on fait s'écrire l'erreur
+					$user->getMessageClient()->addErreur('Vous ne pouvez pas vous administrer vous-même.');
+					
+					// si non, on procède à la redirection
+					$response = $this->app->getHTTPResponse();
+					$response->redirect('/PourAdminSeulement/Utilisateurs/');
+				}
+				else
+				{
+					// On créé l'application démo pour l'utilisateur
+					if($this->createDemoApplication($utilisateurAAdministrer)){
+						// On ajoute la variable d'erreurs à la page
+						$user->getMessageClient()->addErreur(self::ERROR_CREATING_EXAMPLE_APPLICATION);
+					}else{
+						// On ajoute la variable d'erreurs à la page
+						$user->getMessageClient()->addReussite(self::ADD_DEMO_APPLICATION);
+					}
+					//on redirige vers la page d'administration de l'utilisateur
+					$response->redirect('/PourAdminSeulement/Utilisateurs/idUtilisateur='.$utilisateurAAdministrer->getIdUtilisateur());
+				}
+			}
+		}
+	}
 	
 }

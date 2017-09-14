@@ -33,7 +33,9 @@ abstract class MotCleManager extends \Library\Manager
 	
 	abstract function deleteLinkbetweenApplicationsMotCle($motCle);
 
-	abstract function getMotCleById( $id);
+	abstract function getMotCleById($id);
+
+	abstract function getMotCleByName($nomMotCle);
 
 	abstract function getAllMotCles();
 

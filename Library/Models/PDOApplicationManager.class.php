@@ -66,16 +66,63 @@ class PDOApplicationManager extends \Library\Models\ApplicationManager
 			
 			// Ajout des mot clés liés à l'application dans la table application_mot_cle
 			if ($this->addFavorisFromApplication($application) and $this->addMotClesFromApplication($application) and $this->addPublicationsFromApplication($application)){
-				return true;
+				return $application;
 			}
 			else {
 				return false;
 			}
 		}else{
 			$messageClient = new \Library\MessageClient;
-		$messageClient->addErreur('PDO::Application : L\'objet passé en paramètre n\'est pas une instance de Application');
+			$messageClient->addErreur('PDO::Application : L\'objet passé en paramètre n\'est pas une instance de Application');
 		
 		}
+	}
+
+
+	//Méthode pour ajouter une application avec tous ces paramètres.
+	public function addApplicationWithAllParameters($application){
+	
+		if($application instanceof Application){
+
+			$requete = $this->dao->prepare("INSERT INTO application 
+					(nom_application, variable_fixe_application, description_application, lien_application, date_soumission_application, date_validation_application, date_mise_hors_service_application, url_logo_application, id_categorie, id_statut, id_utilisateur) 
+					VALUES (:nomApplication, :variableFixeApplication, :descriptionApplication, :lienApplication, CURDATE(), CURDATE(), CURDATE(), :urlLogoApplication, :idCategorie, :idStatut, :idUtilisateur)");
+			//bind des parametre
+			$requete->bindValue(':nomApplication', $application->getNomApplication(), \PDO::PARAM_STR);
+			$requete->bindValue(':variableFixeApplication', $application->getVariableFixeApplication(), \PDO::PARAM_STR);
+			$requete->bindValue(':descriptionApplication', $application->getDescriptionApplication(), \PDO::PARAM_STR);
+			$requete->bindValue(':lienApplication',$application->getLienApplication(), \PDO::PARAM_STR);
+			$requete->bindValue(':urlLogoApplication', $application->getUrlLogoApplication(), \PDO::PARAM_STR);
+			$requete->bindValue(':idCategorie', $application->getCategorie()->getIdCategorie(), \PDO::PARAM_INT);
+			$requete->bindValue(':idStatut', $application->getStatut()->getIdStatut(), \PDO::PARAM_INT);
+			$requete->bindValue(':idUtilisateur', $application->getCreateur()->getIdUtilisateur(), \PDO::PARAM_INT);
+			
+			//execution de la requete sinon envoi d'une erreur
+			try {
+				$this->dao->beginTransaction();
+				$requete->execute();
+				$application->setIdApplication($this->dao->lastInsertId('id_application'));
+				$this->dao->commit();
+			} catch(PDOException $e) {
+				$this->dao->rollback();
+				return "Erreur!: " . $e->getMessage() . "</br>";
+			}
+			
+			//On libère la requete
+			$requete->closeCursor();
+			
+			if ($this->addFavorisFromApplication($application) and $this->addMotClesFromApplication($application) and $this->addPublicationsFromApplication($application)){
+				return $application;
+			}
+			else {
+				return false;
+			}
+		}else{
+			$messageClient = new \Library\MessageClient;
+			$messageClient->addErreur('PDO::Application : L\'objet passé en paramètre n\'est pas une instance de Application');
+		
+		}
+			
 	}
 
 	
@@ -86,13 +133,17 @@ class PDOApplicationManager extends \Library\Models\ApplicationManager
 		
 			if (sizeof($application->getMotCles()) != 0){
 				
-				foreach ($application->getMotCles() as $motCleApplications){
+				foreach ($application->getMotCles() as $nomMotCle){
 						
-					//préparation de la requete
+					// On récupère le mot-clé en BDD
+					$pdoMotCle = new PDOMotCleManager($this->dao);
+					$motCle = $pdoMotCle->getMotCleByName($nomMotCle);
+
+					//préparation de la requête
 					$requete = $this->dao->prepare("INSERT IGNORE INTO application_mot_cle (id_mot_cle, id_application) VALUES (:idMotCle, :idApplication)");
 					
 					//bind des valeurs
-					$requete->bindValue(':idMotCle', $motCleApplications->getIdMotCle(), \PDO::PARAM_INT);
+					$requete->bindValue(':idMotCle', $motCle->getIdMotCle(), \PDO::PARAM_INT);
 					$requete->bindValue(':idApplication', $application->getIdApplication(), \PDO::PARAM_INT);
 					
 					//execution de la requete sinon envoi d'une erreur
@@ -157,8 +208,6 @@ class PDOApplicationManager extends \Library\Models\ApplicationManager
 	
 	//fonction d'ajout des utilisateurs favori de l'application. 
 	public function addFavorisFromApplication($application){
-	
-	
 		if($application instanceof Application){
 
 			if (sizeof($application->getUtilisateurs()) != 0){
@@ -284,7 +333,7 @@ class PDOApplicationManager extends \Library\Models\ApplicationManager
 			}
 		}else{
 			$messageClient = new \Library\MessageClient;
-		$messageClient->addErreur('PDO::Application : L\'objet passé en paramètre n\'est pas une instance de Application');
+			$messageClient->addErreur('PDO::Application : L\'objet passé en paramètre n\'est pas une instance de Application');
 		
 		}
 			
@@ -777,7 +826,9 @@ class PDOApplicationManager extends \Library\Models\ApplicationManager
 		}
 	}
 
-	
+	/**
+	*	Permet de récupérer une application via son nom
+	*/
 	public function getApplicationByName($nomApplication){
 	
 		$requete = $this->dao->prepare("SELECT * FROM application WHERE nom_application = :nomApplication");
@@ -807,6 +858,49 @@ class PDOApplicationManager extends \Library\Models\ApplicationManager
 			return $application;
 		}
 	}
+
+
+	/**
+	*	Permet de récupérer une application via son nom avec tous les paramètres
+	*/
+	public function getApplicationByNameWithAllParameters($nomApplication){
+	
+		$requete = $this->dao->prepare("SELECT * FROM application WHERE nom_application = :nomApplication");
+	
+		//bind des parametre
+		$requete->bindValue(':nomApplication', $nomApplication, \PDO::PARAM_STR);
+	
+		//execution de la requete sinon envoi d'une erreur
+		try {
+			$this->dao->beginTransaction();
+			$requete->execute();
+			$this->dao->commit();
+		} catch(PDOException $e) {
+			$this->dao->rollback();
+			return "Erreur!: " . $e->getMessage() . "</br>";
+		}
+		$donnees = $requete->fetchAll();
+		
+		if(count($donnees) != 0){
+			//On construit l'objet application
+			$application = $this->constructApplication($donnees[0]);
+			$this->putMotClesInApplication($application);
+			$this->putPublicationsInApplication($application);
+			$this->putVersionsInApplication($application);
+			$this->putFavorisInApplication($application);
+			$this->putAuteursInApplication($application);
+
+			//On libre la requete
+			$requete->closeCursor();
+			
+			return $application;
+		}else{
+			return false;
+		}
+	}
+
+
+
 	
 	/**
 	*	Permet de récupérer toutes les applications

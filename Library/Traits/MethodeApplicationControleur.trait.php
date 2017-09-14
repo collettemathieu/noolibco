@@ -18,12 +18,29 @@ namespace Library\Traits;
  * @version: 1
  */	
 
+use Library\Entities\Application;
+use Library\Entities\Utilisateur;
+use Library\Entities\Categorie;
+use Library\Entities\Tache;
+use Library\Entities\VersionTache;
+use Library\Entities\TacheTypeDonneeUtilisateur;
+use Library\Entities\TypeAffichageParametre;
+use Library\Entities\Fonction;
+use Library\Entities\TacheFonction;
+use Library\Entities\Parametre;
+use Library\Entities\TypeDonneeUtilisateur;
+use Library\Entities\UniteDonneeUtilisateur;
+use Library\Entities\FonctionParametre;
+use Library\Entities\MotCle;
+use Library\Entities\ApplicationMotCle;
+use Library\Entities\ApplicationAuteur;
+
+
 trait MethodeApplicationControleur
 {
 	/**
 	* Permet de mettre à jour le dock des applications
 	**/
-	
 	private function updateDockApplication($application){
 		if($application instanceof \Library\Entities\Application){
 			// On récupère l'id de l'application
@@ -485,6 +502,195 @@ trait MethodeApplicationControleur
 		}else{
 			$user->getMessageClient()->addErreur(self::NO_APPLICATION);
 			return false;
+		}
+	}
+
+
+	/**
+	* Permet de créer une application démo pour l'utilisateur
+	**/
+	private function createDemoApplication($newUser){
+		if($newUser instanceof Utilisateur){
+			
+			// On récupère l'application example
+			$managerApplication = $this->getManagers()->getManagerOf('Application');
+			$application = $managerApplication->getApplicationByIdWithAllParameters(8);
+			// Valeur de contrôle d'erreur
+			$hasError = false;
+			if($application instanceof Application){
+			
+				// On créé la variable fixe de l'application basée sur son nom
+				$nombre = rand(0,10000000);
+				$variableFixeApplication = $newUser->getNomUtilisateur().'_'.$application->getNomApplication().'_'.$nombre;
+
+				// On copie les fichiers physiques de l'application
+				$fileCopy = $this->getApp()->getFileCopy();
+				$paths = $fileCopy->copyApplication($application, $newUser, $variableFixeApplication);
+
+
+				// On modifie la variable fixe de l'application
+				$application->setVariableFixeApplication($variableFixeApplication);
+				// On modifie son nom
+				//$application->setNomApplication('Example1');
+				// On modifie son auteur
+				$application->setCreateur($newUser);
+				// On modifie le chemin du logo
+				$name = substr($application->getUrlLogoApplication(), -(strlen($application->getUrlLogoApplication())-strrpos($application->getUrlLogoApplication(),'/'))+1);
+				$application->setUrlLogoApplication($paths['newLogoPath'].$name);
+
+				// On sauvegarde l'application en BDD
+				$application = $managerApplication->addApplicationWithAllParameters($application);
+				// On enregistre la dernière version en BDD
+				$version = $application->getVersions()[count($application->getVersions())-1];
+				$version->setApplication($application);
+				$managerVersion = $this->getManagers()->getManagerOf('Version');
+				$version = $managerVersion->addVersion($version);
+
+				/***********/
+				/* TACHES  */
+				/***********/
+				// On ajoute les nouvelles tâches associées à la nouvelle version
+				// On appelle le manager des tâches
+				$managerTache = $this->getManagers()->getManagerOf('Tache');
+				// On appelle le manager des versions-tâches
+				$managerVersionTache = $this->getManagers()->getManagerOf('VersionTache');
+				// On appelle le manager des taches-typeDonneeUtilisateur
+				$managerTacheTypeDonneeUtilisateur = $this->getManagers()->getManagerOf('TacheTypeDonneeUtilisateur');
+				
+				// On insère dans la BDD les tâches de la nouvelle version de l'application
+				foreach($version->getTaches() as $tache){
+					$tache = $managerTache->addTache($tache);
+
+					// On crée l'objet VersionTache
+					$versionTache = new VersionTache(array(
+						'version' => $version,
+						'tache' => $tache
+					));
+				
+					// On met à la jour la Version-Tache de la BDD
+					$managerVersionTache->addVersionTache($versionTache);
+
+					// On créé l'objet TacheTypeDonneeUtilisateur pour chaque paramètre entré
+					// et on le rentre en BDD
+					foreach($tache->getTacheTypeDonneeUtilisateurs() as $tacheTypeDonneeUtilisateur){
+						$newTacheTypeDonneeUtilisateur = new TacheTypeDonneeUtilisateur(array(
+							'tache' => $tache,
+							'typeDonneeUtilisateur' => $tacheTypeDonneeUtilisateur->getTypeDonneeUtilisateur(),
+							'ordre' => $tacheTypeDonneeUtilisateur->getOrdre(),
+							'description' => $tacheTypeDonneeUtilisateur->getDescription(),
+							'uniteDonneeUtilisateur' => $tacheTypeDonneeUtilisateur->getUniteDonneeUtilisateur()
+						));
+
+						$managerTacheTypeDonneeUtilisateur->addTacheTypeDonneeUtilisateur($newTacheTypeDonneeUtilisateur);
+					}
+
+					/**************/
+					/* FONCTIONS  */
+					/**************/
+
+					foreach($tache->getFonctions() as $fonction){
+
+						// On crée une nouvelle fonction avec la nouvelle url
+						$newUrl = $paths['newVersionPath'].substr($fonction->getUrlFonction(), -(strlen($fonction->getUrlFonction())-strrpos($fonction->getUrlFonction(),'/'))+1);
+
+						$nouvelleFonction = new Fonction(array(
+							'nomFonction' => $fonction->getNomFonction(),
+							'urlFonction' => $newUrl,
+							'extensionFonction' => $fonction->getExtensionFonction()
+							));
+						
+						
+						if(sizeof($nouvelleFonction->getErreurs()) == 0){
+							
+							// On appelle le manager des fonctions
+							$managerFonction = $this->getManagers()->getManagerOf('Fonction');
+							// On appelle le manager des versions-tâches
+							$managerTacheFonction = $this->getManagers()->getManagerOf('TacheFonction');
+
+							// On insère dans la BDD la nouvelle fonction de la tâche, l'Id de la nouvelle fonction est mis à jour.
+							$nouvelleFonction = $managerFonction->addFonction($nouvelleFonction);
+
+							$tacheFonction = new TacheFonction(array(
+								'tache' => $tache,
+								'fonction' => $nouvelleFonction,
+								'ordre' => $managerTacheFonction->getLastOrdreOfFonctions($tache->getIdTache()) + 1
+								));
+
+							if(sizeof($tacheFonction->getErreurs()) == 0){
+								// On met à la jour la Tache-Fonction de la BDD
+								$managerTacheFonction->addTacheFonction($tacheFonction);
+
+								/***************/
+								/* PARAMETRES  */
+								/***************/
+
+								foreach($fonction->getParametres() as $parametre){
+									// On crée une nouveau paramètre
+									$nouveauParametre = new Parametre(array(
+										'nomParametre' => $parametre->getNomParametre(),
+										'descriptionParametre' => $parametre->getDescriptionParametre(),
+										'statutPublicParametre' => (bool) $parametre->getStatutPublicParametre(),
+										'valeurDefautParametre' => (float) $parametre->getValeurDefautParametre(),
+										'typeAffichageParametre' => $parametre->getTypeAffichageParametre(),
+										'valeurMinParametre' => (float) $parametre->getValeurMinParametre(),
+										'valeurMaxParametre' => (float) $parametre->getValeurMaxParametre(),
+										'valeurPasParametre' => (float) $parametre->getValeurPasParametre()
+									));
+									
+									if(sizeof($nouveauParametre->getErreurs()) == 0){
+							
+										// On appelle le manager des paramètres
+										$managerParametre = $this->getManagers()->getManagerOf('Parametre');
+										// On appelle le manager des fonctions-paramètres
+										$managerFonctionParametre = $this->getManagers()->getManagerOf('FonctionParametre');
+										
+										$fonctionParametre = new FonctionParametre(array(
+											'parametre' => $nouveauParametre,
+											'fonction' => $nouvelleFonction,
+											'ordre' => $managerFonctionParametre->getLastOrdreOfParametres($nouvelleFonction->getIdFonction()) + 1
+										));
+									
+
+										if(sizeof($fonctionParametre->getErreurs()) == 0){
+
+											// On insère dans la BDD le nouveau paramètre de la fonction, l'Id du nouveau paramètre est mis à jour.
+											$managerParametre->addParametre($nouveauParametre);
+											
+											// On met à la jour la Fonction-Parametre de la BDD
+											$managerFonctionParametre->addFonctionParametre($fonctionParametre);
+										}else{
+											$hasError = true;
+											// On ajoute la variable d'erreurs à la page
+											$user->getMessageClient()->addErreur($fonctionParametre->getErreurs());
+											break;
+										}
+									
+									}else{
+										$hasError = true;
+										// On ajoute la variable d'erreurs à la page
+										$user->getMessageClient()->addErreur($nouveauParametre->getErreurs());
+										break;
+									}
+								}
+							}else{
+								$hasError = true;
+								// On ajoute la variable d'erreurs à la page
+								$user->getMessageClient()->addErreur($tacheFonction->getErreurs());
+								break;
+							}
+						}else{
+							$hasError = true;
+							// On ajoute la variable d'erreurs à la page
+							$user->getMessageClient()->addErreur($nouvelleFonction->getErreurs());
+							break;
+						}
+					}
+				}
+				
+			}else{
+				$hasError = true;
+			}
+			return $hasError;
 		}
 	}
 }
