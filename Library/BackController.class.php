@@ -28,7 +28,7 @@ abstract class BackController extends ApplicationComponent
 	const ERROR_FILE_OPEN = 'A technical error has occurred while opening the file.';
 	const NO_FOLDER_OR_FILE = 'No folder or file found.';
 	const FILE_SIZE_EXCEEDED = 'The file size exceeds the limit authorized.';
-	const FILE_EXTENSION = 'This file extension is not authorized.';
+	const FILE_EXTENSION = 'This file extension is not supported by NooLib yet. Please stay tuned!';
 	const NO_SYSTEM_VARIABLE = 'The system variables do not exist.';
 	const NO_DATA = 'The data asked does not exist.';
 	const NO_DATA_ANYMORE = 'The data asked does not exist anymore. You can delete it by dragging it in the trash.';

@@ -597,6 +597,7 @@ $(function(){
 				contentType: false,
 				processData: false,
 				success: function(response) {
+
 					var numeroApp = cloneApplication.attr('numApp');
 					// Pour réinitialiser le message d'attente du bouton
 					$('#formMule').find('button:last').button('reset');
@@ -821,7 +822,7 @@ $(function(){
 									}, 500);
 								}
 
-								if(tableauReponse['errors'] || tableauReponse['systemError']){
+								if(tableauReponse['errors'] || tableauReponse['systemError'] || tableauReponse['erreurs']){
 									if(tableauReponse['errors']){
 										for(var i=0, lenTabErrors = tableauReponse['errors'].length; i<lenTabErrors; ++i){
 											reportClone.find('.errorsResult').append('<li class="list-group-item list-group-item-danger"><h4>'+tableauReponse['errors'][i]['name']+'</h4><p>'+tableauReponse['errors'][i]['content']+'</p></li>');
@@ -829,6 +830,10 @@ $(function(){
 									}
 									if(tableauReponse['systemError']){
 										reportClone.find('.errorsResult').append('<li class="list-group-item list-group-item-danger"><h4>System error</h4><p>'+tableauReponse['systemError']+'</p></li>');
+										
+									}
+									if(tableauReponse['erreurs']){
+										reportClone.find('.errorsResult').append('<li class="list-group-item list-group-item-danger"><h4>System error</h4><p>'+tableauReponse['erreurs']+'</p></li>');
 										
 									}
 								}else{

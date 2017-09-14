@@ -54,6 +54,9 @@
 							<li>
 								<a href="http://www.uco.fr/ima/" target="_blank"><img src="/Images/Social/ima.jpg" alt="Institut de Mathématiques Appliquées de l'Université Catholique de l'Ouest"/></a>
 							</li>
+							<li>
+								<a href="http://www.uco.fr/ima/" target="_blank"><img src="/Images/Social/esaip.jpg" alt="Institut de Mathématiques Appliquées de l'Université Catholique de l'Ouest"/></a>
+							</li>
 						</ul>
 					</li>
 				</ul>

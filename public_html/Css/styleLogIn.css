@@ -225,6 +225,10 @@ footer li{
 /* Team  */
 /*********/
 
+#team .modal-dialog{
+  width: 60%;
+}
+
 .teamTitle{
   color: black;
 }

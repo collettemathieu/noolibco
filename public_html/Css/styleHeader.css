@@ -40,7 +40,13 @@ header .modal-body li{
 }
 
 #helperApplication .modal-dialog{
-	width: 50%;
+	width: 40%;
+}
+#infoNoolibApplication .modal-dialog{
+	width: 60%;
+}
+#helperApplication, #infoNoolibApplication{
+	z-index: 99999;
 }
 
 #alertBrowser{
