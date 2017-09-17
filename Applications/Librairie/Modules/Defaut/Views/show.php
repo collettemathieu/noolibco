@@ -2,8 +2,7 @@
 	<div class="row-fluid">
 		<div class="col-lg-12 centering maxWidth fadeIn">
 			<div class="row">
-				
-				<form class="well centering col-lg-6" id="formRechercheApplication">
+				<form id="firstTour" class="well centering col-lg-6" id="formRechercheApplication">
 					<legend>Need an application?</legend>
 					<div class="form-group">
 						<input type="text" class="form-control" name="rechercheApplication" placeholder="Keywords..." autofocus/>

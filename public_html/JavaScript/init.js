@@ -8,94 +8,122 @@
 /*******************/
 
 	if(!logIn.test(url)){
+		
 		$('#startTour').on('click',function(){
-			var tour = new Tour({
-				backdrop:true,
-				steps:[
-				{
-					element:'#profileTour',
-					content:'Discover and edit your profile here.',
-					title:'Your profile',
-					smartPlacement:true,
-					backdrop:false
-				},
-				{
-					element:'#startTour',
-					content:'For each page of NooLib, you can find a specific tour just like this one.',
-					title:'Need some help?',
-					smartPlacement:true,
-					backdrop:false
-				},
-				{
-					element:'#contactUs',
-					content:'If you want to contact us for any questions, please do not hesitate.',
-					title:'Contact us?',
-					smartPlacement:true,
-					backdrop:false
-				},
-				{
-					element:'#teamTour',
-					content:'Discover here the NooLib team and our partners.',
-					title:'The NooLib Informations',
-					smartPlacement:true,
-					backdrop:false
-				},
-				{
-					element:'#logTour',
-					content:'Or just log out from the platform :-(',
-					title:'Log out',
-					smartPlacement:true,
-					backdrop:false
-				},
-				{
-					element:'#firstTour',
-					content:'To find the application you need, use the library tool.',
-					smartPlacement:true,
-					backdrop:true,
-					backdropContainer:'.col-sm-8'
-				},
-				{
-					element:'#secondTour',
-					content:'The NooSpace is your workspace to run applications online.',
-					smartPlacement:true,
-					backdrop:true,
-					backdropContainer:'.col-sm-8'
-				},
-				{
-					element:'#thirdTour',
-					content:'If you want to deposit your own algorithms and transform them into an application, use this tool.',
-					smartPlacement:true,
-					backdrop:true,
-					backdropContainer:'.col-sm-8'
-				},
-				{
-					element:'#fourTour',
-					content:'You can then manage your own applications.',
-					smartPlacement:true,
-					backdrop:true,
-					backdropContainer:'.col-sm-8'
-				},
-				{
-					element:'#fiveTour',
-					content:'For setting your account and change, for example, your wallpaper, use the settings tool.',
-					smartPlacement:true,
-					backdrop:true,
-					backdropContainer:'.col-sm-8'
-				},
-				{
-					element:'#overlayDockApplication',
-					content:'And finally, the applications in dock where you can find your favorite applications and discover other options by a right click on them. Move your mouse downward to make the dock (dis)appear.',
-					smartPlacement:true,
-					backdrop: false,
-					onShow:function(tour){
-						animPlus(0, -100, $('#overlayDockApplication'));
+			if(/Library/.test(url)){
+				var tour = new Tour({
+					steps:[
+					{
+						orphan: true,
+						content:'Welcome to the library. Here, you can search and find your favorite application.',
+						title:'The library',
+						smartPlacement:true,
+						backdrop:true
+					},
+					{
+						element:'#firstTour',
+						content:'First, fill in the form.',
+						title:'The form',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.row'
 					}
-				}
-			]});
-
+				]});
+			}else{
+				var tour = new Tour({
+					steps:[
+					{
+						orphan: true,
+						content:'Welcome to NooLib. Here, discover a short presentation of the features of the platform. On each page, you can find a specific tour like this one. We hope you will enjoy your trip.',
+						title:'Welcome aboard!',
+						smartPlacement:true,
+						backdrop:true
+					},
+					{
+						element:'#profileTour',
+						content:'Discover and edit your profile here.',
+						title:'Your profile',
+						smartPlacement:true,
+						backdrop:false
+					},
+					{
+						element:'#startTour',
+						content:'For each page of NooLib, you can find a specific tour just like this one.',
+						title:'Need some help?',
+						smartPlacement:true,
+						backdrop:false
+					},
+					{
+						element:'#contactUs',
+						content:'If you want to contact us for any questions, please use this box.',
+						title:'Contact us?',
+						smartPlacement:true,
+						backdrop:false
+					},
+					{
+						element:'#teamTour',
+						content:'Discover here the NooLib team and our partners.',
+						title:'The NooLib Informations',
+						smartPlacement:true,
+						backdrop:false
+					},
+					{
+						element:'#logTour',
+						content:'Or just log out from the platform :-(',
+						title:'Log out',
+						smartPlacement:true,
+						backdrop:false
+					},
+					{
+						element:'#firstTour',
+						content:'To find the application you need, use the library tool.',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.col-sm-8'
+					},
+					{
+						element:'#secondTour',
+						content:'The NooSpace is your workspace to run applications online.',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.col-sm-8'
+					},
+					{
+						element:'#thirdTour',
+						content:'If you want to deposit your own algorithms and transform them into an application, use this tool.',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.col-sm-8'
+					},
+					{
+						element:'#fourTour',
+						content:'You can then manage your own applications.',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.col-sm-8'
+					},
+					{
+						element:'#fiveTour',
+						content:'For setting your account and change, for example, your wallpaper, use the settings tool.',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.col-sm-8'
+					},
+					{
+						element:'#overlayDockApplication',
+						content:'And finally, the applications in dock where you can find your favorite applications and discover other options by a right click on them. Move your mouse downward to make the dock (dis)appear. To add an application in the dock, please visit the library.',
+						smartPlacement:true,
+						backdrop: false,
+						onShow:function(tour){
+							animPlus(0, -100, $('#overlayDockApplication'));
+						}
+					}
+				]});
+			}
 			tour.init();
 			tour.start(true);
 		});
+		
 	}
 
 
