@@ -1,7 +1,7 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="col-sm-8 sousMenu centering maxWidth fadeIn">
-				<h2>Manage your own applications</h2>
+				<h2>Your applications</h2>
 				<?php if(isset($applicationsOfUser) && count($applicationsOfUser) != 0){
 				foreach($applicationsOfUser as $application){
 					$nomApplication = $application->getNomApplication();

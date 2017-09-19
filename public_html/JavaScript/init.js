@@ -29,6 +29,111 @@
 						backdropContainer:'.row'
 					}
 				]});
+			}else if(/ManagerOfApplications/.test(url)){
+				var tour = new Tour({
+					steps:[
+					{
+						orphan: true,
+						content:'Here is the page of your application. On this page, you could manage the metadata of your application, add some contributors and validated publications, and create its tree. For more specific informations, please visit our article <a href="https://blog.noolib.com/Cours/Add-an-application-on-NooLib" target="_blank">Add an application on NooLib</a>.',
+						title:'Manage your application',
+						smartPlacement:true,
+						backdrop:true
+					},
+					{
+						element:'#logoTour',
+						content:'To change the icon of your application, just click on it.',
+						smartPlacement:true,
+						title:'Logo',
+						backdrop:true,
+						backdropContainer:'.row'
+					},
+					{
+						element:'#nameTour',
+						content:'To change the name of your application, just click on it. Notice that you cannot change it for a name that is already taken.',
+						smartPlacement:true,
+						title:'Name',
+						backdrop:true,
+						backdropContainer:'.row'
+					},
+					{
+						element:'#editTour',
+						content:'Here, you can edit the metadata of your applications.',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.row'
+					},
+					{
+						element:'#authorsTour',
+						content:'Here, you can manage the contributors of your application.',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.row'
+					},
+					{
+						element:'#publicationTour',
+						content:'Here, you can add, delete or modify the publications validating your application.',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.row'
+					},	
+					{
+						element:'#testInNooSpace',
+						content:'To test your application directly in the noospace, just click on this button. The version currently displayed will be runned in the noospace. Notice that your application does not have to be validated by the administrator for running.',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.row'
+					},
+					{
+						element:'#deleteTour',
+						content:'You can here delete the application. Be careful, all versions of the application will be removed.',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.row'
+					},
+					{
+						element:'#versionTour',
+						content:'You can see here the version of your application currently displayed. All changes made in the tree of the application are saved in the current version.',
+						smartPlacement:true,
+						title:'The version of your application'
+					},
+					{
+						element:'#taskTour',
+						content:'This is the button to create a new task which will be added to the tree of your application. Once you have submitted an application, its tree is empty and you need to add a first task to begin.',
+						smartPlacement:true,
+						title:'New task',
+						backdrop:true,
+						backdropContainer:'.row'
+					},
+					{
+						element:'#taskOptionTour',
+						content:'Here, you can see all the versions of your application. You can create another version which will be a copy of the last version or select a previous version of your application.',
+						smartPlacement:true,
+						title:'Versions',
+						backdrop:true,
+						backdropContainer:'.row'
+					},
+					{
+						element:'#treeTour',
+						content:'Finally, the tree of your application. You can add one or more functions for a task and one or more parameters for each function created. For more information, please visit our article <a href="https://blog.noolib.com/Cours/Add-an-application-on-NooLib" target="_blank">Add an application on NooLib</a>.',
+						smartPlacement:true,
+						title:'The tree',
+						backdrop:true,
+						backdropContainer:'.row'
+					}
+				]});
+
+			}else if(/Settings/.test(url)){
+
+
+			}else if(/SubmitAnApplication/.test(url)){
+
+
+			}else if(/NooSpace/.test(url)){
+
+
+			}else if(/Profile/.test(url)){
+
+
 			}else{
 				var tour = new Tour({
 					steps:[

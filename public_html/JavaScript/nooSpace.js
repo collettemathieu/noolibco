@@ -139,11 +139,12 @@ $(function(){
 	      	}, 1500);
 
 	      	// On affiche les boîtes de dialogue supplémentaires autour de l'application
-	      	cloneApplication.find('.containerApplication').children('hr').show().css('display', 'inline-block');
+	      	cloneApplication.find('.containerApplication').children('hr').show('slice').css('display', 'inline-block');
 			setTimeout(function(){
 				cloneApplication.find('.containerApplication').children('.resultBox').show('slice').css('display', 'inline-block');
 				// On affiche le bouton Play
-	      		cloneApplication.find('.playButton').css('visibility', 'visible').css('display', 'block');
+				cloneApplication.find('.linkPlay').show('slice').css('visibility', 'visible').css('display', 'block');
+	      		cloneApplication.find('.playButton').show('slice').css('visibility', 'visible').css('display', 'block');
 			}, 500);
 
 	      	// Pour receuillir les données dans la dataBox de l'application

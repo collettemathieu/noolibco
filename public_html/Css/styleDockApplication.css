@@ -189,7 +189,7 @@
 /***************************/
 /* Button Play Application */
 /***************************/
-.playButton{
+.playButton, .linkPlay{
 	display: none;
 	visibility: hidden;
 	padding: 0px;

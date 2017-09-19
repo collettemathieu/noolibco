@@ -5,15 +5,15 @@
 				<div class="row">
 					<div class="col-sm-12 informationApplication">
 						<div class="col-sm-12">
-							<a ng-click="logoApplicationModal()">
+							<a id="logoTour" ng-click="logoApplicationModal()">
 								<img class="infoBulle" data-toggle="tooltip" title="Edit its logo" ng-src="data:image/png;charset=utf8;base64,{{application.urlLogo}}"/>
 							</a>
-							<a ng-click="nameApplicationModal()">
+							<a id="nameTour" ng-click="nameApplicationModal()">
 								<h3 class="infoBulle" data-toggle="tooltip" title="Edit its name" ng-bind="application.nom"></h3>
 							</a>
 							<?php							
 							if($utilisateur->getIdUtilisateur() === $app->getCreateur()->getIdUtilisateur() || $user->getAttribute('isAdmin')){?>
-							<button type="button" class="infoBulle pull-right btn btn-danger btn-margin btn-lg" ng-click="deleteApplicationModal()" title="Delete it"><i class="glyphicon glyphicon-trash"></i></button>
+							<button id="deleteTour" type="button" class="infoBulle pull-right btn btn-danger btn-margin btn-lg" ng-click="deleteApplicationModal()" title="Delete it"><i class="glyphicon glyphicon-trash"></i></button>
 							<?php }?>
 							<?php 
 							if($user->getAttribute('isAdmin')){
@@ -24,23 +24,23 @@
 									<input type="hidden" name="idApplication" value=<?php echo '"'.$app->getIdApplication().'"';?>/>
 								</form>
 							<?php } ?>
-							<a id="testInNooSpace" class="infoBulle pull-right btn btn-primary btn-margin btn-lg" ng-href="/NooSpace/a={{application.id}}v={{idVersion}}" target="_blank" title="Test it in the noospace"><i class="glyphicon glyphicon-log-out"></i></a>
-							<button type="button" class="infoBulle pull-right btn btn-info btn-margin btn-lg" ng-click="publicationsModal()" title="Manage its publications"><i class="glyphicon glyphicon-education"></i></button>
+							<a id="testInNooSpace" class="infoBulle pull-right btn btn-primary btn-margin btn-lg" ng-href="/NooSpace/a={{application.id}}v={{idVersion}}" target="_blank" title="Test it"><i class="glyphicon glyphicon-log-out"></i></a>
+							<button id="publicationTour" type="button" class="infoBulle pull-right btn btn-info btn-margin btn-lg" ng-click="publicationsModal()" title="Manage its publications"><i class="glyphicon glyphicon-education"></i></button>
 							<?php							
 							if($utilisateur->getIdUtilisateur() === $app->getCreateur()->getIdUtilisateur() || $user->getAttribute('isAdmin')){?>
-							<button type="button" class="infoBulle pull-right btn btn-success btn-margin btn-lg" ng-click="authorsApplicationModal()" title="Manage its authors"><i class="glyphicon glyphicon-user"></i></button>
+							<button id="authorsTour" type="button" class="infoBulle pull-right btn btn-success btn-margin btn-lg" ng-click="authorsApplicationModal()" title="Manage its authors"><i class="glyphicon glyphicon-user"></i></button>
 							<?php } ?>
-							<button type="button" class="infoBulle pull-right btn btn-default btn-margin btn-lg" ng-click="descriptionApplicationModal()" title="Edit its description, category and keywords"><i class="glyphicon glyphicon-tags"></i></button>
+							<button id="editTour" type="button" class="infoBulle pull-right btn btn-default btn-margin btn-lg" ng-click="descriptionApplicationModal()" title="Edit its description, category and keywords"><i class="glyphicon glyphicon-tags"></i></button>
 						</div>
 					</div>
 					<div class="col-lg-12"><hr></div>
 
 					<div class="col-lg-12">
-						<span>Version {{numVersion}}</span>
+						<span id="versionTour">Version {{numVersion}}</span>
 						<!-- Split button -->
 						<div class="btn-group pull-right">
-						  <button type="button" ng-click="createTaskModal()" class="btn btn-primary">New task</button>
-						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						  <button id="taskTour" type="button" ng-click="createTaskModal()" class="btn btn-primary">New task</button>
+						  <button id="taskOptionTour" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    <span class="caret"></span>
 						    <span class="sr-only">Toggle Dropdown</span>
 						  </button>
@@ -58,7 +58,7 @@
 
 						  </ul>
 						</div>
-						<div tree-application></div>
+						<div id="treeTour" tree-application></div>
 					</div>
 				</div>
 			</div>
