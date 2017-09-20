@@ -227,6 +227,7 @@
 			}
 			tour.init();
 			tour.start(true);
+			tour.goTo(0);
 		});
 		
 	}

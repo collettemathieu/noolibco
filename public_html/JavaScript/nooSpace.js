@@ -5,6 +5,7 @@ $(function(){
 			numberApp = 0, // Compteur du nombre d'application dans la noospace
 			tabImage = [],
 			tabGraph = [],
+			tabJauge = [],
 			tabComments = [],
 			tabTableOfResults = [],
 			tabFileResults = [];
@@ -275,6 +276,7 @@ $(function(){
 		            	var numeroApp = cloneApplication.attr('numApp');
 		            	tabImage[numeroApp] = [];
 						tabGraph[numeroApp] = [];
+						tabJauge[numeroApp] = [];
 						tabFileResults[numeroApp] = [];
 		            }
 		            if(key === 'mule'){
@@ -612,6 +614,7 @@ $(function(){
 					cloneApplication.find('.applicationReports').empty();
 					tabImage[numeroApp] = [];
 					tabGraph[numeroApp] = [];
+					tabJauge[numeroApp] = [];
 					tabFileResults[numeroApp] = [];
 
 					try{
@@ -638,7 +641,8 @@ $(function(){
 						// Variables globales
 						var templateItemReportApplication = $('#templateItemReportApplication'),
 							indexImage = 0,
-							indexGraph = 0;
+							indexGraph = 0,
+							indexJauge = 0;
 
 						for(var n=0,lenResultats=response['resultat'].length; n<lenResultats ; ++n){
 
@@ -733,7 +737,6 @@ $(function(){
 								            // Création de la table
 								            tableData(txtReader, divGraph);
 								            divGraph.find('.tableOfGraph').attr('index-graph', indexGraph);
-								            indexGraph += 1;
 
 								            // On enregistre la donnée table
 								            tabGraph[numeroApp].push({
@@ -745,11 +748,10 @@ $(function(){
 												sample: txtReader.get_sample_rate(),
 												min: 1,
 												lengthData: txtReader.get_size_signals(),
-												size: txtReader.get_number_of_signals()
+												size: txtReader.get_number_of_signals(),
+												index:indexGraph
 											});
-
-											// Création du graphe	
-									        graphLocalData(txtReader, 15000, divGraph);
+											indexGraph += 1;
 
 								        }else{
 								        	var reponse = {
@@ -762,16 +764,30 @@ $(function(){
 
 								if(tableauReponse['results']){
 									var table = reportClone.find('.tableOfResults');
-									
-									for(var i=0, lenTabResults = tableauReponse['results'].length; i<lenTabResults; ++i){
-										
-										table.append('<table class="table table-nonfluid table-bordered table-striped table-condensed"><thead><tr></tr></thead><tbody><tr></tr></tbody></table>');
-									    var headTable = table.find('thead:last tr'),
-									        bodyTable = table.find('tbody:last tr');
 
-										headTable.append('<th>'+tableauReponse['results'][i]['name']+'</th>');
-										bodyTable.append('<td>'+tableauReponse['results'][i]['value']+'</td>');
-										
+									for(var i=0, lenTabResults = tableauReponse['results'].length; i<lenTabResults; ++i){
+										if(tableauReponse['results'][i]['min']){
+											table.append('<div class="jauge" index-jauge='+indexJauge+'></div>');
+											// On enregistre la donnée table
+								            tabJauge[numeroApp].push({
+												name:tableauReponse['results'][i]['name'],
+												value:tableauReponse['results'][i]['value'],
+												min:tableauReponse['results'][i]['min'],
+												max:tableauReponse['results'][i]['max'],
+												thresholdMin:tableauReponse['results'][i]['thresholdMin'],
+												thresholdMax:tableauReponse['results'][i]['thresholdMax'],
+												unit:tableauReponse['results'][i]['unit'],
+												index:indexJauge
+											});
+											indexJauge += 1;
+										}else{
+											table.append('<table class="table table-nonfluid table-bordered table-striped table-condensed"><thead><tr></tr></thead><tbody><tr></tr></tbody></table>');
+										    var headTable = table.find('thead:last tr'),
+										        bodyTable = table.find('tbody:last tr');
+
+											headTable.append('<th>'+tableauReponse['results'][i]['name']+'</th>');
+											bodyTable.append('<td>'+tableauReponse['results'][i]['value']+'</td>');
+										}
 									}
 								}else{
 									reportClone.find('.tableOfResults').remove();
@@ -845,6 +861,91 @@ $(function(){
 								reportClone.find('li:first').addClass('active');
 								reportClone.find('.tab-pane:first').addClass('active');
 	            				reportClone.appendTo(cloneApplication.find('.applicationReports'));
+            				
+	            				// Création des graphes
+	            				for (var w=0; w<tabGraph[numeroApp].length; ++w){
+	            					var index = tabGraph[numeroApp][w]['index'],
+	            						element = cloneApplication.find('[index-graph="'+index+'"]')[0];
+	            					graphLocalData(tabGraph[numeroApp][w]['data'], 15000, $(element).parent());
+	            				}
+	            				// Création des jauges
+	            				for (var w=0; w<tabJauge[numeroApp].length; ++w){
+	            					var index = tabJauge[numeroApp][w]['index'],
+	            						element = cloneApplication.find('[index-jauge="'+index+'"]')[0];
+	            					$(element).highcharts({
+									    chart: {
+									        type: 'solidgauge'
+									    },
+									    title: {
+									        text: tabJauge[numeroApp][w]['name']
+									    },
+									    pane: {
+									        center: ['50%', '50%'],
+									        size: '100%',
+									        startAngle: -90,
+									        endAngle: 90,
+									        background: {
+									            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+									            innerRadius: '60%',
+									            outerRadius: '100%',
+									            shape: 'arc'
+									        }
+									    },
+									    tooltip: {
+									        enabled: false
+									    },
+									    exporting:{
+									    	enabled: false
+									    },
+									    // the value axis
+									    yAxis: {
+									        stops: [
+									            [0, '#55BF3B'], // green
+									            [0.3, '#DDDF0D'], // yellow
+									            [0.5, '#DF5353'] // red
+									        ],
+									        lineWidth: 0,
+									        minorTickInterval: null,
+									        tickAmount: 2,
+									        title: {
+									            y: -70
+									        },
+									        labels: {
+									            y: 16
+									        }
+									    },
+									    plotOptions: {
+									        solidgauge: {
+									            dataLabels: {
+									                y: 5,
+									                borderWidth: 0,
+									                useHTML: true
+									            }
+									        }
+									    },
+									    yAxis: {
+									        min: tabJauge[numeroApp][w]['min'],
+									        max: tabJauge[numeroApp][w]['max']
+									    },
+									    credits: {
+									        enabled: false
+									    },
+									    series: [{
+									        name: tabJauge[numeroApp][w]['name'],
+									        data: [parseFloat(tabJauge[numeroApp][w]['value'])],
+									        dataLabels: {
+									            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+									                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+									                   '<span style="font-size:12px;color:silver">'+tabJauge[numeroApp][w]['unit']+'</span></div>'
+									        },
+									        tooltip: {
+									            valueSuffix: tabJauge[numeroApp][w]['unit']
+									        }
+									    }]
+									});
+	            				}
+	            				
+								
             				}
 						}
 
@@ -943,9 +1044,7 @@ $(function(){
 					cloneApplication.find('.resultBox img').hide(600);
 
 					// On efface le rapport précédent
-					cloneApplication.find('.applicationReports').html('');
-
-					
+					cloneApplication.find('.applicationReports').html('');	
 				}
 			});
 		}
@@ -1675,11 +1774,7 @@ function graphLocalData(object, num_points_display, overlay){
             scrollbar: {
                 liveRedraw: false
             },
-
-            title: {
-                text: ''
-            },
-
+            title: null,
             rangeSelector : {
                 buttons: [{
                     type: 'all',
@@ -1747,7 +1842,6 @@ function graphLocalData(object, num_points_display, overlay){
                 }
             }
         });
-
         
         // On ajoute les series successives au graph
         var chart = $(overlay).find('.graphResult').highcharts();

@@ -165,8 +165,21 @@
 	margin-top: 20px;
 }
 
-.results img, table{
+.results img{
 	cursor: pointer;
+}
+
+.results table{
+	display: inline-block;
+	vertical-align: top;	
+}
+
+.jauge{
+	display: inline-block;
+	vertical-align: top;
+	width: 400px;
+	height: 350px;
+	padding: 0px 50px 50px 0px;
 }
 
 .item{
