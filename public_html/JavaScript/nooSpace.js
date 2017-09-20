@@ -764,10 +764,12 @@ $(function(){
 
 								if(tableauReponse['results']){
 									var table = reportClone.find('.tableOfResults');
-
+									table.append('<div class="text-center"><div class="jaugeResult"></div></div><div class="tableResult"></div>');
+									var tableResult = table.find('.tableResult'),
+										jaugeResult = table.find('.jaugeResult');
 									for(var i=0, lenTabResults = tableauReponse['results'].length; i<lenTabResults; ++i){
 										if(tableauReponse['results'][i]['min']){
-											table.append('<div class="jauge" index-jauge='+indexJauge+'></div>');
+											jaugeResult.append('<div class="jauge" index-jauge='+indexJauge+'></div>');
 											// On enregistre la donnée table
 								            tabJauge[numeroApp].push({
 												name:tableauReponse['results'][i]['name'],
@@ -781,12 +783,7 @@ $(function(){
 											});
 											indexJauge += 1;
 										}else{
-											table.append('<table class="table table-nonfluid table-bordered table-striped table-condensed"><thead><tr></tr></thead><tbody><tr></tr></tbody></table>');
-										    var headTable = table.find('thead:last tr'),
-										        bodyTable = table.find('tbody:last tr');
-
-											headTable.append('<th>'+tableauReponse['results'][i]['name']+'</th>');
-											bodyTable.append('<td>'+tableauReponse['results'][i]['value']+'</td>');
+											tableResult.append('<table class="table table-inverse"><thead class="thead-inverse"><tr><th>'+tableauReponse['results'][i]['name']+'</th></tr></thead><tbody><tr><td>'+tableauReponse['results'][i]['value']+'</td></tr></tbody></table>');
 										}
 									}
 								}else{
@@ -901,18 +898,14 @@ $(function(){
 									    yAxis: {
 									        stops: [
 									            [0, '#55BF3B'], // green
-									            [0.3, '#DDDF0D'], // yellow
-									            [0.5, '#DF5353'] // red
+									            [parseFloat(tabJauge[numeroApp][w]['thresholdMin'])/parseFloat(tabJauge[numeroApp][w]['max']), '#DDDF0D'], // yellow
+									            [parseFloat(tabJauge[numeroApp][w]['thresholdMax'])/parseFloat(tabJauge[numeroApp][w]['max']), '#DF5353'] // red
 									        ],
 									        lineWidth: 0,
 									        minorTickInterval: null,
 									        tickAmount: 2,
-									        title: {
-									            y: -70
-									        },
-									        labels: {
-									            y: 16
-									        }
+									        min: parseFloat(tabJauge[numeroApp][w]['min']),
+									        max: parseFloat(tabJauge[numeroApp][w]['max'])
 									    },
 									    plotOptions: {
 									        solidgauge: {
@@ -922,10 +915,6 @@ $(function(){
 									                useHTML: true
 									            }
 									        }
-									    },
-									    yAxis: {
-									        min: tabJauge[numeroApp][w]['min'],
-									        max: tabJauge[numeroApp][w]['max']
 									    },
 									    credits: {
 									        enabled: false
@@ -943,9 +932,7 @@ $(function(){
 									        }
 									    }]
 									});
-	            				}
-	            				
-								
+	            				}	
             				}
 						}
 
