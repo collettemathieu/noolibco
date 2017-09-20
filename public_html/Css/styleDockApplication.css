@@ -169,9 +169,10 @@
 	cursor: pointer;
 }
 
-.results table{
+.tabResult{
 	display: inline-block;
-	vertical-align: top;	
+	vertical-align: top;
+	width: 200px;
 }
 
 .jauge{

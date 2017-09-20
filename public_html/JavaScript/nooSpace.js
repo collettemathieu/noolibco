@@ -764,11 +764,11 @@ $(function(){
 
 								if(tableauReponse['results']){
 									var table = reportClone.find('.tableOfResults');
-									table.append('<div class="text-center"><div class="jaugeResult"></div></div><div class="tableResult"></div>');
-									var tableResult = table.find('.tableResult'),
+									table.append('<div class="text-center jaugeResult"></div><div class="text-center tabResult"></div>');
+									var tableResult = table.find('.tabResult'),
 										jaugeResult = table.find('.jaugeResult');
 									for(var i=0, lenTabResults = tableauReponse['results'].length; i<lenTabResults; ++i){
-										if(tableauReponse['results'][i]['min']){
+										if(tableauReponse['results'][i]['min'] && tableauReponse['results'][i]['max']){
 											jaugeResult.append('<div class="jauge" index-jauge='+indexJauge+'></div>');
 											// On enregistre la donnée table
 								            tabJauge[numeroApp].push({
@@ -869,7 +869,34 @@ $(function(){
 	            				for (var w=0; w<tabJauge[numeroApp].length; ++w){
 	            					var index = tabJauge[numeroApp][w]['index'],
 	            						element = cloneApplication.find('[index-jauge="'+index+'"]')[0];
-	            					$(element).highcharts({
+	            					if(tabJauge[numeroApp][w]['thresholdMin'] && tabJauge[numeroApp][w]['thresholdMax']){
+	            						var optionsJauge = {
+										    yAxis: {
+										        stops: [
+										            [0, '#55BF3B'], // green
+										            [parseFloat(tabJauge[numeroApp][w]['thresholdMin'])/parseFloat(tabJauge[numeroApp][w]['max']), '#DDDF0D'], // yellow
+										            [parseFloat(tabJauge[numeroApp][w]['thresholdMax'])/parseFloat(tabJauge[numeroApp][w]['max']), '#DF5353'] // red
+										        ],
+										        lineWidth: 0,
+										        minorTickInterval: null,
+										        tickAmount: 2,
+										        min: parseFloat(tabJauge[numeroApp][w]['min']),
+										        max: parseFloat(tabJauge[numeroApp][w]['max'])
+										    }
+										};
+	            					}else{
+	            						var optionsJauge = {
+										    yAxis: {
+										        lineWidth: 0,
+										        minorTickInterval: null,
+										        tickAmount: 2,
+										        min: parseFloat(tabJauge[numeroApp][w]['min']),
+										        max: parseFloat(tabJauge[numeroApp][w]['max'])
+										    }
+										};
+	            					}
+
+	            					$(element).highcharts(Highcharts.merge(optionsJauge,{
 									    chart: {
 									        type: 'solidgauge'
 									    },
@@ -893,19 +920,6 @@ $(function(){
 									    },
 									    exporting:{
 									    	enabled: false
-									    },
-									    // the value axis
-									    yAxis: {
-									        stops: [
-									            [0, '#55BF3B'], // green
-									            [parseFloat(tabJauge[numeroApp][w]['thresholdMin'])/parseFloat(tabJauge[numeroApp][w]['max']), '#DDDF0D'], // yellow
-									            [parseFloat(tabJauge[numeroApp][w]['thresholdMax'])/parseFloat(tabJauge[numeroApp][w]['max']), '#DF5353'] // red
-									        ],
-									        lineWidth: 0,
-									        minorTickInterval: null,
-									        tickAmount: 2,
-									        min: parseFloat(tabJauge[numeroApp][w]['min']),
-									        max: parseFloat(tabJauge[numeroApp][w]['max'])
 									    },
 									    plotOptions: {
 									        solidgauge: {
@@ -931,7 +945,7 @@ $(function(){
 									            valueSuffix: tabJauge[numeroApp][w]['unit']
 									        }
 									    }]
-									});
+									}));
 	            				}	
             				}
 						}
