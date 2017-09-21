@@ -73,7 +73,6 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 	$scope.validTextFunction = function(e){
 			
 		$scope.displayButtonForm = true;
-		
 		$http({
            url: '/HandleApplication/ValidModifFonction',
             method: 'POST',
@@ -108,5 +107,15 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 			$scope.displayButtonForm = false;
 		})
 	}
+
+	// Pour sauvegarder le formulaire par combinaison des touches
+	var body = document.querySelector('body');
+    body.onkeydown = function (e) {
+        if((e.metaKey || e.ctrlKey) && e.keyCode == 'S'.charCodeAt(0)){
+			e.preventDefault();
+        	$scope.validTextFunction();
+        }
+    }
+
 }]);
 

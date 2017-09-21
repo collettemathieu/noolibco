@@ -34,7 +34,7 @@
 					steps:[
 					{
 						orphan: true,
-						content:'Here is the page of your application. On this page, you could manage the metadata of your application, add some contributors and validated publications, and create its tree. For more specific informations, please visit our article <a href="https://blog.noolib.com/Cours/Add-an-application-on-NooLib" target="_blank">Add an application on NooLib</a>.',
+						content:'Here is the page where you can manage your application. You can edit the metadata of your application, add some contributors or validated publications and create its tree. For more specific informations, please visit our article <a href="https://blog.noolib.com/Cours/Add-an-application-on-NooLib" target="_blank">Add an application on NooLib</a>.',
 						title:'Manage your application',
 						smartPlacement:true,
 						backdrop:true
@@ -57,7 +57,7 @@
 					},
 					{
 						element:'#editTour',
-						content:'Here, you can edit the metadata of your applications.',
+						content:'Here, you can edit the metadata of your application, its description and its category.',
 						smartPlacement:true,
 						backdrop:true,
 						backdropContainer:'.row'
@@ -71,14 +71,14 @@
 					},
 					{
 						element:'#publicationTour',
-						content:'Here, you can add, delete or modify the publications validating your application.',
+						content:'Here, you can add, delete or edit the publications validating the algorithms used in your application.',
 						smartPlacement:true,
 						backdrop:true,
 						backdropContainer:'.row'
 					},	
 					{
 						element:'#testInNooSpace',
-						content:'To test your application directly in the noospace, just click on this button. The version currently displayed will be runned in the noospace. Notice that your application does not have to be validated by the administrator for running.',
+						content:'To test your application directly in the noospace, just click on this button. The version currently displayed will be deployed in the noospace. Notice that you do not need permission from the administrator to test your application but your application need administator validation before it can to be used by platform users.',
 						smartPlacement:true,
 						backdrop:true,
 						backdropContainer:'.row'
@@ -92,13 +92,13 @@
 					},
 					{
 						element:'#versionTour',
-						content:'You can see here the version of your application currently displayed. All changes made in the tree of the application are saved in the current version.',
+						content:'You can see here the version of your application currently displayed. All changes made in the tree of the application are saved in this current version.',
 						smartPlacement:true,
 						title:'The version of your application'
 					},
 					{
 						element:'#taskTour',
-						content:'This is the button to create a new task which will be added to the tree of your application. Once you have submitted an application, its tree is empty and you need to add a first task to begin.',
+						content:'This is the way to create a new task which will be added to the tree of your application. Once you have submitted an application, its tree is empty and you need to add a first task to begin.',
 						smartPlacement:true,
 						title:'New task',
 						backdrop:true,
@@ -106,7 +106,7 @@
 					},
 					{
 						element:'#taskOptionTour',
-						content:'Here, you can see all the versions of your application. You can create another version which will be a copy of the last version or select a previous version of your application.',
+						content:'Here, you can see all the versions of your application. You can create another version which will be a copy of the last version. You can also go back to a previous version of your application.',
 						smartPlacement:true,
 						title:'Versions',
 						backdrop:true,
@@ -123,14 +123,66 @@
 				]});
 
 			}else if(/Settings/.test(url)){
-
-
+				var tour = new Tour({
+					steps:[
+					{
+						orphan: true,
+						content:'This is the page for setting NooLib Web Application. You can change the wallpaper of your environment or delete your account. Be careful, if your delete your account, you will not be able to re-activate later.',
+						title:'Settings!',
+						smartPlacement:true,
+						backdrop:true
+					}
+				]});
 			}else if(/SubmitAnApplication/.test(url)){
-
-
+				var tour = new Tour({
+					steps:[
+					{
+						orphan: true,
+						content:'For more information on submitting an application, please visit our article <a href="https://blog.noolib.com/Cours/Add-an-application-on-NooLib" target="_blank">Add an application on NooLib</a>.',
+						title:'Add an application',
+						smartPlacement:true,
+						backdrop:true
+					}
+				]});
 			}else if(/NooSpace/.test(url)){
-
-
+				var tour = new Tour({
+					steps:[
+					{
+						orphan: true,
+						content:'You are now in the noospace. To start the tour, you must deploy any application from the dock or from the library in the noospace.',
+						title:'The NooSpace',
+						smartPlacement:true,
+						backdrop:true
+					},
+					{
+						element:'#noospace .appInDock:first',
+						content:'The application is now deployed in the NooSpace and you can see a play button, a right box and a left box.',
+						smartPlacement:true,
+						title:'An application',
+						backdrop:false
+					},
+					{
+						element:'#noospace .appInDock:first .allDataBox',
+						content:'The left box of the application represents the input data.',
+						smartPlacement:true,
+						title:'The left box',
+						backdrop:false
+					},
+					{
+						element:'#noospace .appInDock:first .resultBox',
+						content:'The right box of the application represents the results released by it.',
+						smartPlacement:true,
+						title:'The right box',
+						backdrop:false
+					},
+					{
+						element:'#noospace .appInDock:first .playButton',
+						content:'To run an application, just click on its play button after dragging and dropping data into the left box of the application.',
+						smartPlacement:true,
+						title:'The play button',
+						backdrop:false
+					}
+				]});
 			}else if(/Profile/.test(url)){
 
 
@@ -139,7 +191,7 @@
 					steps:[
 					{
 						orphan: true,
-						content:'Welcome to NooLib. Here, discover a short presentation of the features of the platform. On each page, you can find a specific tour like this one. We hope you will enjoy your trip.',
+						content:'Welcome to NooLib. Here, discover a short presentation of the features of the platform. On each page, you can find a specific tour like this one. We hope you enjoy your experience.',
 						title:'Welcome aboard!',
 						smartPlacement:true,
 						backdrop:true
