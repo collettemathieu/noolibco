@@ -79,7 +79,8 @@ class DefautController extends \Library\BackController
 					}
 				}else{
 					// On prend la dernière version active de l'application
-					foreach($application->getVersions() as $version){
+					for ($i=count($application->getVersions())-1; $i >=0 ; --$i) {
+						$version = $application->getVersions()[$i];
 						if($version->getActiveVersion()){
 							// On ajoute la version à la page
 							$this->page->addVar('version', $version);
@@ -87,10 +88,8 @@ class DefautController extends \Library\BackController
 						}
 					}
 				}
-
 			}
 		}
-
 	}
 
 	/**

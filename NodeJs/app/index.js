@@ -368,7 +368,7 @@ router.post('/', function(req, res) {
 				 					break;
 				 				}
 				 			}
-				 		} else{
+				 		}else{
 				 			for(var i=versions.length-1; i>=0 ; --i){
 				 				if(versions[i].getActiveVersion()){
 				 					version = versions[i];
