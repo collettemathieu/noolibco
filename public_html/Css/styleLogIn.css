@@ -229,6 +229,10 @@ footer li{
   width: 60%;
 }
 
+#team img{
+  width: 120px;
+}
+
 .teamTitle{
   color: black;
 }
