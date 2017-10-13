@@ -46,7 +46,7 @@ Go to https://www.noolib.com/Hire/ .
 
 		<!-- Ajout d'une base pour les routes AngularJS -->
 		<base href="/">
-
+		
 	</head>
 
 	<body ng-app="LogIn" ng-controller="logInController" ng-strict-di><!-- ng-strict-di for throwing an exception when minify operation errors appeared -->
