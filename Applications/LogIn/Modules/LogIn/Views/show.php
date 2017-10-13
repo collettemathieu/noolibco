@@ -14,7 +14,7 @@
 			        <div id="content">
 						<h1>Welcome to NooLib.</h1>
 						<h2>NooLib offers a library of scientific applications for Research.</h2>
-						<h2>It is very simple to submit your own algorithms written in C/C++/JS/Java/PHP or Python.</h2>
+						<h2>It is very simple to submit your own algorithms written in Matlab/JS/Java/PHP or Python.</h2>
 						<h2>Interact smartly with other applications and share your results...</h2>
 						<button class="btn btn-default" ng-click="aboutModal()">About</button>
 						<button class="btn btn-primary" ng-click="registrationFormModal()">Sign up</button>
