@@ -2,7 +2,7 @@
 	<div class="row-fluid">
 		<div class="col-lg-12 centering maxWidth fadeIn">
 			<div class="row">
-				<form id="firstTour" class="well centering col-lg-6" id="formRechercheApplication">
+				<form class="well centering col-lg-6" id="formRechercheApplication">
 					<legend>Need an application?</legend>
 					<div class="form-group">
 						<input type="text" class="form-control" name="rechercheApplication" placeholder="Keywords..." autofocus/>
@@ -19,7 +19,7 @@
 				<br>
 				<div class="col-lg-12" id="informationRecherche"></div>
 
-				<div id="secondTour" class="col-lg-12 sousMenu">
+				<div id="lastApplications" class="col-lg-12 sousMenu">
 					<h2>Best new applications</h2>
 					<div class="col-lg-12 sautDeLigne"><hr></div>
 					<?php if(isset($apps)){

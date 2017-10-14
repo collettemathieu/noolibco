@@ -11,40 +11,117 @@
 		
 		$('#startTour').on('click',function(){
 			if(/Library/.test(url)){
-				var tour = new Tour({
-					steps:[
-					{
-						orphan: true,
-						content:'Welcome to the library. Here, you can search and find your favorite applications.',
-						title:'The library',
-						smartPlacement:true,
-						backdrop:true
-					},
-					{
-						element:'#firstTour',
-						content:'First of all, fill in the form with one or more keywords and select a category to refine your search.',
-						title:'The form',
-						smartPlacement:true,
-						backdrop:true,
-						backdropContainer:'.row'
-					},
-					{
-						element:'#informationRecherche',
-						content:'First of all, fill in the form with one or more keywords and select a category to refine your search.',
-						title:'The form',
-						smartPlacement:true,
-						backdrop:true,
-						backdropContainer:'.row'
-					},
-					{
-						element:'#secondTour',
-						content:'You can find also the last applications released on NooLib.',
-						title:'The form',
-						smartPlacement:true,
-						backdrop:true,
-						backdropContainer:'.row'
-					}
-				]});
+				if($('#formRechercheApplication').length != 0){
+					var tour = new Tour({
+						steps:[
+						{
+							orphan: true,
+							content:'Welcome to the library. Here, you can search and find your favorite applications.',
+							title:'The application page',
+							smartPlacement:true,
+							backdrop:true
+						},
+						{
+							element:'#formRechercheApplication',
+							content:'First of all, fill in the form with one or more keywords and select a category to refine your search.',
+							title:'The form',
+							smartPlacement:true,
+							backdrop:true,
+							backdropContainer:'.row'
+						},
+						{
+							element:'#informationRecherche',
+							content:'Once the search is over, you can see the results. Just click on an application to discover its page.',
+							title:'The results',
+							placement:'bottom',
+							backdrop:true,
+							backdropContainer:'.row'
+						},
+						{
+							element:'#lastApplications',
+							content:'Here, you can also find the last applications released on NooLib.',
+							title:'The last applications',
+							placement:'bottom',
+							backdrop:true,
+							backdropContainer:'.row'
+						}
+					]});
+				}else{
+					var tour = new Tour({
+						steps:[
+						{
+							orphan: true,
+							content:'You are on the page of the application.',
+							title:'The application page',
+							smartPlacement:true,
+							backdrop:true
+						},
+						{
+							element:'#firstTour',
+							content:'You can discover the icon of the application that will appear in the dock of the applications if you add it as a favorite.',
+							title:'The icon',
+							smartPlacement:true,
+							backdrop:true,
+							backdropContainer:'.row'
+						},
+						{
+							element:'#secondTour',
+							content:'The name of the application that is unique on the platform.',
+							title:'The name',
+							smartPlacement:true
+						},
+						{
+							element:'#thirdTour',
+							content:'Discover the authors of the application. Click on one of them to open its personal page and contact him if he is registred on NooLib.',
+							title:'The authors',
+							smartPlacement:true
+						},
+						{
+							element:'#fourthTour',
+							content:'Discover the settings of the application. You can observe the last version of the application. If you want to know more about the previous versions of the application, just click on its last version.',
+							title:'The settings',
+							smartPlacement:true
+						},
+						{
+							element:'#fifthTour',
+							content:'You can find the publications validating the application. If no publication has been published, you can offer to help the authors.',
+							title:'The publications',
+							smartPlacement:true
+						},
+						{
+							element:'#sixthTour',
+							content:'Discover the description of the application given by its authors. Important informations on how to use the application can be mentioned.',
+							title:'Description',
+							smartPlacement:true,
+							backdrop:true,
+							backdropContainer:'.row'
+						},
+						{
+							element:'#seventhTour',
+							content:'Discover what the application can do and what kind of data is required for each task of the application.',
+							title:'Informations',
+							smartPlacement:true,
+							backdrop:true,
+							backdropContainer:'.row'
+						},
+						{
+							element:'#formAddApplicationInDock',
+							content:'Add the application as your favorite. It will appear in the dock of the applications.',
+							title:'Application as favorite',
+							smartPlacement:true,
+							backdrop:true,
+							backdropContainer:'.row'
+						},
+						{
+							element:'#highthTour',
+							content:'Click on this button to run the application in the NooSpace. The application will deploy automatically. If you have added the application as a favorite, you will able to drag and drop the application from the dock to deploy it in the NooSpace.',
+							title:'Run it',
+							smartPlacement:true,
+							backdrop:true,
+							backdropContainer:'.row'
+						}
+					]});
+				}
 			}else if(/ManagerOfApplications/.test(url)){
 				var tour = new Tour({
 					steps:[
@@ -165,14 +242,14 @@
 					steps:[
 					{
 						orphan: true,
-						content:'You are now in the noospace. To start the tour, you must deploy any application from the dock or from the library in the noospace.',
+						content:'You are now in the noospace. To start the tour, you must deploy any application in the noospace from the dock or from the library.',
 						title:'The NooSpace',
 						smartPlacement:true,
 						backdrop:true
 					},
 					{
 						element:'#noospace .appInDock:first',
-						content:'The application is now deployed in the NooSpace and you can see a play button, a right box and a left box.',
+						content:'The application is now deployed in the NooSpace and you can see a left box, a right box and a play button.',
 						smartPlacement:true,
 						title:'An application',
 						backdrop:false
@@ -196,6 +273,69 @@
 						content:'To run an application, just click on its play button after dragging and dropping data into the left box of the application.',
 						smartPlacement:true,
 						title:'The play button',
+						backdrop:false
+					},
+					{
+						element:'#boutonShowGestionnaireDonnees',
+						content:'To find your data, you must open your data manager.',
+						smartPlacement:true,
+						title:'The data manager',
+						backdrop:false,
+						onNext:function(tour){
+							openGestionnaireDonnees();
+						}
+					},
+					{
+						element:'#overlayGestionnaireDonnees',
+						content:'Your data manager is now open.',
+						smartPlacement:true,
+						title:'The data manager',
+						backdrop:false,
+						delay:{
+							show: 1500,
+							hide: 0
+						}
+					},
+					{
+						element:'#progressBarGestionnaireDonneeUtilisateur',
+						content:'The data manager displays your available space of 500 MB. Beyond that, you will not be able to add any more data.',
+						smartPlacement:true,
+						title:'The tools box',
+						backdrop:false,
+					},
+					{
+						element:'#boiteAOutils',
+						content:'The data manager proposes a tool box.',
+						smartPlacement:true,
+						title:'The tool box',
+						backdrop:false,
+					},
+					{
+						element:'#boutonImporter',
+						content:'You can add a new data item by clicking on this button.',
+						smartPlacement:true,
+						title:'The tool box',
+						backdrop:false,
+					},
+					{
+						element:'#boutonSaveDataOnServer',
+						content:'You can save a data item by dragging and dropping it in this cloud. The data will be saved for 30 days.',
+						smartPlacement:true,
+						title:'The tool box',
+						backdrop:false,
+					},
+					{
+						element:'#poubelleDonneeUtilisateur',
+						content:'You can also delete a data item by dragging and dropping it in this trash.',
+						smartPlacement:true,
+						title:'The tool box',
+						backdrop:false,
+					},
+					{
+						element:'#noospace .appInDock:first',
+						content:'Right click on the icon of the application to open a submenu. Before running the application, you can select the task and adjust the parameters of each task of the application. You can also call the mule to run multiple scans at the same time.',
+						smartPlacement:true,
+						title:'The right box',
 						backdrop:false
 					}
 				]});

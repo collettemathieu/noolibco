@@ -4,20 +4,20 @@
 				<div class="row">
 					<div class="col-sm-12 informationApplication">
 						<div class="col-sm-12">
-							<img src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())); ?>"/>
-							<h3><?php echo $app->getNomApplication();?></h3>
-							<a class="infoBulle pull-right btn btn-primary btn-margin btn-lg" href="/NooSpace/a=<?php echo $app->getIdApplication(); ?>v=" title="Use it in the noospace"><i class="glyphicon glyphicon-log-out"></i></a>
+							<img id="firstTour" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($app->getUrlLogoApplication())); ?>"/>
+							<h3 id="secondTour"><?php echo $app->getNomApplication();?></h3>
+							<a id="highthTour" class="infoBulle pull-right btn btn-primary btn-margin btn-lg" href="/NooSpace/a=<?php echo $app->getIdApplication(); ?>v=" title="Use it in the noospace"><i class="glyphicon glyphicon-log-out"></i></a>
 							<form id="formAddApplicationInDock" class="pull-right" method="post" action="/HandleApplication/AddRemoveToDock">
 								<button type="submit" id="boutonAjouterAuDock" class="infoBulle btn <?php if(!$appIsInDock){echo 'btn-success';}else{echo 'btn-danger';}?> btn-margin btn-lg" title="Add / Remove from the dock"><?php if(!$appIsInDock){echo '<i class="glyphicon glyphicon-ok"></i>';}else{echo '<i class="glyphicon glyphicon-remove"></i>';} ?></button>
 								<input type="hidden" name="idApplication" value=<?php echo '"'.$app->getIdApplication().'"';?>/>
 							</form>
-							<button type="button" class="infoBulle pull-right btn btn-info btn-margin btn-lg" data-toggle="modal" href="#infoApplication" title="More information"><i class="glyphicon glyphicon-search"></i></button>
+							<button id="seventhTour" type="button" class="infoBulle pull-right btn btn-info btn-margin btn-lg" data-toggle="modal" href="#infoApplication" title="More information"><i class="glyphicon glyphicon-search"></i></button>
 						</div>
 					</div>
 					<div class="col-lg-12"><hr></div>
 					<div class="col-sm-6">
 						<ul class="list-unstyled sousMenu">
-							<li><h3>Author(s)</h3>
+							<li id="thirdTour"><h3>Author(s)</h3>
 								<ul class="list-unstyled">
 									<li><?php if (sizeof($app->getCreateur()) != 0)
 									{ ?>
@@ -28,7 +28,7 @@
 									<?php echo $otherAuthors; ?>
 								</ul>
 							</li>
-							<li><h3>Settings</h3>
+							<li id="fourthTour"><h3>Settings</h3>
 								<ul class="list-unstyled">
 									<li>Status: <?php 
 										if (sizeof($app->getStatut()) != 0){
@@ -74,8 +74,7 @@
 								
 							<!-- *************** -->
 
-
-							<li><h3>Publication(s)</h3>
+							<li id="fifthTour"><h3>Publication(s)</h3>
 								<?php if(count($app->getPublications()) != 0){?>
 								<table class="table table-bordered table-striped table-condensed">
 									<thead>
@@ -104,9 +103,9 @@
 								</table>
 								<?php 
 							   }else{?>
-							   	<div class="alert alert-warning">
+							   	<div id="fifthTour" class="alert alert-warning">
 							   		<p><?php echo $app->getNomApplication();?> is not currently validated by scientific publications.</p>
-							   		<button class="btn btn-primary" data-toggle="modal" href="#askToValidate">Propose your help ?</button>
+							   		<button class="btn btn-primary" data-toggle="modal" href="#askToValidate">Offer to help the authors</button>
 							   	</div>
 							   <?php }?>
 							</li>
@@ -114,7 +113,7 @@
 						
 					</div>
 
-					<div class="col-sm-6">
+					<div id="sixthTour" class="col-sm-6">
 						<div class="col-sm-12">
 							<blockquote class="cesure"><?php echo nl2br($app->getDescriptionApplication());?></blockquote>
 						</div>
@@ -166,7 +165,7 @@
 		    <div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">x</button>
-					<h3 class="modal-title">What <?php echo $app->getNomApplication();?> can do ?</h3>
+					<h3 class="modal-title">What <?php echo $app->getNomApplication();?> can do?</h3>
 				</div>
 				<div class="modal-body">
 					<table class="table table-striped table-bordered table-hover ">
@@ -207,13 +206,13 @@
 		    <div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">x</button>
-					<h2 class="modal-title">Contact the author</h2>
+					<h2 class="modal-title">Contact the authors</h2>
 				</div>
 				<div class="modal-body">
 					<div class="alert alert-warning">By sending an email to <?php echo($app->getCreateur()->getPrenomUtilisateur() . ' ' . $app->getCreateur()->getNomUtilisateur());?>, your email address will be known by this person.</div>
 					<form class="well well-lg" action="/Library/ContactAuthor" method="post">
 						<div class="form-group has-feedback">
-							<input type="text" class="form-control" name="headerMessageMail" placeholder="Your title..." value="Ask for validating <?php echo $app->getNomApplication();?> application..."/>
+							<input type="text" class="form-control" name="headerMessageMail" placeholder="Your title..." value="About <?php echo $app->getNomApplication();?> application..."/>
 							<span class="glyphicon form-control-feedback"></span>
 							<span class="help-block"></span>
 						</div>
