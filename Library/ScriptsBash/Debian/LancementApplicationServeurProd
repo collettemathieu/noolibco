@@ -38,7 +38,7 @@ if [ -f $homenoolibco/Files/Sources/$1/$3/$4/$5 ]; then
 		fi
 	elif [ $extension = "m" ]
 	then
-		fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app numgeom/matlab-desktop:R2016b /usr/local/bin/start_matlab -nodesktop -nojvm -r "$fichier;
+		fonctionLancer=$dockerPath" 15s -v $usrPath:/app -v /usr/local/MATLAB/R2016:/usr/local/MATLAB/from-host --mac-address=00:0c:29:ff:d7:d6 -w /app ninjaben/matlab-support -nodesktop -nojvm -nosplash -nodisplay -r ""run('$fichier');";
 	elif [ $extension = "jar" ]
 	then
 		fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app openjdk:alpine java -jar "$fichier;
