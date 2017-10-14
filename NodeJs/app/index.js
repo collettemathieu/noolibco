@@ -209,6 +209,7 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 			      	// Remove Matlab display
 			      	if(outputData.lastIndexOf('www.mathworks.com.') != -1){
 						outputData = outputData.substring(outputData.lastIndexOf('www.mathworks.com.')+19);
+						outputData = outputData.substring(0,outputData.lastIndexOf('>>'));
 					}
 
 			      	var result = outputData.toString().trim();
