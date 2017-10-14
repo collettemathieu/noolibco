@@ -56,12 +56,6 @@ Go to https://www.noolib.com/Hire/ .
 			<div class="globalLoader"></div>
 		</div>
 		<?php }?>
-		<script>
-		window.onload=function(){
-			$('.overlay').fadeOut();
-		};
-		</script>
-
 		
 		<!-- HEADER -->
 		<header></header>

@@ -19,7 +19,7 @@
 				<br>
 				<div class="col-lg-12" id="informationRecherche"></div>
 
-				<div class="col-lg-12 sousMenu">
+				<div id="secondTour" class="col-lg-12 sousMenu">
 					<h2>Best new applications</h2>
 					<div class="col-lg-12 sautDeLigne"><hr></div>
 					<?php if(isset($apps)){

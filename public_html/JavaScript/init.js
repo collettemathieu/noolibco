@@ -15,14 +15,30 @@
 					steps:[
 					{
 						orphan: true,
-						content:'Welcome to the library. Here, you can search and find your favorite application.',
+						content:'Welcome to the library. Here, you can search and find your favorite applications.',
 						title:'The library',
 						smartPlacement:true,
 						backdrop:true
 					},
 					{
 						element:'#firstTour',
-						content:'First, fill in the form.',
+						content:'First of all, fill in the form with one or more keywords and select a category to refine your search.',
+						title:'The form',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.row'
+					},
+					{
+						element:'#informationRecherche',
+						content:'First of all, fill in the form with one or more keywords and select a category to refine your search.',
+						title:'The form',
+						smartPlacement:true,
+						backdrop:true,
+						backdropContainer:'.row'
+					},
+					{
+						element:'#secondTour',
+						content:'You can find also the last applications released on NooLib.',
 						title:'The form',
 						smartPlacement:true,
 						backdrop:true,
