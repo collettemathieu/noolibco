@@ -1,12 +1,13 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PHP Version 5 								                          |
+// | PHP Version 7 								                          |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2014 NooLib			         				          |
+// | Copyright (c) 2018 NooLib			         				          |
 // +----------------------------------------------------------------------+
 // | Classe PHP pour le manager PDO des Fonctions.						  |
 // +----------------------------------------------------------------------+
-// | Auteur : Corentin Chevallier <ChevallierCorentin@noolib.com>		  |
+// | Auteurs : Corentin Chevallier <ChevallierCorentin@noolib.com>		  |
+// |			Mathieu COLLETTE <collettemathieu@noolib.com>			  |
 // +----------------------------------------------------------------------+
 
 /**
@@ -31,12 +32,14 @@ class PDOFonctionManager extends \Library\Models\FonctionManager
 		 if($fonction instanceof Fonction){
 		
 			//préparation de la requete
-			$requete = $this->dao->prepare("INSERT INTO fonction (nom_fonction, url_fonction, extension_fonction) 
-					VALUES (:nomFonction, :urlFonction, :extensionFonction)");
+			$requete = $this->dao->prepare("INSERT INTO fonction (nom_fonction, url_fonction, language_fonction, version_lang_fonction, extension_fonction) 
+					VALUES (:nomFonction, :urlFonction, :languageFonction, :versionLangFonction, :extensionFonction)");
 
 			//bind des valeurs
 			$requete->bindValue(':nomFonction', $fonction->getNomFonction(), \PDO::PARAM_STR);
 			$requete->bindValue(':urlFonction', $fonction->getUrlFonction(), \PDO::PARAM_STR);
+			$requete->bindValue(':languageFonction', $fonction->getLanguageFonction(), \PDO::PARAM_STR);
+			$requete->bindValue(':versionLangFonction', $fonction->getVersionLangFonction(), \PDO::PARAM_STR);
 			$requete->bindValue(':extensionFonction', $fonction->getExtensionFonction(), \PDO::PARAM_STR);
 			
 			//execution de la requete sinon envoi d'une erreur
@@ -67,7 +70,7 @@ class PDOFonctionManager extends \Library\Models\FonctionManager
 			
 				for ($i = 0 ; $i < sizeof($fonction->getParametres()) ; $i++){
 					$parametre = $fonction->getParametres()[i];
-					//pr�paration de la requete
+					//préparation de la requete
 					$requete = $this->dao->prepare("INSERT INTO fonction_parametre VALUES :idFonction, :idParametre, :i;");
 			
 					//bind des valeurs
@@ -139,6 +142,8 @@ class PDOFonctionManager extends \Library\Models\FonctionManager
 			$requete = $this->dao->prepare("UPDATE fonction SET
 					nom_fonction = :nomFonction,
 					url_fonction = :urlFonction,
+					language_fonction = :languageFonction,
+					version_lang_fonction = :versionLangFonction,
 					extension_fonction = :extensionFonction
 					WHERE id_fonction = :idFonction;");
 
@@ -146,6 +151,8 @@ class PDOFonctionManager extends \Library\Models\FonctionManager
 			$requete->bindValue(':idFonction', $fonction->getIdFonction(), \PDO::PARAM_INT);
 			$requete->bindValue(':nomFonction', $fonction->getNomFonction(), \PDO::PARAM_STR);
 			$requete->bindValue(':urlFonction', $fonction->getUrlFonction(), \PDO::PARAM_STR);
+			$requete->bindValue(':languageFonction', $fonction->getLanguageFonction(), \PDO::PARAM_STR);
+			$requete->bindValue(':versionLangFonction', $fonction->getVersionLangFonction(), \PDO::PARAM_STR);
 			$requete->bindValue(':extensionFonction', $fonction->getExtensionFonction(), \PDO::PARAM_STR);
 
 			//execution de la requete sinon envoi d'une erreur
@@ -472,6 +479,8 @@ class PDOFonctionManager extends \Library\Models\FonctionManager
 		'idFonction' => $donnee['id_fonction'],
 		'nomFonction' => $donnee['nom_fonction'],
 		'urlFonction' => $donnee['url_fonction'],
+		'languageFonction' => $donnee['language_fonction'],
+		'versionLangFonction' => $donnee['version_lang_fonction'],
 		'extensionFonction' => $donnee['extension_fonction'],
 		];
 		return new Fonction($data);

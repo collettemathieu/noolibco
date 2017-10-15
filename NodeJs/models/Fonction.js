@@ -5,9 +5,8 @@ var async=require('asyncawait/async');
 var await=require('asyncawait/await');
 
 function Fonction(){
-	var idFonction, nomFonction, urlFonction, extensionFonction, parametres = [], taches = [];
+	var idFonction, nomFonction, urlFonction, languageFonction, versionLangFonction, extensionFonction, parametres = [], taches = [];
 	return this;
-
 }
 
 Fonction.prototype.getParametres = function(){
@@ -15,6 +14,12 @@ Fonction.prototype.getParametres = function(){
 }
 Fonction.prototype.getUrlFonction = function(){
 	return this.urlFonction;
+}
+Fonction.prototype.getLanguageFonction = function(){
+	return this.languageFonction;
+}
+Fonction.prototype.getVersionLangFonction = function(){
+	return this.versionLangFonction;
 }
 Fonction.prototype.getFonctionById = function(id){
 	return new Promise((resolve,reject)=>{
@@ -26,6 +31,8 @@ Fonction.prototype.getFonctionById = function(id){
 		 		fonction.idFonction = rows[0]['id_fonction'];
 				fonction.nomFonction = rows[0]['nom_fonction'];
 				fonction.urlFonction = rows[0]['url_fonction'];
+				fonction.languageFonction = rows[0]['language_fonction'];
+				fonction.versionLangFonction = rows[0]['version_lang_fonction'];
 				fonction.extensionFonction = rows[0]['extension_fonction'];
 				fonction.parametres=await(putParametresInFonction(fonction));
 				//fonction.taches = putTachesInFonction(fonction);

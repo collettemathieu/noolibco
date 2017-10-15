@@ -22,7 +22,7 @@ abstract class BackController extends ApplicationComponent
 {
 
 	/* Définitions des retours d'erreurs */
-	/* Générals */
+	/* Général */
 	const DATA_REQUIRED = 'User data is required as a parameter for this function.';
 	const ALL_FIELDS_REQUIRED = 'You need to fill in all the fields required.';
 	const ERROR_FILE_OPEN = 'A technical error has occurred while opening the file.';
@@ -114,6 +114,7 @@ abstract class BackController extends ApplicationComponent
 	const TREE_VERSION_WRONG = 'Enter a valid version name (eg. 1.0.0).';
 	const TREE_VERSION_NOT_CORRECT = 'Sorry, the version number entered must be posterior to the previous.';
 	const TREE_VERSION_CREATED = 'A new version has been created successfully.';
+	const VERSION_LANGUAGE_REQUIRED = 'The version of the programming language used is required.';
 
 	/* Library */
 	const LIBRARY_NO_AUTHOR = 'This contributor does not exist anymore.';

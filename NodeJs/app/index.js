@@ -159,7 +159,6 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 					var params = [];
 					var j=0;
 					nbrFunction +=1;
-
 					filesPaths.forEach(function(file){
 
 						if(file == false){
@@ -252,8 +251,9 @@ execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction
 			var nomCreateur = createur.getVariableFixeUtilisateur();
 			var nomApplication = application.getVariableFixeApplication();
 			var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
-			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+args;
-
+			var versionLanguage = fonction.getVersionLangFonction();
+			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+versionLanguage+' '+args;
+			console.log(versionLanguage);
 				var resultat=exec(instructions + '2>&1', {maxBuffer: 1024*50000} ,async function(err,stdout,stderr){
 					if(err)  return resolve(err);
 					if(stderr){

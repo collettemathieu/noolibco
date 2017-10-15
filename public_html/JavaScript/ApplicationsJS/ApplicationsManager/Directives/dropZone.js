@@ -88,6 +88,7 @@ application.directive('dropZone', function(){
 		            formData.append('idVersion', scope.idVersion);
 		            formData.append('idFunction', scope.idFunction);
 		            formData.append('idApp', scope.application.id);
+		            formData.append('language', scope.language);
 		            addClass(picker, 'uploading');
 
 		            rotatingBar.bar.set(0.05);

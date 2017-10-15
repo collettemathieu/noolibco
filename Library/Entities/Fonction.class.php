@@ -1,12 +1,13 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PHP Version 5 |
+// | PHP Version 7														  |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2014 NooLib |
+// | Copyright (c) 2018 NooLib 											  |
 // +----------------------------------------------------------------------+
-// | Classe PHP pour les Fonctions. |
+// | Classe PHP pour les Fonctions. 									  |
 // +----------------------------------------------------------------------+
-// | Auteur : Corentin Chevallier <ChevallierCorentin@noolib.com> |
+// | Auteurs : Corentin Chevallier <ChevallierCorentin@noolib.com> 		  |
+// | Mathieu COLLETTE <collettemathieu@noolib.com>		  				  |
 // +----------------------------------------------------------------------+
 
 /**
@@ -21,7 +22,7 @@ namespace Library\Entities;
  * Classe Fonction
  */
 class Fonction extends \Library\Entity {
-protected $idFonction, $nomFonction, $urlFonction, $extensionFonction, $parametres = array(), $taches = array();
+protected $idFonction, $nomFonction, $urlFonction, $languageFonction, $versionLangFonction, $extensionFonction, $parametres = array(), $taches = array();
 
 const FORMAT_NOM_FONCTION = 'The name of the function must contain at least 3 letters and be less than 20 letters in length.';
 
@@ -52,6 +53,20 @@ const FORMAT_NOM_FONCTION = 'The name of the function must contain at least 3 le
 			$this->urlFonction = $urlFonction;
 		} else {
 			$this->setErreurs("Fonction setUrlFonction " . self::FORMAT_STRING);
+		}
+	}
+	public function setLanguageFonction($name){
+		if(is_string($name)){
+			$this->languageFonction = $name;
+		}else{
+			$this->setErreurs("Fonction setLanguageFonction ".self::FORMAT_STRING);
+		}
+	}
+	public function setVersionLangFonction($version){
+		if(is_string($version)){
+			$this->versionLangFonction = $version;
+		}else{
+			$this->setErreurs("Fonction setVersionLangFonction ".self::FORMAT_STRING);
 		}
 	}
 	public function setExtensionFonction($extensionFonction) {
@@ -88,6 +103,12 @@ const FORMAT_NOM_FONCTION = 'The name of the function must contain at least 3 le
 	}
 	public function getUrlFonction() {
 		return $this->urlFonction;
+	}
+	public function getLanguageFonction(){
+		return $this->languageFonction;
+	}
+	public function getVersionLangFonction(){
+		return $this->versionLangFonction;
 	}
 	public function getExtensionFonction() {
 		return $this->extensionFonction;

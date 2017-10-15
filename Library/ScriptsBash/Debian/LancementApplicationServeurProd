@@ -1,12 +1,17 @@
 #!/bin/bash
 #Ce script permet de lancer une application sur le serveur. Il récupère l'application dans la fonction de /SafeWorkSpace/Application/nomAppli/nomFonction 
-#Paramètre 1: nom du créateur, Paramètre 2: nom de l'utilisateur, Paramètre 3: nom de l'application, Parmaètre 4: num de la version, Paramètre 5: nom de la fonction, Paramètre 6: les paramètres à envoyer à la fonction. 
-#Chaques paramètres devra être séparé par le caractère "§" 
-#Exemple: ./lancem John TailleArtere TailleParoi "img.jpg§2§1,2,3"
-#Il copiera la fonction TailleParoi de /SafeWorkSpace/Application/TailleArtere/1.0.0/TailleParoi.php vers /SafeWorkSpace/Utilisateurs/John/TailleParoi.php
-#Il copiera également tous les fichiers présent dans les datas de l'utilisateur vers le même dossier, dans cet exemple, /files/data/John/img.jpg vers /SafeWorkSpace/Utilisateurs/John/img.jpg
-
-#Le paramètre $7 symbolise le choix de la version de python
+#Paramètre 1: nom du créateur, 
+#Paramètre 2: nom de l'utilisateur, 
+#Paramètre 3: nom de l'application, 
+#Parmaètre 4: num de la version de la tâche à exécuter, 
+#Paramètre 5: nom de la fonction à exécuter,
+#Paramètre 6 : nombre de requête à exécuter,
+#Paramètre 7 : version du langage de programmation,
+#Paramètre 8: les arguments à envoyer à la fonction. 
+#Chaque argument devra être séparé par le caractère "§" 
+#Exemple: ./LancementApplicationServeurProd JohnDash MathieuCollette TailleArtere 1.0.1 TailleParoi 3 2.7 img.jpg§24§32
+#Il copiera la fonction TailleParoi de /Files/Sources/TJohnDash/TailleArtere/1.0.0/TailleParoi.py vers /SafeWorkSpace/Utilisateurs/MathieuCollette/3/TailleParoi.py
+#Il copiera également tous les fichiers présent dans les datas de l'utilisateur vers le même dossier, dans cet exemple, /files/data/MathieuCollette/img.jpg vers /SafeWorkSpace/Utilisateurs/MathieuCollette/img.jpg
 
 #Texte d'explication du fonctionnement de docker ???
 
@@ -26,11 +31,11 @@ if [ -f $homenoolibco/Files/Sources/$1/$3/$4/$5 ]; then
 	extension=${fichier##*.}
 	if [ $extension = "py" ]
 	then
-		version=3; #Remplacer par $7
-		if [ $version = 3 ]
+		version=$7;
+		if [ $version = '3.4' ]
 		then
 			fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app noolibco/python:3-alpine python3 "$fichier;
-		elif [ $version = 2 ]
+		elif [ $version = '2.7' ]
 		then
 			fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app noolibco/python:2-apline python "$fichier;
 		else
@@ -49,11 +54,11 @@ if [ -f $homenoolibco/Files/Sources/$1/$3/$4/$5 ]; then
 	then
 		fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app node:alpine node "$fichier;
 	else
-		echo "File extension $extension not supported"
+		echo "File extension $extension not supported."
 	fi
-	if [ $# -eq 7 ] # Pour NodeJs
+	if [ $# -eq 8 ] # Nombre de paramètres
 	then
-		params=$(echo $7 | tr "§" "\n"); # Pour NodeJs
+		params=$(echo $8 | tr "§" "\n"); # Extrait les arguments
 		if [ $extension = "m" ]
 		then
 			paramsModifier="inputs={";
