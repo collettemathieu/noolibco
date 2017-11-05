@@ -90,11 +90,6 @@
 		<div class="overlay">
 			<div class="globalLoader"></div>
 		</div>
-		<script>
-		window.onload=function(){
-			$('.overlay').fadeOut();
-		};
-		</script>
 
 		<!-- HEADER -->
 		<?php
