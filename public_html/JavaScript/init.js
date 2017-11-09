@@ -571,6 +571,13 @@
 		// Pour ajuster automatiquement au dock la taille des icônes des applications
 		initSizeApplications();
 	}
+
+	/****************/
+	/* 	Chargement  */
+	/****************/
+	window.onload=function(){
+		$('.overlay').fadeOut();
+	};
 })();
 
 /***************/
