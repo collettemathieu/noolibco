@@ -9,7 +9,7 @@
         tx.innerHTML = html;
     }
 
-    if(hljs != 'undefined'){
+    if(typeof hljs != 'undefined'){
         hljs.initHighlightingOnLoad(); 
     }
 })();
