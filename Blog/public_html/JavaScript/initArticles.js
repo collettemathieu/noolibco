@@ -9,5 +9,7 @@
         tx.innerHTML = html;
     }
 
-    hljs.initHighlightingOnLoad();
+    if(hljs != 'undefined'){
+        hljs.initHighlightingOnLoad(); 
+    }
 })();
