@@ -8,7 +8,7 @@
 						<button class="btn btn-default btn-xs" data-toggle="modal" data-target="#team">Team</button>
 						<button ng-click="contactModal()" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Contact us!">Contact</button>
 						<ul>
-							<li><a href="https://www.tipeee.com/noolib" target="_blank" data-toggle="tooltip" title="Help us on tipeee!"><img src="/Images/Social/tipeee.png"/></a></li>
+							<li><a href="https://www.tipeee.com/noolib" target="_blank" data-toggle="tooltip" title="Help us on tipeee!"><img src="/Images/Social/tipeee.png" alt="NooLib on Tipeee"/></a></li>
 						</ul>
 					</div>
 				</div>
@@ -80,11 +80,11 @@
 								<div class="containerApplication">
 									<div class="top">
 										<img class="imageApplication" src="data:image/png;charset=utf8;base64,<?php echo base64_encode(file_get_contents($application->getUrlLogoApplication())); ?>" alt="Logo application"/><div class="linkPlay">&brvbar;</div>
-										<div class="playButton"><img src="/Images/play.png"/></div>
+										<div class="playButton"><img src="/Images/play.png" alt="Play button"/></div>
 									</div>
-									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif"/></div><!--
+									<div class="ajaxLoaderApplication"><img src="/Images/waiter.gif" alt="Wait calculations!"/></div><!--
 									--><hr><div class="resultBox">
-										<img src="/Images/results.png"/>
+										<img src="/Images/results.png" alt="The results"/>
 										<div class="applicationReports hidden"></div>
 									</div>
 								</div>

@@ -7,14 +7,14 @@
 		<!--Menu boutons-->
 		<nav>
 			<ul class="list-inline pull-right">
-				<li id="profileTour"><a href="/Profile/"><img src="/Images/userProfile.png" data-html="true" data-toggle="popover" data-content="Edit your profile"/></a></li>
-				<li id="startTour"><a><img src="/Images/aide.png" data-html="true" data-toggle="popover" data-content="Take a tour?"/></a></li>
-				<li id="contactUs"><a><img src="/Images/contact.png" data-html="true" data-toggle="popover" data-content="Contact us!"/></a></li>
-				<li id="teamTour" data-toggle="modal" href="#infoNoolibApplication"><a><img src="/Images/information.png" data-html="true" data-toggle="popover" data-content="About Noolib!"/></a></li>
+				<li id="profileTour"><a href="/Profile/"><img src="/Images/userProfile.png" alt="Your Profile" data-html="true" data-toggle="popover" data-content="Edit your profile"/></a></li>
+				<li id="startTour"><a><img src="/Images/aide.png" alt="Need some help?" data-html="true" data-toggle="popover" data-content="Take a tour?"/></a></li>
+				<li id="contactUs"><a><img src="/Images/contact.png" alt="Contact us!" data-html="true" data-toggle="popover" data-content="Contact us!"/></a></li>
+				<li id="teamTour" data-toggle="modal" href="#infoNoolibApplication"><a><img src="/Images/information.png" alt="Informations" data-html="true" data-toggle="popover" data-content="About Noolib!"/></a></li>
 				<?php if($user->getAttribute('isAdmin')) { ?>
-				<li><a href="/PourAdminSeulement/SortirDuModeAdmin"><img src="/Images/quitAdminMode.png" data-html="true" data-toggle="popover" data-content="Return to user mode"/></a></li>
+				<li><a href="/PourAdminSeulement/SortirDuModeAdmin"><img src="/Images/quitAdminMode.png" alt="Quit admin mode" data-html="true" data-toggle="popover" data-content="Return to user mode"/></a></li>
 				<?php } ?>
-				<li id="logTour"><a href="/LogIn/Deconnexion"><img class="lastImage" src="/Images/cross.png" data-html="true" data-toggle="popover" data-content="Log out"/></a></li>
+				<li id="logTour"><a href="/LogIn/Deconnexion"><img class="lastImage" src="/Images/cross.png" alt="Log out" data-html="true" data-toggle="popover" data-content="Log out"/></a></li>
 			</ul>
 		</nav>
 
@@ -193,9 +193,9 @@
 			</div>
 			<div id="inSectionGestionnaireDonnees">
 				<div id="boiteAOutils">
-					<img id="boutonImporter" class="infoBulleDataManager" data-toggle="modal" href="#overlayFormulaireAjoutDonneeLocale" src="/Images/addData.png" title="Load a new data item">
-					<img id="boutonSaveDataOnServer" class="infoBulleDataManager" src="/Images/save.png" title="Drag and drop a data item to save it on NooLib for 30 days">
-					<img id="poubelleDonneeUtilisateur" class="infoBulleDataManager" src="/Images/trash.png" title="Drag and drop a data item to delete it permanently">	
+					<img id="boutonImporter" alt="Import data" class="infoBulleDataManager" data-toggle="modal" href="#overlayFormulaireAjoutDonneeLocale" src="/Images/addData.png" title="Load a new data item">
+					<img id="boutonSaveDataOnServer" alt="Save data" class="infoBulleDataManager" src="/Images/save.png" title="Drag and drop a data item to save it on NooLib for 30 days">
+					<img id="poubelleDonneeUtilisateur" alt="Trash" class="infoBulleDataManager" src="/Images/trash.png" title="Drag and drop a data item to delete it permanently">	
 				</div>
 				<div id="listeDonneesUser">
 					<div id="inListeDonneesUser">
@@ -232,7 +232,7 @@
 	        <button type="button" class="close" data-dismiss="modal">x</button>
 			<div class="image-upload">
 			    <label for="" id="labelSubmitUpdateData">
-			        <img src="/Images/upload.png" data-html="true" data-toggle="popover"/>
+			        <img src="/Images/upload.png" alt="Upload data" data-html="true" data-toggle="popover"/>
 			    </label>
 				<form id="formUpdateData">
 				    <input type="submit" name="submit" id="submitUpdateData"/>
@@ -275,10 +275,10 @@
 	        <button type="button" class="close" data-dismiss="modal">x</button>
 			<div class="image-upload">
 			    <label for="fileLocalData" id="labelFileLocalData">
-			        <img src="/Images/addData.png" data-html="true" data-toggle="popover" data-content=""/>
+			        <img src="/Images/addData.png" alt="Add data" data-html="true" data-toggle="popover" data-content=""/>
 			    </label>
 			    <label id="labelSubmitLocalData">
-			        <img src="/Images/upload.png" data-html="true" data-toggle="popover" data-content=""/>
+			        <img src="/Images/upload.png" alt="Upload data" data-html="true" data-toggle="popover" data-content=""/>
 			    </label>
 			    <input id="fileLocalData" name="urlLocalData" type="file" class="withoutBootstrap"/>
 				<form method="POST" enctype="multipart/form-data" id="formUploadLocalData">

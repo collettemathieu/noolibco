@@ -32,8 +32,8 @@
 						<span ng-show="formLogIn.motDePasseFormulaireLogIn.$invalid && formLogIn.motDePasseFormulaireLogIn.$dirty" class="help-block">Enter a password of at least eight characters in length with at least one number, uppercase and lowercase.</span>
 					</div>
 					<div class="checkbox">
-						<label>
-							<input switch-directive type="checkbox" name="resterConnecte"/> Remember me?
+						<label for="resterConnecte">
+							<input switch-directive type="checkbox" name="resterConnecte" id="resterConnecte"/> Remember me?
 						</label>
 						<a ng-click="forgottenPassword()">Forgot password?</a>
 					</div>
