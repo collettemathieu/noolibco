@@ -49,7 +49,7 @@ Go to https://www.noolib.com/Hire/ .
 		
 	</head>
 
-	<body ng-app="LogIn" ng-controller="logInController" ng-strict-di><!-- ng-strict-di for throwing an exception when minify operation errors appeared -->
+	<body ng-csp ng-app="LogIn" ng-controller="logInController" ng-strict-di><!-- ng-strict-di for throwing an exception when minify operation errors appeared -->
 
 		<!-- LOADER -->
 		<?php if($_SERVER['REQUEST_URI'] != '/LogIn/JSNotActivated'){?>
