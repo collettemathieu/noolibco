@@ -140,7 +140,7 @@ Go to https://www.noolib.com/Hire/ .
 		<script type="text/javascript" src="/JavaScript/Frameworks/bootstrap-tour.min.js"></script>
 
 		<!-- Initialisation -->
-		<script type="text/javascript" src="/JavaScript/init.js"></script>
+		<script type="text/javascript" src="/JavaScript/init.min.js"></script>
 
 		<!-- Chargement des librairies JS -->
 		<?php echo $librairiesJS; ?>		

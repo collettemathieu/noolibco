@@ -4,7 +4,7 @@
 <script type="text/javascript" src="/JavaScript/Frameworks/bootstrapSwitch.min.js"></script>
 
 <!-- Critical scripts -->
-<script type="text/javascript" src="/JavaScript/init.js"></script>
+<script type="text/javascript" src="/JavaScript/init.min.js"></script>
 
 <!-- Design -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>

@@ -1,1 +1,1 @@
-<script type="text/javascript" src="/JavaScript/sphinx.js"></script>
+<script type="text/javascript" src="/JavaScript/sphinx.min.js"></script>

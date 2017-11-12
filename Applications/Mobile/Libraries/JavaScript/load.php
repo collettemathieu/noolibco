@@ -8,4 +8,4 @@
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/LogIn/applicationRun.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/LogIn/Controllers/logInController.js"></script>
 <script type="text/javascript" src="/JavaScript/ApplicationsJS/LogIn/Controllers/aboutController.js"></script>
-<script type="text/javascript" src="/JavaScript/initMobile.js"></script>
+<script type="text/javascript" src="/JavaScript/initMobile.min.js"></script>

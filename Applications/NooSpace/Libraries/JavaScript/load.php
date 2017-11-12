@@ -8,8 +8,8 @@
 <script src="https://code.highcharts.com/stock/5.0.14/modules/solid-gauge.js"></script>
 
 <!-- Others libraries JS -->
-<script type="text/javascript" src="/JavaScript/nooSpace.js"></script>
-<script type="text/javascript" src="/JavaScript/addData.js"></script>
+<script type="text/javascript" src="/JavaScript/nooSpace.min.js"></script>
+<script type="text/javascript" src="/JavaScript/addData.min.js"></script>
 
 <!-- DICOM viewer - include the cornerstone library -->
 <script type="text/javascript" src="/JavaScript/Frameworks/cornerstone.min.js"></script>
@@ -23,5 +23,5 @@
 <script type="text/javascript" src="/JavaScript/Frameworks/cornerstoneWADOImageLoader.min.js"></script>
 
 <!-- EDF/TXT viewer -->
-<script type="text/javascript" src="/JavaScript/edfReader.js"></script>
-<script type="text/javascript" src="/JavaScript/txtReader.js"></script>
+<script type="text/javascript" src="/JavaScript/edfReader.min.js"></script>
+<script type="text/javascript" src="/JavaScript/txtReader.min.js"></script>
