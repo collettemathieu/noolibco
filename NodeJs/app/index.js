@@ -206,7 +206,7 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 			      
 			        // Execution du script Bash pour executer une fonction de l'application
 			        outputData=await(execFct(nbReq,createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args));	
-			      	outputData = ReplaceExp(outputData,'< M A T L A B (R) > Copyright 1984-2016 The MathWorks, Inc. R2016a','');
+			      	outputData = ReplaceExp(outputData,'< M A T L A B (R) > Copyright','');
 			      	var result = outputData.toString().trim();
 			        result= result.split('<br>').join('').split('<br />').join('').split("\n").join('').split("\r" ).join('');
 			       	result=unescape(encodeURIComponent(result));
