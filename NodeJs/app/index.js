@@ -206,7 +206,11 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 			      
 			        // Execution du script Bash pour executer une fonction de l'application
 			        outputData=await(execFct(nbReq,createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args));	
-			      	outputData = ReplaceExp(outputData,'< M A T L A B (R) > ','');
+			      	// Remove Matlab display
+			      	if(outputData.lastIndexOf('www.mathworks.com.') != -1){
+						outputData = outputData.substring(outputData.lastIndexOf('www.mathworks.com.')+19);
+					}
+
 			      	var result = outputData.toString().trim();
 			        result= result.split('<br>').join('').split('<br />').join('').split("\n").join('').split("\r" ).join('');
 			       	result=unescape(encodeURIComponent(result));
@@ -469,18 +473,6 @@ router.post('/', function(req, res) {
 function escapeHtml(text){
 	return text.split('/&/g').join('&amp;').split('/</g').join('&lt;').split('/>/g').join('&gt;');
 	//.split('/"/g').join('&quot;').split("/'/g").join('&#39;')
-}
-
-function ReplaceExp(expr,a,b) {
-    var i=0
-    while (i!=-1) {
-      i=expr.indexOf(a,i);
-      if (i>=0) {
-        expr=expr.substring(0,i)+b+expr.substring(i+a.length);
-        i+=b.length;
-      }
-    }
-    return expr;
 }
 
 module.exports = router;
