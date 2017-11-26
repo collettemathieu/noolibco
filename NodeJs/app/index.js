@@ -56,7 +56,6 @@ async function getFormData(req){
 		var form = new multiparty.Form();
 		form.parse(req,function(err,fields){
 	 		if(err) {
-	 			//console.log(err);
 	 			return err;
 	 		}
 
@@ -172,9 +171,9 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 					});		
 						
 
-						if(outputData != undefined ) {
-							outputData= escapeShell(outputData);
-						}
+					if(outputData != undefined ) {
+						outputData= escapeShell(outputData);
+					}
 
 					// On récupère les paramètres de la fonction modifiés (ou non) par l'utilisateur
 					var parametres = await(fonction.getParametres());
@@ -236,10 +235,7 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 			
 		}else{
 			messageClient.addErreur(FORMAT_TACHE);
-		}
-			
-			
-		
+		}	
 }
 
 
@@ -263,7 +259,7 @@ execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction
 					
 				});
 		}else{
-			return reject("erreur exec fct");
+			return reject("An error has occurred during the execution of the function.");
 		}
 	});	
 }	
@@ -272,7 +268,6 @@ delFolderInProd = function (utilisateur,nbReq){
 	return new Promise(function(resolve,reject){
 	 	if(utilisateur instanceof User){
 	 			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/SuppressionUtilisateurInProd '+utilisateur.getVariableFixeUtilisateur()+' '+nbReq;
-	 			//console.log(instructions);
 				exec(instructions,function(err){
 					if(err) return resolve(err);
 					return resolve("done");
@@ -281,7 +276,7 @@ delFolderInProd = function (utilisateur,nbReq){
 			
 			
 		}else{
-			return reject("error delFolderInProd");
+			return reject("An error has occured while deleting the folder.");
 		}
 	});
 }
