@@ -206,7 +206,7 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 			      
 			        // Execution du script Bash pour executer une fonction de l'application
 			        outputData=await(execFct(nbReq,createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args));	
-			      	outputData = ReplaceExp(outputData,'< M A T L A B (R) > Copyright 1984-2016 The MathWorks, Inc. R2016a (9.0.0.341360) 64-bit (glnxa64) February 11, 2016 For online documentation, see http://www.mathworks.com/supportFor product information, visit www.mathworks.com. ','');
+			      	outputData = ReplaceExp(outputData,'< M A T L A B (R) >','');
 			      	var result = outputData.toString().trim();
 			        result= result.split('<br>').join('').split('<br />').join('').split("\n").join('').split("\r" ).join('');
 			       	result=unescape(encodeURIComponent(result));
