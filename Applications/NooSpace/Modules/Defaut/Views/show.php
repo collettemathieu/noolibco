@@ -64,3 +64,13 @@
 				</div>
 			</div>
 		</div>
+
+		<div id="overlayDragAndDropData">
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="col-lg-10 centering text-center">
+						<div class="textDragAndDrop">Drop your file to upload!</div>
+					</div>
+				</div>
+			</div>
+		</div>

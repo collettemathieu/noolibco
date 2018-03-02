@@ -11,7 +11,8 @@ $(function(){
 			tabFileResults = [];
 		dataManagerAlreadyOpened = false // Pour connaître le statut du gestionnaire de données
 		addDataAlreadyLoaded = false; // Pour éviter un envoi multiple des formulaires lors de l'ajout de données
-		
+		addData(); // Chargement de nouvelles données
+
 		// Requête pour récupérer la session utilisateur à envoyer à NodeJs
 		$.ajax({
 			url: '/NooSpace/getSession',
@@ -2229,7 +2230,6 @@ function openGestionnaireDonnees(){
 
                     // On traite l'ajout de nouvelles données
                     if(!addDataAlreadyLoaded){
-                        addData();
                         addDataAlreadyLoaded = true;
                     }
 

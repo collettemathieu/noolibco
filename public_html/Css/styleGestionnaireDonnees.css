@@ -317,3 +317,24 @@ input[type="checkbox"]:checked + label{
 .editor{
 	height: 500px;
 }
+
+/* Drag and Drop Data User*/
+#overlayDragAndDropData{
+	display: none;
+	position: absolute;
+	z-index: 10000;
+	top:0px;
+	left:0px;
+	background-color: rgba(0,0,0,0.5);
+	width: 100%;
+	height: 100%;
+	pointer-events: none; /*Prevent event actions of mouse including css hover which provokes bugs with JS dragleave*/
+}
+
+.textDragAndDrop{
+	display: block;
+	border: 5px dashed white;
+	color: white;
+	font-size: 1.7em;
+	padding: 100px 200px 100px 200px;
+}

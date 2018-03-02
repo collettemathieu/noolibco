@@ -15,13 +15,21 @@ function addData(){
   $(document).on('dragover',function(e){
       e.stopPropagation();
       e.preventDefault();
+      $('#overlayDragAndDropData').fadeIn();
   });
   $(document).on('drop',function(e){
       e.stopPropagation();
       e.preventDefault();
-      uploadFile(e.originalEvent.dataTransfer.files);
-      $('#overlayFormulaireAjoutDonneeLocale').modal('show');
+      $('#overlayDragAndDropData').fadeOut();
+      // Si un fichier a été déposé... sinon on ne fait rien.
+      if(typeof e.originalEvent.dataTransfer != 'undefined'){
+        uploadFile(e.originalEvent.dataTransfer.files);
+        $('#overlayFormulaireAjoutDonneeLocale').modal('show');
+      }
   });  
+  $(document).on('dragleave', function(e){
+     $('#overlayDragAndDropData').fadeOut();
+  });
 
   // 2. Par input File
   $('#fileLocalData').change(function(){
