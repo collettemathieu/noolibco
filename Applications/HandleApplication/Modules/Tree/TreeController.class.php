@@ -3461,7 +3461,9 @@ class TreeController extends \Library\BackController
 										$nouvelleFonction = new Fonction(array(
 											'nomFonction' => $fonction->getNomFonction(),
 											'urlFonction' => preg_replace('/([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2})/', $nameVersion, $fonction->getUrlFonction()),
-											'extensionFonction' => $fonction->getExtensionFonction()
+											'extensionFonction' => $fonction->getExtensionFonction(),
+											'languageFonction'=> $fonction->getLanguageFonction(),
+											'versionLangFonction'=> $fonction->getVersionLangFonction()
 											));
 										
 										
