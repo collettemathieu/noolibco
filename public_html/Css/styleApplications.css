@@ -60,13 +60,3 @@ a{
 	height: 700px;
 	border-radius: 10px;
 }
-
-.options{
-	display: block;
-	width: 300px;
-}
-
-.option{
-	display: inline-block;
-	vertical-align: middle;
-}

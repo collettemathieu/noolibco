@@ -17,53 +17,25 @@ application.directive('aceEditor', ['$compile', '$http', function($compile, $htt
 	return{
 		restrict: 'A',
 		link: function(scope, element, attrs){
-			
-			var editor = ace.edit(element[0]);
-			editor.$blockScrolling = Infinity; // Remove warning
-			editor.setHighlightActiveLine(true); // Underline
+
+			// On contrôle si le format du fichier est du JAR ou non
 			if(typeof scope.textFunction != 'undefined'){
+				var editor = ace.edit(element[0]);
+				editor.$blockScrolling = Infinity; // Remove warning
+				editor.setHighlightActiveLine(true); // Underline
 				editor.setValue(scope.textFunction, 1);
+				scope.textEditor = editor.getValue();
+				editor.setTheme('ace/theme/monokai'); // Edit the theme
+				editor.getSession().on('change', function(e) {
+				    scope.textEditor = editor.getValue();
+				});
+
+				switchMode(scope.extFunction); //Chgt de mode
+			}else{
+				element.removeClass('editor');
+				element.addClass('alert alert-danger');
+				element.append('We cannot display this type of file (e.g. jar file).');
 			}
-			scope.textEditor = editor.getValue();
-			editor.setTheme('ace/theme/monokai'); // Edit the theme
-			editor.getSession().on('change', function(e) {
-			    scope.textEditor = editor.getValue();
-			});
-
-			switchMode(scope.extFunction); //Chgt de mode
-
-			// On s'abonne à l'évènement de la dropZone
-			scope.$on('dropEnded', function(evt, value){
-				if(value){
-					// On récupère le texte de la fonction
-					$http({
-						method: 'POST',
-						url: '/HandleApplication/GetTextFunction',
-						headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-						transformRequest: function(obj) {
-					        var str = [];
-					        for(var p in obj)
-					        	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-					        return str.join("&");
-					    },
-						data: {
-							idFunction: scope.idFunction,
-							idApp: scope.application.id,
-							idVersion: scope.idVersion
-						}
-					})
-					.success(function(response){
-						editor.setValue(response['text'], 1);
-						switchMode(response['ext']);
-					})
-					.error(function(error){
-						var response = {
-							'erreurs': '<p>A system error has occurred: '+error+'</p>'
-						};
-						displayInformationsClient(response);
-					});
-				}
-			});
 
 			// Edit the mode
 			function switchMode(ext){

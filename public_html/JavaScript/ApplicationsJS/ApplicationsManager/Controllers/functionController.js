@@ -20,22 +20,13 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 	$scope.close = function(){
 		 $uibModalInstance.dismiss('cancel');
 	};
-
+	
 	// Initialisation des variables
 	$scope.idFunction = idFunction;
-	$scope.urlDropZone = '/HandleApplication/ValidModifFonction';
-	$scope.textFunction = dataFunction['text'];
 	$scope.extFunction = dataFunction['ext'];
 	$scope.tableLanguages = tableLanguages;
 	$scope.language = dataFunction['lang']+' '+dataFunction['versionLang'];
-
-	// On s'abonne à l'évènement de la dropZone
-	$scope.$on('dropEnded', function(evt, value){
-		if(value){
-			// Evènement de l'arbre des applications
-			$scope.$emit('treeHasChanged', false);
-		}
-	});
+	$scope.textFunction = dataFunction['text'];
 
 	// Pour supprimer la fonction
 	$scope.formValidDeleteFunction = function(e){
@@ -89,7 +80,8 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 				idApp: $scope.application.id,
 				textFunction: $scope.textEditor,
 				idFunction: $scope.idFunction,
-				idVersion: $scope.idVersion
+				idVersion: $scope.idVersion,
+				language: $scope.language
 			}
         })
 		.success(function(response){

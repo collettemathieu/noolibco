@@ -1,11 +1,14 @@
 <?php 
 if(isset($texteSource) && isset($fonction)){
 	$reponse = array(
-		'text' => $texteSource,
 		'ext' => $fonction->getExtensionFonction(),
 		'lang' => $fonction->getLanguageFonction(),
 		'versionLang' => $fonction->getVersionLangFonction()
 		);
+	// On n'affiche par les .jar
+	if($fonction->getExtensionFonction() != 'jar'){
+		$reponse['text'] = $texteSource;
+	}
 
 	
 }elseif($user->getMessageClient()->hasErreur()){

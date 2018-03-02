@@ -7,24 +7,23 @@
 		<div class="col-lg-12">
 			<br><div class="editor" ace-editor></div><br>
 		</div>
-		<div class="col-lg-12">
-			<div class="options centering txt-center">
-				<drop-zone class="option"></drop-zone>
-				<div class="option textFormat">-- OR --</div>
-				<form class="option">
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon">Select a programming language</div>
-							<select name="languages" ng-model="language" ng-options="language for language in tableLanguages" class="form-control input-sm" required select-design-directive data-live-search="false"></select>
+	</div>
+	<div class="row">
+		<div class="col-lg-5 centering">
+			<form>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-addon">Language</div>
+						<select name="languages" ng-model="language" ng-options="language for language in tableLanguages" class="form-control input-sm" required select-design-directive data-live-search="false"></select>
+						<div class="input-group-btn">
+							<button ng-click="validTextFunction()" class="btn btn-primary">
+								<div ng-hide="displayButtonForm">Save</div>
+								<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
+							</button>
 						</div>
 					</div>
-				</form>
-				<button ng-click="validTextFunction()" class="option btn btn-primary">
-					<div ng-hide="displayButtonForm">Save</div>
-					<div ng-show="displayButtonForm"><span class="glyphicon glyphicon-refresh spinning" ></span> Loading...</div>
-				</button>	
-			</div>
-		</div>
+				</div>
+			</form>
 	</div><br>
 	
 	<div class="modal-footer">
