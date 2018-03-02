@@ -100,9 +100,6 @@ class FileUpload extends \Library\File{
 						$this->setErreurs('An technical error has occurred. No file saved.');
 						return false;
 					}
-				
-				
-
 			}else{
 				$this->setErreurs('FILEUPLOAD :: The folder or file is empty.');
 				return false;

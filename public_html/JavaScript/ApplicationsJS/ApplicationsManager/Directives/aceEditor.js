@@ -34,7 +34,7 @@ application.directive('aceEditor', ['$compile', '$http', function($compile, $htt
 			}else{
 				element.removeClass('editor');
 				element.addClass('alert alert-danger');
-				element.append('We cannot display this type of file (e.g. jar file).');
+				element.append('We cannot display this type of file (such as JAR file).');
 			}
 
 			// Edit the mode

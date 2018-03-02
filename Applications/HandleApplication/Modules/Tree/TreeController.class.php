@@ -1667,119 +1667,136 @@ class TreeController extends \Library\BackController
 								// Type et Version du langage utilisé
 								$language = $request->getPostData('language'); 
 								if(isset($language) && !empty($language) && $language != 'undefined'){
+									
+									// On sépare la version du nom du langage de programmation
+									list($nameLang, $versionLang) = explode(' ',$language);
+
 									$tagName = array( 'categorie' => 'application', 'sousCategorie' => 'source');
 									// On charge l'objet File avec la configuration du fichier source de l'application
 									$file = $this->getApp()->getFileUpload('urlFonction', $tagName);
 
 									if(count($file->getErreurs()) == 0){
+
 										// En paramètre on renseigne l'utilisateur, le sous-dossier de l'application et le sous-sous-dossier du numéro de version
 										$file->validFileUpload($application->getCreateur(), $application->getVariableFixeApplication(), $version->getNumVersion());
 
 										if(count($file->getErreurs()) == 0){
 
-											// On sépare la version du nom du langage de programmation
-											list($nameLang, $versionLang) = explode(' ',$language);
+											// On vérifie que l'extension du fichier correspond au langage choisi par l'utilisateur
+											$config = $this->getApp()->getConfig();
+											$tableLanguages = explode(';',$config->getVar('application', 'languages', 'matchNameExt'));
+											$listExt = array();
+											foreach ($tableLanguages as $value) {
+												list($langage, $ext) = explode(' ',$value);
+												$listExt[$langage] = $ext;
+											}
 
-											// On crée une nouvelle fonction
-											$nouvelleFonction = new Fonction(array(
-												'nomFonction' => 'Function xx',
-												'urlFonction' => $file->getFilePath(),
-												'languageFonction' => $nameLang,
-												'versionLangFonction' => $versionLang,
-												'extensionFonction' => $file->getFileExtension()
-												));
-											if(sizeof($nouvelleFonction->getErreurs()) == 0){
-												
-												// S'il n'y a pas d'erreur, on enregistre le fichier source sur le serveur
-												if($file->depositFileUpload()){
+											if($listExt[$nameLang] === $file->getFileExtension()){
+										
+												// On crée une nouvelle fonction
+												$nouvelleFonction = new Fonction(array(
+													'nomFonction' => 'Function xx',
+													'urlFonction' => $file->getFilePath(),
+													'languageFonction' => $nameLang,
+													'versionLangFonction' => $versionLang,
+													'extensionFonction' => $file->getFileExtension()
+													));
+												if(sizeof($nouvelleFonction->getErreurs()) == 0){
 													
-													// On appelle le manager des tâches
-													$managerFonction = $this->getManagers()->getManagerOf('Fonction');
-													// On appelle le manager des versions-tâches
-													$managerTacheFonction = $this->getManagers()->getManagerOf('TacheFonction');
-													// On appelle le manager des tâches
-													$managerTache = $this->getManagers()->getManagerOf('Tache');
+													// S'il n'y a pas d'erreur, on enregistre le fichier source sur le serveur
+													if($file->depositFileUpload()){
+														
+														// On appelle le manager des tâches
+														$managerFonction = $this->getManagers()->getManagerOf('Fonction');
+														// On appelle le manager des versions-tâches
+														$managerTacheFonction = $this->getManagers()->getManagerOf('TacheFonction');
+														// On appelle le manager des tâches
+														$managerTache = $this->getManagers()->getManagerOf('Tache');
 
-													// On récupère la tâche si elle existe
-													$tache = $managerTache->getTacheById($idTache);
+														// On récupère la tâche si elle existe
+														$tache = $managerTache->getTacheById($idTache);
 
-													// On crée l'objet TacheFonction s'il existe
-													if($tache){
-														$numberFonction = count($tache->getFonctions())+1;
-														$nouvelleFonction->hydrate(array(
-															'nomFonction' => 'Function '.$numberFonction
-															));
-
-														// On insère dans la BDD la nouvelle fonction de la tâche, l'Id de la nouvelle fonction est mis à jour.
-														$managerFonction->addFonction($nouvelleFonction);
-
-														$tacheFonction = new TacheFonction(array(
-															'tache' => $tache,
-															'fonction' => $nouvelleFonction,
-															'ordre' => $managerTacheFonction->getLastOrdreOfFonctions($tache->getIdTache()) + 1
-															));
-
-														if(sizeof($tacheFonction->getErreurs()) == 0){
-															// On met à la jour la Tache-Fonction de la BDD
-															$managerTacheFonction->addTacheFonction($tacheFonction);
-
-															// On met à jour l'application en session
-															$managerApplication = $this->getManagers()->getManagerOf('Application');
-															$applicationUpdated = $managerApplication->getApplicationByIdWithAllParameters($application->getIdApplication());
-													
-															// On rend la version inactive et si aucune autre version active, on rend l'application inactive
-															// On appelle le manager des versions
-															$managerVersion = $this->getManagers()->getManagerOf('Version');
-
-															$version->hydrate(array(
-																'activeVersion' => false
+														// On crée l'objet TacheFonction s'il existe
+														if($tache){
+															$numberFonction = count($tache->getFonctions())+1;
+															$nouvelleFonction->hydrate(array(
+																'nomFonction' => 'Function '.$numberFonction
 																));
-															$managerVersion->saveVersion($version);
 
-															$otherActiveVersion = false;
-															foreach($application->getVersions() as $versionApp){
-																if($versionApp->getIdVersion() != $version->getIdVersion()){
-																	if($versionApp->getActiveVersion()){
-																		$otherActiveVersion = true;
+															// On insère dans la BDD la nouvelle fonction de la tâche, l'Id de la nouvelle fonction est mis à jour.
+															$managerFonction->addFonction($nouvelleFonction);
+
+															$tacheFonction = new TacheFonction(array(
+																'tache' => $tache,
+																'fonction' => $nouvelleFonction,
+																'ordre' => $managerTacheFonction->getLastOrdreOfFonctions($tache->getIdTache()) + 1
+																));
+
+															if(sizeof($tacheFonction->getErreurs()) == 0){
+																// On met à la jour la Tache-Fonction de la BDD
+																$managerTacheFonction->addTacheFonction($tacheFonction);
+
+																// On met à jour l'application en session
+																$managerApplication = $this->getManagers()->getManagerOf('Application');
+																$applicationUpdated = $managerApplication->getApplicationByIdWithAllParameters($application->getIdApplication());
+														
+																// On rend la version inactive et si aucune autre version active, on rend l'application inactive
+																// On appelle le manager des versions
+																$managerVersion = $this->getManagers()->getManagerOf('Version');
+
+																$version->hydrate(array(
+																	'activeVersion' => false
+																	));
+																$managerVersion->saveVersion($version);
+
+																$otherActiveVersion = false;
+																foreach($application->getVersions() as $versionApp){
+																	if($versionApp->getIdVersion() != $version->getIdVersion()){
+																		if($versionApp->getActiveVersion()){
+																			$otherActiveVersion = true;
+																		}
 																	}
 																}
+
+																if(!$otherActiveVersion){
+																	// On appelle le manager des statuts
+																	$managerStatut = $this->getManagers()->getManagerOf('StatutApplication');
+																	// On met à jour le statut de l'application
+																	$applicationUpdated->hydrate(array(
+																		'statut' => $managerStatut->getStatutByNom('Inactive')
+																	));
+																	// On met à jour le statut de l'application
+																	$managerApplication->saveStatutApplication($applicationUpdated);
+																}
+
+																// On met à jour le dock des applications
+																$this->updateDockApplication($applicationUpdated);
+
+																// On retourne un message de confirmation
+																$user->getMessageClient()->addReussite(self::TREE_FUNCTION_ADDED);
+															}else{
+																
+																// On ajoute la variable d'erreurs à la page
+																$user->getMessageClient()->addErreur($tacheFonction->getErreurs());
 															}
-
-															if(!$otherActiveVersion){
-																// On appelle le manager des statuts
-																$managerStatut = $this->getManagers()->getManagerOf('StatutApplication');
-																// On met à jour le statut de l'application
-																$applicationUpdated->hydrate(array(
-																	'statut' => $managerStatut->getStatutByNom('Inactive')
-																));
-																// On met à jour le statut de l'application
-																$managerApplication->saveStatutApplication($applicationUpdated);
-															}
-
-															// On met à jour le dock des applications
-															$this->updateDockApplication($applicationUpdated);
-
-															// On retourne un message de confirmation
-															$user->getMessageClient()->addReussite(self::TREE_FUNCTION_ADDED);
-														}else{
-															
+														}
+														else{
 															// On ajoute la variable d'erreurs à la page
-															$user->getMessageClient()->addErreur($tacheFonction->getErreurs());
+															$user->getMessageClient()->addErreur(self::NO_TASK);
 														}
 													}
 													else{
 														// On ajoute la variable d'erreurs à la page
-														$user->getMessageClient()->addErreur(self::NO_TASK);
+														$user->getMessageClient()->addErreur($file->getErreurs());
 													}
-												}
-												else{
+												}else{
+													
 													// On ajoute la variable d'erreurs à la page
-													$user->getMessageClient()->addErreur($file->getErreurs());
+													$user->getMessageClient()->addErreur($nouvelleFonction->getErreurs());
 												}
 											}else{
-												
-												// On ajoute la variable d'erreurs à la page
-												$user->getMessageClient()->addErreur($nouvelleFonction->getErreurs());
+												// On ajoute la variable d'erreurs
+												$user->getMessageClient()->addErreur(self::TREE_LANGUAGE_DOES_NOT_MATCH_EXT);
 											}
 										}else{
 											// On ajoute la variable d'erreurs à la page
@@ -2653,8 +2670,8 @@ class TreeController extends \Library\BackController
 									$fonction = $managerFonction->getFonctionById($idFonction);
 
 									// On affiche les premières lignes du fichier source
+									$texte = '';
 									if($fichierSource = fopen($fonction->getUrlFonction(), 'r')){
-										$texte = '';
 										while($line = fgets($fichierSource)){
 											$texte .= $line;
 										}
@@ -2993,9 +3010,25 @@ class TreeController extends \Library\BackController
 											fputs($fp, htmlspecialchars_decode($request->getPostData('textFunction')));
 											// On ferme le fichier
 											fclose($fp);
+											/**
+											* On renomme le fichier avec la nouvelle extension
+											*/
+											// On récupère les extensions de fichiers en lien avec le nom des langages
+											$config = $this->getApp()->getConfig();
+											$tableLanguages = explode(';',$config->getVar('application', 'languages', 'matchNameExt'));
+											$listExt = array();
+											foreach ($tableLanguages as $value) {
+												list($langage, $ext) = explode(' ',$value);
+												$listExt[$langage] = $ext;
+											}
+
+											$newExtFile = $listExt[$nameLang];
+											$newUrlFile = $fonctionAModifier->getUrlFonction().'.'.$newExtFile;
 
 											// On met à jour la fonction dans la BDD
 											$fonctionAModifier->hydrate(array(
+												'urlFonction' => $newUrlFile,
+												'extensionFonction' => $newExtFile,
 												'versionLangFonction' => $versionLang,
 												'languageFonction' => $nameLang
 												));

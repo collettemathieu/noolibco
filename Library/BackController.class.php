@@ -114,8 +114,9 @@ abstract class BackController extends ApplicationComponent
 	const TREE_VERSION_WRONG = 'Enter a valid version name (eg. 1.0.0).';
 	const TREE_VERSION_NOT_CORRECT = 'Sorry, the version number entered must be posterior to the previous.';
 	const TREE_VERSION_CREATED = 'A new version has been created successfully.';
-	const TREE_VERSION_LANGUAGE_REQUIRED = 'The version of the programming language used is required.';
+	const TREE_VERSION_LANGUAGE_REQUIRED = 'The name of the programming language used is required.';
 	const TREE_NO_TEXT_FUNCTION = 'Sorry, no text has been sent to update the function.';
+	const TREE_LANGUAGE_DOES_NOT_MATCH_EXT = 'The language selected does not match with the extension of the file uploaded.';
 
 	/* Library */
 	const LIBRARY_NO_AUTHOR = 'This contributor does not exist anymore.';

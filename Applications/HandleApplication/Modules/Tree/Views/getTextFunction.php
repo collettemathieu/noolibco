@@ -5,8 +5,8 @@ if(isset($texteSource) && isset($fonction)){
 		'lang' => $fonction->getLanguageFonction(),
 		'versionLang' => $fonction->getVersionLangFonction()
 		);
-	// On n'affiche par les .jar
-	if($fonction->getExtensionFonction() != 'jar'){
+	// On n'affiche que les sources lisibles
+	if(!empty($texteSource)){
 		$reponse['text'] = $texteSource;
 	}
 

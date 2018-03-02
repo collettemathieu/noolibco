@@ -20,7 +20,7 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 	$scope.close = function(){
 		 $uibModalInstance.dismiss('cancel');
 	};
-	
+
 	// Initialisation des variables
 	$scope.idFunction = idFunction;
 	$scope.extFunction = dataFunction['ext'];
@@ -85,7 +85,6 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 			}
         })
 		.success(function(response){
-			
 			displayInformationsClient(response);
 			// Position par defaut du bouton envoyer
 			$scope.displayButtonForm = false;
