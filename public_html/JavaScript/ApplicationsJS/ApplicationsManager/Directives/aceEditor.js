@@ -30,11 +30,14 @@ application.directive('aceEditor', ['$compile', '$http', function($compile, $htt
 				    scope.textEditor = editor.getValue();
 				});
 
-				switchMode(scope.extFunction); //Chgt de mode
+				//switchMode(scope.extFunction); //Chgt de mode
+				scope.$watch('extFunction',function(newValue){
+					switchMode(newValue); // Chgt de mode lorsqu'il y a une modification enregistrée
+				});
 			}else{
 				element.removeClass('editor');
 				element.addClass('alert alert-danger');
-				element.append('We cannot display this type of file (such as JAR file).');
+				element.append('Sorry, we cannot display this kind of file (compressed format?).');
 			}
 
 			// Edit the mode

@@ -3003,13 +3003,10 @@ class TreeController extends \Library\BackController
 										if(!$fp = fopen($fonctionAModifier->getUrlFonction(), 'w')){
 
 											// Envoi d'une erreur
-											$user->getMessageClient()->addErreur("Le fichier n'est pas ouvert.");
+											$user->getMessageClient()->addErreur(self::TREE_ERROR_FILE_OPENED);
 
 										}else{
-											// On modifie le fichier
-											fputs($fp, htmlspecialchars_decode($request->getPostData('textFunction')));
-											// On ferme le fichier
-											fclose($fp);
+											
 											/**
 											* On renomme le fichier avec la nouvelle extension
 											*/
@@ -3023,7 +3020,8 @@ class TreeController extends \Library\BackController
 											}
 
 											$newExtFile = $listExt[$nameLang];
-											$newUrlFile = $fonctionAModifier->getUrlFonction().'.'.$newExtFile;
+											$oldUrlFile = $fonctionAModifier->getUrlFonction();
+											$newUrlFile = substr($oldUrlFile,0,strrpos($oldUrlFile, '.')).'.'.$newExtFile;
 
 											// On met à jour la fonction dans la BDD
 											$fonctionAModifier->hydrate(array(
@@ -3033,39 +3031,53 @@ class TreeController extends \Library\BackController
 												'languageFonction' => $nameLang
 												));
 
-											$managerFonction->saveFonction($fonctionAModifier);
+											if(count($fonctionAModifier->getErreurs()) == 0){
+												$managerFonction->saveFonction($fonctionAModifier);
 
-											// On rend la version inactive et si aucune autre version, on rend l'application inactive
-											// On appelle le manager des versions
-											$managerVersion = $this->getManagers()->getManagerOf('Version');
+												// On modifie le fichier en dur
+												fputs($fp, htmlspecialchars_decode($request->getPostData('textFunction')));
+												// On ferme le fichier
+												fclose($fp);
 
-											$version->hydrate(array(
-												'activeVersion' => false
-												));
-											$managerVersion->saveVersion($version);
+												// On renomme le fichier en dur
+												rename($oldUrlFile, $newUrlFile);
 
-											$otherActiveVersion = false;
-											foreach($application->getVersions() as $versionApp){
-												if($versionApp->getIdVersion() != $version->getIdVersion()){
-													if($versionApp->getActiveVersion()){
-														$otherActiveVersion = true;
+												// On rend la version inactive et si aucune autre version, on rend l'application inactive
+												// On appelle le manager des versions
+												$managerVersion = $this->getManagers()->getManagerOf('Version');
+
+												$version->hydrate(array(
+													'activeVersion' => false
+													));
+												$managerVersion->saveVersion($version);
+
+												$otherActiveVersion = false;
+												foreach($application->getVersions() as $versionApp){
+													if($versionApp->getIdVersion() != $version->getIdVersion()){
+														if($versionApp->getActiveVersion()){
+															$otherActiveVersion = true;
+														}
 													}
 												}
-											}
 
-											if(!$otherActiveVersion){
-												// On appelle le manager des statuts
-												$managerStatut = $this->getManagers()->getManagerOf('StatutApplication');
-												// On met à jour le statut de l'application
-												$application->hydrate(array(
-													'statut' => $managerStatut->getStatutByNom('Inactive')
-												));
-												// On met à jour le statut de l'application
-												$managerApplication->saveStatutApplication($application);
-											}
+												if(!$otherActiveVersion){
+													// On appelle le manager des statuts
+													$managerStatut = $this->getManagers()->getManagerOf('StatutApplication');
+													// On met à jour le statut de l'application
+													$application->hydrate(array(
+														'statut' => $managerStatut->getStatutByNom('Inactive')
+													));
+													// On met à jour le statut de l'application
+													$managerApplication->saveStatutApplication($application);
+												}
 
-											// On envoie un message
-											$user->getMessageClient()->addReussite(self::TREE_FUNCTION_EDITED);
+												// On envoie un message
+												$user->getMessageClient()->addReussite(self::TREE_FUNCTION_EDITED);
+												// On envoie la nouvelle fonction à la page
+												$this->getPage()->addVar('extensionFonction',$newExtFile);
+											}else{
+												$user->getMessageClient()->addErreur($fonctionAModifier->getErreurs());
+											}
 										}
 									}else{
 										// On ajoute la variable d'erreurs

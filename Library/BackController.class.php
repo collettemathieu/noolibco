@@ -117,6 +117,7 @@ abstract class BackController extends ApplicationComponent
 	const TREE_VERSION_LANGUAGE_REQUIRED = 'The name of the programming language used is required.';
 	const TREE_NO_TEXT_FUNCTION = 'Sorry, no text has been sent to update the function.';
 	const TREE_LANGUAGE_DOES_NOT_MATCH_EXT = 'The language selected does not match with the extension of the file uploaded.';
+	const TREE_ERROR_FILE_OPENED = 'The file asked cannot be opened.';
 
 	/* Library */
 	const LIBRARY_NO_AUTHOR = 'This contributor does not exist anymore.';

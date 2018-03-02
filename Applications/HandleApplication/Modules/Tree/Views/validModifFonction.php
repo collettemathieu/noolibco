@@ -5,7 +5,8 @@ if($user->getMessageClient()->hasReussite()){
 		$texte .= '<p>'.$reussite.'</p>';
 	}
 	$reponse = array(
-				'reussites' => $texte
+				'reussites' => $texte,
+				'extFonction' => $extensionFonction
 			);
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';

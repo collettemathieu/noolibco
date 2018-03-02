@@ -90,6 +90,7 @@ application.controller('functionController', ['$scope', '$uibModalInstance', '$h
 			$scope.displayButtonForm = false;
 			// Evènement de l'arbre des applications
 			$scope.$emit('treeHasChanged', false);
+			$scope.extFunction = response['extFonction'];
 		})
 		.error(function(error){
 			var response = {
