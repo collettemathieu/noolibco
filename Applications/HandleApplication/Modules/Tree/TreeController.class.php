@@ -293,6 +293,34 @@ class TreeController extends \Library\BackController
 		}
 	}
 
+	/**
+	* Méthode pour récupérer les types de langages de programmation
+	*/
+	public function executeGetLanguages($request){
+		// On détecte qu'il sagit bien d'une requête AJAX sinon on ne fait rien.
+		if ($request->isAjaxRequest()) {
+			// On récupère l'utilisateur système
+			$user = $this->app->getUser();
+
+			// On informe que c'est un chargement Ajax
+			$user->setAjax(true);
+
+			// On récupére une instance de config
+			$config = $this->getApp()->getConfig();
+
+			// On récupère les langages de programmation
+			$tableLanguages = explode(';',$config->getVar('application', 'languages', 'name'));
+
+			// On envoie la réponse à la page
+			$this->page->addVar('tableLanguages',$tableLanguages);
+
+		}else{
+			// On procède à la redirection
+			$response = $this->app->getHTTPResponse();
+			$response->redirect('/');
+		}
+	}
+
 
 	/**
 	* Méthode pour récupérer les types de paramètres
@@ -2635,7 +2663,7 @@ class TreeController extends \Library\BackController
 									}
 
 									$this->page->addVar('texteSource', $texte);
-									$this->page->addVar('ext', $fonction->getExtensionFonction());
+									$this->page->addVar('fonction', $fonction);
 								}else{
 									// On ajoute la variable d'erreurs
 									$user->getMessageClient()->addErreur(self::DENY_HANDLE_FUNCTION);

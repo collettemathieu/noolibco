@@ -37,7 +37,7 @@ if [ -f $homenoolibco/Files/Sources/$1/$3/$4/$5 ]; then
 			fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app noolibco/python:3-alpine python3 "$fichier;
 		elif [ $version = '2.7' ]
 		then
-			fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app noolibco/python:2-apline python "$fichier;
+			fonctionLancer=$dockerPath" 15s -v $usrPath:/app -w /app noolibco/python:2-alpine python "$fichier;
 		else
 			echo "Python version $fichier not supported"
 		fi
@@ -81,6 +81,7 @@ if [ -f $homenoolibco/Files/Sources/$1/$3/$4/$5 ]; then
 	then
 		paramsModifier=$paramsModifier"};run('$fichier');";
 	fi	
+
 $fonctionLancer $paramsModifier;
 #EOF
 fi

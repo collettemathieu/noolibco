@@ -18,6 +18,7 @@
 
 
 	<route url="/HandleApplication/GetTypeData" module="Tree" action="getTypeData"/>
+	<route url="/HandleApplication/GetLanguages" module="Tree" action="getLanguages"/>
 	<route url="/HandleApplication/GetTextFunction" module="Tree" action="getTextFunction"/>
 	<route url="/HandleApplication/ValidFormTache" module="Tree" action="validFormTache"/>
 	<route url="/HandleApplication/ValidFormFonction" module="Tree" action="validFormFonction"/>

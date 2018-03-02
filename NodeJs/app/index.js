@@ -205,6 +205,7 @@ function executeRun(nbReq,fields,currentUtilisateur, applicationRunning,numVersi
 			      
 			        // Execution du script Bash pour executer une fonction de l'application
 			        outputData=await(execFct(nbReq,createur,currentUtilisateur, applicationRunning, numVersionRunning, fonction, args));	
+			      
 			      	// Remove Matlab display
 			      	if(outputData.lastIndexOf('www.mathworks.com.') != -1){
 						outputData = outputData.substring(outputData.lastIndexOf('www.mathworks.com.')+19);
@@ -253,7 +254,7 @@ execFct = function(nbReq,createur, utilisateur, application, numVersion,fonction
 			var nameFunction = strrchr(fonction.getUrlFonction(),'/').substr(1);
 			var versionLanguage = fonction.getVersionLangFonction();
 			var instructions = '/home/noolibco/Library/ScriptsBash/Debian/LancementApplicationServeurProd '+nomCreateur+' '+nomUtilisateur+' '+nomApplication+' '+numVersion+' '+nameFunction+' '+nbReq+' '+versionLanguage+' '+args;
-			console.log(versionLanguage);
+			
 				var resultat=exec(instructions + '2>&1', {maxBuffer: 1024*50000} ,async function(err,stdout,stderr){
 					if(err)  return resolve(err);
 					if(stderr){

@@ -243,8 +243,26 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 														});
 
 														return deferred.promise;
-													}
-											      ]
+													}],
+													// On récupère les langages de programmation
+													tableLanguages: ['$http','$q',function($http,$q){
+														var deferred = $q.defer(); // On créé une promise
+														$http({
+															url:'/HandleApplication/GetLanguages',
+															method:'POST',
+															headers:{'Content-Type': 'application/x-www-form-urlencoded'}
+														})
+														.success(function(response){
+															deferred.resolve(response);
+														})
+														.error(function(error){
+															var response = {
+																'erreurs': '<p>A system error has occurred: '+error+'</p>'
+															}
+															displayInformationsClient(response);
+														});
+														return deferred.promise;
+													}]
 												}
 										    });
 		                                }else{
@@ -258,7 +276,26 @@ application.directive('treeApplication', ['$uibModal', 'applicationService', fun
 												resolve: {
 													idTache: function(){
 														return idTache;
-													}
+													},
+													// On récupère les langages de programmation
+													tableLanguages: ['$http', '$q', function($http, $q){
+														var deferred = $q.defer(); // On créé une promise
+														$http({
+															method: 'POST',
+															url:'/HandleApplication/GetLanguages',
+															headers: {'Content-Type': 'application/x-www-form-urlencoded'},	
+														})
+														.success(function(response){
+															deferred.resolve(response);
+														})
+														.error(function(error){
+															var response = {
+																'erreurs': '<p>A system error has occurred: '+error+'</p>'
+															};
+															displayInformationsClient(response);
+														});
+														return deferred.promise;
+													}]
 												}
 										    });
 		                                }

@@ -14,7 +14,7 @@
  * @version: 1
  */
 
-application.controller('newFunctionController', ['$scope', '$uibModalInstance', '$http', 'idTache', function($scope, $uibModalInstance, $http, idTache){
+application.controller('newFunctionController', ['$scope', '$uibModalInstance', '$http', 'idTache', 'tableLanguages', function($scope, $uibModalInstance, $http, idTache, tableLanguages){
 	
 	// Pour fermer la fenêtre modale
 	$scope.close = function(){
@@ -24,7 +24,7 @@ application.controller('newFunctionController', ['$scope', '$uibModalInstance', 
 	// Initialisation des variables
 	$scope.idTache = idTache;
 	$scope.urlDropZone = '/HandleApplication/ValidFormFonction';
-	$scope.tableLanguages = ['python 2.7','python 3.4'];
+	$scope.tableLanguages = tableLanguages;
 	$scope.language = '';
 
 	// On s'abonne à l'évènement de la dropZone

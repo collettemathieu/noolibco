@@ -1,12 +1,6 @@
 <?php 
-if(isset($texteSource) && isset($fonction)){
-	$reponse = array(
-		'text' => $texteSource,
-		'ext' => $fonction->getExtensionFonction(),
-		'lang' => $fonction->getLanguageFonction(),
-		'versionLang' => $fonction->getVersionLangFonction()
-		);
-
+if(isset($tableLanguages)){
+	$reponse = $tableLanguages;
 	
 }elseif($user->getMessageClient()->hasErreur()){
 	$texte = '';
@@ -22,7 +16,7 @@ if(isset($texteSource) && isset($fonction)){
 	);
 }
 
-// On envoie la réponse au format text
+// On envoie la réponse au format JSON
 echo json_encode($reponse);
 
 ?>
