@@ -596,7 +596,9 @@ trait MethodeApplicationControleur
 						$nouvelleFonction = new Fonction(array(
 							'nomFonction' => $fonction->getNomFonction(),
 							'urlFonction' => $newUrl,
-							'extensionFonction' => $fonction->getExtensionFonction()
+							'extensionFonction' => $fonction->getExtensionFonction(),
+							'languageFonction' => $fonction->getLanguageFonction(),
+							'versionLangFonction' => $fonction->getVersionLangFonction()
 							));
 						
 						
