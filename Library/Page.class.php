@@ -17,8 +17,15 @@ namespace Library;
  * @version: 1
  */
 
-class Page extends ApplicationComponent
-{
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\OAuth;
+use PHPMailer\PHPMailer\Exception;
+
+require '../vendor/autoload.php';
+
+class Page extends ApplicationComponent{
+
 	protected $contentFile,
 			  $vars = array();
 
@@ -168,6 +175,45 @@ class Page extends ApplicationComponent
 					$destinataires = implode(', ', $destinataires);
 				}
 
+				$mail = new PHPMailer(true);// Passing `true` enables exceptions
+				try {
+				    //Server settings
+				    $mail->SMTPDebug = 4; // Enable verbose debug output
+				    $mail->isSMTP(); // Set mailer to use SMTP
+				    $mail->Host = 'mail.noolib.com'; // Specify main and backup SMTP servers
+				    $mail->SMTPAuth = true; // Enable SMTP authentication
+				    $mail->Username = 'collettemathieu@noolib.com'; // SMTP username
+				    $mail->Password = 'VN9>{Br&36jw'; // SMTP password
+				    $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
+				    $mail->Port = 25; // TCP port to connect to
+
+				    //Recipients
+				    $mail->setFrom('collettemathieu@noolib.com', 'collettemathieu');
+				    //$mail->addAddress('joe@example.net', 'Joe User'); // Add a recipient
+				    $mail->addAddress($destinataires); // Name is optional
+				    //$mail->addReplyTo('info@example.com', 'Information');
+				    //$mail->addCC('cc@example.com');
+				    //$mail->addBCC('bcc@example.com');
+
+				    //Attachments
+				    //$mail->addAttachment('/var/tmp/file.tar.gz'); // Add attachments
+				    //$mail->addAttachment('/tmp/image.jpg', 'new.jpg'); // Optional name
+
+				    //Content
+				    $mail->isHTML(true); // Set email format to HTML
+				    $mail->Subject = $titreMail;
+				    $mail->Body    = $texteCompletMail;
+				    //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+				    $mail->send();
+				    
+				    $user->getMessageClient()->addReussite('An email has been sent to '.$destinataires);
+				} catch (Exception $e) {
+					$user->getMessageClient()->addErreur('MAIL :: No email sent to '.$destinataires.' : '.$mail->ErrorInfo);
+				}
+
+
+				/*
 				// On créé un délimiteur
 				$delimiteur = md5(uniqid(mt_rand()));		
 		
@@ -203,6 +249,7 @@ class Page extends ApplicationComponent
 				}else{
 					$user->getMessageClient()->addErreur('MAIL :: No email sent to '.$destinataires);
 				}
+				*/
 
 			}else{
 				$user->getMessageClient()->addErreur('MAIL :: No specific e-mail address entered.');
