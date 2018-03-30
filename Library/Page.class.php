@@ -175,13 +175,14 @@ class Page extends ApplicationComponent{
 					$destinataires = implode(', ', $destinataires);
 				}
 
+				/*
 				$mail = new PHPMailer(true);// Passing `true` enables exceptions
 				try {
 				    //Server settings
 				    $mail->SMTPDebug = 2; // Enable verbose debug output
 				    $mail->isSMTP(); // Set mailer to use SMTP
 				    $mail->Host = 'mail.noolib.com'; // Specify main and backup SMTP servers
-				    $mail->SMTPAuth = false; // Enable SMTP authentication
+				    $mail->SMTPAuth = true; // Enable SMTP authentication
 				    $mail->Username = 'contactteam@noolib.com'; // SMTP username
 				    $mail->Password = 'A7B7{G;vhj3}'; // SMTP password
 				    $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
@@ -212,8 +213,8 @@ class Page extends ApplicationComponent{
 					$user->getMessageClient()->addErreur('MAIL :: No email sent to '.$destinataires.' : '.$mail->ErrorInfo);
 				}
 
-
-				/*
+				*/
+				
 				// On créé un délimiteur
 				$delimiteur = md5(uniqid(mt_rand()));		
 		
@@ -249,7 +250,7 @@ class Page extends ApplicationComponent{
 				}else{
 					$user->getMessageClient()->addErreur('MAIL :: No email sent to '.$destinataires);
 				}
-				*/
+				
 
 			}else{
 				$user->getMessageClient()->addErreur('MAIL :: No specific e-mail address entered.');
