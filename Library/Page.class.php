@@ -178,17 +178,17 @@ class Page extends ApplicationComponent{
 				$mail = new PHPMailer(true);// Passing `true` enables exceptions
 				try {
 				    //Server settings
-				    $mail->SMTPDebug = 4; // Enable verbose debug output
+				    $mail->SMTPDebug = 2; // Enable verbose debug output
 				    $mail->isSMTP(); // Set mailer to use SMTP
 				    $mail->Host = 'mail.noolib.com'; // Specify main and backup SMTP servers
 				    $mail->SMTPAuth = false; // Enable SMTP authentication
-				    $mail->Username = 'collettemathieu@noolib.com'; // SMTP username
-				    $mail->Password = 'VN9>{Br&36jw'; // SMTP password
+				    $mail->Username = 'contactteam@noolib.com'; // SMTP username
+				    $mail->Password = 'A7B7{G;vhj3}'; // SMTP password
 				    $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 				    $mail->Port = 25; // TCP port to connect to
 
 				    //Recipients
-				    $mail->setFrom('collettemathieu@noolib.com', 'collettemathieu');
+				    $mail->setFrom($expediteur);
 				    //$mail->addAddress('joe@example.net', 'Joe User'); // Add a recipient
 				    $mail->addAddress($destinataires); // Name is optional
 				    //$mail->addReplyTo('info@example.com', 'Information');
