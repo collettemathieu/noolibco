@@ -181,7 +181,7 @@ class Page extends ApplicationComponent{
 				    $mail->SMTPDebug = 4; // Enable verbose debug output
 				    $mail->isSMTP(); // Set mailer to use SMTP
 				    $mail->Host = 'mail.noolib.com'; // Specify main and backup SMTP servers
-				    $mail->SMTPAuth = true; // Enable SMTP authentication
+				    $mail->SMTPAuth = false; // Enable SMTP authentication
 				    $mail->Username = 'collettemathieu@noolib.com'; // SMTP username
 				    $mail->Password = 'VN9>{Br&36jw'; // SMTP password
 				    $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
