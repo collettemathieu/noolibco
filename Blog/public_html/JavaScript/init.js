@@ -93,13 +93,13 @@
                     }else{
                         var texte = '';
                             if(name != 'unknown' && name != 'ie'){
-                                texte += 'La version de votre navigateur ' + name+ ' est obsolète et ScienceAPart risque de présenter des dysfonctionnements.<br/>';
+                                texte += 'La version de votre navigateur ' + name+ ' est obsolète et NooLib The Blog risque de présenter des dysfonctionnements.<br/>';
                                 texte += 'Nous vous recommandons de mettre à jour votre navigateur ou de changer pour un autre navigateur.';
                             }else if(name == 'ie'){
-                                texte += 'Aucune des versions d\'Internet Explorer n\'est supportée par ScienceAPart et le site risque de présenter des dysfonctionnements.<br/>';
+                                texte += 'Aucune des versions d\'Internet Explorer n\'est supportée par NooLib The Blog et le site risque de présenter des dysfonctionnements.<br/>';
                                 texte += 'Nous vous recommandons de changer pour un autre navigateur.';
                             }else{
-                                texte += 'Votre navigateur est inconnu et ScienceAPart risque de présenter des dysfonctionnements.<br/>';
+                                texte += 'Votre navigateur est inconnu et NooLib The Blog risque de présenter des dysfonctionnements.<br/>';
                                 texte += 'Nous vous recommandons de changer pour un autre navigateur.';
                             }
                             $('#alertBrowser').removeClass('hidden').append(texte);

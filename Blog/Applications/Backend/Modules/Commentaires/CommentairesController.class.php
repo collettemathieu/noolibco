@@ -1,12 +1,12 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PHP Version 5                                                        |
+// | PHP Version 7                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2016 ScienceAPart									  |
+// | Copyright (c) 2018 NooLib The Blog									  |
 // +----------------------------------------------------------------------+
 // | Ce controleur permet de créer ou supprimer les commentaires   		  |	  										  |
 // +----------------------------------------------------------------------+
-// | Auteurs : Mathieu COLLETTE <collettemathieu@scienceapart.com> 		  |
+// | Auteurs : Mathieu COLLETTE <collettemathieu@noolib.com> 			  |
 // +----------------------------------------------------------------------+
 
 /**
@@ -127,7 +127,7 @@ class CommentairesController extends \Library\BackController{
 				$user->setFlash(array(
 					'mailAuteur' => $commentaire->getUtilisateur()->getMailUtilisateur(),
 					'titreMessage' => 'Votre commentaire a été accepté',
-					'lienValidation' => 'http://www.scienceapart.com/Commentaire/ValiderCommentaire/id='.$commentaire->getIdCommentaire()
+					'lienValidation' => 'http://blog.noolib.com/Commentaire/ValiderCommentaire/id='.$commentaire->getIdCommentaire()
 					));
 				$mailApplication = new \Applications\ApplicationsStandAlone\Mail\MailApplication;
 				$mailApplication->execute('SendMailToAuthor', 'sendAMessageForValidatingComment'); // Module = MailInscription ; action = sendAMessageForValidatingComment

@@ -1,12 +1,12 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PHP Version 5                                                        |
+// | PHP Version 7                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2016 ScienceAPart									  |
+// | Copyright (c) 2018 NooLib The Blog									  |
 // +----------------------------------------------------------------------+
-// | Ce controleur permet de valider les commentaires par les auteurs	  |	  										  |
+// | Ce controleur permet de valider les commentaires par les auteurs	  |	  			
 // +----------------------------------------------------------------------+
-// | Auteurs : Mathieu COLLETTE <collettemathieu@scienceapart.com> 		  |
+// | Auteurs : Mathieu COLLETTE <collettemathieu@noolib.com> 			  |
 // +----------------------------------------------------------------------+
 
 /**
