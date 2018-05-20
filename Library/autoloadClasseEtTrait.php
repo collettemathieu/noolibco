@@ -35,5 +35,11 @@ function autoloadClasseEtTrait($nomClasse)
 	}
 }
 
-/* On place la fonction autoload dans la pile des fichiers chargés automatiquement par PHP*/
+/* On place la fonction autoload dans la pile des fichiers chargés automatiquement par PHP pour notre framework*/
 spl_autoload_register('autoloadClasseEtTrait');
+
+/* Chargement des classes pour Composer */
+if(file_exists('../vendor/autoload.php')){
+	require_once '../vendor/autoload.php';	
+}
+

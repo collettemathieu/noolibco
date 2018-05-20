@@ -487,9 +487,15 @@ trait MethodeUtilisateurControleur
 					$mailApplication = new \Applications\ApplicationsStandAlone\Mail\MailApplication;
 					$mailApplication->execute('SendMailToNooLib', 'sendAMessage'); // Module = SendMailToNooLib ; action = sendAMessage
 
-					// Opération réussie
-					$user->getMessageClient()->addReussite(self::MAIL_MESSAGE_SENT);
-					return true;
+					// Retour de l'opération
+					if($user->getMessageClient()->hasErreur()){
+						return false;
+					}elseif($user->getMessageClient()->hasReussite()){
+						return true;
+					}else{
+						$user->getMessageClient()->addReussite(self::MAIL_MESSAGE_SENT);
+						return true;
+					}
 			}
 			else{
 				// On envoie une erreur

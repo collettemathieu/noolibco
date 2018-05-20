@@ -9,6 +9,7 @@
 !/Library
 !/Library/*
 /Library/PDOFactory.class.php
+/Library/Page.class.php
 /Library/ScriptsBash/Debian/docker-run-timeout
 !/public_html
 !/public_html/*
