@@ -1,0 +1,1 @@
+<script type="text/javascript" src="/JavaScript/dist/information.js"></script>

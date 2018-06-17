@@ -95,11 +95,6 @@
 			include_once('../public_html/footer.php');
 		?>
 		
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		<!-- Critical scripts -->
-		<script type="text/javascript" src="/JavaScript/init.js"></script>
-
 		<!-- Chargement des librairies JS -->
 		<?php echo $librairiesJS; ?>
 	</body>

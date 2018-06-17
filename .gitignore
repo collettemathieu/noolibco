@@ -28,6 +28,7 @@
 !/Blog/*
 !/Blog/Applications
 !/Blog/Applications/*
+/Blog/node_modules/
 /Blog/Files
 /Blog/Files/*
 /Blog/ConfigSystem/*

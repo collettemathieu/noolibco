@@ -20,7 +20,7 @@
 
 		<!-- FrameWorks CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-		<link rel="stylesheet" href="https://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css"/>
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 
 		<!-- Files CSS -->
 		<link rel="stylesheet" href="/Css/styleGeneral.css" />
@@ -121,16 +121,7 @@
 			<?php } ?>
 		</div>
 
-		<!-- FrameWorks and Libraries JS -->
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.contextMenu.min.js"></script>
-		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.ui.position.min.js"></script>
-		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.easing.1.3.min.js"></script>
-		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<!-- Chargement des librairies JS -->
 		<?php echo $librairiesJS; ?>
-		<!-- Critical scripts -->
-		<script type="text/javascript" src="/JavaScript/init.js"></script>
 	</body>
 </html>
