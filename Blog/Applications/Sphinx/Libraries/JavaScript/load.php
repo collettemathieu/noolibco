@@ -1,1 +1,1 @@
-<script type="text/javascript" src="/JavaScript/dist/sphinx.js"></script>
+<script type="text/javascript" src="/dist/sphinx.js"></script>

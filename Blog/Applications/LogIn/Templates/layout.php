@@ -20,11 +20,6 @@
 		<!-- FrameWorks CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
 		
-		<!-- Files CSS -->
-		<link rel="stylesheet" href="/Css/styleGeneral.css" />
-		<link rel="stylesheet" href="/Css/styleHeader.css" />
-		<link rel="stylesheet" href="/Css/styleFooter.css" />
-
 		<!-- Chargement des librairies CSS -->
 		<?php echo $librairiesCSS; ?>
 

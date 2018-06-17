@@ -1,1 +1,1 @@
-<script type="text/javascript" src="/JavaScript/dist/services.js"></script>
+<script type="text/javascript" src="/dist/services.js"></script>

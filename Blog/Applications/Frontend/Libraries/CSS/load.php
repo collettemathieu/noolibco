@@ -1,1 +1,1 @@
-<link rel="stylesheet" href="/Css/styleFrontend.css" />
+<link rel="stylesheet" href="/dist/styleFrontend.css" />

@@ -1,2 +1,2 @@
 <!-- FrameWorks CSS -->
-<link rel="stylesheet" href="/Css/styleInformation.css">
+<link rel="stylesheet" href="/dist/styleInformation.css">

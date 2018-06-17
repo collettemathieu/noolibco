@@ -1,1 +1,1 @@
-<script type="text/javascript" src="/JavaScript/dist/articles.js"></script>
+<script type="text/javascript" src="/dist/articles.js"></script>

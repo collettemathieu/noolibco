@@ -1,1 +1,1 @@
-<link rel="stylesheet" href="/Css/styleSphinx.css" />
+<link rel="stylesheet" href="/dist/styleSphinx.css" />
