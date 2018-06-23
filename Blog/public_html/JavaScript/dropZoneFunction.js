@@ -1,4 +1,4 @@
-function dropZoneFunc(nameOfParameter, URL, extensionFiles){
+export default function dropZoneFunc(nameOfParameter, URL, extensionFiles){
 
     // Disabling autoDiscover, otherwise Dropzone will try to attach twice
     Dropzone.autoDiscover = false;
@@ -140,9 +140,3 @@ function dropZoneFunc(nameOfParameter, URL, extensionFiles){
         element.className = newClasses.join(' ');
     }
 }
-
-
-
-
-
-   

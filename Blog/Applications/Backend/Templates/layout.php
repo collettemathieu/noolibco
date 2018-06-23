@@ -19,7 +19,7 @@
 
 		<!-- FrameWorks CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-		<link rel="stylesheet" href="https://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css"/>
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 		
 		<!-- Chargement des librairies CSS -->
 		<?php echo $librairiesCSS; ?>
@@ -111,35 +111,13 @@
 			<?php } ?>
 		</div>
 
-		<!-- FrameWorks and Libraries JS -->
-
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+		<!-- FrameWorks and Libraries JS 
 		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.contextMenu.min.js"></script>
 		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.ui.position.min.js"></script>
 		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.easing.1.3.min.js"></script>
-		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="/JavaScript/Frameworks/dropzone.min.js"></script>
-		<script type="text/javascript" src="/JavaScript/Frameworks/progressBar.min.js"></script>
-		<script type="text/javascript" src="/JavaScript/Frameworks/loDash.min.js"></script>
-		
-		<!-- Files JS -->
-		<script type="text/javascript" src="/JavaScript/dropZoneFunction.js"></script>
-		<script type="text/javascript" src="/JavaScript/managerUtilisateurs.js"></script>
-		<script type="text/javascript" src="/JavaScript/managerCommentairesBackend.js"></script>
-		<script type="text/javascript" src="/JavaScript/managerActualites.js"></script>
-		<script type="text/javascript" src="/JavaScript/managerArticles.js"></script>
-		<script type="text/javascript" src="/JavaScript/managerCours.js"></script>
-		<script type="text/javascript" src="/JavaScript/managerCoursGlobal.js"></script>
-		<script type="text/javascript" src="/JavaScript/managerMedias.js"></script>
-		<script type="text/javascript" src="/JavaScript/initBackend.js"></script>
-
-		<!-- Critical scripts -->
-		<script type="text/javascript" src="/JavaScript/init.js"></script>
+		-->
 
 		<!-- Chargement des librairies JS -->
-		<?php echo $librairiesJS; ?>
-		
-		
+		<?php echo $librairiesJS; ?>	
 	</body>
 </html>

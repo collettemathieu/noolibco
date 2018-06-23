@@ -1,1 +1,1 @@
-<!-- FrameWorks and Libraries JS -->
+<script type="text/javascript" src="/dist/backend.js"></script>

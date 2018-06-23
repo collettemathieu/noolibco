@@ -12,6 +12,7 @@ let config = {
 		services: './public_html/JavaScript/entries/services.js',
 		information: './public_html/JavaScript/entries/information.js',
 		sphinx: './public_html/JavaScript/entries/sphinx.js',
+		backend: './public_html/JavaScript/entries/backend.js',
 		styleFrontend: './public_html/Css/entries/frontend.css',
 		styleCours: './public_html/Css/entries/cours.css',
 		styleArticles: './public_html/Css/entries/articles.css',
@@ -80,7 +81,10 @@ let config = {
 			jQuery: 'jquery',
 			'window.jQuery': 'jQuery',
 			katex: 'katex',
-			'window.katex': 'katex'
+			'window.katex': 'katex',
+			Dropzone: 'dropzone',
+			ProgressBar: 'progressbar.js',
+			_: 'lodash'
 		})
 	],
 	devtool: dev ? "cheap-module-eval-source-map":false
