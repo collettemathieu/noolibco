@@ -83,7 +83,7 @@ import displayInformationsClient from './displayInformationsClient.js';
             }
 
             // Envoi de la requête HTTP en mode asynchrone
-            xhr = new XMLHttpRequest();
+            var xhr = new XMLHttpRequest();
             xhr.open('POST', '/LogIn/BrowserIsValid/');
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.send('name='+name+'&version='+parseInt(version));     
