@@ -39,6 +39,8 @@
 /Blog/Library/PDOFactory.class.php
 !/Blog/public_html
 !/Blog/public_html/*
+/Blog/public_html/dist
+/Blog/public_html/dist/*
 /Blog/public_html/Images/Actualite
 /Blog/public_html/Images/Actualite/*
 /Blog/public_html/.htaccess

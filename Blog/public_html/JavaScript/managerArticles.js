@@ -1,4 +1,6 @@
 import dropZoneFunc from './dropZoneFunction.js';
+import displayInformationsClient from './displayInformationsClient.js';
+
 if($('#dropzoneImageArticle').length != 0){
     dropZoneFunc('imageArticle', '/ForAdminOnly/Articles/ModifierImageArticle', '.png,.PNG,.jpg,.jpeg,.JPG,.JPEG');
     
@@ -27,7 +29,6 @@ if($('#dropzoneImageArticle').length != 0){
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    console.log(response);
                     try{
                         response = JSON.parse(response);
                         displayInformationsClient(response);

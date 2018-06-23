@@ -111,12 +111,6 @@
 			<?php } ?>
 		</div>
 
-		<!-- FrameWorks and Libraries JS 
-		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.contextMenu.min.js"></script>
-		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.ui.position.min.js"></script>
-		<script type="text/javascript" src="/JavaScript/Frameworks/jquery.easing.1.3.min.js"></script>
-		-->
-
 		<!-- Chargement des librairies JS -->
 		<?php echo $librairiesJS; ?>	
 	</body>

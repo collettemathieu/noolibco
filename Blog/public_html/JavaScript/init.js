@@ -1,3 +1,5 @@
+import displayInformationsClient from './displayInformationsClient.js';
+
 (function(){
     /**************************/
     /* Contrôle du navigateur */
@@ -118,7 +120,7 @@
     /************/
     /* Frontend */
     /************/
-    // Info bulle
+    // IdisplayInformationsClientnfo bulle
     var largeur = screen.width; // On supprime pour les smartphones
     if(largeur >= 768){
         $('.infoBulleBottom').tooltip({
@@ -132,7 +134,7 @@
     }
 
     // Pour le carrousel des actualités
-    numeroActualite = 0;
+    var numeroActualite = 0;
     $('.rightArrow').on('click', function(e){
         numeroActualite += 1;
         getActualite(1);
@@ -208,7 +210,7 @@
     });
     
     // Pour le carrousel des éditos
-    numeroEdito = 0;
+    var numeroEdito = 0;
     $('.rightEditoArrow').on('click', function(e){
         numeroEdito += 1;
         getEdito(1);
@@ -481,50 +483,6 @@
 /*************/
 /* Fonctions */
 /*************/
-
-function displayInformationsClient(response){
-
-    if(typeof(response) != 'undefined'){
-        
-        if(response['erreurs'] && response['erreurs'] != ''){
-            
-            $('#informationsClient').show().append('<div class="alert alert-danger alert-dismissable" style="display:none"><button type="button" class="close" data-dismiss="alert">x</button><h3>Attention</h3>'+response['erreurs']+'</div>');
-            
-            $('#informationsClient').find('.alert:last').fadeIn(function(){
-                
-                    $(this).delay(6000).fadeOut(800, function(){
-                        $(this).remove();
-                    });
-
-            });
-            
-        }
-
-        if(response['reussites'] && response['reussites'] != ''){
-            $('#informationsClient').show().append('<div class="alert alert-success alert-dismissable style="display:none"><button type="button" class="close" data-dismiss="alert">x</button><h3>Information</h3>'+response['reussites']+'</div>');
-            $('#informationsClient').find('.alert:last').fadeIn(function(){
-                
-                    $(this).delay(6000).fadeOut(function(){
-                        $(this).remove();
-                    });
-
-            });
-        }
-    }else{
-
-        if($('#informationExists').length != 0){
-        
-            $('#informationsClient').fadeIn(function(){
-                
-                $('#informationsClient').delay(6000).fadeOut(800, function(){
-                    $('#informationsClient').html(''); // On réinitialise
-                });
-
-            });
-            
-        }
-    }
-}
 
 function setCookie(sName, sValue) {
     var today = new Date(), expires = new Date();

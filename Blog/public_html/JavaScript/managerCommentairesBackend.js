@@ -1,3 +1,5 @@
+import displayInformationsClient from './displayInformationsClient.js';
+
 function manageCommentaire(){
 	$('.commentaire').on('click', function(e){
         

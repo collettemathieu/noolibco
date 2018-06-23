@@ -127,7 +127,7 @@ animation-duration:0.8s;
   position: fixed;
   top: 10px;
   right: 10px;
-  z-index: 99999;
+  z-index: 9999999;
   width: 400px;
 }
 

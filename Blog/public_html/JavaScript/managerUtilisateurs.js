@@ -1,3 +1,5 @@
+import displayInformationsClient from './displayInformationsClient.js';
+
 function manageUtilisateur(){
 
     $('.utilisateur').on('click', function(e){
