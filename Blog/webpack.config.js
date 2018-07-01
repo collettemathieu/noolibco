@@ -94,7 +94,11 @@ if(!dev){
 	config.plugins.push(new UglifyJsPlugin({
 		sourceMap: false
 	}));
-	config.plugins.push(new OptimizeCssAssetsWebpackPlugIn({}));
+	config.plugins.push(new OptimizeCssAssetsWebpackPlugIn({
+		cssProcessorOptions: {
+			safe: true // Permet d'utiliser uniquement le minify en mode safe
+		}
+	}));
 }
 
 module.exports = config;
