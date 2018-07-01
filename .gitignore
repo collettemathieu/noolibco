@@ -1,5 +1,7 @@
 /*
 !.gitignore
+!composer.json
+!composer.lock
 !/Applications
 !/Applications/*
 !/ConfigSystem
@@ -28,6 +30,8 @@
 !/Blog/*
 !/Blog/Applications
 !/Blog/Applications/*
+/Blog/vendor
+/Blog/vendor/*
 /Blog/node_modules/
 /Blog/Files
 /Blog/Files/*

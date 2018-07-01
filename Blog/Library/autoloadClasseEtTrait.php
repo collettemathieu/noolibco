@@ -1,9 +1,9 @@
 <?php
 
 // +----------------------------------------------------------------------+
-// | PHP Version 5                                                        |
+// | PHP Version 7                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2014 NooLib                                            |
+// | Copyright (c) 2018 NooLib The Blog                                   |
 // +----------------------------------------------------------------------+
 // | Fonction permettant de charger les classes et les traits 			  |
 // | automatiquement à l'aide de la pile PHP spl_autoload_register   	  |
@@ -37,3 +37,8 @@ function autoloadClasseEtTrait($nomClasse)
 
 /* On place la fonction autoload dans la pile des fichiers chargés automatiquement par PHP*/
 spl_autoload_register('autoloadClasseEtTrait');
+
+/* Chargement des classes pour Composer */
+if(file_exists('../vendor/autoload.php')){
+	require_once '../vendor/autoload.php';	
+}

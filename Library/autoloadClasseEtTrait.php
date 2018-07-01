@@ -1,9 +1,9 @@
 <?php
 
 // +----------------------------------------------------------------------+
-// | PHP Version 5                                                        |
+// | PHP Version 7                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2014 NooLib                                            |
+// | Copyright (c) 2018 NooLib                                            |
 // +----------------------------------------------------------------------+
 // | Fonction permettant de charger les classes et les traits 			  |
 // | automatiquement à l'aide de la pile PHP spl_autoload_register   	  |

@@ -2,15 +2,14 @@
 namespace Library;
 
 // +----------------------------------------------------------------------+
-// | PHP Version 5                                                        |
+// | PHP Version 7                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2016 ScienceAPart									  |
+// | Copyright (c) 2018 NooLib The Blog                                   |
 // +----------------------------------------------------------------------+
-// | Classe PHP Page pour générer et envoyer la vue au client.	  		  |		  										  |
+// | Classe PHP Page pour générer et envoyer la vue au client.	  		  |
 // +----------------------------------------------------------------------+
-// | Auteurs : Mathieu COLLETTE <collettemathieu@scienceapart.com> 		  |
+// | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>               |
 // +----------------------------------------------------------------------+
-
 
 /**
  * @name:  Classe Page
@@ -18,8 +17,13 @@ namespace Library;
  * @version: 1
  */
 
-class Page extends ApplicationComponent
-{
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\OAuth;
+use PHPMailer\PHPMailer\Exception;
+
+class Page extends ApplicationComponent{
+
 	protected $contentFile,
 			  $vars = array();
 
@@ -131,7 +135,8 @@ class Page extends ApplicationComponent
 	/**
 	* Permet de générer la réponse par l'envoi d'un email.
 	*/
-	public function getGeneratedPageByMail(){
+	public function getGeneratedPageByMail()
+	{
 		if(file_exists($this->contentFile)){
 			
 			//On extrait les variables du tableau $this->_vars. La fonction extract créera les variables automatiquement selon les entrées du tableau
@@ -168,44 +173,55 @@ class Page extends ApplicationComponent
 					$destinataires = implode(', ', $destinataires);
 				}
 
-				// On créé un délimiteur
-				$delimiteur = md5(uniqid(mt_rand()));		
-		
-				//On définit le header du mail avec un contenu type HTML sans pièce jointe ni image
-				$headers = "Reply-to:".$expediteur."\r\nFrom:".$expediteur."\r\nBcc:".$destinataires."\n";
-				$headers.= "MIME-Version: 1.0 \n"; 
-				$headers.= "Content-type:multipart/mixed; boundary=\"".$delimiteur."\"\n";
-				$headers.="\n";
-
-				//On définit le contenu du mail
-				$message = "Ce message est au format MIME \n";
-				$message.="\n";
 				
-				$message.="--$delimiteur\n";
-				
-				$message.="Content-type: text/html; charset=utf-8 \n";
-				$message.="Content-Transfert-Encoding:8bit\n";
-				$message.="\n";
+				$mail = new PHPMailer(true);// Passing `true` enables exceptions
+				try {
+				    //Server settings
+				    $mail->CharSet = 'UTF-8';
+				    $mail->SMTPDebug = 0; // Enable verbose debug output
+				    $mail->isSMTP(); // Set mailer to use SMTP
+				    $mail->Host = 'mail.noolib.com'; // Specify main and backup SMTP servers
+				    $mail->SMTPAuth = 'yes'; // Enable SMTP authentication
+				    $mail->AuthType = 'PLAIN';
+				    //$mail->SMTPautoTLS = false;
+				    $mail->Username = 'contactteam'; // SMTP username
+				    $mail->Password = 'A7B7{G;vhj3}'; // SMTP password
+				    $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
+				    $mail->Port = 25; // TCP port to connect to
 
-				//On inclut le template du mail
-				$message.= $texteCompletMail;
+				    //Recipients
+				    $mail->setFrom($expediteur);
+				    //$mail->addAddress('joe@example.net', 'Joe User'); // Add a recipient
+				    $mail->addAddress($destinataires); // Name is optional
+				    //$mail->addReplyTo('info@example.com', 'Information');
+				    //$mail->addCC('cc@example.com');
+				    //$mail->addBCC('bcc@example.com');
 
-				$message.="\n";
-				
-				$message.= "--$delimiteur\n";
+				    //Attachments
+				    //$mail->addAttachment('/var/tmp/file.tar.gz'); // Add attachments
+				    //$mail->addAttachment('/tmp/image.jpg', 'new.jpg'); // Optional name
 
-				//On ferme le délimiteur
-				$message.="--$delimiteur--\n";
+				    //Content
+				    $mail->isHTML(true); // Set email format to HTML
+				    $mail->Subject = $titreMail;
+				    $mail->Body    = $texteCompletMail;
+				    // For non-HTML mail clients
+				    if(isset($message) && !empty($message)){
+				    	$mail->AltBody = $message;
+				    }else{
+				    	$mail->AltBody = 'This is the body in plain text for non-HTML mail clients. No specific text mentionned for this email.';
+				    }
+				    
+				    $mail->send();
 
-				//On envoit le tout à l'aide de la fonction mail()
-				if(mail($destinataires, $titreMail, $message, $headers)){
-					$user->setFlash('Un email a été envoyé au(x) destinataire(s) : '.$destinataires);
-				}else{
-					$user->setFlash('MAIL :: Aucun email envoyé au(x) destinataire(s) : '.$destinataires);
+				    if(empty($mail->ErrorInfo)){
+				    	$user->getMessageClient()->addReussite('An email has been sent to '.$destinataires);
+				    }
+				} catch (Exception $e) {
+					$user->getMessageClient()->addErreur('MAIL :: No email sent to '.$destinataires.' : '.$mail->ErrorInfo);
 				}
-
 			}else{
-				$user->setFlash('MAIL :: Aucun expéditeur, destinataire ou titre n\'a été spécifié.');
+				$user->getMessageClient()->addErreur('MAIL :: No specific e-mail address entered.');
 			}
 
 		}
@@ -213,4 +229,3 @@ class Page extends ApplicationComponent
 	}
 
 }
-
