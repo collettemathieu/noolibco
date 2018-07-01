@@ -3,7 +3,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-5 centering" >
-						<h5>© 2017 NooLib - </h5>
+						<h5>© 2018 NooLib - </h5>
 						<a href="https://blog.noolib.com" target="_blank" class="btn btn-primary btn-xs" data-toggle="tooltip" title="The NooLib Blog!">The Blog</a>
 						<button class="btn btn-default btn-xs" data-toggle="modal" data-target="#team">Team</button>
 						<button ng-click="contactModal()" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Contact us!">Contact</button>

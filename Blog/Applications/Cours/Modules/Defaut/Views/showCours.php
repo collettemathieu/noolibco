@@ -8,8 +8,7 @@
 						
 						<div class="col-sm-12 headerCours centering text-center">
 							<h5>NooLib The Blog | le <?php echo $date->format('d-m-Y');?></h5>
-							<h5>Par <?php echo $cours->getAuteur()->getNomUtilisateur();?></h5>
-
+							<h5>Catégorie : <?php echo $cours->getCategorie()->getNomCategorie();?></h5>
 						</div>
 						<div class="col-sm-12 imageCours">
 							<img class="img-responsive" title="<?php echo nl2br($cours->getTitreCours());?>" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode(file_get_contents($cours->getUrlImageCours())); ?>"/>

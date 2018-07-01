@@ -8,7 +8,7 @@
 							<h1><?php echo $article->getTitreArticle();?></h1>
 							<div class="col-sm-12 headerArticle centering text-center">
 								<h5>NooLib The Blog | le <?php echo $date->format('d-m-Y');?></h5>
-								<h5>Par <?php echo $article->getAuteur()->getNomUtilisateur();?></h5>
+								<h5>Catégorie : <?php echo $article->getCategorie()->getNomCategorie();?></h5>
 							</div>
 							<div class="col-sm-12 imageArticle">
 								<img class="img-responsive centering" title="<?php echo nl2br($article->getTitreArticle());?>" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode(file_get_contents($article->getUrlImageArticle())); ?>"/>

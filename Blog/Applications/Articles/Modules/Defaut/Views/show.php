@@ -9,7 +9,7 @@
 							--><div class="mainText">
 								<h4><?php echo nl2br($article->getTitreCours());?></h4>
 								<div class="informationCours"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Publié le <?php echo $date->format('d-m-Y');?></div>
-								<div class="informationCours"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Par <?php echo $article->getAuteur()->getNomUtilisateur();?></div>
+								<div class="informationCours"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Catégorie : <?php echo $article->getCategorie()->getNomCategorie();?></div>
 								<div class="informationCours"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Lu <?php echo $article->getNbreVueCours();?> fois</div>
 								<p class="cesure"><?php echo nl2br($article->getDescriptionCours());?></p>
 							</div>
@@ -22,7 +22,7 @@
 							--><div class="mainText">
 								<h4><?php echo nl2br($article->getTitreArticle());?></h4>
 								<div class="informationArticle"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Publié le <?php echo $date->format('d-m-Y');?></div>
-								<div class="informationArticle"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Par <?php echo $article->getAuteur()->getNomUtilisateur();?></div>
+								<div class="informationArticle"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Catégorie : <?php echo $article->getCategorie()->getNomCategorie();?></div>
 								<div class="informationArticle"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Lu <?php echo $article->getNbreVueArticle();?> fois</div>
 								<p class="cesure"><?php echo nl2br($article->getDescriptionArticle());?></p>
 							</div>

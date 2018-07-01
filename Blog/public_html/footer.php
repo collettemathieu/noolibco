@@ -39,7 +39,7 @@
 							</div>
 							<div class="col-lg-12"><hr/></div>
 							<div class="col-lg-12">
-								<p>Copyright © 2017 NooLib. Tous droits réservés.<p>
+								<p>Copyright © 2018 NooLib. Tous droits réservés.<p>
 							</div>
 						</div>
 					</div>

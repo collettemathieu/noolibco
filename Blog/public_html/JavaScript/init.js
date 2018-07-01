@@ -397,11 +397,10 @@ import displayInformationsClient from './displayInformationsClient.js';
 
         function displayArticles(){
             var elems = $('.caseArticle'),
-                marginBottom = parseInt($(elems[0]).css('marginBottom'));
-
-                var parentWidth = $(elems[0]).parent().width()-40,
-                    sonWidth = $(elems[0]).outerWidth(),
-                    nbreCase = Math.floor(parentWidth/sonWidth);
+                marginBottom = parseInt($(elems[0]).css('marginBottom')),
+                parentWidth = $(elems[0]).parent().width()-40,
+                sonWidth = $(elems[0]).outerWidth(),
+                nbreCase = Math.floor(parentWidth/sonWidth);
 
             for(var i=nbreCase, c=elems.length; i<c; ++i){
                 var elem = $(elems[i]),
