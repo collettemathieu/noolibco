@@ -38,8 +38,8 @@ abstract class BackController extends ApplicationComponent
 	const TREE_DOI_NOT_FOUND = 'Désolé, la DOI mentionnée ne correspond à aucune référence.';
 
 	/* Mail */
-	const MAIL_MESSAGE_SENT = 'Your message has been sent successfully.';
-	const MAIL_SUBSCRIPTION = 'Bienvenue sur ScienceAPart.com !';
+	const MAIL_MESSAGE_SENT = 'Votre message a été envoyé avec succès.';
+	const MAIL_SUBSCRIPTION = 'Bienvenue sur NooLib The Blog !';
 	const MAIL_RESET_PASSWORD = 'Reset your password.';
 
 	/* Backend */

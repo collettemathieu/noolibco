@@ -215,7 +215,7 @@ class Page extends ApplicationComponent{
 				    $mail->send();
 
 				    if(empty($mail->ErrorInfo)){
-				    	$user->getMessageClient()->addReussite('An email has been sent to '.$destinataires);
+				    	$user->getMessageClient()->addReussite('Un mail a été envoyé aux destinataires suivant : '.$destinataires);
 				    }
 				} catch (Exception $e) {
 					$user->getMessageClient()->addErreur('MAIL :: No email sent to '.$destinataires.' : '.$mail->ErrorInfo);
