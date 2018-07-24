@@ -184,8 +184,8 @@ class Page extends ApplicationComponent{
 				    $mail->SMTPAuth = 'yes'; // Enable SMTP authentication
 				    $mail->AuthType = 'PLAIN';
 				    //$mail->SMTPautoTLS = false;
-				    $mail->Username = 'contactteam'; // SMTP username
-				    $mail->Password = 'A7B7{G;vhj3}'; // SMTP password
+				    $mail->Username = '*****'; // SMTP username
+				    $mail->Password = '*****'; // SMTP password
 				    $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 				    $mail->Port = 25; // TCP port to connect to
 

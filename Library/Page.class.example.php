@@ -177,6 +177,7 @@ class Page extends ApplicationComponent{
 				$mail = new PHPMailer(true);// Passing `true` enables exceptions
 				try {
 				    //Server settings
+				    $mail->CharSet = 'UTF-8';
 				    $mail->SMTPDebug = 0; // Enable verbose debug output
 				    $mail->isSMTP(); // Set mailer to use SMTP
 				    $mail->Host = 'mail.noolib.com'; // Specify main and backup SMTP servers
