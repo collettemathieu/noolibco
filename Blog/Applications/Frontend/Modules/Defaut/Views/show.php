@@ -84,7 +84,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-sm-12 text-center"><h3>Nombre de vues</h3></div>
+								<div class="col-sm-12 text-center"><h3>Vues</h3></div>
 							</div>
 						</div>
 						<div class="hidden-xs col-sm-3">
