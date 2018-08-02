@@ -294,7 +294,9 @@ import displayInformationsClient from './displayInformationsClient.js';
                 success: function(response) {
                     response = JSON.parse(response);
                     if(response['nbreUsers']){
-                        var valeurMax = Math.max(response['nbreUsers'], response['nbreCommentaires'], response['nbreArticles'])+1,
+                        var valeurMaxArticles = response['nbreArticles']+2,
+                            valeurMaxVues = response['nbreVues']+1,
+                            ValeurMaxAutres = Math.max(response['nbreUsers'], response['nbreCommentaires'])+1,
                             statUtilisateurs  = $('#statUtilisateurs'),
                             statVues = $('#statVues'),
                             statCommentaires = $('#statCommentaires'),
@@ -308,10 +310,10 @@ import displayInformationsClient from './displayInformationsClient.js';
                             },
                             lineCap: 'round'
                         }).on('circle-animation-progress', function(event, progress, stepValue) {
-                          $(this).find('strong').text(String(Math.round(stepValue.toFixed(1)*valeurMax)));
+                          $(this).find('strong').text(String(Math.round(stepValue.toFixed(1)*ValeurMaxAutres)));
                         });
                         setTimeout(function() { 
-                            statUtilisateurs.circleProgress('value', response['nbreUsers']/valeurMax); 
+                            statUtilisateurs.circleProgress('value', response['nbreUsers']/ValeurMaxAutres); 
                         }, 1000);
                         
                         statVues.circleProgress({
@@ -323,10 +325,10 @@ import displayInformationsClient from './displayInformationsClient.js';
                             },
                             lineCap: 'round'
                         }).on('circle-animation-progress', function(event, progress, stepValue) {
-                          $(this).find('strong').text(String(Math.round(stepValue.toFixed(1))));
+                          $(this).find('strong').text(String(Math.round(stepValue.toFixed(1)*valeurMaxVues)));
                         });
                         setTimeout(function() { 
-                            statVues.circleProgress('value', response['nbreVues']); 
+                            statVues.circleProgress('value', response['nbreVues']/valeurMaxVues); 
                         }, 1000);
 
                         statCommentaires.circleProgress({
@@ -338,10 +340,10 @@ import displayInformationsClient from './displayInformationsClient.js';
                             },
                             lineCap: 'round'
                         }).on('circle-animation-progress', function(event, progress, stepValue) {
-                            $(this).find('strong').text(String(Math.round(stepValue.toFixed(1)*valeurMax)));
+                            $(this).find('strong').text(String(Math.round(stepValue.toFixed(1)*ValeurMaxAutres)));
                         });
                         setTimeout(function() { 
-                            statCommentaires.circleProgress('value', response['nbreCommentaires']/valeurMax); 
+                            statCommentaires.circleProgress('value', response['nbreCommentaires']/ValeurMaxAutres); 
                         }, 1000);
 
                         statArticles.circleProgress({
@@ -353,10 +355,10 @@ import displayInformationsClient from './displayInformationsClient.js';
                             },
                             lineCap: 'round'
                         }).on('circle-animation-progress', function(event, progress, stepValue) {
-                          $(this).find('strong').text(String(Math.round(stepValue.toFixed(1)*valeurMax)));
+                          $(this).find('strong').text(String(Math.round(stepValue.toFixed(1)*valeurMaxArticles)));
                         });
                         setTimeout(function() { 
-                            statArticles.circleProgress('value', response['nbreArticles']/valeurMax); 
+                            statArticles.circleProgress('value', response['nbreArticles']/valeurMaxArticles); 
                         }, 1000);
                     }else{
                         displayInformationsClient(response);
