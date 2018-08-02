@@ -3,7 +3,7 @@ if(isset($stats)){
 	$reponse = array(
 			'nbreUsers' => $stats['nbreUsers'],
 			'nbreArticles' => $stats['nbreArticles'],
-			'nbreCours' => $stats['nbreCours'],
+			'nbreVues' => $stats['nbreVues'],
 			'nbreCommentaires' => $stats['nbreCommentaires']
 		);
 

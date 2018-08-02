@@ -41,13 +41,15 @@ abstract class CoursManager extends \Library\Manager
 
 	abstract function deleteLinkbetweenCoursAuteur($cours);
 
-	abstract function getCoursById( $id);
+	abstract function getCoursById($id);
 
 	abstract function getCoursByUrlTitle($urlTitreCours);
 
 	abstract function getAllCours();
 
-	abstract function getCoursBetweenIndex( $debut,  $quantite);
+	abstract function getAllVues();
+
+	abstract function getCoursBetweenIndex($debut, $quantite);
 
 	abstract function getNumberOfCours();
 

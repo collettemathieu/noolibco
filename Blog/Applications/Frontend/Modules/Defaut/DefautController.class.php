@@ -71,13 +71,15 @@ class DefautController extends \Library\BackController
 			// On récupère les stats
 			$nombreUtilisateurs = $managerUtilisateurs->getNumberOfUtilisateur();
 			$nombreArticles = $managerArticle->getNumberOfArticles();
-			$nombreCours = $managerCours->getNumberOfCours();
+			$nombreArticles += $managerCours->getNumberOfCours();
 			$nombreCommentaires = $managerCommentaire->getNumberOfCommentaires();
+			$nombreVues = $managerArticle->getAllVues();
+			$nombreVues += $managerCours->getAllVues();
 
 			$stats = array(
 				'nbreUsers' => $nombreUtilisateurs,
 				'nbreArticles' => $nombreArticles,
-				'nbreCours' => $nombreCours,
+				'nbreVues' => $nombreVues,
 				'nbreCommentaires' => $nombreCommentaires
 
 				);

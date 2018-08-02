@@ -39,13 +39,15 @@ abstract class ArticleManager extends \Library\Manager
 
 	abstract function deleteLinkbetweenArticleAuteur($article);
 
-	abstract function getArticleById( $id);
+	abstract function getArticleById($id);
 
 	abstract function getArticleByUrlTitle($urlTitreArticle);
 
 	abstract function getAllArticles();
 
-	abstract function getArticlesBetweenIndex( $debut,  $quantite);
+	abstract function getAllVues();
+
+	abstract function getArticlesBetweenIndex($debut, $quantite);
 
 	abstract function getNumberOfArticles();
 

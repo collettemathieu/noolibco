@@ -464,6 +464,32 @@ class PDOArticleManager extends \Library\Models\ArticleManager
 		
 		return $articles;
 	}
+
+	// Retourne le nombre de vues de tous les articles
+	public function getAllVues(){
+		
+		//Préparation de la requête
+		$requete = $this->dao->prepare("SELECT SUM(nbre_vue_article) AS nbVues FROM article");
+		
+		//Exécution de la requête sinon envoi d'une erreur
+		try {
+			$this->dao->beginTransaction();
+			$requete->execute();
+			$this->dao->commit();
+		} catch(PDOException $e) {
+			$this->dao->rollback();
+			return "Erreur!: " . $e->getMessage() . "</br>";
+		}
+		$donnees = $requete->fetchAll();
+		
+		$requete->closeCursor ();
+		
+		if (count($donnees) == 0) {
+			return false;
+		}
+		
+		return $donnees[0]['nbVues'];
+	}
 	
 	// Renvoi un tableau d'articles à partir de l'index début jusqu'à debut + quantité
 	public function getArticlesBetweenIndex( $debut,  $quantite){

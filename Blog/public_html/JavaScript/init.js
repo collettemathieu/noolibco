@@ -294,12 +294,11 @@ import displayInformationsClient from './displayInformationsClient.js';
                 success: function(response) {
                     response = JSON.parse(response);
                     if(response['nbreUsers']){
-                        var valeurMax = Math.max(response['nbreUsers'], response['nbreCours'], response['nbreCommentaires'], response['nbreArticles'])+1,
+                        var valeurMax = Math.max(response['nbreUsers'], response['nbreCommentaires'], response['nbreArticles'])+1,
                             statUtilisateurs  = $('#statUtilisateurs'),
-                            statCours = $('#statCours'),
+                            statVues = $('#statVues'),
                             statCommentaires = $('#statCommentaires'),
                             statArticles = $('#statArticles');
-
                         statUtilisateurs.circleProgress({
                             value: 1,
                             startAngle: -Math.PI / 4 * 3,
@@ -315,19 +314,19 @@ import displayInformationsClient from './displayInformationsClient.js';
                             statUtilisateurs.circleProgress('value', response['nbreUsers']/valeurMax); 
                         }, 1000);
                         
-                        statCours.circleProgress({
+                        statVues.circleProgress({
                             value: 1,
                             startAngle: -Math.PI / 4 * 3,
                             size: 150,
                             fill: {
-                                color: '#0681c4'
+                                color: '#F78181'
                             },
                             lineCap: 'round'
                         }).on('circle-animation-progress', function(event, progress, stepValue) {
-                          $(this).find('strong').text(String(Math.round(stepValue.toFixed(1)*valeurMax)));
+                          $(this).find('strong').text(String(Math.round(stepValue.toFixed(1))));
                         });
                         setTimeout(function() { 
-                            statCours.circleProgress('value', response['nbreCours']/valeurMax); 
+                            statVues.circleProgress('value', response['nbreVues']); 
                         }, 1000);
 
                         statCommentaires.circleProgress({
@@ -350,7 +349,7 @@ import displayInformationsClient from './displayInformationsClient.js';
                             startAngle: -Math.PI / 4 * 3,
                             size: 150,
                             fill: {
-                                color: '#F78181'
+                                color: '#0681c4'
                             },
                             lineCap: 'round'
                         }).on('circle-animation-progress', function(event, progress, stepValue) {

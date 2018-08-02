@@ -79,22 +79,22 @@
 						</div>
 						<div class="hidden-xs col-sm-3 statistics">
 							<div class="row">
+								<div id="statVues" class="col-sm-12 circle text-center">
+									<strong></strong>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12 text-center"><h3>Nombre de vues</h3></div>
+							</div>
+						</div>
+						<div class="hidden-xs col-sm-3">
+							<div class="row">
 								<div id="statArticles" class="col-sm-12 circle text-center">
 									<strong></strong>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-sm-12 text-center"><h3>Articles</h3></div>
-							</div>
-						</div>
-						<div class="hidden-xs col-sm-3">
-							<div class="row">
-								<div id="statCours" class="col-sm-12 circle text-center">
-									<strong></strong>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-12 text-center"><h3>Cours</h3></div>
 							</div>
 						</div>
 						<div class="hidden-xs col-sm-3">
