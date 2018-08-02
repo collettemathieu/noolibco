@@ -103,7 +103,7 @@
 								<label for="select">Objet du contact</label>
 								<select id="select" name="sujet" class="form-control">
 									<option>Question ?</option>
-									<option>Création d'application</option>
+									<option>Création d'applications</option>
 									<option>Projet collaboratif</option>
 									<option>Aide à la valorisation</option>
 									<option>Aide à la diffusion</option>
