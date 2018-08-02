@@ -296,7 +296,7 @@ class CoursController extends \Library\BackController{
 				
 				// On met à jour les titres du sommaire
 				$compteur = 0;
-				$texte = preg_replace_callback('#<h1( id=".+"){0,1}>([0-9]. ){0,1}(.+)</h1>#', function($matches){
+				$texte = preg_replace_callback('#<h1( id=".+"){0,1}>[0-9]{0,3}(\. ){0,1}(.+)</h1>#', function($matches){
 					global $compteur;
 					++$compteur;
 					$id = $this->cleanTitreSommaire($matches[3]);
