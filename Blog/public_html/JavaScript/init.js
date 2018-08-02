@@ -41,7 +41,7 @@ import displayInformationsClient from './displayInformationsClient.js';
                 // Edge 20+
             var isEdge = !isIE && !!window
                 // Chrome 1+
-            var isChrome = !!window.chrome && !!window.chrome.webstore;
+            var isChrome = !!window.chrome;
 
             // Contrôle des versions
             if(isOpera){

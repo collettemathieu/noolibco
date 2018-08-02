@@ -1,1 +1,1 @@
-<script type="text/javascript" src="/dist/front.js"></script>
+<script type="text/javascript" src="/dist/front_end.js"></script>

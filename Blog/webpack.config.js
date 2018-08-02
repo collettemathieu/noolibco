@@ -7,7 +7,7 @@ const webpack = require('webpack');
 
 let config = {
 	entry: {
-		front: './public_html/JavaScript/entries/frontend.js',
+		front_end: './public_html/JavaScript/entries/frontend.js',
 		articles: './public_html/JavaScript/entries/articles.js',
 		services: './public_html/JavaScript/entries/services.js',
 		information: './public_html/JavaScript/entries/information.js',
