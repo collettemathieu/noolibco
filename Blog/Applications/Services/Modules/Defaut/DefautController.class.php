@@ -1,12 +1,12 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PHP Version 5 								                          |
+// | PHP Version 7 								                          |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2016 AboutScience			         		          |
+// | Copyright (c) 2018 NoolibTheBlog			         		          |
 // +----------------------------------------------------------------------+
 // | Classe PHP du contrôleur pour l'affichage de la page des services.	  |
 // +----------------------------------------------------------------------+
-// | Auteur : Mathieu COLLETTE <collettemathieu@aboutscience.com>    	  |
+// | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>		    	  |
 // +----------------------------------------------------------------------+
 
 /**

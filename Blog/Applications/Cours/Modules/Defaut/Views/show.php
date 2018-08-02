@@ -9,7 +9,7 @@
 						--><div class="mainText">
 							<h4><?php echo nl2br($cours->getTitreCours());?></h4>
 							<div class="informationCours"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Publié le <?php echo $date->format('d-m-Y');?></div>
-							<div class="informationCours"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Par <?php echo $cours->getAuteur()->getNomUtilisateur();?></div>
+							<div class="informationCours"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Catégorie : <?php echo $cours->getCategorie()->getNomCategorie();?></div>
 							<div class="informationCours"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Lu <?php echo $cours->getNbreVueCours();?> fois</div>
 							<p class="cesure"><?php echo nl2br($cours->getDescriptionCours());?></p>
 						</div>

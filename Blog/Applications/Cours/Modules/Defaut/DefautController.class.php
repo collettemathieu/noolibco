@@ -1,12 +1,12 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PHP Version 5 								                          |
+// | PHP Version 7 								                          |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2016 AboutScience			         		          |
+// | Copyright (c) 2018 NoolibTheBlog			         		          |
 // +----------------------------------------------------------------------+
 // | Classe PHP du contrôleur pour l'affichage du blog.					  |
 // +----------------------------------------------------------------------+
-// | Auteur : Mathieu COLLETTE <collettemathieu@aboutscience.com>    	  |
+// | Auteur : Mathieu COLLETTE <collettemathieu@noolib.com>		    	  |
 // +----------------------------------------------------------------------+
 
 /**
@@ -21,70 +21,10 @@ namespace Applications\Cours\Modules\Defaut;
 class DefautController extends \Library\BackController
 {
 	public function executeShow($request){
-		//On appelle le manager des Cours
-		$managerCours = $this->getManagers()->getManagerOf('Cours');
-		//On récupère tous les cours
-		$courss = $managerCours->getAllCours();
-
-		$admin = $request->getCookieData('admin');
-
-		/*
-		//On appelle le manager des CoursGlobal
-		$managerCoursGlobal = $this->getManagers()->getManagerOf('CoursGlobal');
-		//On récupère tous les cours globaux
-		$coursGlobaux = $managerCoursGlobal->getAllCoursGlobal();
-		*/
-
-		$coursAAfficher = array();
-		foreach($courss as $cours){
-			//$cours = $managerCours->putCoursGlobalInCours($cours);
-			if($cours->getEnLigneCours() || $admin){
-				array_push($coursAAfficher, $cours);
-				/*
-				if(empty($cours->getCoursGlobal())){
-					array_push($coursAAfficher, $cours);
-				}
-				*/
-			}
-		}
-
-		/*
-		$coursGlobauxAAfficher = array();
-		foreach($coursGlobaux as $coursGlobal){
-			if($coursGlobal->getEnLigneCoursGlobal() || $admin){
-				array_push($coursGlobauxAAfficher, $coursGlobal);
-			}
-		}
-		*/
-
-		// On trie par date
-		/*
-		$courss = array_merge($coursAAfficher, $coursGlobauxAAfficher);
-		uasort($courss, 
-			function ($a, $b) {
-				if($a instanceof \Library\Entities\Cours){
-					$dateA = new \DateTime($a->getDateCreationCours());
-				}else{
-					$dateA = new \DateTime($a->getDateCreationCoursGlobal());
-				}
-				if($b instanceof \Library\Entities\Cours){
-					$dateB = new \DateTime($b->getDateCreationCours());
-				}else{
-					$dateB = new \DateTime($b->getDateCreationCoursGlobal());
-				}
-				$a = $dateA->getTimestamp();
-				$b = $dateB->getTimestamp();
-			    if ($a == $b) {
-			        return 0;
-			    }
-			    return ($a > $b) ? -1 : 1;
-			}
-		);
-		*/
-
-		// On ajoute les cours à la page
-		$this->page->addVar('courss', $coursAAfficher);
-
+		// Deprecated
+		// On retourne à la page des cours
+		$response = $this->app->getHTTPResponse();
+		$response->redirect('/Articles/');
 	}
 
 	// Permet d'afficher un cours

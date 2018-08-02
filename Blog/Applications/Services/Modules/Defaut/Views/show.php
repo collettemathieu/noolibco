@@ -48,8 +48,10 @@
 						<h1>Pour les écoles et les laboratoires</h1>
 						<p>NooLib est bien au fait de la recherche académique et collabore par différentes voies :</p>
 						<ul>
+							<li>Création d'applications pour donner vie à vos algorithmes de Recherche</li>
 							<li>Aide à la diffusion de vos algorithmes de Recherche via notre plateforme <a class="noolibService" href="https://wwww.noolib.com" target="_blank">NooLib</a></li>
 							<li>Aide à la valorisation de vos activités de Recherche auprès du grand public</li>
+							<li>Formation (Informatique, Mathématiques, Physique)</li>
 							<li>Mise en place de projets collaboratifs</li>
 						</ul>
 					</div>
@@ -65,10 +67,11 @@
 						<h1>Pour les entreprises</h1>
 						<p>Nous avons l’habitude de collaborer avec des entreprises de différentes manières :</p>
 						<ul>
+							<li>Aide au Crédit Impôt Recherche et Innovation</li>
+							<li>Mise en place de projets collaboratifs entre laboratoires et entreprises</li>
+							<li>Création de contenus dédiés hébergés sur <a class="noolibService" href="https://www.noolib.com" target="_blank">NooLib</a> ou sur votre site Internet</li>
 							<li>Insertion intelligente de bannières publicitaires</li>
 							<li>Affiliation</li>
-							<li>Mise en place de projets collaboratifs</li>
-							<li>Création de contenus dédiés hébergés sur <a class="noolibService" href="https://www.noolib.com" target="_blank">NooLib</a> ou sur votre site Internet</li>
 							<li>Création de contenus en marque blanche</li>
 						</ul>
 						<p>Nous serions ravis d’échanger avec vous sur vos problématiques afin d’y répondre via une prestation sur-mesure.</p>
